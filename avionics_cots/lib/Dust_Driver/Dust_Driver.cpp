@@ -16,10 +16,12 @@ Dust::~Dust() {
 
 void Dust::init() {
     SERIAL_OUTPUT.println("Initializing Dust Sensor");
-    if (sensor->init()) {
+    if (sensor->init(I2C_DUST_SDA, I2C_DUST_SCL)) {
+        alive = false;
         SERIAL_OUTPUT.println("Dust Sensor init failed");
-        while (true);
+        return;
     }
+    alive = true;
 
     SERIAL_OUTPUT.println("Dust Sensor Initialized.");
 }
@@ -57,5 +59,6 @@ void Dust::parse_sensor_data(uint8_t* data) {
     }
 }
 
-
-void Dust::calibrate() {}
+bool Dust::is_alive() {
+    return alive;
+}

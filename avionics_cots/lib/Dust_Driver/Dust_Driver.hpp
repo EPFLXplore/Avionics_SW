@@ -39,13 +39,13 @@
 class Dust
 {
 public:
-     Dust();
+    Dust();
     ~Dust();
 
     void init();
     void loop();
-    
-    void calibrate();
+
+    bool is_alive();
 
 private:
     HM330X* sensor = nullptr;
@@ -63,6 +63,8 @@ private:
     uint16_t num_particles_2_5 = 0;
     uint16_t num_particles_5_0 = 0;
     uint16_t num_particles_10_ = 0;
+
+    bool alive = false;
 };
 
 #endif /** DUST_SENSOR_HPP */
