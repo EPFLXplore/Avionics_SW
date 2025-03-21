@@ -42,18 +42,43 @@
 class Dust
 {
 public:
+    /**
+     * @brief Construct a new Dust object
+     */
     Dust();
+
+    /**
+     * @brief Destroy the Dust object
+     */
     ~Dust();
 
+    /**
+     * @brief Initializes the Dust Sensor
+     * @return null
+     */
     void init();
+
+    /**
+     * @brief Loop function that reads dust sensor data periodically
+     * @return null
+     */
     void loop();
 
+    /**
+     * @brief Asks the Dust Instance if the sensor is working
+     * @return alive boolean
+     */
     bool is_alive();
 
 private:
     HM330X* sensor = nullptr;
     uint8_t buf[SENS_BUF_SIZE] = {0};  // sensor data buffer
 
+    /**
+     * @brief Parses incoming data
+     * @param data
+     * @return null
+     */
     void parse_sensor_data(uint8_t* data);
 
     uint16_t pm1_0_ = 0;

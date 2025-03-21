@@ -4,8 +4,6 @@
 */
 #include "Dust_Driver.hpp"
 
-uint8_t counter = 0;
-
 Dust::Dust() :  pm1_0_(0), pm2_5_(0), pm10__(0), num_particles_0_3_(0), num_particles_0_5_(0), num_particles_1_0_(0),
                 num_particles_2_5_(0), num_particles_5_0_(0), num_particles_10__(0) {
                 
@@ -56,7 +54,7 @@ void Dust::loop() {
         .num_particles_10_ = num_particles_10__,
     };
 
-    dust_monitor.log("BEGIN SEND DATA: " + String(counter++) + "\n");
+    dust_monitor.log("BEGIN SEND DATA\n");
     
     dust_handler.sendDustDataPacket(&packet);
 
