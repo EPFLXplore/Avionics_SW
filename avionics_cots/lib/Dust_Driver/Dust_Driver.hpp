@@ -8,6 +8,9 @@
 #include <Seeed_HM330X.h>
 #include <Arduino.h>
 #include "driver/ledc.h"
+#include "monitor.hpp"
+#include "Cosco.hpp"
+#include "packet_definition.hpp"
 
 #ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
     #define SERIAL_OUTPUT SerialUSB
@@ -53,18 +56,21 @@ private:
 
     void parse_sensor_data(uint8_t* data);
 
-    uint16_t pm1_0 = 0;
-    uint16_t pm2_5 = 0;
-    uint16_t pm10_ = 0;
+    uint16_t pm1_0_ = 0;
+    uint16_t pm2_5_ = 0;
+    uint16_t pm10__ = 0;
 
-    uint16_t num_particles_0_3 = 0;
-    uint16_t num_particles_0_5 = 0;
-    uint16_t num_particles_1_0 = 0;
-    uint16_t num_particles_2_5 = 0;
-    uint16_t num_particles_5_0 = 0;
-    uint16_t num_particles_10_ = 0;
+    uint16_t num_particles_0_3_ = 0;
+    uint16_t num_particles_0_5_ = 0;
+    uint16_t num_particles_1_0_ = 0;
+    uint16_t num_particles_2_5_ = 0;
+    uint16_t num_particles_5_0_ = 0;
+    uint16_t num_particles_10__ = 0;
 
     bool alive = false;
+
+    SerialMonitor dust_monitor;
+    Cosco dust_handler;
 };
 
 #endif /** DUST_SENSOR_HPP */

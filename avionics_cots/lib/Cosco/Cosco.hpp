@@ -53,6 +53,14 @@ public:
     void sendMassDataPacket(MassData *responsePacket);
 
     /**
+     * @brief Send sensor data packet
+     * 
+     * @param dataPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
+     * @return null 
+     */
+    void sendDustDataPacket(DustData *dataPacket);
+
+    /**
      * @brief functions that receive commands  
      * 
      * @param configPacket 

@@ -54,6 +54,15 @@ void Cosco::sendMassDataPacket(MassData *responsePacket)
     Serial.write(packetBuffer, sizeof(MassData));
 }
 
+void Cosco::sendDustDataPacket(DustData *dataPacket)
+{
+    // Serialize and send sendDustDataPacket
+    uint8_t packetBuffer[sizeof(DustData) + 1];
+    packetBuffer[0] = DustData_ID;
+    memcpy(packetBuffer, dataPacket, sizeof(DustData));
+    Serial.write(packetBuffer, sizeof(DustData));
+}
+
 void Cosco::receive(MassConfigPacket *configPacket, MassConfigRequestPacket *requestPacket, MassConfigResponsePacket *responsePacket)
 {
     // Check if data is available
