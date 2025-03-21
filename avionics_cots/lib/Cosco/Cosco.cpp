@@ -32,7 +32,7 @@ void Cosco::sendMassConfigRequestPacket(MassConfigRequestPacket *requestPacket)
     // Serialize and send MassConfigRequestPacket
     uint8_t packetBuffer[sizeof(MassConfigRequestPacket) + 1];
     packetBuffer[0] = MassConfigRequest_ID; 
-    memcpy(packetBuffer, requestPacket, sizeof(MassConfigRequestPacket));
+    memcpy(&packetBuffer[1], requestPacket, sizeof(MassConfigRequestPacket));
     Serial.write(packetBuffer, sizeof(MassConfigRequestPacket));
 }
 
@@ -41,7 +41,7 @@ void Cosco::sendMassConfigResponsePacket(MassConfigResponsePacket *responsePacke
     // Serialize and send MassConfigResponsePacket
     uint8_t packetBuffer[sizeof(MassConfigResponsePacket) + 1];
     packetBuffer[0] = MassConfigResponse_ID;
-    memcpy(packetBuffer, responsePacket, sizeof(MassConfigResponsePacket));
+    memcpy(&packetBuffer[1], responsePacket, sizeof(MassConfigResponsePacket));
     Serial.write(packetBuffer, sizeof(MassConfigResponsePacket));
 }
 
@@ -50,7 +50,7 @@ void Cosco::sendMassDataPacket(MassData *responsePacket)
     // Serialize and send sendMassDataPacket
     uint8_t packetBuffer[sizeof(MassData) + 1];
     packetBuffer[0] = MassData_ID;
-    memcpy(packetBuffer, responsePacket, sizeof(MassData));
+    memcpy(&packetBuffer[1], responsePacket, sizeof(MassData));
     Serial.write(packetBuffer, sizeof(MassData));
 }
 
@@ -59,7 +59,7 @@ void Cosco::sendDustDataPacket(DustData *dataPacket)
     // Serialize and send sendDustDataPacket
     uint8_t packetBuffer[sizeof(DustData) + 1];
     packetBuffer[0] = DustData_ID;
-    memcpy(packetBuffer, dataPacket, sizeof(DustData));
+    memcpy(&packetBuffer[1], dataPacket, sizeof(DustData));
     Serial.write(packetBuffer, sizeof(DustData));
 }
 

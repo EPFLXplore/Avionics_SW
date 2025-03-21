@@ -4,6 +4,8 @@
 */
 #include "Dust_Driver.hpp"
 
+uint8_t counter = 0;
+
 Dust::Dust() :  pm1_0_(0), pm2_5_(0), pm10__(0), num_particles_0_3_(0), num_particles_0_5_(0), num_particles_1_0_(0),
                 num_particles_2_5_(0), num_particles_5_0_(0), num_particles_10__(0) {
                 
@@ -37,8 +39,8 @@ void Dust::loop() {
     // dust_monitor.log();
 
 
-    dust_monitor.log("PM1.0_STD:" + String(pm1_0_) + ", PM2.5_STD:" + String(pm2_5_) + ", PM10_STD:" + String(pm10__));
-    dust_monitor.log(", NUM_PTC_0_3:" + String(num_particles_0_3_) + ", NUM_PTC_0_5:" + String(num_particles_0_5_) +
+    dust_monitor.log("PM1.0_STD:" + String(pm1_0_) + ", PM2.5_STD:" + String(pm2_5_) + ", PM10_STD:" + String(pm10__) + "\n");
+    dust_monitor.log("NUM_PTC_0_3:" + String(num_particles_0_3_) + ", NUM_PTC_0_5:" + String(num_particles_0_5_) +
                         ", NUM_PTC_1_0:" + String(num_particles_1_0_) + ", NUM_PTC_2_5:" + String(num_particles_2_5_) +
                         ", NUM_PTC_5_0:" + String(num_particles_5_0_) + ", NUM_PTC_10 :" + String(num_particles_10__) + "\n");
 
@@ -53,8 +55,13 @@ void Dust::loop() {
         .num_particles_5_0 = num_particles_5_0_,
         .num_particles_10_ = num_particles_10__,
     };
+
+    dust_monitor.log("BEGIN SEND DATA: " + String(counter++) + "\n");
     
     dust_handler.sendDustDataPacket(&packet);
+
+    dust_monitor.log("END SEND DATA\n");
+
     delay(1000 / SAMPLING_RATE);
 }
 
