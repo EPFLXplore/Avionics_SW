@@ -33,9 +33,12 @@ struct NPK {
 };
 
 struct DustData {
-    uint16_t pm1_0;
-    uint16_t pm2_5;
-    uint16_t pm10_;
+    uint16_t pm1_0_std;
+    uint16_t pm2_5_std;
+    uint16_t pm10__std;
+    uint16_t pm1_0_atm;
+    uint16_t pm2_5_atm;
+    uint16_t pm10__atm;
     uint16_t num_particles_0_3;
     uint16_t num_particles_0_5;
     uint16_t num_particles_1_0;
