@@ -7,8 +7,11 @@
 
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <ESP32Servo.h>
 #include "driver/ledc.h"
+#include "packet_definition.hpp"
 
 #define DEFAULT_PWM_PERIOD 20000-1
 
@@ -21,9 +24,11 @@ public:
 
     void init();
 
-    void set_servo(float angle);
-    void handle_request(float pwm);
-    float angle_to_duty(float angle);
+    void set_servo(float angle, int8_t ch);
+    void zero_in(int8_t ch);
+    void handle_servo(char buffer[64]);
+    float angle_to_duty(float angle, int8_t ch);
+    std::vector<std::string> split(std::string s, std::string delimiter);
 
 private:
     uint8_t _channel;
@@ -31,11 +36,18 @@ private:
 
     uint16_t _PWM_Pin;
     uint32_t _period = DEFAULT_PWM_PERIOD;
+    
+    bool _zero_in;
 
-    float min_angle = 0;
-	float max_angle = 360;
-	float min_duty = 5;
-	float max_duty = 10;
+    float min_angle[2] = {-180, -180};
+	float max_angle[2] = {180, 180};
+	float min_pulse[2] = {500, 500};
+	float max_pulse[2] = {2500, 2500};
+
+    float zero_pulse[2] = {1400, 1400};
+
+    ServoRequest* servoRequest;
+    ServoResponse* servoResponse;
 };
 
 #endif

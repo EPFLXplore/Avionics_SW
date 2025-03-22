@@ -91,44 +91,10 @@ struct NPK {
     uint16_t potassium;
 };
 
-struct ServoConfigRequestJetson {
-    uint16_t destination_id;
-    float min_duty;
-    float max_duty;
-    float min_angle;
-    float max_angle;
-    bool remote_command;
-    bool set_min_duty;
-    bool set_max_duty;
-    bool set_min_angles;
-    bool set_max_angles;
-};
-
-struct ServoConfigRequestMCU {
-    uint16_t id;
-    bool req_min_duty;
-    bool req_max_duty;
-    bool req_min_angle;
-    bool req_max_angle;
-};
-
-struct ServoConfigResponse {
-    uint16_t id;
-    float min_duty;
-    float max_duty;
-    float min_angle;
-    float max_angle;
-    bool remote_command;
-    bool set_min_duty;
-    bool set_max_duty;
-    bool set_min_angle;
-    bool set_max_angle;
-    bool success;
-};
-
 struct ServoRequest {
     uint16_t id;
     float angle;
+    bool zero_in;
 };
 
 struct ServoResponse {

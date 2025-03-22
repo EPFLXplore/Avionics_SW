@@ -7,24 +7,55 @@
 // Servo_Driver::Servo_Driver(ledc_channel_config_t* ledc, uint8_t channel, uint16_t PWM_Pin)
 //             :_ledc(ledc), _PWM_Pin(PWM_Pin), _channel(channel) {}
 
-Servo_Driver::Servo_Driver(){}
-Servo_Driver::~Servo_Driver(){}
-
-void Servo_Driver::init()
+Servo_Driver::Servo_Driver()
 {
-    ledcSetup(0, 50, 16);
-    ledcAttachPin(13, 0);
-    
+    servoRequest = new ServoRequest();
+    servoResponse = new ServoResponse();
+}
+Servo_Driver::~Servo_Driver()
+{
+    delete servoRequest;
+    servoRequest = nullptr;
+    delete servoResponse;
+    servoResponse = nullptr;
 }
 
-float Servo_Driver::angle_to_duty(float angle)
+std::vector<std::string> Servo_Driver::split(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+  
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+  
+    res.push_back (s.substr (pos_start));
+    return res;
+  }
+
+void Servo_Driver::init()
+{    
+    ledcSetup(0, 50, 16);
+    ledcAttachPin(13, 0);
+    zero_in(1);
+}
+
+void Servo_Driver::zero_in(int8_t ch)
 {
-    float pwm = map(angle, 0, 360, 500, 2500);
+    float duty_cycle = (zero_pulse[ch-1] * 65535) / 20000;
+    ledcWrite(0, duty_cycle);
+}
+
+float Servo_Driver::angle_to_duty(float angle, int8_t ch)
+{
+    float pwm = map(angle, min_angle[ch-1], max_angle[ch-1], min_pulse[ch-1], max_pulse[ch-1]);
     float duty_cycle = (pwm * 65535) / 20000;
     return duty_cycle;
 }
 
-void Servo_Driver::set_servo(float angle)
+void Servo_Driver::set_servo(float angle, int8_t ch)
 {
     // if (angle > max_angle)
     //     angle = max_angle;
@@ -34,9 +65,57 @@ void Servo_Driver::set_servo(float angle)
     // float duty_cycle = angle_to_duty(angle);
     
     // float pwm = (uint32_t)(_period*duty_cycle/100 - 1);
-    ledcWrite(0, angle_to_duty(angle));
+    ledcWrite(0, angle_to_duty(angle, ch));
 }
 
+void Servo_Driver::handle_servo(char buffer[64])
+{
+    std::string to_parse = buffer;
+    std::vector<std::string> parsed = split(to_parse, ",");        
+    // if (parsed[0] != "servo")
+    // {
+    //     Serial.println("Invalid request");
+    // }
+    // else
+    // {
+    if (not(servoRequest == nullptr))
+    {
+        if (parsed.size() < 3)
+        {
+            delay(1000); //give me time to write the request par pitié
+        }
+        else
+        {
+            servoRequest->id = stoi(parsed[0]);
+            servoRequest->angle = stoi(parsed[1]);
+            servoRequest->zero_in = stoi(parsed[2]);
+
+            if (not(servoRequest->id == 1 or servoRequest->id == 2))
+            {
+                Serial.println("Invalid id");
+            }
+            if (not(servoRequest->angle <= 180 and servoRequest->angle >= -180))
+            {
+                Serial.println("Invalid angle");
+            }
+            if ( servoRequest->zero_in == true)
+            {
+                servoRequest->angle = 0;
+            }
+            else
+            {
+                set_servo(servoRequest->angle, servoRequest->id);
+                Serial.print("set servo ");
+                Serial.print(servoRequest->id);
+                Serial.print(" to ");
+                Serial.print(servoRequest->angle);
+                Serial.println(" degrees.");
+            }
+        }
+    }
+        
+    // }
+}
 
 
 
