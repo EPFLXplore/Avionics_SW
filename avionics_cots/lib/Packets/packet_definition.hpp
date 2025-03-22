@@ -9,46 +9,9 @@
 #include <iostream>
 #include <packet_id.hpp>
 
-struct LEDMessage {
-    uint8_t low;
-    uint8_t high;
-    uint8_t system;
-    uint8_t mode;
-};
-
-struct ServoConfigRequestMCU {
+struct AngleArray {
     uint16_t id;
-    bool req_min_duty;
-    bool req_max_duty;
-    bool req_min_angles;
-    bool req_max_angles;
-};
-
-struct ServoConfigRequestJetson {
-    uint16_t destination_id;
-    float min_duty[4];
-    float max_duty[4];
-    float min_angles[4];
-    float max_angles[4];
-    bool remote_command;
-    bool set_min_duty;
-    bool set_max_duty;
-    bool set_min_angles;
-    bool set_max_angles;
-};
-
-struct ServoConfigResponse {
-    uint16_t id;
-    float min_duty[4];
-    float max_duty[4];
-    float min_angles[4];
-    float max_angles[4];
-    bool remote_command;
-    bool set_min_duty;
-    bool set_max_duty;
-    bool set_min_angles;
-    bool set_max_angles;
-    bool success;
+    float angles[4];
 };
 
 struct FourInOne {
@@ -59,11 +22,31 @@ struct FourInOne {
     float ph;
 };
 
-struct ServoResponse {
-    uint16_t id;
-    uint8_t channel;
-    float angle;
+struct LEDMessage {
+    uint8_t low;
+    uint8_t high;
+    uint8_t system;
+    uint8_t mode;
+};
+
+struct LEDResponse {
     bool success;
+};
+
+struct MassArray {
+    uint16_t id;
+    float mass[4];
+};
+
+struct MassCalibOffset {
+    uint16_t destination_id;
+    uint8_t channel;
+};
+
+struct MassCalibScale {
+    uint16_t destination_id;
+    uint8_t channel;
+    float expected_weight;
 };
 
 struct MassConfigPacket {
@@ -77,6 +60,14 @@ struct MassConfigPacket {
     bool set_scale;
     bool set_alpha;
     bool set_channels_status;
+};
+
+struct MassConfigRequestPacket {
+    uint16_t id;
+    bool req_offset;
+    bool req_scale;
+    bool req_alpha;
+    bool req_channels_status;
 };
 
 struct MassConfigResponsePacket {
@@ -93,11 +84,6 @@ struct MassConfigResponsePacket {
     bool success;
 };
 
-struct MassArray {
-    uint16_t id;
-    float mass[4];
-};
-
 struct NPK {
     uint16_t id;
     uint16_t nitrogen;
@@ -105,36 +91,50 @@ struct NPK {
     uint16_t potassium;
 };
 
-struct AngleArray {
-    uint16_t id;
-    float angles[4];
-};
-
-struct MassCalibScale {
+struct ServoConfigRequestJetson {
     uint16_t destination_id;
-    uint8_t channel;
-    float expected_weight;
+    float min_duty;
+    float max_duty;
+    float min_angle;
+    float max_angle;
+    bool remote_command;
+    bool set_min_duty;
+    bool set_max_duty;
+    bool set_min_angles;
+    bool set_max_angles;
 };
 
-struct ServoRequest {
-    float angle;
+struct ServoConfigRequestMCU {
+    uint16_t id;
+    bool req_min_duty;
+    bool req_max_duty;
+    bool req_min_angle;
+    bool req_max_angle;
 };
 
-struct LEDResponse {
+struct ServoConfigResponse {
+    uint16_t id;
+    float min_duty;
+    float max_duty;
+    float min_angle;
+    float max_angle;
+    bool remote_command;
+    bool set_min_duty;
+    bool set_max_duty;
+    bool set_min_angle;
+    bool set_max_angle;
     bool success;
 };
 
-struct MassConfigRequestPacket {
+struct ServoRequest {
     uint16_t id;
-    bool req_offset;
-    bool req_scale;
-    bool req_alpha;
-    bool req_channels_status;
+    float angle;
 };
 
-struct MassCalibOffset {
-    uint16_t destination_id;
-    uint8_t channel;
+struct ServoResponse {
+    uint16_t id;
+    float angle;
+    bool success;
 };
 
 #endif /* PACKET_DEFINITION_H */
