@@ -67,7 +67,7 @@ public:
      * @param requestPacket 
      * @param responsePacket 
      */    
-    void receive(MassConfigPacket* configPacket, MassConfigRequestPacket* requestPacket, MassConfigResponsePacket* responsePacket);
+    void receive(void* packet);
 };
 
 #endif /* COSCO_HPP */

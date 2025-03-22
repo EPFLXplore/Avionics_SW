@@ -26,7 +26,7 @@ void Dust::init() {
     }
     alive = true;
 
-    dust_monitor.log("Dust Sensor Initialized.");
+    dust_monitor.log("Dust Sensor Initialized");
 }
 void Dust::loop() {
     if (sensor->read_sensor_value(buf, BUFSIZE)) {
@@ -34,15 +34,7 @@ void Dust::loop() {
         return;
     }
 
-    for (size_t i = 0; i < BUFSIZE; ++i) {
-        dust_monitor.log(" buf[" + String(i) + "] = " + String(buf[i]));
-    }
-    dust_monitor.log("\n");
-
     parse_sensor_data(buf);
-    // for (size_t i = 0; i < 30; i++) dust_monitor.log(String(buf[i]) + " ");
-    // dust_monitor.log();
-
 
     dust_monitor.log("PM1.0_STD:" + String(pm1_0_std_) + ", PM2.5_STD:" + String(pm2_5_std_) + ", PM10_STD:" + String(pm10__std_) + "\n");
     dust_monitor.log("PM1.0_ATM:" + String(pm1_0_atm_) + ", PM2.5_ATM:" + String(pm2_5_atm_) + ", PM10_ATM:" + String(pm10__atm_) + "\n");
@@ -71,11 +63,21 @@ void Dust::loop() {
 
     dust_monitor.log("END SEND DATA\n");
 
+    DustData received_packet = {0};
+
+    dust_handler.receive(&received_packet);
+    dust_monitor.log("RECEIVED: " + String(received_packet.pm1_0_std) + " " + String(received_packet.pm2_5_std) + " " + String(received_packet.pm10__std) + "\n");
+    dust_monitor.log("RECEIVED: " + String(received_packet.pm1_0_atm) + " " + String(received_packet.pm2_5_atm) + " " + String(received_packet.pm10__atm) + "\n");
+    dust_monitor.log("RECEIVED: " + String(received_packet.num_particles_0_3) + " " + String(received_packet.num_particles_0_5) + " " + String(received_packet.num_particles_1_0) + "\n");
+    dust_monitor.log("RECEIVED: " + String(received_packet.num_particles_2_5) + " " + String(received_packet.num_particles_5_0) + " " + String(received_packet.num_particles_10_) + "\n");
+
     delay(1000 / SAMPLING_RATE);
 }
 
 void Dust::parse_sensor_data(uint8_t* data) {
     uint16_t checksum = 0;
+
+    dust_monitor.log("SIZE OF DATA = " + String(sizeof(*data)));
 
     if (data != NULL) {
         pm2_5_std_ = ((uint16_t)(data[PM2_5_STD] << 8) + data[PM2_5_STD+1]);
