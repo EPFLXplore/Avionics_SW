@@ -150,7 +150,9 @@ void execute_strip(Command* commands[3], LEDStrip* strip){
 
 void SerialHandler(Command* commands[3], LEDStrip* strip) {
   // Check if data is available
-  if (Serial.available() > 0) {
+  while (Serial.available() <= 0){
+  }
+  //if (Serial.available() > 0) {
     // Read the incoming data into a buffer
     char buffer[64];
     int len = Serial.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
@@ -172,7 +174,7 @@ void SerialHandler(Command* commands[3], LEDStrip* strip) {
     } else {
       Serial.println("Failed to parse command");
     }
-  }
+  //}
 }
 
 void setup() {
