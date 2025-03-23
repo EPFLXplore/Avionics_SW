@@ -72,50 +72,63 @@ void Servo_Driver::handle_servo(char buffer[64])
 {
     std::string to_parse = buffer;
     std::vector<std::string> parsed = split(to_parse, ",");        
-    // if (parsed[0] != "servo")
-    // {
-    //     Serial.println("Invalid request");
-    // }
-    // else
-    // {
-    if (not(servoRequest == nullptr))
+    if (parsed[0] != "servo")
     {
-        if (parsed.size() < 3)
+        Serial.println("Invalid request");
+    }
+    else
+    {
+        if (not(servoRequest == nullptr))
         {
-            delay(1000); //give me time to write the request par pitié
-        }
-        else
-        {
-            servoRequest->id = stoi(parsed[0]);
-            servoRequest->angle = stoi(parsed[1]);
-            servoRequest->zero_in = stoi(parsed[2]);
+            if (parsed.size() == 4)
+            {
+                servoRequest->id = stoi(parsed[1]);
+                servoRequest->angle = stoi(parsed[2]);
+                servoRequest->zero_in = stoi(parsed[3]);
 
-            if (not(servoRequest->id == 1 or servoRequest->id == 2))
-            {
-                Serial.println("Invalid id");
-            }
-            if (not(servoRequest->angle <= 180 and servoRequest->angle >= -180))
-            {
-                Serial.println("Invalid angle");
-            }
-            if ( servoRequest->zero_in == true)
-            {
-                servoRequest->angle = 0;
+                if (not(servoRequest->id == 1 or servoRequest->id == 2))
+                {
+                    Serial.println("Invalid id");
+                    servoResponse->id = servoRequest->id;
+                    servoResponse->angle = servoRequest->angle;
+                    servoResponse->success = false;
+                }
+                else if (not(servoRequest->angle <= 180 and servoRequest->angle >= -180))
+                {
+                    Serial.println("Invalid angle");
+                    servoResponse->id = servoRequest->id;
+                    servoResponse->angle = servoRequest->angle;
+                    servoResponse->success = false;
+                }
+                else if (servoRequest->zero_in == true)
+                {
+                    zero_in(servoRequest->id);
+                    Serial.print("zeroed in servo ");
+                    Serial.println(servoRequest->id);
+                    servoResponse->id = servoRequest->id;
+                    servoResponse->angle = 0;
+                    servoResponse->success = true;
+                }
+                else
+                {
+                    set_servo(servoRequest->angle, servoRequest->id);
+                    Serial.print("set servo ");
+                    Serial.print(servoRequest->id);
+                    Serial.print(" to ");
+                    Serial.print(servoRequest->angle);
+                    Serial.println(" degrees.");
+                    
+                    servoResponse->id = servoRequest->id;
+                    servoResponse->angle = servoRequest->angle;
+                    servoResponse->success = true;
+                }
             }
             else
             {
-                set_servo(servoRequest->angle, servoRequest->id);
-                Serial.print("set servo ");
-                Serial.print(servoRequest->id);
-                Serial.print(" to ");
-                Serial.print(servoRequest->angle);
-                Serial.println(" degrees.");
+                delay(1000);
             }
         }
     }
-        
-    // }
 }
-
 
 
