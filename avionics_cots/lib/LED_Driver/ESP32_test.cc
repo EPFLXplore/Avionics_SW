@@ -1,22 +1,13 @@
+#include <Arduino.h>
 #include <Wire.h>
+#include "driver/uart.h"
+#include "freertos/queue.h"
 #include <vector>
 #include <Adafruit_NeoPixel.h>
 
 #include "LEDStrip.h"
-// #include "StripPattern.h"
 
-/**
- * Message received from Rasberry: low, high, system, mode
- * Functioning: Each system has a color (blue, red, orange) and when
- *              there is a change in the mode a subsequent pattern will
- *              be displayed. Different pattern <-> different mode.
- * 
- * nav(0),hd(1),drill(2) - uint8_t
- * System: nav(0,33), hd(33,66), drill(66,100)
- * Modes: Manual(0), Manual Direct(1), Manual Inverse(2), Auto(3), Off(4)
- */
 
-// define if we want to use GPIO instead of I2C for receiving commands
 
 #define LED_PIN (27)
 #define NUM_LEDS (96)
@@ -94,7 +85,8 @@ void initialize_strip(Command* commands[3]){
 
 }
 
-void execute_strip(Command* commands[3], LEDStrip* strip){
+void execute_strip(){
+  //Serial.printf("executing\n");
   for (size_t i = 0; i < 3; i++) {
     Command* current_command = commands[i];
 
@@ -144,15 +136,14 @@ void execute_strip(Command* commands[3], LEDStrip* strip){
       default:
         break;
     }
-    // Serial.printf("Current: %d, %d, %d, %d, %d, %d \n",start,end,mode,r,g,b);
+    //Serial.printf("Current: %d, %d, %d, %d, %d, %d \n",start,end,mode,r,g,b);
+    Serial.printf("sector %d, mode %d \n", i,mode);
   }
 }
 
-void SerialHandler(Command* commands[3], LEDStrip* strip) {
+void SerialHandler() {
   // Check if data is available
-  while (Serial.available() <= 0){
-  }
-  //if (Serial.available() > 0) {
+  if (Serial.available() > 0) {
     // Read the incoming data into a buffer
     char buffer[64];
     int len = Serial.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
@@ -170,26 +161,43 @@ void SerialHandler(Command* commands[3], LEDStrip* strip) {
       commands[system]->mode = mode;
 
       // Debug print to verify the parsed values
-      // Serial.printf("Parsed values - Start: %d, End: %d, Mode: %d, R: %d, G: %d, B: %d\n", low, high, system, mode);
+      Serial.printf("Parsed values - Start: %d, End: %d, Mode: %d, R: %d, G: %d, B: %d\n", low, high, system, mode);
     } else {
       Serial.println("Failed to parse command");
     }
-  //}
+  }
 }
+
+
+// Task for handling UART data
+void SerialTask(void *pvParameters) {
+    for (;;) { // Loop forever in this task
+      SerialHandler();
+      vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
 
 void setup() {
-  Serial.begin(BAUD_RATE);
-  initialize_strip(commands);
+    Serial.begin(BAUD_RATE);
+    initialize_strip(commands);
 
-  pinMode(LED_BUILTIN, OUTPUT);
-  strip->begin();
+    pinMode(LED_PIN, OUTPUT);
+    strip->begin();   
 
-  
+    // Configure UART
+    xTaskCreate(
+        SerialTask,      // Function that implements the task
+        "SerialTask",    // Just a name
+        4096,            // Stack size (in words) - adjust as needed
+        NULL,            // Parameter passed to task
+        1,               // Task priority
+        NULL             // Task handle
+    );
 }
 
-void loop(){
-  // default_segments(strip);
-  SerialHandler(commands,strip);
-  execute_strip(commands,strip);
-  delay(100);
+void loop() {
+    // The main loop is free for other tasks
+    execute_strip();
+    delay(100);
 }
