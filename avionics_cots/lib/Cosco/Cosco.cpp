@@ -32,7 +32,7 @@ void Cosco::sendMassConfigRequestPacket(MassConfigRequestPacket *requestPacket)
     // Serialize and send MassConfigRequestPacket
     uint8_t packetBuffer[sizeof(MassConfigRequestPacket) + 1];
     packetBuffer[0] = MassConfigRequest_ID; 
-    memcpy(&packetBuffer[1], requestPacket, sizeof(MassConfigRequestPacket));
+    memcpy(packetBuffer + 1, requestPacket, sizeof(MassConfigRequestPacket));
     Serial.write(packetBuffer, sizeof(MassConfigRequestPacket));
 }
 
@@ -41,7 +41,7 @@ void Cosco::sendMassConfigResponsePacket(MassConfigResponsePacket *responsePacke
     // Serialize and send MassConfigResponsePacket
     uint8_t packetBuffer[sizeof(MassConfigResponsePacket) + 1];
     packetBuffer[0] = MassConfigResponse_ID;
-    memcpy(&packetBuffer[1], responsePacket, sizeof(MassConfigResponsePacket));
+    memcpy(packetBuffer + 1, responsePacket, sizeof(MassConfigResponsePacket));
     Serial.write(packetBuffer, sizeof(MassConfigResponsePacket));
 }
 
@@ -50,7 +50,7 @@ void Cosco::sendMassDataPacket(MassData *responsePacket)
     // Serialize and send sendMassDataPacket
     uint8_t packetBuffer[sizeof(MassData) + 1];
     packetBuffer[0] = MassData_ID;
-    memcpy(&packetBuffer[1], responsePacket, sizeof(MassData));
+    memcpy(packetBuffer + 1, responsePacket, sizeof(MassData));
     Serial.write(packetBuffer, sizeof(MassData));
 }
 
@@ -59,26 +59,29 @@ void Cosco::sendDustDataPacket(DustData *dataPacket)
     // Serialize and send sendDustDataPacket
     uint8_t packetBuffer[sizeof(DustData) + 1];
     packetBuffer[0] = DustData_ID;
-    memcpy(&packetBuffer[1], dataPacket, sizeof(DustData));
+    memcpy(packetBuffer + 1, dataPacket, sizeof(DustData));
     Serial.write(packetBuffer, sizeof(DustData));
 }
 
-#define HANDLE_PACKET(packet_type) { \
-    if (len == sizeof(packet_type)) { \
-        memcpy(packet, buffer + 1, sizeof(packet_type));  \
-        Serial.println(String(#packet_type) + String(" packet copied successfully")); \
-    } else { \
-        Serial.println(String("Received data too ") + String(len > sizeof(DustData) ? "long" : "short") + String(" for ") + String(#packet_type)); \
-    } \
-    break; \
-}
+#define HANDLE_PACKET(packet_type) do {                                         \
+    if (len == sizeof(packet_type)) {                                           \
+        memcpy(packet, buffer + 1, sizeof(packet_type));                        \
+        Serial.println(String(#packet_type) + " packet copied successfully");   \
+    } else {                                                                    \
+        Serial.println("Received data too "                                     \
+                        + String(len > sizeof(packet_type) ? "long" : "short")  \
+                        + " for " + String(#packet_type));                      \
+    }                                                                           \
+    break;                                                                      \
+} while (0)
+
 
 void Cosco::receive(void* packet)
 {
     // Check if data is available
     if (Serial.available() > 0) {
         // Read the incoming data into a buffer
-        char buffer[64] = {0};
+        char buffer[128] = {0};
         int len = Serial.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
         buffer[len] = '\0'; // Null-terminate the string
 
