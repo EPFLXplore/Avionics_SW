@@ -4,13 +4,18 @@
 */
 #include "Servo.hpp"
 
-// Servo_Driver::Servo_Driver(ledc_channel_config_t* ledc, uint8_t channel, uint16_t PWM_Pin)
-//             :_ledc(ledc), _PWM_Pin(PWM_Pin), _channel(channel) {}
-
 Servo_Driver::Servo_Driver()
 {
     servoRequest = new ServoRequest();
     servoResponse = new ServoResponse();
+
+    min_angle[2] = {-180, -180};
+	max_angle[2] = {180, 180};
+	min_pulse[2] = {500, 500};
+	max_pulse[2] = {2500, 2500};
+
+    zero_pulse[2] = {1500, 1500};
+
 }
 Servo_Driver::~Servo_Driver()
 {
@@ -35,11 +40,12 @@ std::vector<std::string> Servo_Driver::split(std::string s, std::string delimite
     return res;
   }
 
-void Servo_Driver::init()
+void Servo_Driver::init(int8_t ch, int8_t servoPin, int8_t packetSize)
 {    
     ledcSetup(0, 50, 16);
-    ledcAttachPin(13, 0);
-    zero_in(1);
+    ledcAttachPin(servoPin, 0);
+    zero_in(ch);
+    _packetSize = packetSize;
 }
 
 void Servo_Driver::zero_in(int8_t ch)
@@ -57,14 +63,6 @@ float Servo_Driver::angle_to_duty(float angle, int8_t ch)
 
 void Servo_Driver::set_servo(float angle, int8_t ch)
 {
-    // if (angle > max_angle)
-    //     angle = max_angle;
-    // if (angle < min_angle)
-    //     angle = min_angle;
-    
-    // float duty_cycle = angle_to_duty(angle);
-    
-    // float pwm = (uint32_t)(_period*duty_cycle/100 - 1);
     ledcWrite(0, angle_to_duty(angle, ch));
 }
 
@@ -72,63 +70,57 @@ void Servo_Driver::handle_servo(char buffer[64])
 {
     std::string to_parse = buffer;
     std::vector<std::string> parsed = split(to_parse, ",");        
-    if (parsed[0] != "servo")
+    if (servoRequest != nullptr)
     {
-        Serial.println("Invalid request");
-    }
-    else
-    {
-        if (not(servoRequest == nullptr))
+        if (parsed.size() == _packetSize)
         {
-            if (parsed.size() == 4)
-            {
-                servoRequest->id = stoi(parsed[1]);
-                servoRequest->angle = stoi(parsed[2]);
-                servoRequest->zero_in = stoi(parsed[3]);
+            servoRequest->id = stoi(parsed[1]); //parsed strings from the buffer placed in a vector after splitting. 
+            servoRequest->angle = stoi(parsed[2]); //Casting them into the servoRequest struct for error-checking
+            servoRequest->zero_in = stoi(parsed[3]);
 
-                if (not(servoRequest->id == 1 or servoRequest->id == 2))
-                {
-                    Serial.println("Invalid id");
-                    servoResponse->id = servoRequest->id;
-                    servoResponse->angle = servoRequest->angle;
-                    servoResponse->success = false;
-                }
-                else if (not(servoRequest->angle <= 180 and servoRequest->angle >= -180))
-                {
-                    Serial.println("Invalid angle");
-                    servoResponse->id = servoRequest->id;
-                    servoResponse->angle = servoRequest->angle;
-                    servoResponse->success = false;
-                }
-                else if (servoRequest->zero_in == true)
-                {
-                    zero_in(servoRequest->id);
-                    Serial.print("zeroed in servo ");
-                    Serial.println(servoRequest->id);
-                    servoResponse->id = servoRequest->id;
-                    servoResponse->angle = 0;
-                    servoResponse->success = true;
-                }
-                else
-                {
-                    set_servo(servoRequest->angle, servoRequest->id);
-                    Serial.print("set servo ");
-                    Serial.print(servoRequest->id);
-                    Serial.print(" to ");
-                    Serial.print(servoRequest->angle);
-                    Serial.println(" degrees.");
-                    
-                    servoResponse->id = servoRequest->id;
-                    servoResponse->angle = servoRequest->angle;
-                    servoResponse->success = true;
-                }
+            if (not(servoRequest->id == 1 or servoRequest->id == 2)) //servo id 1 being Drill and id 2 being Camera
+            { //check for valid servo id
+                Serial.println("Invalid id");
+                servoResponse->id = servoRequest->id;
+                servoResponse->angle = servoRequest->angle;
+                servoResponse->success = false;
+            }
+            else if (not(servoRequest->angle <= max_angle[servoRequest->id - 1] and servoRequest->angle >= min_angle[servoRequest->id - 1]))
+            { //check for angle within bounds
+                Serial.println("Invalid angle");
+                servoResponse->id = servoRequest->id;
+                servoResponse->angle = servoRequest->angle;
+                servoResponse->success = false;
+            }
+            else if (servoRequest->zero_in == true)
+            { //check if zero_in was requested
+                zero_in(servoRequest->id);
+                Serial.print("zeroed in servo ");
+                Serial.println(servoRequest->id);
+                servoResponse->id = servoRequest->id;
+                servoResponse->angle = 0; // cancel rotation and zero in
+                servoResponse->success = true;
             }
             else
-            {
-                delay(1000);
+            { //set servo to angle if OK
+                set_servo(servoRequest->angle, servoRequest->id);
+                Serial.print("set servo ");
+                Serial.print(servoRequest->id);
+                Serial.print(" to ");
+                Serial.print(servoRequest->angle);
+                Serial.println(" degrees.");
+                
+                servoResponse->id = servoRequest->id;
+                servoResponse->angle = servoRequest->angle;
+                servoResponse->success = true;
             }
+        }
+        else
+        {
+            delay(1000);
         }
     }
 }
+
 
 
