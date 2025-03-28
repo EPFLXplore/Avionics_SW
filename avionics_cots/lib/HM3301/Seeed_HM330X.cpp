@@ -39,7 +39,7 @@ HM330XErrorCode HM330X::select_comm() {
     return IIC_SEND_CMD(SELECT_COMM_CMD);
 }
 
-HM330XErrorCode HM330X::init() {
+HM330XErrorCode HM330X::init(uint32_t sda, uint32_t scl) {
     Wire.begin();
     return select_comm();
 }

@@ -19,7 +19,7 @@ Dust::~Dust() {
 
 void Dust::init() {
     dust_monitor.log("Initializing Dust Sensor");
-    if (sensor->init()) { //I2C_DUST_SDA, I2C_DUST_SCL
+    if (sensor->init(I2C_DUST_SDA, I2C_DUST_SCL)) {
         alive = false;
         dust_monitor.log("Dust Sensor init failed");
         return;

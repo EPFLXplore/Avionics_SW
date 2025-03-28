@@ -45,7 +45,7 @@ class HM330X : public I2COperations {
 public:
     HM330X(uint8_t IIC_ADDR = DEFAULT_IIC_ADDR);
 
-    HM330XErrorCode init();
+    HM330XErrorCode init(uint32_t sda, uint32_t scl);
 
     HM330XErrorCode select_comm();
 
