@@ -74,96 +74,27 @@ void LEDStrip::mode0(int start, int end, byte red, byte green, byte blue){
 
 void LEDStrip::mode1(int start, int end, byte red, byte green, byte blue, int EyeSize, int SpeedDelay, int ReturnDelay){
 
-  for(int i = start; i < end-EyeSize-2; i++) {
-    setAll(start, end, 0,0,0);
-    strip.setPixelColor(i, strip.Color(red/10, green/10, blue/10));
-
-    for(int j = 1; j <= EyeSize; j++) {
-      strip.setPixelColor(i+j, strip.Color(red, green, blue));
-    }
-    strip.setPixelColor(i+EyeSize+1, strip.Color(red/10, green/10, blue/10));
-    strip.show();
-    delay(SpeedDelay);
-  }
-
-  delay(ReturnDelay);
-
-  for(int i = end-EyeSize-2; i > start; i--) {
-    setAll(start, end, 0,0,0);
-    strip.setPixelColor(i, strip.Color(red/10, green/10, blue/10));
-
-    for(int j = 1; j <= EyeSize; j++) {
-      strip.setPixelColor(i+j, strip.Color(red, green, blue));
-    }
-    strip.setPixelColor(i+EyeSize+1, strip.Color(red/10, green/10, blue/10));
-    strip.show();
-    delay(SpeedDelay);
-  }
-  
-  delay(ReturnDelay);
+  setAll(start, end, 0, 0, 255);
 }
 
 void LEDStrip::mode2(int start, int end, byte red, byte green, byte blue, int SpeedDelay) {
-  for(uint16_t i=start; i<end; i++) {
-      this->strip.setPixelColor(i, this->strip.Color(red, green, blue));
-      this->strip.show();
-      delay(SpeedDelay);
-  }
+  setAll(start, end, 0, 255, 0);
 
 }
 
 void LEDStrip::mode3(int start, int end, byte red, byte green, byte blue){
-  float r, g, b;
-     
-  for(int k = 255; k >= 0; k=k-2) {
-    r = (k/256.0)*red;
-    g = (k/256.0)*green;
-    b = (k/256.0)*blue;
-    setAll(start,end,r,g,b);
-    strip.show();
-  }
-
-  for(int k = 0; k < 256; k=k+1) { 
-    r = (k/256.0)*red;
-    g = (k/256.0)*green;
-    b = (k/256.0)*blue;
-    setAll(start,end,r,g,b);
-    strip.show();
-  }
+  setAll(start, end, 255, 0, 0);
 
 }
 
 void LEDStrip::mode4(int start, int end, byte red, byte green, byte blue, int SpeedDelay) {
-  for (int j=0; j<10; j++) {  //do 10 cycles of chasing
-    for (int q=0; q < 3; q++) {
-      for (int i=start; i < end; i=i+2) {
-        strip.setPixelColor(i+q, strip.Color(red, green, blue));
-      }
-      strip.show();
-     
-      delay(SpeedDelay);
-     
-      for (int i=start; i < end; i=i+2) {
-        strip.setPixelColor(i+q, strip.Color(0,0,0));
-      }
-    }
-  }
-  setAll(start,end,red,green,blue);
+  setAll(start, end, 0, 255, 255);
 }
 
 void LEDStrip::mode5(int start, int end){
-  setAll(start, end, 0x00,0x00,255);
+  setAll(start, end, 255,0x00,255);
 }
 
 void LEDStrip::mode6(int start, int end, byte red, byte green, byte blue, int StrobeCount, int FlashDelay, int EndPause){
-  for(int j = 0; j < StrobeCount; j++) {
-    setAll(start,end,red,green,blue);
-    strip.show();
-    delay(FlashDelay);
-    setAll(start,end,0,0,0);
-    strip.show();
-    delay(FlashDelay);
-  }
- 
- delay(EndPause);
+  setAll(start, end, 255, 255, 0);
 }
