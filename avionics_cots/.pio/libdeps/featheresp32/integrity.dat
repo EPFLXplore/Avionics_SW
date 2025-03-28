@@ -1,0 +1,5 @@
+seeed-studio/Grove - Laser PM2.5 Sensor HM3301@^1.0.3
+SPI
+Wire
+fastled/FastLED@^3.7.3
+adafruit/Adafruit NeoPixel@^1.11.0
