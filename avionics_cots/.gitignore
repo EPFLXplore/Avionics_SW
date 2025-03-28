@@ -6,3 +6,4 @@
 *.out
 bin/
 generate_structs
+.vscode/

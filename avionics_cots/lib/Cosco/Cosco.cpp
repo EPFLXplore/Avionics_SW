@@ -75,8 +75,25 @@ void Cosco::sendDustDataPacket(DustData *dataPacket)
     break;                                                                      \
 } while (0)
 
+void sendServoRequestPacket(ServoRequest* requestPacket)
+{
+    // Serialize and send sendServoRequestPacket
+    uint8_t packetBuffer[sizeof(ServoRequest) + 1];
+    packetBuffer[0] = ServoConfigRequest_ID;
+    memcpy(packetBuffer + 1, requestPacket, sizeof(ServoRequest));
+    Serial.write(packetBuffer, sizeof(ServoRequest));
+}
 
-void Cosco::receive(void* packet)
+void sendServoResponsePacket(ServoResponse* responsePacket)
+{
+    // Serialize and send sendServoResponsePacket
+    uint8_t packetBuffer[sizeof(ServoResponse) + 1];
+    packetBuffer[0] = ServoResponse_ID;
+    memcpy(packetBuffer + 1, responsePacket, sizeof(ServoResponse));
+    Serial.write(packetBuffer, sizeof(ServoResponse));
+}
+
+void Cosco::receive(MassConfigPacket *configPacket, MassConfigRequestPacket *requestPacket, MassConfigResponsePacket *responsePacket)
 {
     // Check if data is available
     if (Serial.available() > 0) {
@@ -93,7 +110,9 @@ void Cosco::receive(void* packet)
 
         switch (packet_id) {
             case MassData_ID: HANDLE_PACKET(MassArray);
+                break;
             case MassConfigRequest_ID: HANDLE_PACKET(MassConfigRequestPacket);
+                break;
             // case MassCalib_ID: HANDLE_PACKET();
             // case MassConfig_ID: HANDLE_PACKET();
             case MassConfigResponse_ID: HANDLE_PACKET(MassConfigResponsePacket);

@@ -2,6 +2,9 @@
  * @file main.cpp
  * @author Eliot Abramo
 */
+#include <iostream>
+#include <string>
+#include <vector>
 #include <Arduino.h>
 #include <Wire.h>
 #include "ADS1234.hpp"
@@ -16,6 +19,7 @@ void setup() {
   // mass_thread.init();
   dust_sensor.init();
 }
+
 
 void loop() {
   if (!dust_sensor.is_alive()) {

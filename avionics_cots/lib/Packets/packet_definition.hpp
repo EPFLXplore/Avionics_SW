@@ -45,6 +45,22 @@ struct ServoResponse {
     bool success;
 };
 
+struct MassArray {
+    uint16_t id;
+    float mass[4];
+};
+
+struct MassCalibOffset {
+    uint16_t destination_id;
+    uint8_t channel;
+};
+
+struct MassCalibScale {
+    uint16_t destination_id;
+    uint8_t channel;
+    float expected_weight;
+};
+
 struct MassConfigPacket {
     uint16_t destination_id;
     float offset[4];
@@ -56,6 +72,14 @@ struct MassConfigPacket {
     bool set_scale;
     bool set_alpha;
     bool set_channels_status;
+};
+
+struct MassConfigRequestPacket {
+    uint16_t id;
+    bool req_offset;
+    bool req_scale;
+    bool req_alpha;
+    bool req_channels_status;
 };
 
 struct MassConfigResponsePacket {
@@ -70,11 +94,6 @@ struct MassConfigResponsePacket {
     bool set_alpha;
     bool set_channels_status;
     bool success;
-};
-
-struct MassArray {
-    uint16_t id;
-    float mass[4];
 };
 
 struct NPK {
@@ -103,21 +122,10 @@ struct ServoRequest {
     bool zero_in;
 };
 
-struct LEDResponse {
-    bool success;
-};
-
-struct MassConfigRequestPacket {
+struct ServoResponse {
     uint16_t id;
-    bool req_offset;
-    bool req_scale;
-    bool req_alpha;
-    bool req_channels_status;
-};
-
-struct MassCalibOffset {
-    uint16_t destination_id;
-    uint8_t channel;
+    float angle;
+    bool success;
 };
 
 #endif /* PACKET_DEFINITION_H */
