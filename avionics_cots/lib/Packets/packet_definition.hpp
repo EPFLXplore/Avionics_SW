@@ -16,6 +16,21 @@ struct LEDMessage {
     uint8_t mode;
 };
 
+struct DustData {
+    uint16_t pm1_0_std;;
+    uint16_t pm2_5_std;;
+    uint16_t pm10__std;;
+    uint16_t pm1_0_atm;;
+    uint16_t pm2_5_atm;;
+    uint16_t pm10__atm;;
+    uint16_t num_particles_0_3;;
+    uint16_t num_particles_0_5;;
+    uint16_t num_particles_1_0;;
+    uint16_t num_particles_2_5;;
+    uint16_t num_particles_5_0;;
+    uint16_t num_particles_10_;;
+};
+
 struct FourInOne {
     uint16_t id;
     float temperature;
@@ -60,21 +75,6 @@ struct MassConfigResponsePacket {
 struct MassArray {
     uint16_t id;
     float mass[4];
-};
-
-struct Dust {
-    uint16_t pm1_0_std;;
-    uint16_t pm2_5_std;;
-    uint16_t pm10__std;;
-    uint16_t pm1_0_atm;;
-    uint16_t pm2_5_atm;;
-    uint16_t pm10__atm;;
-    uint16_t num_particles_0_3;;
-    uint16_t num_particles_0_5;;
-    uint16_t num_particles_1_0;;
-    uint16_t num_particles_2_5;;
-    uint16_t num_particles_5_0;;
-    uint16_t num_particles_10_;;
 };
 
 struct NPK {

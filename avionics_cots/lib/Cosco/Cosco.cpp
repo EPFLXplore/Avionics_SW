@@ -101,7 +101,7 @@ void Cosco::receive(void* packet)
             case ServoResponse_ID: HANDLE_PACKET(ServoResponse);
             // case ServoConfigRequest_ID: HANDLE_PACKET();
             // case ServoConfig_ID: HANDLE_PACKET();
-            case ServoConfigResponse_ID: HANDLE_PACKET(ServoConfigResponse);
+            // case ServoConfigResponse_ID: HANDLE_PACKET(ServoConfigResponse);
             case LED_ID: HANDLE_PACKET(LEDMessage);
             case LEDResponse_ID: HANDLE_PACKET(LEDResponse);
             case FourInOne_ID: HANDLE_PACKET(FourInOne);
