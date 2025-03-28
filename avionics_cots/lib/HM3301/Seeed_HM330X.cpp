@@ -40,14 +40,14 @@ HM330XErrorCode HM330X::select_comm() {
 }
 
 HM330XErrorCode HM330X::init(uint32_t sda, uint32_t scl) {
-    Wire.begin();
+    Wire.begin(sda,scl);
     return select_comm();
 }
 
 HM330XErrorCode HM330X::read_sensor_value(uint8_t *data, uint32_t data_len) {
     uint32_t time_out_count = 0;
     HM330XErrorCode ret = NO_ERROR;
-    Wire.requestFrom(0x40, 29);
+    Wire.requestFrom(0x40, data_len);
     while (data_len != Wire.available()) {
         time_out_count++;
         if (time_out_count > 10) return ERROR_COMM;
