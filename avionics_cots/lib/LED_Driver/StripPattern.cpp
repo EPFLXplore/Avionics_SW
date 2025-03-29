@@ -1,5 +1,5 @@
 /** 
- * @file packet_definition.hpp 
+ * @file StripPattern.cpp 
  * @author Eliot Abramo 
 */ 
 

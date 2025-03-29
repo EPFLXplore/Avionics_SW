@@ -60,28 +60,6 @@ public:
      * @param responsePacket 
      */    
     void receive(MassConfigPacket* configPacket, MassConfigRequestPacket* requestPacket, MassConfigResponsePacket* responsePacket);
-
-
-    /**
-     * @brief Initialize leds 
-     * 
-     * @return null 
-     */
-    void init_LEDS();
-
-     /**
-     * @brief recieve led info
-     * 
-     * @return null 
-     */
-    void recieve_LED_packet();
-
-     /**
-     * @brief update LED
-     * 
-     * @return null 
-     */
-    void update_LEDS();
 };
 
 #endif /* COSCO_HPP */
