@@ -55,45 +55,6 @@ public:
      * @param configPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
      * @return null
      */
-<<<<<<< HEAD
-    void sendMassDataPacket(MassData* responsePacket);
-
-
-    /**
-     * @brief Send mass configuration packet
-     *
-     * @param requestPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null
-     */
-    void sendServoRequestPacket(ServoRequest* requestPacket);
-
-    /**
-     * @brief Send mass configuration response packet
-     *
-     * @param responsePacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null
-     */
-    void sendServoResponsePacket(ServoResponse* responsePacket);
-
-    /**
-     * @brief Send sensor data packet
-     *
-     * @param dataPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null
-     */
-    void sendDustDataPacket(DustData* dataPacket);
-
-
-    /**
-     * @brief functions that receive commands
-     *
-     * @param configPacket
-     * @param requestPacket
-     * @param responsePacket
-     * @return null
-     */
-    void receive(void* packet);
-=======
     void sendMassDataPacket(MassData *responsePacket);
 
     /**
@@ -104,7 +65,6 @@ public:
      * @param responsePacket 
      */    
     void receive(MassConfigPacket* configPacket, MassConfigRequestPacket* requestPacket, MassConfigResponsePacket* responsePacket);
->>>>>>> 3a6b2f0be72ce4afffa8409f90482291cc3b5c7e
 };
 
 #endif /* COSCO_HPP */
