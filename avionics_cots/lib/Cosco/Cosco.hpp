@@ -6,7 +6,12 @@
 #define COSCO_HPP
 
 #include "packet_definition.hpp"
-#include "ADS1234.hpp"
+#include "packet_id.hpp"
+#include "HX711.h"
+#include <functional>    // For std::function
+#include <unordered_map> // For std::unordered_map
+
+
 
 class Cosco {
 public:
@@ -14,74 +19,79 @@ public:
      * @brief Create a new Cosco Object
      */
     Cosco();
-    
+
     /**
      * @brief Destroys a Cosco Object. Should unalocate any pointers and memory used up in class
-     */    
+     */
     ~Cosco();
 
     /**
      * @brief Send mass configuration packet
-     * 
+     *
      * @param configPacket: pointer to packet to be sent. Defined in Packets->packet_definition.hpp
-     * @return null 
+     * @return null
      */
     void sendMassConfigPacket(MassConfigPacket* configPacket);
 
     /**
      * @brief Send mass configuration packet
-     * 
+     *
      * @param configPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null 
+     * @return null
      */
     void sendMassConfigRequestPacket(MassConfigRequestPacket* requestPacket);
 
     /**
      * @brief Send mass configuration response packet
-     * 
+     *
      * @param configPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null 
+     * @return null
      */
     void sendMassConfigResponsePacket(MassConfigResponsePacket* responsePacket);
 
     /**
      * @brief Send mass data  packet
-     * 
+     *
      * @param configPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
-     * @return null 
+     * @return null
      */
-    void sendMassDataPacket(MassData *responsePacket);
-
-    /**
-     * @brief functions that receive commands  
-     * 
-     * @param configPacket 
-     * @param requestPacket 
-     * @param responsePacket 
-     */    
-    void receive(MassConfigPacket* configPacket, MassConfigRequestPacket* requestPacket, MassConfigResponsePacket* responsePacket);
+    void sendMassDataPacket(MassData* responsePacket);
 
 
     /**
-     * @brief Initialize leds 
-     * 
-     * @return null 
+     * @brief Send mass configuration packet
+     *
+     * @param requestPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
+     * @return null
      */
-    void init_LEDS();
+    void sendServoRequestPacket(ServoRequest* requestPacket);
 
-     /**
-     * @brief recieve led info
-     * 
-     * @return null 
+    /**
+     * @brief Send mass configuration response packet
+     *
+     * @param responsePacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
+     * @return null
      */
-    void recieve_LED_packet();
+    void sendServoResponsePacket(ServoResponse* responsePacket);
 
-     /**
-     * @brief update LED
-     * 
-     * @return null 
+    /**
+     * @brief Send sensor data packet
+     *
+     * @param dataPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
+     * @return null
      */
-    void update_LEDS();
+    void sendDustDataPacket(DustData* dataPacket);
+
+
+    /**
+     * @brief functions that receive commands
+     *
+     * @param configPacket
+     * @param requestPacket
+     * @param responsePacket
+     * @return null
+     */
+    void receive(void* packet);
 };
 
 #endif /* COSCO_HPP */

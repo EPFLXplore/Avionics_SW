@@ -3,18 +3,15 @@
  * @author Eliot Abramo
 */
 #include <Arduino.h>
-#include "ADS1234.hpp"
-#include "ADS1234_Mass_Thread.hpp"
-#include "Cosco.hpp"
-static ADS1234Thread mass_thread;
-static Cosco device;
+#include "Mass_thread.hpp"
+
+//static HX711Thread mass_thread;
+HX711Thread* mass_thread = new HX711Thread();
+
 void setup() {
-  mass_thread.init();
-  device.init_LEDS();
+	mass_thread->init();
 }
 
 void loop() {
-  mass_thread.loop();
-  device.recieve_LED_packet();
-  device.update_LEDS();
+	mass_thread->loop(); // CHANGES TO DO HERE
 }
