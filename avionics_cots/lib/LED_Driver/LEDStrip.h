@@ -1,5 +1,5 @@
 /** 
- * @file packet_definition.hpp 
+ * @file LEDStrip.h
  * @author Eliot Abramo 
 */ 
 

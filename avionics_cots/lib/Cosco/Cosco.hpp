@@ -55,6 +55,7 @@ public:
      * @param configPacket: pointer to packet to be sent. Defined in Packets->->packet_definition.hpp
      * @return null
      */
+<<<<<<< HEAD
     void sendMassDataPacket(MassData* responsePacket);
 
 
@@ -92,6 +93,18 @@ public:
      * @return null
      */
     void receive(void* packet);
+=======
+    void sendMassDataPacket(MassData *responsePacket);
+
+    /**
+     * @brief functions that receive commands  
+     * 
+     * @param configPacket 
+     * @param requestPacket 
+     * @param responsePacket 
+     */    
+    void receive(MassConfigPacket* configPacket, MassConfigRequestPacket* requestPacket, MassConfigResponsePacket* responsePacket);
+>>>>>>> 3a6b2f0be72ce4afffa8409f90482291cc3b5c7e
 };
 
 #endif /* COSCO_HPP */

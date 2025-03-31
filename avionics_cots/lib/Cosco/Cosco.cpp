@@ -8,6 +8,7 @@
 #include <packet_id.hpp>
 #include <packet_definition.hpp>
 
+<<<<<<< HEAD
 // Macro de Ilyas
 #define HANDLE_PACKET(packet_type) do {                                         \
     if (len == sizeof(packet_type)) {                                           \
@@ -20,6 +21,11 @@
     }                                                                           \
     break;                                                                      \
 } while (0)
+=======
+#include "ADS1234.hpp"
+#include "packet_definition.hpp"
+#include "packet_id.hpp"
+>>>>>>> 3a6b2f0be72ce4afffa8409f90482291cc3b5c7e
 
 Cosco::Cosco()
 {
@@ -91,4 +97,9 @@ void Cosco::receive(void* packet)
         }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 3a6b2f0be72ce4afffa8409f90482291cc3b5c7e
