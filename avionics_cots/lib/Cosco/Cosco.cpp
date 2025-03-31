@@ -82,9 +82,6 @@ void Cosco::receive(void* packet)
         }
         }
     }
-<<<<<<< HEAD
-}
-=======
+
 }
 
->>>>>>> 3a6b2f0be72ce4afffa8409f90482291cc3b5c7e

@@ -1,3 +1,4 @@
 fastled/FastLED@^3.7.3
-SPI
+ESP32Servo
 adafruit/Adafruit NeoPixel@^1.11.0
+SPI
