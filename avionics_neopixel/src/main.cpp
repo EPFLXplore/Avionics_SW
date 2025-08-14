@@ -39,8 +39,8 @@ void serialHandler() {
 
     if (sscanf(buf, "%d %d %d %d", &low, &high, &system, &mode) == 4) {
         Command cmd;
-        cmd.system        = constrain(system, 0, 3);
-        cmd.mode          = constrain(mode,   0, 6);
+        cmd.system = constrain(system, 0, 3);
+        cmd.mode = constrain(mode,   0, 6);
 
         switch (cmd.system) {
             case 0: cmd.segment.r = 147; cmd.segment.g = 0;   cmd.segment.b = 211; cmd.segment.low = 0, cmd.segment.high= 50; break; // NAV - Pink
@@ -66,7 +66,6 @@ void commandTask(void* pv) {
             //emergency motors
             if(cmd.mode == 4){
                 cmd.segment.r = 100; cmd.segment.g = 81; cmd.segment.b = 50; cmd.segment.low = 0; cmd.segment.high = 50; // AMBER
-
                 strip_left.applyCommand(cmd);
                 strip_right.applyCommand(cmd);
             } 

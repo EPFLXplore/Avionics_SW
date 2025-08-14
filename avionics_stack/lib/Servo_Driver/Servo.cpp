@@ -4,56 +4,59 @@
 */
 #include "Servo.hpp"
 
-Servo_Driver::Servo_Driver()
-{
+Servo_Driver::Servo_Driver(){
     servoRequest = new ServoRequest();
-    servoResponse = new ServoResponse();
 
-    min_angle = -200;
-	max_angle = 360;
-	min_pulse = 500;
-	max_pulse = 2500;
+    min_angle = -500;
+	max_angle = 500;
+	min_pulse = 400;
+	max_pulse = 2600;
 
     zero_pulse = 1500;
     angle = 0;
 }
-Servo_Driver::~Servo_Driver()
-{
+
+Servo_Driver::~Servo_Driver(){
     delete servoRequest;
     servoRequest = nullptr;
-    delete servoResponse;
-    servoResponse = nullptr;
 }
 
-void Servo_Driver::init(int8_t servoPin, uint8_t channel)
-{
+void Servo_Driver::init(int8_t servoPin, uint8_t channel){
     _channel = channel;
     ledcSetup(channel, 50, 16);
     ledcAttachPin(servoPin, channel);
 
     if(channel == 0){
+        // set camera
         angle = 300;
+        set_servo();
+    }else if(channel == 1){
+        // set drill
+        angle = -400;
         set_servo();
     }else{
         zero_in();
     }
 }
 
-void Servo_Driver::zero_in()
-{
+void Servo_Driver::zero_in(){
     float duty_cycle = (zero_pulse * 65535) / 20000;
     ledcWrite(_channel, duty_cycle);
 }
 
-float Servo_Driver::angle_to_duty()
-{
-    float pwm = map(angle, min_angle, max_angle, min_pulse, max_pulse);
-    float duty_cycle = (pwm * 65535) / 20000;
+float Servo_Driver::angle_to_duty(){
+    // Float lerp to avoid integer truncation from Arduino map()
+    float spanA = (float)max_angle - (float)min_angle;
+    float spanP = (float)max_pulse - (float)min_pulse;
+    float pwm   = (float)min_pulse + ((angle - (float)min_angle) * spanP) / spanA;
+
+    // Convert µs, 16-bit duty @ 50 Hz (20,000 µs period)
+    float duty_cycle = (pwm * 65535.0f) / 20000.0f;
     return duty_cycle;
 }
 
-void Servo_Driver::set_servo()
-{
+
+void Servo_Driver::set_servo(){
     ledcWrite(_channel, angle_to_duty());
 }
 
@@ -79,21 +82,12 @@ void Servo_Driver::handle_servo() {
         if (servoRequest->zero_in) { //check if zero_in was requested
             angle = 0;
             zero_in();
-            servoResponse->id = servoRequest->id;
-            servoResponse->angle = 0; // cancel rotation and zero in
-            servoResponse->success = true;
         } else if (!(new_angle <= max_angle and new_angle >= min_angle)) { //check for angle within bounds
             angle = new_angle <= min_angle ? min_angle : max_angle;
             set_servo();
-            servoResponse->id = servoRequest->id;
-            servoResponse->angle = angle;
-            servoResponse->success = false;
         } else { //set servo to angle if OK
             angle = new_angle;
             set_servo();            
-            servoResponse->id = servoRequest->id;
-            servoResponse->angle = angle;
-            servoResponse->success = true;
         }
     }
 }
@@ -101,8 +95,3 @@ void Servo_Driver::handle_servo() {
 void Servo_Driver::set_request(ServoRequest req) {
     *servoRequest = req;
 }
-
-ServoResponse* Servo_Driver::get_response() {
-    return servoResponse;
-}
-

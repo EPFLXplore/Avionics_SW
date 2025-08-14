@@ -129,6 +129,13 @@ void LEDStrip::mode6(uint8_t idx) {
     }
 }
 
+/**
+ * OLD PATTERNS
+ * 
+ * Here are some additional patterns I had fun coding.
+ * Feel free to use them if you ever want other things.
+ * 
+ */
 
 // // Solid colour – set once.
 // void LEDStrip::mode0(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b) {

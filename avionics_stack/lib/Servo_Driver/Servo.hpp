@@ -2,6 +2,7 @@
  * @file Servo.hpp
  * @author Eliot Abramo
 */
+
 #ifndef SERVO_HPP
 #define SERVO_HPP
 
@@ -64,7 +65,6 @@ public:
     float angle_to_duty();
 
     void set_request(ServoRequest req);
-    ServoResponse* get_response();
 
 private:
     uint8_t _channel;
@@ -85,7 +85,6 @@ private:
     int32_t angle;
 
     ServoRequest* servoRequest;
-    ServoResponse* servoResponse;
 };
 
 #endif
