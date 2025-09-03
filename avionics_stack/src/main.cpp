@@ -199,15 +199,16 @@ void loop() {
     nexus.sendMassPacket(&hd, MassHD_ID);
 
     // If mass above 200g for the drill, then we just put the Servo back under rover.
-    if(weight_drill >= 200){
-      ServoRequest request = {
-        ServoDrill_ID,
-        -1000,
-        false
-      };
-      servo_drill->set_request(request);
-      servo_drill->handle_servo();   
-    }
+    // Removed as not deemed useful for competition.
+    // if(weight_drill >= 200){
+    //   ServoRequest request = {
+    //     ServoDrill_ID,
+    //     -1000,
+    //     false
+    //   };
+    //   servo_drill->set_request(request);
+      // servo_drill->handle_servo();   
+    // }
     // Serial.printf("Drill: %.2f g | HD: %.2f g\n", drill.mass, hd.mass);
   }
 
