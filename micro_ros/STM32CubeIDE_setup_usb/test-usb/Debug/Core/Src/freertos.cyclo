@@ -1,0 +1,2 @@
+../Core/Src/freertos.c:101:6:MX_FREERTOS_Init	1
+../Core/Src/freertos.c:143:6:StartDefaultTask	3
