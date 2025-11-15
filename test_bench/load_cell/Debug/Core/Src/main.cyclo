@@ -1,0 +1,5 @@
+../Core/Src/main.cpp:127:5:int main()	3
+../Core/Src/main.cpp:200:6:void SystemClock_Config()	4
+../Core/Src/main.cpp:260:13:void MX_TIM2_Init()	4
+../Core/Src/main.cpp:305:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:346:6:void Error_Handler()	1

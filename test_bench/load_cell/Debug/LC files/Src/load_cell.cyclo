@@ -1,0 +1,6 @@
+../LC files/Src/load_cell.cpp:9:1:HX711::HX711(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	1
+../LC files/Src/load_cell.cpp:23:6:void HX711::begin()	1
+../LC files/Src/load_cell.cpp:30:6:bool HX711::available() const	1
+../LC files/Src/load_cell.cpp:36:9:int32_t HX711::read()	4
+../LC files/Src/load_cell.cpp:65:6:void HX711::tare(uint16_t)	3
+../LC files/Src/load_cell.cpp:79:6:void HX711::pulseClock() const	3
