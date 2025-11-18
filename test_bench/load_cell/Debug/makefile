@@ -9,7 +9,17 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include LC\ files/Src/subdir.mk
+-include USB_DEVICE/Target/subdir.mk
+-include USB_DEVICE/App/subdir.mk
+-include System/Utils/Src/subdir.mk
+-include System/Threads/Src/subdir.mk
+-include System/Core/Src/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+-include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
+-include Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/subdir.mk
 -include Drivers/STM32H7xx_HAL_Driver/Src/subdir.mk
 -include Drivers/BSP/STM32H7xx_Nucleo/subdir.mk
 -include Core/Startup/subdir.mk
@@ -60,34 +70,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := load_cell
+BUILD_ARTIFACT_NAME := AV_STM
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-load_cell.elf \
+AV_STM.elf \
 
 MAP_FILES += \
-load_cell.map \
+AV_STM.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-load_cell.list \
+AV_STM.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: load_cell.elf secondary-outputs
+main-build: AV_STM.elf secondary-outputs
 
 # Tool invocations
-load_cell.elf load_cell.map: $(OBJS) $(USER_OBJS) /Users/brthadm/STM32CubeIDE/workspace_1.19.0/load_cell/STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "load_cell.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/Users/brthadm/STM32CubeIDE/workspace_1.19.0/load_cell/STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="load_cell.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+AV_STM.elf AV_STM.map: $(OBJS) $(USER_OBJS) /home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/load_cell/STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "AV_STM.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/load_cell/STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AV_STM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -96,14 +106,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-load_cell.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "load_cell.list"
+AV_STM.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "AV_STM.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout load_cell.elf load_cell.list load_cell.map
+	-$(RM) AV_STM.elf AV_STM.list AV_STM.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

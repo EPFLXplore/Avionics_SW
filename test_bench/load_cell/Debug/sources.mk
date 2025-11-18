@@ -42,5 +42,15 @@ Core/Src \
 Core/Startup \
 Drivers/BSP/STM32H7xx_Nucleo \
 Drivers/STM32H7xx_HAL_Driver/Src \
-LC\ files/Src \
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src \
+Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
+Middlewares/Third_Party/FreeRTOS/Source \
+Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
+Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
+System/Core/Src \
+System/Threads/Src \
+System/Utils/Src \
+USB_DEVICE/App \
+USB_DEVICE/Target \
 
