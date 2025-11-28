@@ -1,0 +1,58 @@
+/*
+ * TestTask.h
+ *
+ *  Created on: Jul 9, 2025
+ *      Author: pedro
+ */
+
+#pragma once
+
+#include "Thread.h"
+#include "HX711.h"
+
+#include <sys/time.h>
+#include "cmsis_os2.h"
+#include "usbd_cdc_if.h"
+
+#include <stdio.h>
+
+constexpr uint8_t AVG_SIZE = 10;
+
+struct MassType {
+	HX711* hx = nullptr;
+	float offset = 0.0f;
+	float slope = 0.01028f;
+	float weight = 0.0f;
+	float buffer[AVG_SIZE];
+};
+
+class MassThread : public Thread {
+public:
+	MassThread();
+
+	void init();
+
+
+	void shift(float *array , int N, float valueIn);
+
+	float movingAverage(const float *arr, uint8_t n);
+
+	void update(MassType* device);
+
+	void tareScale(MassType* device);
+
+	void loop();
+
+private:
+	HX711* load_cell;
+	MassType* mass;
+	int32_t raw = 0;
+
+	char buffer[64];
+
+	//Tiny helper for now
+	void sendfloat(float value);
+	void sendint(int32_t value);
+};
+
+

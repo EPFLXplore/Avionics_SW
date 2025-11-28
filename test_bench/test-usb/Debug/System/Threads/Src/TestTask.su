@@ -1,0 +1,7 @@
+/Users/brthadm/STM32CubeIDE/workspace_1.19.0/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
+/Users/brthadm/STM32CubeIDE/workspace_1.19.0/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
+../System/Threads/Src/TestTask.cpp:18:1:TestTask::TestTask()	16	static
+../System/Threads/Src/TestTask.cpp:20:6:virtual void TestTask::init()	16	static
+../System/Threads/Src/TestTask.cpp:24:6:virtual void TestTask::loop()	16	static
+/Users/brthadm/STM32CubeIDE/workspace_1.19.0/test-usb/System/Threads/Inc/TestTask.h:13:7:TestTask::~TestTask()	16	static
+/Users/brthadm/STM32CubeIDE/workspace_1.19.0/test-usb/System/Threads/Inc/TestTask.h:13:7:virtual TestTask::~TestTask()	16	static
