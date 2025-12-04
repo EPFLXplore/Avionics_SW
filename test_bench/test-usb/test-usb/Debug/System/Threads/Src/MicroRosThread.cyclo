@@ -1,0 +1,8 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
+../System/Threads/Src/MicroRosThread.cpp:32:1:MicroRosThread::MicroRosThread(QueueHandle_t)	1
+../System/Threads/Src/MicroRosThread.cpp:39:6:virtual void MicroRosThread::init()	2
+../System/Threads/Src/MicroRosThread.cpp:45:6:bool MicroRosThread::try_connect_and_setup()	3
+../System/Threads/Src/MicroRosThread.cpp:117:6:virtual void MicroRosThread::loop()	9
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:18:7:MicroRosThread::~MicroRosThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:18:7:virtual MicroRosThread::~MicroRosThread()	1

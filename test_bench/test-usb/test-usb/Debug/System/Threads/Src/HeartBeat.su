@@ -1,0 +1,7 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
+../System/Threads/Src/HeartBeat.cpp:18:1:HeartBeat::HeartBeat(QueueHandle_t)	16	static
+../System/Threads/Src/HeartBeat.cpp:20:6:virtual void HeartBeat::init()	16	static
+../System/Threads/Src/HeartBeat.cpp:24:6:virtual void HeartBeat::loop()	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/HeartBeat.h:13:7:HeartBeat::~HeartBeat()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	16	static

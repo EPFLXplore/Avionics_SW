@@ -1,0 +1,14 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MassThread.h:22:8:MassType::MassType()	16	static
+../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(QueueHandle_t)	32	static
+../System/Threads/Src/MassThread.cpp:18:6:virtual void MassThread::init()	16	static
+../System/Threads/Src/MassThread.cpp:23:6:virtual void MassThread::loop()	32	static
+../System/Threads/Src/MassThread.cpp:39:6:void MassThread::shift(float*, int, float)	32	static
+../System/Threads/Src/MassThread.cpp:46:7:float MassThread::movingAverage(const float*, uint8_t)	32	static
+../System/Threads/Src/MassThread.cpp:53:6:void MassThread::update(MassType*)	24	static
+../System/Threads/Src/MassThread.cpp:61:6:void MassThread::tareScale(MassType*)	24	static
+../System/Threads/Src/MassThread.cpp:71:6:void MassThread::sendfloat(float)	24	static
+../System/Threads/Src/MassThread.cpp:76:6:void MassThread::sendint(int32_t)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MassThread.h:30:7:MassThread::~MassThread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MassThread.h:30:7:virtual MassThread::~MassThread()	16	static
