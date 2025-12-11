@@ -174,3 +174,21 @@ int _execve(char *name, char **argv, char **env)
   errno = ENOMEM;
   return -1;
 }
+
+int _gettimeofday(struct timeval *tv, void *tzvp)
+{
+    (void)tzvp;
+
+    if (tv == NULL) {
+        return -1;
+    }
+
+    // Use HAL_GetTick() as milliseconds since boot
+    uint32_t ms = HAL_GetTick();
+
+    tv->tv_sec  = ms / 1000;
+    tv->tv_usec = (ms % 1000) * 1000;
+
+    return 0;
+}
+

@@ -16,3 +16,4 @@
 ../Core/Src/syscalls.c:155:5:_link	16	static
 ../Core/Src/syscalls.c:163:5:_fork	8	static
 ../Core/Src/syscalls.c:169:5:_execve	24	static
+../Core/Src/syscalls.c:178:5:_gettimeofday	32	static

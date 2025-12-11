@@ -11,10 +11,13 @@
 #include "transport_layer.h"
 #include "Thread.h"
 
+#include <cstring>   // for memset
+
 extern "C" {
 #include "usb_device.h"
 #include "usbd_core.h"
 #include <rcl/rcl.h>
+#include <rcl/time.h>
 #include <rclc/rclc.h>
 #include <rmw_microros/rmw_microros.h>
 #include <std_msgs/msg/int32.h>
@@ -24,10 +27,23 @@ extern "C" {
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 // Globals just for clarity here
-static rclc_support_t  g_support;
-static rcl_node_t      g_node;
-static rcl_publisher_t g_pub_mass;
-static rcl_publisher_t g_pub_beat;
+static rclc_support_t    g_support;
+static rcl_node_t        g_node;
+static rcl_publisher_t   g_pub_mass;
+static rcl_publisher_t   g_pub_beat;
+
+// New globals for test subscriber + counter
+static rcl_publisher_t      g_pub_subs;   // publishes the counter value
+static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
+static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
+static int32_t              g_counter = 0; // incremented on each received msg
+
+// Callback: each received message increments the counter
+static void test_subscription_callback(const std_msgs__msg__Int32 * msg)
+{
+    (void)msg; // We don't care about the content, only the event
+    g_counter++;
+}
 
 MicroRosThread::MicroRosThread(QueueHandle_t toRosQueue)
 : Thread("MicroRosThread"),
@@ -36,10 +52,10 @@ MicroRosThread::MicroRosThread(QueueHandle_t toRosQueue)
     setTickDelay(1);
 }
 
-void MicroRosThread::init(){
-	if (try_connect_and_setup()) {
-	    initialized = true;
-	}
+void MicroRosThread::init() {
+    if (try_connect_and_setup()) {
+        initialized = true;
+    }
 }
 
 bool MicroRosThread::try_connect_and_setup()
@@ -77,25 +93,16 @@ bool MicroRosThread::try_connect_and_setup()
         if (ret == RCL_RET_OK) {
             connected = true;
         } else {
-            // FIX: Do NOT call rclc_support_fini here.
-            // If init failed, the struct is likely garbage.
-            // Just ensure it is zeroed before the next attempt.
-
-            // FIX: Do NOT aggressively toggle USB here.
-            // Toggling USB while the transport layer (cubemx_transport)
-            // might be pending an operation causes HardFaults.
-
+            // Do NOT call rclc_support_fini here on failed init.
             // Just wait for the Agent to become available.
             vTaskDelay(pdMS_TO_TICKS(1000));
-
-            // Optional: If you MUST reset USB, do it very rarely (e.g., every 10 failures)
-            // and ensure transport is closed first.
         }
     }
 
     // 4. ROS 2 Resource Setup (Only runs if connected = true)
     rclc_node_init_default(&g_node, "cubemx_node", "", &g_support);
 
+    // Existing publishers
     rclc_publisher_init_default(
         &g_pub_mass,
         &g_node,
@@ -103,10 +110,27 @@ bool MicroRosThread::try_connect_and_setup()
         "mass");
 
     rclc_publisher_init_default(
-            &g_pub_beat,
-            &g_node,
-            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
-            "beat");
+        &g_pub_beat,
+        &g_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "beat");
+
+    // New publisher: counter on "subs"
+    rclc_publisher_init_default(
+        &g_pub_subs,
+        &g_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "subs");
+
+    // New subscriber: any msg on "test_sub" bumps the counter
+    rclc_subscription_init_default(
+        &g_sub_test,
+        &g_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "test_sub");
+
+    // Zero init storage for incoming messages
+    g_sub_msg.data = 0;
 
     initialized = true;
 
@@ -116,31 +140,53 @@ bool MicroRosThread::try_connect_and_setup()
 
 void MicroRosThread::loop()
 {
-	// A. HEALTH CHECK: Check if connection is active.
-	    // The rcl_ok() function checks the health of the core RCL context (g_support).
-	    if (initialized && !rcl_context_is_valid(&g_support.context)) {
-	        // Disconnected detected! Clean up all resources.
-	        initialized = false;
-	        rcl_publisher_fini(&g_pub_mass, &g_node);
-	        rcl_publisher_fini(&g_pub_beat, &g_node);
-	        rcl_node_fini(&g_node);
-	        rclc_support_fini(&g_support);
+    // A. HEALTH CHECK: Check if connection is active.
+    if (initialized && !rcl_context_is_valid(&g_support.context)) {
+        // Disconnection detected! Clean up all resources.
+        initialized = false;
 
-	        // The next block will attempt reconnection.
-	    }
+        // Destroy subscription and publishers
+        rcl_subscription_fini(&g_sub_test, &g_node);
+        rcl_publisher_fini(&g_pub_subs, &g_node);
+        rcl_publisher_fini(&g_pub_mass, &g_node);
+        rcl_publisher_fini(&g_pub_beat, &g_node);
 
-	    // B. RECONNECTION/INITIALIZATION ATTEMPT
-	    if (!initialized) {
-	        // Attempt to connect and set up resources.
-	        if (try_connect_and_setup()) {
-	            initialized = true;
-	        } else {
-	            // Wait before retrying the connection to prevent resource hogging.
-	            vTaskDelay(pdMS_TO_TICKS(100));
-	            return;
-	        }
-	    }
+        // Finally node + support
+        rcl_node_fini(&g_node);
+        rclc_support_fini(&g_support);
 
+        // The next block will attempt reconnection.
+    }
+
+    // B. RECONNECTION/INITIALIZATION ATTEMPT
+    if (!initialized) {
+        // Attempt to connect and set up resources.
+        if (try_connect_and_setup()) {
+            initialized = true;
+        } else {
+            // Wait before retrying the connection to prevent resource hogging.
+            vTaskDelay(pdMS_TO_TICKS(100));
+            return;
+        }
+    }
+
+    // C. Manually poll the subscriber (no executor)
+    if (initialized) {
+        rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
+        if (ret == RCL_RET_OK) {
+            // We got a message, bump the counter
+            test_subscription_callback(&g_sub_msg);
+        }
+    }
+
+    // Publish current counter value on "subs"
+    if (initialized) {
+        std_msgs__msg__Int32 out_msg;
+        out_msg.data = g_counter;
+        rcl_publish(&g_pub_subs, &out_msg, NULL);
+    }
+
+    // D. Handle messages coming from the system queue and publish
     SystemMessage msg;
 
     if (xQueueReceive(queue_to_ros, &msg, pdMS_TO_TICKS(20)) == pdPASS) {
@@ -154,9 +200,9 @@ void MicroRosThread::loop()
         }
 
         case PacketType::HEARTBEAT: {
-        	std_msgs__msg__Float32 beat_msg;
-        	beat_msg.data = msg.data.heartbeat.beat;
-        	rcl_publish(&g_pub_beat, &beat_msg, NULL);
+            std_msgs__msg__Float32 beat_msg;
+            beat_msg.data = msg.data.heartbeat.beat;
+            rcl_publish(&g_pub_beat, &beat_msg, NULL);
             break;
         }
 
@@ -165,4 +211,3 @@ void MicroRosThread::loop()
         }
     }
 }
-
