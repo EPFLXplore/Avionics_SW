@@ -10,19 +10,11 @@
 #include "microros_allocators.h"
 #include "transport_layer.h"
 #include "Thread.h"
+#include "System.h"
 
 #include <cstring>   // for memset
 
-extern "C" {
-#include "usb_device.h"
-#include "usbd_core.h"
-#include <rcl/rcl.h>
-#include <rcl/time.h>
-#include <rclc/rclc.h>
-#include <rmw_microros/rmw_microros.h>
-#include <std_msgs/msg/int32.h>
-#include <std_msgs/msg/float32.h>
-}
+
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -38,25 +30,78 @@ static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
 
-// Callback: each received message increments the counter
-static void test_subscription_callback(const std_msgs__msg__Int32 * msg)
-{
-    (void)msg; // We don't care about the content, only the event
-    g_counter++;
-}
 
-MicroRosThread::MicroRosThread(QueueHandle_t toRosQueue)
+MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
 : Thread("MicroRosThread"),
-  queue_to_ros(toRosQueue)
+  _reg(registry)
 {
     setTickDelay(1);
 }
+
+
+
+// Callback: each received message increments the counter
+void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
+{
+    TestPacket testpacket;
+    testpacket.ping = msg->data;
+    _reg->test->pushCommand(testpacket);
+}
+
 
 void MicroRosThread::init() {
     if (try_connect_and_setup()) {
         initialized = true;
     }
 }
+
+
+void MicroRosThread::updateSubs() {
+	if (!initialized || _reg == nullptr) {
+	        return;
+	}
+
+    rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
+    if (ret == RCL_RET_OK) {
+    	this->TestCallback(&g_sub_msg);
+    }
+}
+
+void MicroRosThread::updatePubs()
+{
+    if (!initialized || _reg == nullptr) {
+        return;
+    }
+
+    // 1) TestTask status -> /subs topic
+    if (_reg->test != nullptr) {
+        TestPacket st;
+        while (_reg->test->popStatus(st)) {
+            std_msgs__msg__Int32 msg;
+            msg.data = st.ping;   // this holds the accumulated counter
+            rcl_publish(&g_pub_subs, &msg, nullptr);
+        }
+    }
+
+    // if (_reg->mass != nullptr) {
+    //     MassStatus ms;
+    //     while (_reg->mass->popStatus(ms)) {
+    //         std_msgs__msg__Float32 msg;
+    //         msg.data = ms.mass;
+    //         rcl_publish(&g_pub_mass, &msg, nullptr);
+    //     }
+    // }
+    //
+    if (_reg->beat != nullptr) {
+         BeatPacket hb;
+         while (_reg->beat->popStatus(hb)) {
+             std_msgs__msg__Float32 msg;
+             msg.data = hb.beat;
+             rcl_publish(&g_pub_beat, &msg, nullptr);
+         }
+    }
+}
+
 
 bool MicroRosThread::try_connect_and_setup()
 {
@@ -102,12 +147,6 @@ bool MicroRosThread::try_connect_and_setup()
     // 4. ROS 2 Resource Setup (Only runs if connected = true)
     rclc_node_init_default(&g_node, "cubemx_node", "", &g_support);
 
-    // Existing publishers
-    rclc_publisher_init_default(
-        &g_pub_mass,
-        &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
-        "mass");
 
     rclc_publisher_init_default(
         &g_pub_beat,
@@ -129,11 +168,8 @@ bool MicroRosThread::try_connect_and_setup()
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
         "test_sub");
 
-    // Zero init storage for incoming messages
-    g_sub_msg.data = 0;
-
     initialized = true;
-
+    g_sub_msg.data = 0;
     // CRITICAL FIX: Return value strictly required for bool function
     return true;
 }
@@ -170,44 +206,10 @@ void MicroRosThread::loop()
         }
     }
 
-    // C. Manually poll the subscriber (no executor)
     if (initialized) {
-        rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
-        if (ret == RCL_RET_OK) {
-            // We got a message, bump the counter
-            test_subscription_callback(&g_sub_msg);
-        }
+    	updateSubs();
+    	updatePubs();
     }
 
-    // Publish current counter value on "subs"
-    if (initialized) {
-        std_msgs__msg__Int32 out_msg;
-        out_msg.data = g_counter;
-        rcl_publish(&g_pub_subs, &out_msg, NULL);
-    }
 
-    // D. Handle messages coming from the system queue and publish
-    SystemMessage msg;
-
-    if (xQueueReceive(queue_to_ros, &msg, pdMS_TO_TICKS(20)) == pdPASS) {
-        switch (msg.type) {
-
-        case PacketType::MASS_PACKET: {
-            std_msgs__msg__Float32 mass_msg;
-            mass_msg.data = msg.data.mass_packet.mass;
-            rcl_publish(&g_pub_mass, &mass_msg, NULL);
-            break;
-        }
-
-        case PacketType::HEARTBEAT: {
-            std_msgs__msg__Float32 beat_msg;
-            beat_msg.data = msg.data.heartbeat.beat;
-            rcl_publish(&g_pub_beat, &beat_msg, NULL);
-            break;
-        }
-
-        default:
-            break;
-        }
-    }
 }

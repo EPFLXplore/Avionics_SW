@@ -10,6 +10,7 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
+#include "packets.h"
 
 #include <cstddef>      // std::size_t
 #include <type_traits>  // std::is_trivially_copyable

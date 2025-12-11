@@ -8,18 +8,17 @@
 #ifndef THREADS_INC_HEARTBEAT_H_
 #define THREADS_INC_HEARTBEAT_H_
 
-#include "Thread.h"
+#include "MessageThread.h"
 
-class HeartBeat : public Thread {
+class HeartBeat : public MessageThread<EmptyMessage, BeatPacket> {
 public:
-	HeartBeat(QueueHandle_t toRosQueue);
-
-	void init();
-	void loop();
+    HeartBeat();
+    void init() override;
+    void loop() override;
 
 private:
-	uint32_t counter = 0;
-	QueueHandle_t queue_to_ros;
+    float _beat = 0.0f;   // or int32_t, etc.
 };
+
 
 #endif /* THREADS_INC_TESTTASK_H_ */

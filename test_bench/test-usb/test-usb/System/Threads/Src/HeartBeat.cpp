@@ -5,33 +5,37 @@
  *      Author: pedro
  */
 
-#include <HeartBeat.h>
-#include "System.h"
-#include "usbd_cdc_if.h"
+#include "HeartBeat.h"
 
-
-// syscalls_time.c
-#include <sys/time.h>
-#include "cmsis_os2.h"
-
-
-HeartBeat::HeartBeat(QueueHandle_t toRosQueue) : Thread("HeartBeat", (osPriority)osPriorityNormal5, (uint32_t) 2048), queue_to_ros(toRosQueue) {}
-
-void HeartBeat::init(){
-
+HeartBeat::HeartBeat()
+: MessageThread("HeartBeat")
+{
 }
 
-void HeartBeat::loop(){
-	if (queue_to_ros == nullptr)
-	        return;
+void HeartBeat::init()
+{
+    // Any hardware init if needed
+}
 
-	    SystemMessage msg;
-	    msg.type = PacketType::HEARTBEAT;
+void HeartBeat::loop()
+{
+    // If you ever add commands, handle them here:
+    // EmptyMessage cmd;
+    // while (popCommand(cmd)) {
+    //     // no-op for now
+    // }
 
-	    msg.data.heartbeat.beat = counter++;
+    // 1) Update your heartbeat value
+    // For now let's just increment a counter as a test signal.
+    // Later you can set this from a real sensor / timer.
+	_beat += 1.0f;
 
-	    // non-blocking send
-	    xQueueSend(queue_to_ros, &msg, 0);
+    // 2) Push status to MicroRosThread
+    BeatPacket st;
+    st.beat = _beat;
+    pushStatus(st);
+
+    // loop period is controlled by Thread::setTickDelay()
 }
 
 

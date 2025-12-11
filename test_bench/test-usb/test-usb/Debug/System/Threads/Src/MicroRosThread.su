@@ -1,9 +1,11 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
-../System/Threads/Src/MicroRosThread.cpp:42:13:void test_subscription_callback(const std_msgs__msg__Int32*)	16	static
-../System/Threads/Src/MicroRosThread.cpp:48:1:MicroRosThread::MicroRosThread(QueueHandle_t)	16	static
-../System/Threads/Src/MicroRosThread.cpp:55:6:virtual void MicroRosThread::init()	16	static
-../System/Threads/Src/MicroRosThread.cpp:61:6:bool MicroRosThread::try_connect_and_setup()	72	static
-../System/Threads/Src/MicroRosThread.cpp:141:6:virtual void MicroRosThread::loop()	48	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:18:7:MicroRosThread::~MicroRosThread()	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:18:7:virtual MicroRosThread::~MicroRosThread()	16	static
+../System/Threads/Src/MicroRosThread.cpp:34:1:MicroRosThread::MicroRosThread(ThreadsRegistry*)	16	static
+../System/Threads/Src/MicroRosThread.cpp:44:6:void MicroRosThread::TestCallback(const std_msgs__msg__Int32*)	24	static
+../System/Threads/Src/MicroRosThread.cpp:52:6:virtual void MicroRosThread::init()	16	static
+../System/Threads/Src/MicroRosThread.cpp:59:6:void MicroRosThread::updateSubs()	24	static
+../System/Threads/Src/MicroRosThread.cpp:70:6:void MicroRosThread::updatePubs()	40	static
+../System/Threads/Src/MicroRosThread.cpp:106:6:bool MicroRosThread::try_connect_and_setup()	72	static
+../System/Threads/Src/MicroRosThread.cpp:177:6:virtual void MicroRosThread::loop()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:33:7:MicroRosThread::~MicroRosThread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/System/Threads/Inc/MicroRosThread.h:33:7:virtual MicroRosThread::~MicroRosThread()	16	static

@@ -14,15 +14,20 @@
 #include "HeartBeat.h"
 
 
+struct ThreadsRegistry {
+    HeartBeat* beat;
+    TestTask* test;     // or whatever TestTask really is
+    // Add more threads here as you create them
+};
+
 class System {
 public:
 	static void init();
 
 	static TestTask* test;
-	static MassThread* mass;
 	static MicroRosThread* microros;
-	static QueueHandle_t queue_to_ros;
 	static HeartBeat* beat;
+	static ThreadsRegistry reg;
 };
 
 #endif /* CORE_INC_SYSTEM_H_ */

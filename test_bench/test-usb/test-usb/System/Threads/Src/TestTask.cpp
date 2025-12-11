@@ -15,14 +15,21 @@
 #include "cmsis_os2.h"
 
 
-TestTask::TestTask() : Thread("TestingTask", (osPriority)osPriorityNormal5, (uint32_t) 2048) {}
+TestTask::TestTask() : MessageThread("TestingTask", (osPriority)osPriorityNormal5, (uint32_t) 2048) {}
 
 void TestTask::init(){
-
+	counter = 0;
 }
 
 void TestTask::loop(){
-	//CDC_Transmit_FS((uint8_t*) "Hello my friend", 15);
+	while (popCommand(cmd)) {
+	    // Add received ping to our counter
+		counter += cmd.ping;
+	}
+
+
+	status.ping = counter;   // or use a different field if you have one
+	pushStatus(status);
 }
 
 

@@ -8,9 +8,10 @@
 #ifndef THREADS_INC_TESTTASK_H_
 #define THREADS_INC_TESTTASK_H_
 
-#include "Thread.h"
+#include "MessageThread.h"
 
-class TestTask : public Thread {
+
+class TestTask : public MessageThread<TestPacket,TestPacket> {
 public:
 	TestTask();
 
@@ -19,6 +20,9 @@ public:
 
 private:
 	bool cleared = false;
+	TestPacket status{};
+	TestPacket cmd{};
+	uint32_t counter = 0;
 };
 
 #endif /* THREADS_INC_TESTTASK_H_ */

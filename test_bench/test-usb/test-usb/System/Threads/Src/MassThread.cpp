@@ -24,14 +24,7 @@ void MassThread::loop(){
 	this->update(mass);
 	//raw = mass->hx->read();
 	//this->sendint(raw);
-	if (queue_to_ros != nullptr) {
-		SystemMessage msg;
-	    msg.type = PacketType::MASS_PACKET;
-	    msg.data.mass_packet.id   = 0;     // sensor id if needed
-	    msg.data.mass_packet.mass = 333.33;
 
-	    xQueueSend(queue_to_ros, &msg, 0);
-	}
 	osDelay(pdMS_TO_TICKS(500));
 	//this->sendfloat(mass->weight);
 }
@@ -67,7 +60,7 @@ void MassThread::tareScale(MassType* device) {
     osDelay(100); //TODO ms or ticks?
 }
 
-
+/*
 void MassThread::sendfloat(float value) {
 	snprintf(this->buffer, sizeof(buffer), "Mass value = %.3f\r\n", value);
 	CDC_Transmit_FS((uint8_t*)buffer, sizeof(buffer));
@@ -77,5 +70,6 @@ void MassThread::sendint(int32_t value) {
 	snprintf(this->buffer, sizeof(buffer), "Mass value = %d\r\n", value);
 	CDC_Transmit_FS((uint8_t*)buffer, sizeof(buffer));
 }
+*/
 
 

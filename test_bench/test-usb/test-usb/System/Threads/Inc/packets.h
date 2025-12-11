@@ -9,14 +9,13 @@
 #define THREADS_INC_PACKETS_H_
 
 
-enum class PacketType : uint8_t {
-    SERVO_REQUEST,
-    HEARTBEAT,
-    MASS_PACKET
+struct BeatPacket {
+	int32_t beat;
 };
 
-struct Heartbeat {
-    uint8_t beat;
+
+struct TestPacket {
+	int32_t ping;
 };
 
 struct ServoRequest {
@@ -29,14 +28,6 @@ struct MassPacket {
     float mass;
 };
 
-struct SystemMessage {
-    PacketType type;
-    union {
-        ServoRequest    servo;
-        Heartbeat       heartbeat;
-        MassPacket      mass_packet;
-    } data;
-};
 
 
 
