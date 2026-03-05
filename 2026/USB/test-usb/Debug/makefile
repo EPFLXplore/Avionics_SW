@@ -90,14 +90,15 @@ test-usb.list \
 
 
 # All Target
-all: main-build
+all:
+	+@$(MAKE) --no-print-directory pre-build && $(MAKE) --no-print-directory main-build
 
 # Main-build Target
 main-build: test-usb.elf secondary-outputs
 
 # Tool invocations
-test-usb.elf test-usb.map: $(OBJS) $(USER_OBJS) /home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "test-usb.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test-usb.map" -Wl,--gc-sections -static -L"/home/pedro/Pedro/Xplore/Gits/Avionics_SW/test_bench/test-usb/test-usb/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+test-usb.elf test-usb.map: $(OBJS) $(USER_OBJS) /home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "test-usb.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test-usb.map" -Wl,--gc-sections -static -L"/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -116,6 +117,10 @@ clean:
 	-$(RM) default.size.stdout test-usb.elf test-usb.list test-usb.map
 	-@echo ' '
 
+pre-build:
+	docker run --rm -v "/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb":/project --env MICROROS_LIBRARY_FOLDER=micro_ros_stm32cubemx_utils/microros_static_library_ide microros/micro_ros_static_library_builder:humble
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
@@ -125,6 +130,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified pre-build
 
 -include ../makefile.targets

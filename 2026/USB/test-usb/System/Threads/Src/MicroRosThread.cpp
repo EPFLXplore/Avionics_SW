@@ -1,11 +1,10 @@
 /*
  * MicroROSThread.cpp
  *
- *  Created on: Nov 29, 2025
- *      Author: pedro
+ * Created on: Nov 29, 2025
+ * Author: pedro
  */
 
-// MicroRosThread.cpp
 #include <MicroRosThread.h>
 #include "microros_allocators.h"
 #include "transport_layer.h"
@@ -14,7 +13,8 @@
 
 #include <cstring>   // for memset
 
-
+// 1. ADD THE CUSTOM MESSAGE HEADER HERE
+#include <micro_ros_custom_msgs/msg/beat_packet.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -25,10 +25,10 @@ static rcl_publisher_t   g_pub_mass;
 static rcl_publisher_t   g_pub_beat;
 
 // New globals for test subscriber + counter
-static rcl_publisher_t      g_pub_subs;   // publishes the counter value
-static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
-static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
-static int32_t              g_counter = 0; // incremented on each received msg
+static rcl_publisher_t      g_pub_subs;
+static rcl_subscription_t   g_sub_test;
+static std_msgs__msg__Int32 g_sub_msg;
+static int32_t              g_counter = 0;
 
 
 MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
@@ -38,8 +38,6 @@ MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
     setTickDelay(1);
 }
 
-
-
 // Callback: each received message increments the counter
 void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
 {
@@ -48,22 +46,20 @@ void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
     _reg->test->pushCommand(testpacket);
 }
 
-
 void MicroRosThread::init() {
     if (try_connect_and_setup()) {
         initialized = true;
     }
 }
 
-
 void MicroRosThread::updateSubs() {
-	if (!initialized || _reg == nullptr) {
-	        return;
-	}
+    if (!initialized || _reg == nullptr) {
+            return;
+    }
 
     rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
     if (ret == RCL_RET_OK) {
-    	this->TestCallback(&g_sub_msg);
+        this->TestCallback(&g_sub_msg);
     }
 }
 
@@ -78,30 +74,29 @@ void MicroRosThread::updatePubs()
         TestPacket st;
         while (_reg->test->popStatus(st)) {
             std_msgs__msg__Int32 msg;
-            msg.data = st.ping;   // this holds the accumulated counter
+            msg.data = st.ping;
             rcl_publish(&g_pub_subs, &msg, nullptr);
         }
     }
 
-    // if (_reg->mass != nullptr) {
-    //     MassStatus ms;
-    //     while (_reg->mass->popStatus(ms)) {
-    //         std_msgs__msg__Float32 msg;
-    //         msg.data = ms.mass;
-    //         rcl_publish(&g_pub_mass, &msg, nullptr);
-    //     }
-    // }
-    //
     if (_reg->beat != nullptr) {
-         BeatPacket hb;
+         BeatPacket hb; // Your internal Thread registry struct
          while (_reg->beat->popStatus(hb)) {
-             std_msgs__msg__Float32 msg;
-             msg.data = hb.beat;
+
+             // 2. USE THE CUSTOM MESSAGE STRUCT HERE
+             micro_ros_custom_msgs__msg__BeatPacket msg;
+
+             // Map your internal data to the custom message fields
+             msg.beat = hb.beat;
+
+             // Assuming your internal 'hb' doesn't have status_code yet,
+             // we can hardcode it or map it if it exists.
+             msg.status_code = 200; // Change this to hb.status_code if you have it!
+
              rcl_publish(&g_pub_beat, &msg, nullptr);
          }
     }
 }
-
 
 bool MicroRosThread::try_connect_and_setup()
 {
@@ -126,42 +121,34 @@ bool MicroRosThread::try_connect_and_setup()
     bool connected = false;
     rcl_allocator_t allocator = rcl_get_default_allocator();
 
-    // Reset support object to zero before starting
-    // This is safer than calling fini() on a failed object
     memset(&g_support, 0, sizeof(g_support));
 
     while (!connected) {
-
-        // Try to initialize
         rcl_ret_t ret = rclc_support_init(&g_support, 0, NULL, &allocator);
 
         if (ret == RCL_RET_OK) {
             connected = true;
         } else {
-            // Do NOT call rclc_support_fini here on failed init.
-            // Just wait for the Agent to become available.
             vTaskDelay(pdMS_TO_TICKS(1000));
         }
     }
 
-    // 4. ROS 2 Resource Setup (Only runs if connected = true)
+    // 4. ROS 2 Resource Setup
     rclc_node_init_default(&g_node, "cubemx_node", "", &g_support);
 
-
+    // 3. USE THE CUSTOM TYPE SUPPORT MACRO HERE
     rclc_publisher_init_default(
         &g_pub_beat,
         &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, BeatPacket),
         "beat");
 
-    // New publisher: counter on "subs"
     rclc_publisher_init_default(
         &g_pub_subs,
         &g_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
         "subs");
 
-    // New subscriber: any msg on "test_sub" bumps the counter
     rclc_subscription_init_default(
         &g_sub_test,
         &g_node,
@@ -170,46 +157,36 @@ bool MicroRosThread::try_connect_and_setup()
 
     initialized = true;
     g_sub_msg.data = 0;
-    // CRITICAL FIX: Return value strictly required for bool function
     return true;
 }
 
 void MicroRosThread::loop()
 {
-    // A. HEALTH CHECK: Check if connection is active.
+    // A. HEALTH CHECK
     if (initialized && !rcl_context_is_valid(&g_support.context)) {
-        // Disconnection detected! Clean up all resources.
         initialized = false;
 
-        // Destroy subscription and publishers
         rcl_subscription_fini(&g_sub_test, &g_node);
         rcl_publisher_fini(&g_pub_subs, &g_node);
         rcl_publisher_fini(&g_pub_mass, &g_node);
         rcl_publisher_fini(&g_pub_beat, &g_node);
 
-        // Finally node + support
         rcl_node_fini(&g_node);
         rclc_support_fini(&g_support);
-
-        // The next block will attempt reconnection.
     }
 
-    // B. RECONNECTION/INITIALIZATION ATTEMPT
+    // B. RECONNECTION
     if (!initialized) {
-        // Attempt to connect and set up resources.
         if (try_connect_and_setup()) {
             initialized = true;
         } else {
-            // Wait before retrying the connection to prevent resource hogging.
             vTaskDelay(pdMS_TO_TICKS(100));
             return;
         }
     }
 
     if (initialized) {
-    	updateSubs();
-    	updatePubs();
+        updateSubs();
+        updatePubs();
     }
-
-
 }
