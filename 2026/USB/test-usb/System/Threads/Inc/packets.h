@@ -19,12 +19,12 @@ struct TestPacket {
 };
 
 struct ServoRequest {
-    uint8_t id;
+    //uint8_t id;
     int32_t increment;
     bool zero_in;
 };
 struct MassPacket {
-    uint8_t id;
+    //uint8_t id;
     float mass;
 };
 

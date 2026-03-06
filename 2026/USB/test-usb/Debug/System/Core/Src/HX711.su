@@ -1,6 +1,6 @@
 ../System/Core/Src/HX711.cpp:9:1:HX711::HX711(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	24	static
 ../System/Core/Src/HX711.cpp:23:6:void HX711::begin()	16	static
 ../System/Core/Src/HX711.cpp:30:6:bool HX711::available() const	16	static
-../System/Core/Src/HX711.cpp:35:9:int32_t HX711::read()	40	static
-../System/Core/Src/HX711.cpp:64:6:void HX711::tare(uint16_t)	56	static
-../System/Core/Src/HX711.cpp:78:6:void HX711::pulseClock() const	24	static,ignoring_inline_asm
+../System/Core/Src/HX711.cpp:35:9:int32_t HX711::read()	24	static
+../System/Core/Src/HX711.cpp:55:6:void HX711::tare(uint16_t)	56	static
+../System/Core/Src/HX711.cpp:69:6:bool HX711::pulseClock() const	32	static,ignoring_inline_asm

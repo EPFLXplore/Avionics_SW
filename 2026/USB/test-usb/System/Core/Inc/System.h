@@ -12,11 +12,15 @@
 #include "TestTask.h"
 #include "MassThread.h"
 #include "HeartBeat.h"
+#include "servoThreadnew.h"
+
 
 
 struct ThreadsRegistry {
     HeartBeat* beat;
     TestTask* test;     // or whatever TestTask really is
+    MassThread* mass;
+    ServoThread* servo;
     // Add more threads here as you create them
 };
 
@@ -28,6 +32,8 @@ public:
 	static MicroRosThread* microros;
 	static HeartBeat* beat;
 	static ThreadsRegistry reg;
+	static MassThread* mass;
+	static ServoThread* servo;
 };
 
 #endif /* CORE_INC_SYSTEM_H_ */

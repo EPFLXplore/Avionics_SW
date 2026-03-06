@@ -6,6 +6,7 @@
 #pragma once
 #include "main.h"
 #include <cstdint>
+#include "cmsis_os2.h"   // nécessaire pour osDelay()
 
 class HX711 {
 public:
@@ -36,7 +37,7 @@ public:
 
 
 private:
-    void pulseClock() const;
+    bool pulseClock() const;
 
     GPIO_TypeDef* dout_port_;
     uint16_t      dout_pin_;

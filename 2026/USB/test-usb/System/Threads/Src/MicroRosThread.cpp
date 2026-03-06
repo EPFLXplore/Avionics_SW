@@ -23,10 +23,12 @@ static rclc_support_t    g_support;
 static rcl_node_t        g_node;
 static rcl_publisher_t   g_pub_mass;
 static rcl_publisher_t   g_pub_beat;
+static rcl_publisher_t   g_pub_servo_request;
 
 // New globals for test subscriber + counter
 static rcl_publisher_t      g_pub_subs;   // publishes the counter value
 static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
+static rcl_subscription_t   g_sub_servo;
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
 
@@ -37,8 +39,6 @@ MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
 {
     setTickDelay(1);
 }
-
-
 
 // Callback: each received message increments the counter
 void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
@@ -65,6 +65,22 @@ void MicroRosThread::updateSubs() {
     if (ret == RCL_RET_OK) {
     	this->TestCallback(&g_sub_msg);
     }
+
+    static std_msgs__msg__Int32 servo_msg;
+    if (rcl_take(&g_sub_servo, &servo_msg, NULL, NULL) == RCL_RET_OK) {
+        ServoRequest req;
+        if (servo_msg.data == -999) { // Use -999 as a "Home" command
+                req.zero_in = true;
+                req.increment = 0;
+            } else {
+                req.zero_in = false;
+                req.increment = servo_msg.data;
+            }
+
+            if (_reg->servo != nullptr) {
+                _reg->servo->pushCommand(req);
+            }
+        }
 }
 
 void MicroRosThread::updatePubs()
@@ -83,15 +99,15 @@ void MicroRosThread::updatePubs()
         }
     }
 
-    // if (_reg->mass != nullptr) {
-    //     MassStatus ms;
-    //     while (_reg->mass->popStatus(ms)) {
-    //         std_msgs__msg__Float32 msg;
-    //         msg.data = ms.mass;
-    //         rcl_publish(&g_pub_mass, &msg, nullptr);
-    //     }
-    // }
-    //
+    if (_reg->mass != nullptr) {
+         MassPacket ms;
+         while (_reg->mass->popStatus(ms)) {
+             std_msgs__msg__Float32 msg;
+             msg.data = ms.mass;
+             rcl_publish(&g_pub_mass, &msg, nullptr);
+         }
+     }
+
     if (_reg->beat != nullptr) {
          BeatPacket hb;
          while (_reg->beat->popStatus(hb)) {
@@ -100,8 +116,28 @@ void MicroRosThread::updatePubs()
              rcl_publish(&g_pub_beat, &msg, nullptr);
          }
     }
+
+   /*if (_reg->servo != nullptr) {
+         BeatPacket hb;
+         while (_reg->beat->popStatus(hb)) {
+             std_msgs__msg__Float32 msg;
+             msg.data = hb.beat;
+             rcl_publish(&g_pub_beat, &msg, nullptr);
+         }
+    }*/
 }
 
+void MicroRosThread::ServoCallback(const std_msgs__msg__Int32 * msg)
+{
+    ServoRequest req;
+    req.increment = msg->data; // Using the Int32 data as the target angle
+    req.zero_in = false;
+
+    // Push the command to the ServoThread queue
+    if (_reg->servo != nullptr) {
+        _reg->servo->pushCommand(req);
+    }
+}
 
 bool MicroRosThread::try_connect_and_setup()
 {
@@ -161,12 +197,24 @@ bool MicroRosThread::try_connect_and_setup()
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
         "subs");
 
+    rclc_publisher_init_default(
+            &g_pub_mass,
+            &g_node,
+            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+            "mass");
+
     // New subscriber: any msg on "test_sub" bumps the counter
     rclc_subscription_init_default(
         &g_sub_test,
         &g_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
         "test_sub");
+
+    rclc_subscription_init_default(
+        &g_sub_servo,
+        &g_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "servo_angle"); // Topic name
 
     initialized = true;
     g_sub_msg.data = 0;

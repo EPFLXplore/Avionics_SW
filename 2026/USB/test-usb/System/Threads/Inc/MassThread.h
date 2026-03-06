@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Thread.h"
+#include "MessageThread.h"
 #include "HX711.h"
 #include "packets.h"
 
@@ -17,22 +18,21 @@
 
 #include <stdio.h>
 
-constexpr uint8_t AVG_SIZE = 10;
+constexpr uint8_t AVG_SIZE = 20;
 
 struct MassType {
 	HX711* hx = nullptr;
 	float offset = 0.0f;
-	float slope = 0.01028f;
+	float slope = 0.00049191f;
 	float weight = 0.0f;
 	float buffer[AVG_SIZE];
 };
 
-class MassThread : public Thread {
+class MassThread : public MessageThread<EmptyMessage, MassPacket>{
 public:
-	MassThread(QueueHandle_t toRosQueue);
+	MassThread();
 
 	void init();
-
 
 	void shift(float *array , int N, float valueIn);
 
@@ -50,8 +50,6 @@ private:
 	int32_t raw = 0;
 
 	char buffer[64];
-
-	QueueHandle_t queue_to_ros;
 
 	//Tiny helper for now DONT USE WITH MICROROS
 	void sendfloat(float value);

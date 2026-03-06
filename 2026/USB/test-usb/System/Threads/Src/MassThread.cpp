@@ -7,17 +7,20 @@
 
 #include <MassThread.h>
 
-MassThread::MassThread(QueueHandle_t toRosQueue) : Thread("MassThread", (osPriority)osPriorityNormal5, (uint32_t) 2048), queue_to_ros(toRosQueue){
+MassThread::MassThread()
+: MessageThread("MassThread", (osPriority)osPriorityNormal5, 2048)
+{
 	load_cell = new HX711(HD_DOUT_GPIO_Port, HD_DOUT_Pin, HD_SCK_GPIO_Port,  HD_SCK_Pin); //TODO change this pointer thingy to not have two heap allocs
-	mass = new MassType;
-	if (load_cell){
-		mass->hx = load_cell;
-	}
+		mass = new MassType;
+		if (load_cell){
+			mass->hx = load_cell;
+		}
 }
 
 void MassThread::init(){
 	mass->hx->begin();
-	osDelay(pdMS_TO_TICKS(1));
+	osDelay(110);
+	this->tareScale(mass);
 }
 
 void MassThread::loop(){
@@ -25,12 +28,17 @@ void MassThread::loop(){
 	//raw = mass->hx->read();
 	//this->sendint(raw);
 
-	osDelay(pdMS_TO_TICKS(500));
+	    // 2) Push status to MicroRosThread
+	    MassPacket st;
+	    st.mass = mass->weight;
+	    pushStatus(st);
+
+	osDelay(pdMS_TO_TICKS(100));
 	//this->sendfloat(mass->weight);
 }
 
 void MassThread::shift(float *array , int N, float valueIn){  //shifts all array values left and adds valueIn at position N-1
-  for(int i = 1; i<N-1 ; i++){
+  for(int i = 1; i<N ; i++){
     array[i-1] = array[i];
   }
   array[N-1] = valueIn;
@@ -43,21 +51,44 @@ float MassThread::movingAverage(const float *arr, uint8_t n) {
   return sum / n;
 }
 
-void MassThread::update(MassType* device) {
+void MassThread::update(MassType* device)
+{
     if (!device->hx->available()) return;
-    long raw = device->hx->read();
-    this->shift(device->buffer, AVG_SIZE, (float) raw);
+
+    int32_t raw = device->hx->read();
+
+    // 1. Shift and average
+    this->shift(device->buffer, AVG_SIZE, (float)raw);
     float avg = this->movingAverage(device->buffer, AVG_SIZE);
-    device->weight = (avg - device->offset) * device->slope;
+
+    // 2. Apply offset AND slope
+    // Result = (Current - Zero) * CalibrationFactor
+   float val = (avg - device->offset) * device->slope;
+
+   // Deadzone: If weight is less than 0.5g, just call it 0.0
+   if (val < 0.5f && val > -0.5f) {
+	   device->weight = 0.0f;
+       } else {
+          device->weight = val;
+   }
 }
 
 void MassThread::tareScale(MassType* device) {
-    device->offset = device->hx->read();
-    device->hx->tare();
+	for (uint8_t i = 0; i < AVG_SIZE; ++i) {
+	    	device->buffer[i] = 0;
+	}
+
+	int64_t sum = 0;
+	for (uint8_t i = 0; i < 20; ++i) {
+		sum += device->hx->read();
+		osDelay(10);
+	}
+
+    device->offset = (float)(sum/20);
+
     for (uint8_t i = 0; i < AVG_SIZE; ++i) {
     	device->buffer[i] = device->offset;
     }
-    osDelay(100); //TODO ms or ticks?
 }
 
 /*

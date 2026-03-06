@@ -1,0 +1,9 @@
+/opt/st/stm32cubeide_1.19.0_2/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/arm-none-eabi/thumb/v7e-m+dp/hard/bits/gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+../System/Core/Src/Servo.cpp:7:1:Servo_Driver::Servo_Driver()	16	static
+../System/Core/Src/Servo.cpp:19:1:Servo_Driver::~Servo_Driver()	16	static
+../System/Core/Src/Servo.cpp:24:6:void Servo_Driver::init(TIM_HandleTypeDef*, uint8_t)	24	static
+../System/Core/Src/Servo.cpp:44:6:void Servo_Driver::zero_in()	24	static
+../System/Core/Src/Servo.cpp:51:7:float Servo_Driver::angle_to_duty()	32	static
+../System/Core/Src/Servo.cpp:63:6:void Servo_Driver::setAngle(int32_t)	16	static
+../System/Core/Src/Servo.cpp:75:6:void Servo_Driver::set_servo()	24	static
+../System/Core/Src/Servo.cpp:114:6:void Servo_Driver::apply()	24	static

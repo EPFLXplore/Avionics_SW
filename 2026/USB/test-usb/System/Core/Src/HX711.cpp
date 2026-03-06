@@ -34,31 +34,22 @@ bool HX711::available() const {
 
 int32_t HX711::read()
 {
-    // Wait for data ready
-    while (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET) {
-        // busy wait
-    }
-
+    while (HAL_GPIO_ReadPin(dout_port_,dout_pin_) == GPIO_PIN_SET);
     uint32_t value = 0;
-
-    // Read 24 bits, MSB first
     for (int i = 0; i < 24; ++i) {
-        pulseClock();
-        value = (value << 1) | (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET);
-    }
+            value <<=1;
+            if(pulseClock()) {
+            	value++;
 
-    // One extra pulse: channel A, gain 128
+            }
+    }
     pulseClock();
 
-    // Sign-extend 24-bit value to 32 bits
-    if (value & 0x800000U) {
-        value |= 0xFF000000U;
+    if(value & 0x800000) {
+    	value |= 0xFF000000;
     }
 
-    int32_t signedValue = static_cast<int32_t>(value);
-
-    // Apply stored offset (tare)
-    return signedValue - offset_;
+    return static_cast<int32_t>(value);
 }
 
 void HX711::tare(uint16_t samples)
@@ -75,11 +66,15 @@ void HX711::tare(uint16_t samples)
 
 // ---- Private helpers -------------------------------------------------------
 
-void HX711::pulseClock() const
+bool HX711::pulseClock() const
 {
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_SET);
     // short delay: HX711 requires >0.2 µs high
     for (volatile int i = 0; i < 20; ++i) { __NOP(); }
+
+    bool bit = (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET);
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_RESET);
     for (volatile int i = 0; i < 20; ++i) { __NOP(); }
+
+    return bit;
 }
