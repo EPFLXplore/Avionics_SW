@@ -21,7 +21,7 @@ using namespace std;
 #define CCR_B0 27   // 33% duty cycle.
 #define CCR_B1 52   // 66% duty cycle.
 
-#define BRIGHTNESS_SAFETY_THRESH 80 // DO NOT EXCEED 80% BRIGHTNESS TO AVOID XPLOSION.
+#define BRIGHTNESS_SAFETY_THRESH 200 // DO NOT EXCEED TO AVOID XPLOSION.
 #define PI 3.14
 
 // Array containing RGB values. 0 = R | 1 = G | 2 = B.
@@ -42,7 +42,7 @@ public:
 	~Adafruit_NeoPixel();
 
 	bool begin(TIM_HandleTypeDef *timer, const uint32_t channel);
-	void setPixelColor(const uint8_t& ID, const Color color);
+	void setPixelColor(const uint8_t& ID, const Color& color);
 	void presetColors(const Color colors[]);
 	void setBrightness(uint8_t br);
 	void show(void);
@@ -59,13 +59,14 @@ public:
 	bool hasBegun() { return begun; }
 
 	private:
-		Color* pixels;
-		Color* pixels_full_b;
-		uint32_t *pBuff;
-		TIM_HandleTypeDef *neoPixTim;
-		uint32_t timCH;
-		uint16_t numLEDs;   // Number of LEDs in strip
-		uint8_t brightness; // Strip brightness (percentage)
+		Color* pixels = nullptr;
+		Color* pixels_full_b = nullptr;
+		uint32_t *pBuff = nullptr;
+		TIM_HandleTypeDef *neoPixTim = nullptr;
+		uint32_t timCH = 0;
+		uint16_t numLEDs = 30;   // Number of LEDs in strip
+		uint16_t bufferSize = 24*numLEDs;
+		uint8_t brightness = 128; // Strip brightness (0-255)
 		bool begun = false;
 		bool isBusy = false;
 

@@ -24,6 +24,11 @@ static void MX_UART4_Init(void);
 static void MX_USB_OTG_HS_USB_Init(void);
 static void MX_TIM4_Init(void);
 
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+	HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+}
+
 int main(void)
 {
   MPU_Config();
@@ -40,51 +45,64 @@ int main(void)
   MX_TIM4_Init();
 
   Color ledColors[NUM_LEDS] = {
-		  {255, 200, 220},  // Soft pink
-		      {180, 220, 255},  // Light sky blue
-		      {200, 255, 180},  // Mint green
-		      {255, 180, 180},  // Light coral
-		      {220, 200, 255},  // Lavender
-		      {180, 255, 220},  // Seafoam
-		      {255, 220, 180},  // Peach
-		      {200, 180, 255},  // Periwinkle
-		      {180, 220, 200},  // Sage
-		      {255, 200, 180},  // Apricot
-		      {220, 180, 255},  // Light purple
-		      {180, 255, 200},  // Light green
-		      {200, 220, 255},  // Powder blue
-		      {255, 180, 200},  // Blush
-		      {220, 200, 200},  // Dusty rose
-		      {180, 200, 255},  // Soft blue
-		      {200, 255, 220},  // Pale mint
-		      {255, 220, 200},  // Creamsicle
-		      {220, 180, 220},  // Light magenta
-		      {180, 220, 180},  // Pale green
-		      {200, 200, 255},  // Light periwinkle
-		      {255, 180, 220},  // Light hot pink (muted)
-		      {220, 200, 180},  // Sand
-		      {180, 200, 200},  // Gray-blue
-		      {200, 180, 220},  // Light violet
-		      {255, 200, 200},  // Light pink
-		      {180, 220, 220},  // Light cyan
-		      {200, 220, 200},  // Light sage
-		      {220, 180, 200},  // Mauve
-		      {180, 180, 220}    // 29: Lime green
-  };
+		    // Reds and Pinks
+		    {255, 0, 0},      // Pure Red
+		    {255, 64, 64},    // Light Red
+		    {255, 0, 128},    // Rose
+		    {255, 128, 0},    // Orange-Red
+
+		    // Oranges and Yellows
+		    {255, 128, 0},    // Orange
+		    {255, 165, 0},    // Bright Orange
+		    {255, 200, 0},    // Golden Yellow
+		    {255, 255, 0},    // Pure Yellow
+
+		    // Greens
+		    {128, 255, 0},    // Yellow-Green
+		    {0, 255, 0},      // Pure Green
+		    {0, 255, 128},    // Spring Green
+		    {0, 200, 100},    // Medium Green
+		    {0, 255, 200},    // Mint
+
+		    // Cyans and Teals
+		    {0, 255, 255},    // Pure Cyan
+		    {0, 200, 200},    // Teal
+		    {0, 128, 255},    // Sky Blue
+
+		    // Blues
+		    {0, 100, 255},    // Bright Blue
+		    {64, 0, 255},     // Blue-Purple
+		    {0, 0, 255},      // Pure Blue
+		    {100, 100, 255},  // Light Blue
+
+		    // Purples and Magentas
+		    {128, 0, 255},    // Purple
+		    {200, 0, 255},    // Violet
+		    {255, 0, 255},    // Magenta
+		    {255, 0, 200},    // Hot Pink
+		    {255, 100, 255},  // Light Magenta
+
+		    // More distinct colors
+		    {255, 128, 128},  // Light Pink
+		    {200, 255, 100},  // Lime
+		    {180, 100, 255},  // Lavender
+		    {255, 150, 50},   // Coral
+		    {150, 255, 150}   // Pale Green
+		};
 
   Adafruit_NeoPixel strip(NUM_LEDS);
-  uint8_t b(50);
-  strip.presetColors(ledColors);
-  strip.show();
+  uint8_t b(30);
 
-  while (1)
+  if (strip.begin(&htim4, TIM_CHANNEL_1))
   {
+	  strip.presetColors(ledColors);
 	  strip.setBrightness(b);
-	  b--;
-	  strip.show();
-	  HAL_Delay(1000);
-  }
 
+	  while (1)
+	  {
+		  strip.show();
+	  }
+  }
 }
 
 /**
