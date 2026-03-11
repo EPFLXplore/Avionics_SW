@@ -7,41 +7,41 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00009e64  08000298  08000298  00001298  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000009c  0800a0fc  0800a0fc  0000b0fc  2**2
+  2 .rodata       000000f4  0800a0fc  0800a0fc  0000b0fc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM          00000008  0800a198  0800a198  0000b198  2**2
+  3 .ARM          00000008  0800a1f0  0800a1f0  0000b1f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  4 .init_array   00000004  0800a1a0  0800a1a0  0000b1a0  2**2
+  4 .init_array   00000004  0800a1f8  0800a1f8  0000b1f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .fini_array   00000004  0800a1a4  0800a1a4  0000b1a4  2**2
+  5 .fini_array   00000004  0800a1fc  0800a1fc  0000b1fc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  6 .data         00000060  24000000  0800a1a8  0000c000  2**2
+  6 .data         00000060  24000000  0800a200  0000c000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .bss          00000350  24000060  0800a208  0000c060  2**2
+  7 .bss          00000350  24000060  0800a260  0000c060  2**2
                   ALLOC
-  8 ._user_heap_stack 00000600  240003b0  0800a208  0000c3b0  2**0
+  8 ._user_heap_stack 00000600  240003b0  0800a260  0000c3b0  2**0
                   ALLOC
   9 .ARM.attributes 0000002e  00000000  00000000  0000c060  2**0
                   CONTENTS, READONLY
- 10 .debug_info   0001f532  00000000  00000000  0000c08e  2**0
+ 10 .debug_info   0001f535  00000000  00000000  0000c08e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_abbrev 0000341d  00000000  00000000  0002b5c0  2**0
+ 11 .debug_abbrev 00003406  00000000  00000000  0002b5c3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_aranges 00001358  00000000  00000000  0002e9e0  2**3
+ 12 .debug_aranges 00001358  00000000  00000000  0002e9d0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_rnglists 00000f1c  00000000  00000000  0002fd38  2**0
+ 13 .debug_rnglists 00000f1c  00000000  00000000  0002fd28  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_macro  0003da33  00000000  00000000  00030c54  2**0
+ 14 .debug_macro  0003da33  00000000  00000000  00030c44  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   0001c1fc  00000000  00000000  0006e687  2**0
+ 15 .debug_line   0001c1fd  00000000  00000000  0006e677  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    00172217  00000000  00000000  0008a883  2**0
+ 16 .debug_str    00172217  00000000  00000000  0008a874  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  001fca9a  2**0
+ 17 .comment      00000043  00000000  00000000  001fca8b  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00005798  00000000  00000000  001fcae0  2**2
+ 18 .debug_frame  00005798  00000000  00000000  001fcad0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line_str 00000070  00000000  00000000  00202278  2**0
+ 19 .debug_line_str 00000070  00000000  00000000  00202268  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1055,7 +1055,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 int main(void)
 {
  8000ac8:	b580      	push	{r7, lr}
- 8000aca:	b09e      	sub	sp, #120	@ 0x78
+ 8000aca:	b0b6      	sub	sp, #216	@ 0xd8
  8000acc:	af00      	add	r7, sp, #0
   MPU_Config();
  8000ace:	f000 faff 	bl	80010d0 <_ZL10MPU_Configv>
@@ -1081,27 +1081,27 @@ int main(void)
 
   Color ledColors[NUM_LEDS] = {
  8000af2:	4a1a      	ldr	r2, [pc, #104]	@ (8000b5c <main+0x94>)
- 8000af4:	f107 031c 	add.w	r3, r7, #28
+ 8000af4:	f107 0320 	add.w	r3, r7, #32
  8000af8:	4611      	mov	r1, r2
- 8000afa:	225a      	movs	r2, #90	@ 0x5a
+ 8000afa:	22b4      	movs	r2, #180	@ 0xb4
  8000afc:	4618      	mov	r0, r3
  8000afe:	f009 fae3 	bl	800a0c8 <memcpy>
-		    {180, 100, 255},  // Lavender
-		    {255, 150, 50},   // Coral
-		    {150, 255, 150}   // Pale Green
+					    {180, 100, 255},  // Lavender
+					    {255, 150, 50},   // Coral
+					    {150, 255, 150}
 		};
 
   Adafruit_NeoPixel strip(NUM_LEDS);
- 8000b02:	463b      	mov	r3, r7
- 8000b04:	211e      	movs	r1, #30
+ 8000b02:	1d3b      	adds	r3, r7, #4
+ 8000b04:	213c      	movs	r1, #60	@ 0x3c
  8000b06:	4618      	mov	r0, r3
  8000b08:	f7ff fd90 	bl	800062c <_ZN17Adafruit_NeoPixelC1Et>
   uint8_t b(30);
  8000b0c:	231e      	movs	r3, #30
- 8000b0e:	f887 3077 	strb.w	r3, [r7, #119]	@ 0x77
+ 8000b0e:	f887 30d7 	strb.w	r3, [r7, #215]	@ 0xd7
 
   if (strip.begin(&htim4, TIM_CHANNEL_1))
- 8000b12:	463b      	mov	r3, r7
+ 8000b12:	1d3b      	adds	r3, r7, #4
  8000b14:	2200      	movs	r2, #0
  8000b16:	4912      	ldr	r1, [pc, #72]	@ (8000b60 <main+0x98>)
  8000b18:	4618      	mov	r0, r3
@@ -1111,14 +1111,14 @@ int main(void)
  8000b22:	d012      	beq.n	8000b4a <main+0x82>
   {
 	  strip.presetColors(ledColors);
- 8000b24:	f107 021c 	add.w	r2, r7, #28
- 8000b28:	463b      	mov	r3, r7
+ 8000b24:	f107 0220 	add.w	r2, r7, #32
+ 8000b28:	1d3b      	adds	r3, r7, #4
  8000b2a:	4611      	mov	r1, r2
  8000b2c:	4618      	mov	r0, r3
  8000b2e:	f7ff fe58 	bl	80007e2 <_ZN17Adafruit_NeoPixel12presetColorsEPK5Color>
 	  strip.setBrightness(b);
- 8000b32:	f897 2077 	ldrb.w	r2, [r7, #119]	@ 0x77
- 8000b36:	463b      	mov	r3, r7
+ 8000b32:	f897 20d7 	ldrb.w	r2, [r7, #215]	@ 0xd7
+ 8000b36:	1d3b      	adds	r3, r7, #4
  8000b38:	4611      	mov	r1, r2
  8000b3a:	4618      	mov	r0, r3
  8000b3c:	f7ff fe8c 	bl	8000858 <_ZN17Adafruit_NeoPixel13setBrightnessEh>
@@ -1126,19 +1126,19 @@ int main(void)
 	  while (1)
 	  {
 		  strip.show();
- 8000b40:	463b      	mov	r3, r7
+ 8000b40:	1d3b      	adds	r3, r7, #4
  8000b42:	4618      	mov	r0, r3
  8000b44:	f7ff ff38 	bl	80009b8 <_ZN17Adafruit_NeoPixel4showEv>
  8000b48:	e7fa      	b.n	8000b40 <main+0x78>
 	  }
   }
 }
- 8000b4a:	463b      	mov	r3, r7
+ 8000b4a:	1d3b      	adds	r3, r7, #4
  8000b4c:	4618      	mov	r0, r3
  8000b4e:	f7ff fdcb 	bl	80006e8 <_ZN17Adafruit_NeoPixelD1Ev>
  8000b52:	2300      	movs	r3, #0
  8000b54:	4618      	mov	r0, r3
- 8000b56:	3778      	adds	r7, #120	@ 0x78
+ 8000b56:	37d8      	adds	r7, #216	@ 0xd8
  8000b58:	46bd      	mov	sp, r7
  8000b5a:	bd80      	pop	{r7, pc}
  8000b5c:	0800a0fc 	.word	0x0800a0fc
@@ -3313,7 +3313,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8001750:	24000060 	.word	0x24000060
   ldr r2, =_sidata
- 8001754:	0800a1a8 	.word	0x0800a1a8
+ 8001754:	0800a200 	.word	0x0800a200
   ldr r2, =_sbss
  8001758:	24000060 	.word	0x24000060
   ldr r4, =_ebss
@@ -3415,7 +3415,7 @@ HAL_StatusTypeDef HAL_Init(void)
  80017c8:	46bd      	mov	sp, r7
  80017ca:	bd80      	pop	{r7, pc}
  80017cc:	58024400 	.word	0x58024400
- 80017d0:	0800a158 	.word	0x0800a158
+ 80017d0:	0800a1b0 	.word	0x0800a1b0
  80017d4:	24000004 	.word	0x24000004
  80017d8:	24000000 	.word	0x24000000
 
@@ -9120,7 +9120,7 @@ static uint32_t DMA_CalcBaseAndBitshift(DMA_HandleTypeDef *hdma)
  8003f0c:	400204a0 	.word	0x400204a0
  8003f10:	400204b8 	.word	0x400204b8
  8003f14:	aaaaaaab 	.word	0xaaaaaaab
- 8003f18:	0800a168 	.word	0x0800a168
+ 8003f18:	0800a1c0 	.word	0x0800a1c0
  8003f1c:	fffffc00 	.word	0xfffffc00
 
 08003f20 <DMA_CheckFifoParam>:
@@ -12346,7 +12346,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef  *RCC_ClkInitStru
  8005244:	bd80      	pop	{r7, pc}
  8005246:	bf00      	nop
  8005248:	58024400 	.word	0x58024400
- 800524c:	0800a158 	.word	0x0800a158
+ 800524c:	0800a1b0 	.word	0x0800a1b0
  8005250:	24000004 	.word	0x24000004
  8005254:	24000000 	.word	0x24000000
  8005258:	24000008 	.word	0x24000008
@@ -12748,7 +12748,7 @@ uint32_t HAL_RCC_GetHCLKFreq(void)
  800559c:	46bd      	mov	sp, r7
  800559e:	bd80      	pop	{r7, pc}
  80055a0:	58024400 	.word	0x58024400
- 80055a4:	0800a158 	.word	0x0800a158
+ 80055a4:	0800a1b0 	.word	0x0800a1b0
  80055a8:	24000004 	.word	0x24000004
  80055ac:	24000000 	.word	0x24000000
 
@@ -12782,7 +12782,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  80055d0:	4618      	mov	r0, r3
  80055d2:	bd80      	pop	{r7, pc}
  80055d4:	58024400 	.word	0x58024400
- 80055d8:	0800a158 	.word	0x0800a158
+ 80055d8:	0800a1b0 	.word	0x0800a1b0
 
 080055dc <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -12813,7 +12813,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  80055fc:	4618      	mov	r0, r3
  80055fe:	bd80      	pop	{r7, pc}
  8005600:	58024400 	.word	0x58024400
- 8005604:	0800a158 	.word	0x0800a158
+ 8005604:	0800a1b0 	.word	0x0800a1b0
 
 08005608 <HAL_RCCEx_PeriphCLKConfig>:
   * (*) : Available on some STM32H7 lines only.
@@ -15849,7 +15849,7 @@ uint32_t HAL_RCCEx_GetD3PCLK1Freq(void)
  8006a3c:	4618      	mov	r0, r3
  8006a3e:	bd80      	pop	{r7, pc}
  8006a40:	58024400 	.word	0x58024400
- 8006a44:	0800a158 	.word	0x0800a158
+ 8006a44:	0800a1b0 	.word	0x0800a1b0
 
 08006a48 <HAL_RCCEx_GetPLL2ClockFreq>:
   *         right PLL2CLK value. Otherwise, any configuration based on this function will be incorrect.
@@ -22461,7 +22461,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
  8009612:	e0b5      	b.n	8009780 <UART_SetConfig+0xa94>
  8009614:	03d09000 	.word	0x03d09000
  8009618:	003d0900 	.word	0x003d0900
- 800961c:	0800a170 	.word	0x0800a170
+ 800961c:	0800a1c8 	.word	0x0800a1c8
  8009620:	58024400 	.word	0x58024400
       }
     }
@@ -22677,7 +22677,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
  80097ac:	58024400 	.word	0x58024400
  80097b0:	03d09000 	.word	0x03d09000
  80097b4:	003d0900 	.word	0x003d0900
- 80097b8:	0800a170 	.word	0x0800a170
+ 80097b8:	0800a1c8 	.word	0x0800a1c8
 
 080097bc <UART_AdvFeatureConfig>:
   * @brief Configure the UART peripheral advanced features.
@@ -23782,8 +23782,8 @@ static void UARTEx_SetNbDataToProcess(UART_HandleTypeDef *huart)
  8009df4:	f85d 7b04 	ldr.w	r7, [sp], #4
  8009df8:	4770      	bx	lr
  8009dfa:	bf00      	nop
- 8009dfc:	0800a188 	.word	0x0800a188
- 8009e00:	0800a190 	.word	0x0800a190
+ 8009dfc:	0800a1e0 	.word	0x0800a1e0
+ 8009e00:	0800a1e8 	.word	0x0800a1e8
 
 08009e04 <_Znaj>:
  8009e04:	f000 b800 	b.w	8009e08 <_Znwj>
@@ -24104,10 +24104,10 @@ static void UARTEx_SetNbDataToProcess(UART_HandleTypeDef *huart)
  800a0ae:	4798      	blx	r3
  800a0b0:	3601      	adds	r6, #1
  800a0b2:	e7f2      	b.n	800a09a <__libc_init_array+0x1e>
- 800a0b4:	0800a1a0 	.word	0x0800a1a0
- 800a0b8:	0800a1a0 	.word	0x0800a1a0
- 800a0bc:	0800a1a0 	.word	0x0800a1a0
- 800a0c0:	0800a1a4 	.word	0x0800a1a4
+ 800a0b4:	0800a1f8 	.word	0x0800a1f8
+ 800a0b8:	0800a1f8 	.word	0x0800a1f8
+ 800a0bc:	0800a1f8 	.word	0x0800a1f8
+ 800a0c0:	0800a1fc 	.word	0x0800a1fc
 
 0800a0c4 <__retarget_lock_acquire_recursive>:
  800a0c4:	4770      	bx	lr

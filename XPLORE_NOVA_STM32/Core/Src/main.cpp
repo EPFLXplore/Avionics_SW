@@ -2,7 +2,7 @@
 
 #include "../Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.h"
 
-#define NUM_LEDS 30
+#define NUM_LEDS 60
 #define BITS_PER_LED 24
 #define RESET_PULSE 50
 #define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED
@@ -87,7 +87,49 @@ int main(void)
 		    {200, 255, 100},  // Lime
 		    {180, 100, 255},  // Lavender
 		    {255, 150, 50},   // Coral
-		    {150, 255, 150}   // Pale Green
+		    {150, 255, 150},   // Pale Green
+			{255, 0, 0},      // Pure Red
+					    {255, 64, 64},    // Light Red
+					    {255, 0, 128},    // Rose
+					    {255, 128, 0},    // Orange-Red
+
+					    // Oranges and Yellows
+					    {255, 128, 0},    // Orange
+					    {255, 165, 0},    // Bright Orange
+					    {255, 200, 0},    // Golden Yellow
+					    {255, 255, 0},    // Pure Yellow
+
+					    // Greens
+					    {128, 255, 0},    // Yellow-Green
+					    {0, 255, 0},      // Pure Green
+					    {0, 255, 128},    // Spring Green
+					    {0, 200, 100},    // Medium Green
+					    {0, 255, 200},    // Mint
+
+					    // Cyans and Teals
+					    {0, 255, 255},    // Pure Cyan
+					    {0, 200, 200},    // Teal
+					    {0, 128, 255},    // Sky Blue
+
+					    // Blues
+					    {0, 100, 255},    // Bright Blue
+					    {64, 0, 255},     // Blue-Purple
+					    {0, 0, 255},      // Pure Blue
+					    {100, 100, 255},  // Light Blue
+
+					    // Purples and Magentas
+					    {128, 0, 255},    // Purple
+					    {200, 0, 255},    // Violet
+					    {255, 0, 255},    // Magenta
+					    {255, 0, 200},    // Hot Pink
+					    {255, 100, 255},  // Light Magenta
+
+					    // More distinct colors
+					    {255, 128, 128},  // Light Pink
+					    {200, 255, 100},  // Lime
+					    {180, 100, 255},  // Lavender
+					    {255, 150, 50},   // Coral
+					    {150, 255, 150}
 		};
 
   Adafruit_NeoPixel strip(NUM_LEDS);

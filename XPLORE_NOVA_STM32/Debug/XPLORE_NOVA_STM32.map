@@ -213,6 +213,310 @@ Discarded input sections
                 0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIyEE
                 0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .group         0x00000000        0xc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text          0x00000000        0x0 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .data          0x00000000        0x0 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .bss           0x00000000        0x0 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .rodata._ZStL19piecewise_construct
+                0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZL20__gthread_key_deletei
+                0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStripC2Eh
+                0x00000000       0x42 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5beginEP17TIM_HandleTypeDefm
+                0x00000000      0x144 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZNK8LEDStrip8pctToIdxEh
+                0x00000000       0x34 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip12applyCommandERK7Command
+                0x00000000       0x6c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip4tickEv
+                0x00000000       0x2e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip6setAllEiihhh
+                0x00000000       0x5c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip10handleModeEh
+                0x00000000      0x134 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode0Ehii
+                0x00000000       0x50 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode1Ehiihhh
+                0x00000000       0x54 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode2Ehiihhhhtt
+                0x00000000      0x1cc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode3Ehiihhht
+                0x00000000       0xf8 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode4Ehhhh
+                0x00000000       0x5c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode5Ehhhh
+                0x00000000       0x5c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .text._ZN8LEDStrip5mode6Eh
+                0x00000000       0x4c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIjEE
+                0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedImEE
+                0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIyEE
+                0x00000000        0x1 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_info    0x00000000     0x49bd ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_abbrev  0x00000000      0x5f0 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_aranges
+                0x00000000       0x90 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_rnglists
+                0x00000000       0x6b ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x816 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0xbce ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x23e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x2e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x3b ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x22 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x8e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x51 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x103 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x6a ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x1df ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x22 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xfb ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000     0x1305 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x11f ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x27 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000    0x261cc ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x6d ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000     0x3d79 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x197 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x1f2 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x409 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x18 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x61 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x29 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x43 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x34 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x38c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x4a ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x34 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x58 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x8e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x185 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x194 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x3c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x29 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x3c7 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x5d ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000     0x240e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000     0x102c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x154 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x114 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x3b6 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xac ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x72d ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x228 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x66 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x3bb ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x3e4 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x275 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x3ca ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x408 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x51 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x4a ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x22c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x67 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xa5 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x1c4 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x25e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x35 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x5e4 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xc1 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0xafa ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x29f ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x693 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xa6 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x5ac ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x41 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x4f ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1f ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x18 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x27 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x28 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x2e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x19 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x88 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x19 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x22 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x43 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x33 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x173 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x11 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x5e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x52 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x5e ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x11 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x2f ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x32 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x11 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x11 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0xf0 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x16 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x131 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x11d ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000      0x242 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x17 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x19 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x18 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x17 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x17 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x10 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x76 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x1c ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_macro   0x00000000       0x22 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_line    0x00000000     0x1ae7 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_str     0x00000000   0x16aa34 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .comment       0x00000000       0x44 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .debug_frame   0x00000000      0x244 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
+ .ARM.attributes
+                0x00000000       0x32 ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
  .group         0x00000000        0xc ./Core/Src/main.o
  .group         0x00000000        0xc ./Core/Src/main.o
  .group         0x00000000        0xc ./Core/Src/main.o
@@ -5494,6 +5798,7 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 LOAD ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
+LOAD ./Core/Adafruit_NeoPixel_STM/LEDStrip.o
 LOAD ./Core/Src/main.o
 LOAD ./Core/Src/stm32h7xx_hal_msp.o
 LOAD ./Core/Src/stm32h7xx_it.o
@@ -6136,59 +6441,58 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 .iplt           0x0800a0fc        0x0
  .iplt          0x0800a0fc        0x0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.rodata         0x0800a0fc       0x9c
+.rodata         0x0800a0fc       0xf4
                 0x0800a0fc                        . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x0800a0fc       0x5a ./Core/Src/main.o
+ .rodata        0x0800a0fc       0xb4 ./Core/Src/main.o
  *(.rodata*)
- *fill*         0x0800a156        0x2 
  .rodata.D1CorePrescTable
-                0x0800a158       0x10 ./Core/Src/system_stm32h7xx.o
-                0x0800a158                D1CorePrescTable
+                0x0800a1b0       0x10 ./Core/Src/system_stm32h7xx.o
+                0x0800a1b0                D1CorePrescTable
  .rodata.flagBitshiftOffset.0
-                0x0800a168        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+                0x0800a1c0        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
  .rodata.UARTPrescTable
-                0x0800a170       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
-                0x0800a170                UARTPrescTable
+                0x0800a1c8       0x18 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+                0x0800a1c8                UARTPrescTable
  .rodata.numerator.1
-                0x0800a188        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x0800a1e0        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
  .rodata.denominator.0
-                0x0800a190        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
-                0x0800a198                        . = ALIGN (0x4)
+                0x0800a1e8        0x8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+                0x0800a1f0                        . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0800a198        0x8
-                0x0800a198                        __exidx_start = .
+.ARM            0x0800a1f0        0x8
+                0x0800a1f0                        __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x0800a198        0x8 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_udivmoddi4.o)
-                0x0800a1a0                        __exidx_end = .
+ .ARM.exidx     0x0800a1f0        0x8 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a(_udivmoddi4.o)
+                0x0800a1f8                        __exidx_end = .
 
-.preinit_array  0x0800a1a0        0x0
-                0x0800a1a0                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0800a1f8        0x0
+                0x0800a1f8                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0800a1a0                        PROVIDE (__preinit_array_end = .)
+                0x0800a1f8                        PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0800a1a0        0x4
-                0x0800a1a0                        PROVIDE (__init_array_start = .)
+.init_array     0x0800a1f8        0x4
+                0x0800a1f8                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0800a1a0        0x4 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
-                0x0800a1a4                        PROVIDE (__init_array_end = .)
+ .init_array    0x0800a1f8        0x4 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+                0x0800a1fc                        PROVIDE (__init_array_end = .)
 
-.fini_array     0x0800a1a4        0x4
+.fini_array     0x0800a1fc        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0800a1a4        0x4 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .fini_array    0x0800a1fc        0x4 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0800a1a8                        _sidata = LOADADDR (.data)
+                0x0800a200                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x0800a1a8        0x0
- .rel.iplt      0x0800a1a8        0x0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
+.rel.dyn        0x0800a200        0x0
+ .rel.iplt      0x0800a200        0x0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.data           0x24000000       0x60 load address 0x0800a1a8
+.data           0x24000000       0x60 load address 0x0800a200
                 0x24000000                        . = ALIGN (0x4)
                 0x24000000                        _sdata = .
  *(.data)
@@ -6217,11 +6521,11 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x24000060                        . = ALIGN (0x4)
                 0x24000060                        _edata = .
 
-.igot.plt       0x24000060        0x0 load address 0x0800a208
+.igot.plt       0x24000060        0x0 load address 0x0800a260
  .igot.plt      0x24000060        0x0 C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard/crtbegin.o
                 0x24000060                        . = ALIGN (0x4)
 
-.bss            0x24000060      0x350 load address 0x0800a208
+.bss            0x24000060      0x350 load address 0x0800a260
                 0x24000060                        _sbss = .
                 0x24000060                        __bss_start__ = _sbss
  *(.bss)
@@ -6262,7 +6566,7 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x240003b0                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x240003b0      0x600 load address 0x0800a208
+                0x240003b0      0x600 load address 0x0800a260
                 0x240003b0                        . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
                 0x240003b0                        PROVIDE (_end = .)
@@ -6374,49 +6678,49 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a
 LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+dp/hard\libgcc.a
 
-.debug_info     0x00000000    0x1f532
+.debug_info     0x00000000    0x1f535
  .debug_info    0x00000000     0x4395 ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
- .debug_info    0x00004395     0x5beb ./Core/Src/main.o
- .debug_info    0x00009f80     0x1999 ./Core/Src/stm32h7xx_hal_msp.o
- .debug_info    0x0000b919      0x449 ./Core/Src/stm32h7xx_it.o
- .debug_info    0x0000bd62      0x6a3 ./Core/Src/syscalls.o
- .debug_info    0x0000c405      0x168 ./Core/Src/sysmem.o
- .debug_info    0x0000c56d      0xdb2 ./Core/Src/system_stm32h7xx.o
- .debug_info    0x0000d31f       0x30 ./Core/Startup/startup_stm32h753zitx.o
- .debug_info    0x0000d34f     0x1541 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_info    0x0000e890     0x10b7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_info    0x0000f947      0xc31 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_info    0x00010578      0xc5a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_info    0x000111d2     0x1012 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_info    0x000121e4      0xe6a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_info    0x0001304e     0x1225 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_info    0x00014273     0x144a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
- .debug_info    0x000156bd     0x2bae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
- .debug_info    0x0001826b     0x17eb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
- .debug_info    0x00019a56     0x4b1d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_info    0x0001e573      0xfbf ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_info    0x00004395     0x5bee ./Core/Src/main.o
+ .debug_info    0x00009f83     0x1999 ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_info    0x0000b91c      0x449 ./Core/Src/stm32h7xx_it.o
+ .debug_info    0x0000bd65      0x6a3 ./Core/Src/syscalls.o
+ .debug_info    0x0000c408      0x168 ./Core/Src/sysmem.o
+ .debug_info    0x0000c570      0xdb2 ./Core/Src/system_stm32h7xx.o
+ .debug_info    0x0000d322       0x30 ./Core/Startup/startup_stm32h753zitx.o
+ .debug_info    0x0000d352     0x1541 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_info    0x0000e893     0x10b7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_info    0x0000f94a      0xc31 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_info    0x0001057b      0xc5a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_info    0x000111d5     0x1012 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_info    0x000121e7      0xe6a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_info    0x00013051     0x1225 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_info    0x00014276     0x144a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
+ .debug_info    0x000156c0     0x2bae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_info    0x0001826e     0x17eb ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_info    0x00019a59     0x4b1d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_info    0x0001e576      0xfbf ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
 
-.debug_abbrev   0x00000000     0x341d
+.debug_abbrev   0x00000000     0x3406
  .debug_abbrev  0x00000000      0x5bd ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
- .debug_abbrev  0x000005bd      0x6dd ./Core/Src/main.o
- .debug_abbrev  0x00000c9a      0x271 ./Core/Src/stm32h7xx_hal_msp.o
- .debug_abbrev  0x00000f0b      0x16d ./Core/Src/stm32h7xx_it.o
- .debug_abbrev  0x00001078      0x1b6 ./Core/Src/syscalls.o
- .debug_abbrev  0x0000122e       0xbc ./Core/Src/sysmem.o
- .debug_abbrev  0x000012ea      0x165 ./Core/Src/system_stm32h7xx.o
- .debug_abbrev  0x0000144f       0x24 ./Core/Startup/startup_stm32h753zitx.o
- .debug_abbrev  0x00001473      0x295 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_abbrev  0x00001708      0x339 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_abbrev  0x00001a41      0x248 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_abbrev  0x00001c89      0x205 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_abbrev  0x00001e8e      0x2a7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_abbrev  0x00002135      0x2c8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_abbrev  0x000023fd      0x269 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_abbrev  0x00002666      0x2b1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
- .debug_abbrev  0x00002917      0x276 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
- .debug_abbrev  0x00002b8d      0x281 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
- .debug_abbrev  0x00002e0e      0x33d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_abbrev  0x0000314b      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_abbrev  0x000005bd      0x6c6 ./Core/Src/main.o
+ .debug_abbrev  0x00000c83      0x271 ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_abbrev  0x00000ef4      0x16d ./Core/Src/stm32h7xx_it.o
+ .debug_abbrev  0x00001061      0x1b6 ./Core/Src/syscalls.o
+ .debug_abbrev  0x00001217       0xbc ./Core/Src/sysmem.o
+ .debug_abbrev  0x000012d3      0x165 ./Core/Src/system_stm32h7xx.o
+ .debug_abbrev  0x00001438       0x24 ./Core/Startup/startup_stm32h753zitx.o
+ .debug_abbrev  0x0000145c      0x295 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_abbrev  0x000016f1      0x339 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_abbrev  0x00001a2a      0x248 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_abbrev  0x00001c72      0x205 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_abbrev  0x00001e77      0x2a7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_abbrev  0x0000211e      0x2c8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_abbrev  0x000023e6      0x269 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_abbrev  0x0000264f      0x2b1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
+ .debug_abbrev  0x00002900      0x276 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_abbrev  0x00002b76      0x281 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_abbrev  0x00002df7      0x33d ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_abbrev  0x00003134      0x2d2 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
 
 .debug_aranges  0x00000000     0x1358
  .debug_aranges
@@ -6681,27 +6985,27 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x0003d478      0x2ed ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
  .debug_macro   0x0003d765      0x2ce ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
 
-.debug_line     0x00000000    0x1c1fc
+.debug_line     0x00000000    0x1c1fd
  .debug_line    0x00000000     0x198e ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o
- .debug_line    0x0000198e     0x1a2d ./Core/Src/main.o
- .debug_line    0x000033bb      0xa77 ./Core/Src/stm32h7xx_hal_msp.o
- .debug_line    0x00003e32      0x9d2 ./Core/Src/stm32h7xx_it.o
- .debug_line    0x00004804      0x8ac ./Core/Src/syscalls.o
- .debug_line    0x000050b0      0x588 ./Core/Src/sysmem.o
- .debug_line    0x00005638      0xb0a ./Core/Src/system_stm32h7xx.o
- .debug_line    0x00006142       0x7b ./Core/Startup/startup_stm32h753zitx.o
- .debug_line    0x000061bd      0xee3 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_line    0x000070a0      0xecd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_line    0x00007f6d     0x2864 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_line    0x0000a7d1      0xd6c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_line    0x0000b53d     0x1067 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_line    0x0000c5a4     0x158a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_line    0x0000db2e     0x1e96 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_line    0x0000f9c4     0x2275 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
- .debug_line    0x00011c39     0x4037 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
- .debug_line    0x00015c70     0x1da9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
- .debug_line    0x00017a19     0x396a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_line    0x0001b383      0xe79 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_line    0x0000198e     0x1a2e ./Core/Src/main.o
+ .debug_line    0x000033bc      0xa77 ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_line    0x00003e33      0x9d2 ./Core/Src/stm32h7xx_it.o
+ .debug_line    0x00004805      0x8ac ./Core/Src/syscalls.o
+ .debug_line    0x000050b1      0x588 ./Core/Src/sysmem.o
+ .debug_line    0x00005639      0xb0a ./Core/Src/system_stm32h7xx.o
+ .debug_line    0x00006143       0x7b ./Core/Startup/startup_stm32h753zitx.o
+ .debug_line    0x000061be      0xee3 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_line    0x000070a1      0xecd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_line    0x00007f6e     0x2864 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_line    0x0000a7d2      0xd6c ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_line    0x0000b53e     0x1067 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_line    0x0000c5a5     0x158a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_line    0x0000db2f     0x1e96 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_line    0x0000f9c5     0x2275 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.o
+ .debug_line    0x00011c3a     0x4037 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_line    0x00015c71     0x1da9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_line    0x00017a1a     0x396a ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_line    0x0001b384      0xe79 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
 
 .debug_str      0x00000000   0x172217
  .debug_str     0x00000000   0x172217 ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o

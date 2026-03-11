@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.cpp 
+../Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.cpp \
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp 
 
 OBJS += \
-./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o 
+./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o \
+./Core/Adafruit_NeoPixel_STM/LEDStrip.o 
 
 CPP_DEPS += \
-./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.d 
+./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.d \
+./Core/Adafruit_NeoPixel_STM/LEDStrip.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Core/Adafruit_NeoPixel_STM/%.o Core/Adafruit_NeoPixel_STM/%.su Core/Adafruit_Neo
 clean: clean-Core-2f-Adafruit_NeoPixel_STM
 
 clean-Core-2f-Adafruit_NeoPixel_STM:
-	-$(RM) ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.cyclo ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.d ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.su
+	-$(RM) ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.cyclo ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.d ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.o ./Core/Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.su ./Core/Adafruit_NeoPixel_STM/LEDStrip.cyclo ./Core/Adafruit_NeoPixel_STM/LEDStrip.d ./Core/Adafruit_NeoPixel_STM/LEDStrip.o ./Core/Adafruit_NeoPixel_STM/LEDStrip.su
 
 .PHONY: clean-Core-2f-Adafruit_NeoPixel_STM
 
