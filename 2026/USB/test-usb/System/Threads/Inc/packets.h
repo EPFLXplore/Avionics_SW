@@ -28,6 +28,11 @@ struct MassPacket {
     float mass;
 };
 
+struct AnalogPacket {
+    float voltage;
+    int hat_id; // 0: None, 1: HAT1, 2: HAT2
+};
+
 
 
 

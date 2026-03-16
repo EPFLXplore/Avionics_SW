@@ -12,12 +12,15 @@
 #include "TestTask.h"
 #include "MassThread.h"
 #include "HeartBeat.h"
+#include "AnalogTask.h"
 
 
 struct ThreadsRegistry {
     HeartBeat* beat;
     TestTask* test;     // or whatever TestTask really is
     // Add more threads here as you create them
+    AnalogTask* analog;
+
 };
 
 class System {
@@ -27,6 +30,7 @@ public:
 	static TestTask* test;
 	static MicroRosThread* microros;
 	static HeartBeat* beat;
+	static AnalogTask* analog;
 	static ThreadsRegistry reg;
 };
 

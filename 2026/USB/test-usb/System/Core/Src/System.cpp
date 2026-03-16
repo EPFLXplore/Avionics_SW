@@ -21,14 +21,17 @@ void System::init(){
 	//Allocate memory for the test thread
 	beat = new HeartBeat();
 	test = new TestTask();
+	AnalogTask* analog = new AnalogTask();
 
     reg.beat = beat;
     reg.test = test;
+    reg.analog = analog; // Make sure reg has this member!
 
     microros = new MicroRosThread(&reg);
 
 	test->start();
 	beat->start();
+	analog->start(); // Start it
 	microros->start();
 
 }

@@ -1,0 +1,12 @@
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
+/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/cmath:234:3:constexpr float std::fabs(float)	1
+../System/Threads/Src/AnalogTask.cpp:13:1:AnalogTask::AnalogTask()	1
+../System/Threads/Src/AnalogTask.cpp:20:6:virtual void AnalogTask::init()	1
+../System/Threads/Src/AnalogTask.cpp:25:6:virtual void AnalogTask::loop()	8
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:85:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*) [with CommandMsg = EmptyMessage; StatusMsg = AnalogPacket]	1
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = AnalogPacket]	3
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = AnalogPacket]	1
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:60:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = EmptyMessage; StatusMsg = AnalogPacket]	3
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/AnalogTask.h:7:7:AnalogTask::~AnalogTask()	1
+/home/loic-finette/Documents/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/AnalogTask.h:7:7:virtual AnalogTask::~AnalogTask()	1

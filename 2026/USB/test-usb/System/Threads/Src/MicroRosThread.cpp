@@ -1,215 +1,207 @@
 /*
  * MicroROSThread.cpp
  *
- *  Created on: Nov 29, 2025
- *      Author: pedro
+ * Modified on: Mar 16, 2026
+ * Author: pedro / Gemini
  */
 
-// MicroRosThread.cpp
 #include <MicroRosThread.h>
 #include "microros_allocators.h"
 #include "transport_layer.h"
 #include "Thread.h"
 #include "System.h"
-
 #include <cstring>   // for memset
-
-
+#include <std_msgs/msg/string.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
-// Globals just for clarity here
+// Globals
 static rclc_support_t    g_support;
 static rcl_node_t        g_node;
 static rcl_publisher_t   g_pub_mass;
 static rcl_publisher_t   g_pub_beat;
+static rcl_publisher_t   g_pub_adc;    // <--- NEW: ADC Publisher
+static rcl_publisher_t g_pub_hat_name;
+static std_msgs__msg__String g_hat_msg;
 
 // New globals for test subscriber + counter
-static rcl_publisher_t      g_pub_subs;   // publishes the counter value
-static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
-static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
-static int32_t              g_counter = 0; // incremented on each received msg
-
+static rcl_publisher_t      g_pub_subs;
+static rcl_subscription_t   g_sub_test;
+static std_msgs__msg__Int32 g_sub_msg;
+static int32_t              g_counter = 0;
 
 MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
 : Thread("MicroRosThread"),
   _reg(registry)
 {
-    setTickDelay(1);
+	setTickDelay(1);
 }
 
-
-
-// Callback: each received message increments the counter
 void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
 {
-    TestPacket testpacket;
-    testpacket.ping = msg->data;
-    _reg->test->pushCommand(testpacket);
+	TestPacket testpacket;
+	testpacket.ping = msg->data;
+	_reg->test->pushCommand(testpacket);
 }
-
 
 void MicroRosThread::init() {
-    if (try_connect_and_setup()) {
-        initialized = true;
-    }
+	if (try_connect_and_setup()) {
+		initialized = true;
+	}
 }
-
 
 void MicroRosThread::updateSubs() {
 	if (!initialized || _reg == nullptr) {
-	        return;
+			return;
 	}
 
-    rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
-    if (ret == RCL_RET_OK) {
-    	this->TestCallback(&g_sub_msg);
-    }
+	rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
+	if (ret == RCL_RET_OK) {
+		this->TestCallback(&g_sub_msg);
+	}
 }
 
 void MicroRosThread::updatePubs()
 {
-    if (!initialized || _reg == nullptr) {
-        return;
-    }
+	if (!initialized || _reg == nullptr) {
+		return;
+	}
 
-    // 1) TestTask status -> /subs topic
-    if (_reg->test != nullptr) {
-        TestPacket st;
-        while (_reg->test->popStatus(st)) {
-            std_msgs__msg__Int32 msg;
-            msg.data = st.ping;   // this holds the accumulated counter
-            rcl_publish(&g_pub_subs, &msg, nullptr);
-        }
-    }
+	// 1) TestTask status -> /subs topic
+	if (_reg->test != nullptr) {
+		TestPacket st;
+		while (_reg->test->popStatus(st)) {
+			std_msgs__msg__Int32 msg;
+			msg.data = st.ping;
+			rcl_publish(&g_pub_subs, &msg, nullptr);
+		}
+	}
 
-    // if (_reg->mass != nullptr) {
-    //     MassStatus ms;
-    //     while (_reg->mass->popStatus(ms)) {
-    //         std_msgs__msg__Float32 msg;
-    //         msg.data = ms.mass;
-    //         rcl_publish(&g_pub_mass, &msg, nullptr);
-    //     }
-    // }
-    //
-    if (_reg->beat != nullptr) {
-         BeatPacket hb;
-         while (_reg->beat->popStatus(hb)) {
-             std_msgs__msg__Float32 msg;
-             msg.data = hb.beat;
-             rcl_publish(&g_pub_beat, &msg, nullptr);
-         }
-    }
+	// 2) Beat status -> /beat topic
+	if (_reg->beat != nullptr) {
+		 BeatPacket hb;
+		 while (_reg->beat->popStatus(hb)) {
+			 std_msgs__msg__Float32 msg;
+			 msg.data = hb.beat;
+			 rcl_publish(&g_pub_beat, &msg, nullptr);
+		 }
+	}
+
+	// 3) NEW: Analog status -> /adc topic
+	if (_reg->analog != nullptr) {
+		AnalogPacket ap;
+		while (_reg->analog->popStatus(ap)) {
+			// 1. Publish the raw voltage to /adc as usual
+			std_msgs__msg__Float32 v_msg;
+			v_msg.data = ap.voltage;
+			rcl_publish(&g_pub_adc, &v_msg, nullptr);
+
+			// 2. Publish the string name to /detected_hat
+			const char* name;
+			if (ap.hat_id == 1)      name = "HAT1";
+			else if (ap.hat_id == 2) name = "HAT2";
+			else                     name = "Disconnected";
+
+			strcpy(g_hat_msg.data.data, name);
+			g_hat_msg.data.size = strlen(g_hat_msg.data.data);
+
+			rcl_publish(&g_pub_hat_name, &g_hat_msg, nullptr);
+		}
+	}
 }
-
 
 bool MicroRosThread::try_connect_and_setup()
 {
-    // 1. Setup Custom Transport
-    rmw_uros_set_custom_transport(
-        true,
-        NULL,
-        cubemx_transport_open,
-        cubemx_transport_close,
-        cubemx_transport_write,
-        cubemx_transport_read);
+	rmw_uros_set_custom_transport(
+		true, NULL,
+		cubemx_transport_open,
+		cubemx_transport_close,
+		cubemx_transport_write,
+		cubemx_transport_read);
 
-    // 2. Setup Allocators
-    rcl_allocator_t freeRTOS_allocator = rcutils_get_zero_initialized_allocator();
-    freeRTOS_allocator.allocate      = microros_allocate;
-    freeRTOS_allocator.deallocate    = microros_deallocate;
-    freeRTOS_allocator.reallocate    = microros_reallocate;
-    freeRTOS_allocator.zero_allocate = microros_zero_allocate;
-    rcutils_set_default_allocator(&freeRTOS_allocator);
+	rcl_allocator_t freeRTOS_allocator = rcutils_get_zero_initialized_allocator();
+	freeRTOS_allocator.allocate      = microros_allocate;
+	freeRTOS_allocator.deallocate    = microros_deallocate;
+	freeRTOS_allocator.reallocate    = microros_reallocate;
+	freeRTOS_allocator.zero_allocate = microros_zero_allocate;
+	rcutils_set_default_allocator(&freeRTOS_allocator);
 
-    // 3. Robust Connection Loop
-    bool connected = false;
-    rcl_allocator_t allocator = rcl_get_default_allocator();
+	bool connected = false;
+	rcl_allocator_t allocator = rcl_get_default_allocator();
+	memset(&g_support, 0, sizeof(g_support));
 
-    // Reset support object to zero before starting
-    // This is safer than calling fini() on a failed object
-    memset(&g_support, 0, sizeof(g_support));
+	while (!connected) {
+		rcl_ret_t ret = rclc_support_init(&g_support, 0, NULL, &allocator);
+		if (ret == RCL_RET_OK) {
+			connected = true;
+		} else {
+			vTaskDelay(pdMS_TO_TICKS(1000));
+		}
+	}
 
-    while (!connected) {
+	rclc_node_init_default(&g_node, "cubemx_node", "", &g_support);
 
-        // Try to initialize
-        rcl_ret_t ret = rclc_support_init(&g_support, 0, NULL, &allocator);
+	// Initializing Publishers
+	rclc_publisher_init_default(
+		&g_pub_beat, &g_node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32), "beat");
 
-        if (ret == RCL_RET_OK) {
-            connected = true;
-        } else {
-            // Do NOT call rclc_support_fini here on failed init.
-            // Just wait for the Agent to become available.
-            vTaskDelay(pdMS_TO_TICKS(1000));
-        }
-    }
+	rclc_publisher_init_default(
+		&g_pub_subs, &g_node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32), "subs");
 
-    // 4. ROS 2 Resource Setup (Only runs if connected = true)
-    rclc_node_init_default(&g_node, "cubemx_node", "", &g_support);
+	// NEW: Initialize /adc publisher
+	rclc_publisher_init_default(
+		&g_pub_adc, &g_node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32), "adc");
 
+	//hat pub
+	rclc_publisher_init_default(
+		&g_pub_hat_name, &g_node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, String), "detected_hat");
 
-    rclc_publisher_init_default(
-        &g_pub_beat,
-        &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
-        "beat");
+	// Pre-allocate string memory (Micro-ROS needs this)
+	g_hat_msg.data.data = (char*) malloc(20 * sizeof(char));
+	g_hat_msg.data.capacity = 20;
 
-    // New publisher: counter on "subs"
-    rclc_publisher_init_default(
-        &g_pub_subs,
-        &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "subs");
+	// Initializing Subscriber
+	rclc_subscription_init_default(
+		&g_sub_test, &g_node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32), "test_sub");
 
-    // New subscriber: any msg on "test_sub" bumps the counter
-    rclc_subscription_init_default(
-        &g_sub_test,
-        &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "test_sub");
-
-    initialized = true;
-    g_sub_msg.data = 0;
-    // CRITICAL FIX: Return value strictly required for bool function
-    return true;
+	initialized = true;
+	g_sub_msg.data = 0;
+	return true;
 }
 
 void MicroRosThread::loop()
 {
-    // A. HEALTH CHECK: Check if connection is active.
-    if (initialized && !rcl_context_is_valid(&g_support.context)) {
-        // Disconnection detected! Clean up all resources.
-        initialized = false;
+	// A. HEALTH CHECK
+	if (initialized && !rcl_context_is_valid(&g_support.context)) {
+		initialized = false;
 
-        // Destroy subscription and publishers
-        rcl_subscription_fini(&g_sub_test, &g_node);
-        rcl_publisher_fini(&g_pub_subs, &g_node);
-        rcl_publisher_fini(&g_pub_mass, &g_node);
-        rcl_publisher_fini(&g_pub_beat, &g_node);
+		rcl_subscription_fini(&g_sub_test, &g_node);
+		rcl_publisher_fini(&g_pub_subs, &g_node);
+		rcl_publisher_fini(&g_pub_mass, &g_node);
+		rcl_publisher_fini(&g_pub_beat, &g_node);
+		rcl_publisher_fini(&g_pub_adc, &g_node); // <--- NEW: Clean up ADC
 
-        // Finally node + support
-        rcl_node_fini(&g_node);
-        rclc_support_fini(&g_support);
+		rcl_node_fini(&g_node);
+		rclc_support_fini(&g_support);
+	}
 
-        // The next block will attempt reconnection.
-    }
+	// B. RECONNECTION
+	if (!initialized) {
+		if (try_connect_and_setup()) {
+			initialized = true;
+		} else {
+			vTaskDelay(pdMS_TO_TICKS(100));
+			return;
+		}
+	}
 
-    // B. RECONNECTION/INITIALIZATION ATTEMPT
-    if (!initialized) {
-        // Attempt to connect and set up resources.
-        if (try_connect_and_setup()) {
-            initialized = true;
-        } else {
-            // Wait before retrying the connection to prevent resource hogging.
-            vTaskDelay(pdMS_TO_TICKS(100));
-            return;
-        }
-    }
-
-    if (initialized) {
-    	updateSubs();
-    	updatePubs();
-    }
-
-
+	if (initialized) {
+		updateSubs();
+		updatePubs();
+	}
 }
