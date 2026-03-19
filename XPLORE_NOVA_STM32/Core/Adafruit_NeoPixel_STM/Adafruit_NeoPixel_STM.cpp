@@ -8,8 +8,8 @@ uint32_t colorCode(const Color &c)
 Adafruit_NeoPixel::Adafruit_NeoPixel(const uint16_t ledsNum)
     : numLEDs(ledsNum), brightness(0)
 {
-	bufferSize = 24*ledsNum;
-	pBuff = new uint32_t[bufferSize];
+	bufferSize = BITS_PER_LED*ledsNum;
+	pBuff = new uint16_t[bufferSize];
 	pixels = new Color[ledsNum];
 	pixels_full_b = new Color[ledsNum];
 }
@@ -21,10 +21,13 @@ Adafruit_NeoPixel::~Adafruit_NeoPixel() {
 	__HAL_TIM_CLEAR_FLAG(neoPixTim, TIM_FLAG_UPDATE);
 }
 
-bool Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
+void Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
 {
 	if (!begun)
 	{
+		for (int i = 0; i < bufferSize; i++)
+			pBuff[i] = 0;
+
 		// Making sure that the LED strip is cleared.
 		this->clear();
 
@@ -33,30 +36,31 @@ bool Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
 
 		begun = true;
 		HAL_Delay(1);
-		return true;
 	}
 }
 
 // This function changes dmaBuffer. In order to see changes on the LEDS, use show() to activate the PWM timer.
-void Adafruit_NeoPixel::setPixelColor(const uint8_t& ID, const Color& color)
+void Adafruit_NeoPixel::setPixelColor(const uint8_t& ID, const Color& color, bool updateOG = false)
 {
-	*(pixels + ID) = color;
+	pixels[ID] = color;
+	if (updateOG) pixels_full_b[ID] = color;
+
 	uint32_t code = colorCode(color);
 
 	for  (int i(23); i >=0;  i--)
 	{
 		// Setting duty cycle via a pointer in the dmaBuffer array.
-		*(pBuff + 24*ID + 23-i) = (code >> i) & 0x01 ? CCR_B1 : CCR_B0;
+		pBuff[24*ID + 23-i] = (code >> i) & 0x01 ? CCR_B1 : CCR_B0;
 	}
+
+	//for (int i = 0; i < RESET_PULSE; i++)
+		//*(pBuff + BITS_PER_LED*numLEDs + i) = 0;
 }
 
 void Adafruit_NeoPixel::presetColors(const Color colors[])
 {
 	for (int i(0); i < numLEDs; i++)
-	{
-		setPixelColor(i, colors[i]);
-		*(pixels_full_b + i) = *(pixels + i);
-	}
+		setPixelColor(i, colors[i], true);
 }
 
 // b is a percentage.
@@ -73,15 +77,15 @@ void Adafruit_NeoPixel::setBrightness(uint8_t br)
 		pixels[i].r = pixels_full_b[i].r * ((float) brightness / 255.0);
 		pixels[i].g = pixels_full_b[i].g * ((float) brightness / 255.0);
 		pixels[i].b = pixels_full_b[i].b * ((float) brightness / 255.0);
-		setPixelColor(i, pixels[i]);
+		setPixelColor(i, pixels[i], false);
 	}
 }
 
 void Adafruit_NeoPixel::show()
 {
-	*(pBuff + bufferSize - 1) = 0;
-	HAL_TIM_PWM_Start_DMA(neoPixTim, timCH, pBuff, 24*numLEDs);
-	HAL_Delay(10);
+	pBuff[bufferSize - 1] = 0;
+	HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,(uint32_t *) pBuff, bufferSize);
+	HAL_Delay(1);
 }
 
 // Sets color to black (or blank).
@@ -89,13 +93,11 @@ void Adafruit_NeoPixel::clear()
 {
 	for (int i(0); i < numLEDs; i++)
 	{
-		(pixels + i)->r = 0;
-		(pixels + i)->g = 0;
-		(pixels + i)->b = 0;
+		pixels[i].r = 0;
+		pixels[i].g = 0;
+		pixels[i].b = 0;
 
-		*(pixels_full_b + i) = *(pixels + i);
-
-		setPixelColor((uint8_t) i, *(pixels + i));
+		setPixelColor((uint8_t) i, pixels[i], true);
 	}
 
 	show();

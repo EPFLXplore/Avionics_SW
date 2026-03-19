@@ -1,11 +1,9 @@
 #include "main.h"
 
-#include "../Adafruit_NeoPixel_STM/Adafruit_NeoPixel_STM.h"
+#include "../Adafruit_NeoPixel_STM/LEDStrip.h"
 
-#define NUM_LEDS 60
-#define BITS_PER_LED 24
-#define RESET_PULSE 50
-#define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED
+#define NUM_LEDS 34
+#define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED + RESET_PULSE
 
 SPI_HandleTypeDef hspi1;
 
@@ -44,106 +42,41 @@ int main(void)
   MX_USB_OTG_HS_USB_Init();
   MX_TIM4_Init();
 
-  Color ledColors[NUM_LEDS] = {
-		    // Reds and Pinks
-		    {255, 0, 0},      // Pure Red
-		    {255, 64, 64},    // Light Red
-		    {255, 0, 128},    // Rose
-		    {255, 128, 0},    // Orange-Red
+  LEDStrip strip(NUM_LEDS);
+  strip.begin(&htim4, TIM_CHANNEL_1);
+  strip.clear();
 
-		    // Oranges and Yellows
-		    {255, 128, 0},    // Orange
-		    {255, 165, 0},    // Bright Orange
-		    {255, 200, 0},    // Golden Yellow
-		    {255, 255, 0},    // Pure Yellow
+  Command cmd;
+  cmd.system = 2;
+  cmd.mode = 6;
+  cmd.emergency_global = 1;
+  cmd.emergency_motors = 0;
 
-		    // Greens
-		    {128, 255, 0},    // Yellow-Green
-		    {0, 255, 0},      // Pure Green
-		    {0, 255, 128},    // Spring Green
-		    {0, 200, 100},    // Medium Green
-		    {0, 255, 200},    // Mint
+  switch (cmd.system) {
+      case 0: cmd.segment.r = 147; cmd.segment.g = 0;   cmd.segment.b = 211; cmd.segment.low = 0, cmd.segment.high= 50; break; // NAV - Pink
+      case 1: cmd.segment.r = 255; cmd.segment.g = 140; cmd.segment.b = 0;   cmd.segment.low = 51, cmd.segment.high=100; break; // HD - Yellow
+      case 2: cmd.segment.r = 0;   cmd.segment.g = 255; cmd.segment.b = 0;   cmd.segment.low = 0, cmd.segment.high=50; break; // DRILL - Green
+      case 3: cmd.segment.r = 20; cmd.segment.g = 56; cmd.segment.b = 50; cmd.segment.low = 51, cmd.segment.high=100; break; // Avionics - Turquoise
+  }
 
-		    // Cyans and Teals
-		    {0, 255, 255},    // Pure Cyan
-		    {0, 200, 200},    // Teal
-		    {0, 128, 255},    // Sky Blue
+  if(cmd.mode == 4){
+      cmd.segment.r = 100; cmd.segment.g = 81; cmd.segment.b = 50; cmd.segment.low = 0; cmd.segment.high = 50; // AMBER
+  }
 
-		    // Blues
-		    {0, 100, 255},    // Bright Blue
-		    {64, 0, 255},     // Blue-Purple
-		    {0, 0, 255},      // Pure Blue
-		    {100, 100, 255},  // Light Blue
+  //emergency shutdown
+  if(cmd.mode == 5){
+      cmd.segment.r = 255; cmd.segment.g = 0;   cmd.segment.b = 0; cmd.segment.low = 0, cmd.segment.high= 100;
+  }
 
-		    // Purples and Magentas
-		    {128, 0, 255},    // Purple
-		    {200, 0, 255},    // Violet
-		    {255, 0, 255},    // Magenta
-		    {255, 0, 200},    // Hot Pink
-		    {255, 100, 255},  // Light Magenta
+  strip.applyCommand(cmd);
+  HAL_Delay(1);
+  strip.setBrightness(1);
+  HAL_Delay(1);
 
-		    // More distinct colors
-		    {255, 128, 128},  // Light Pink
-		    {200, 255, 100},  // Lime
-		    {180, 100, 255},  // Lavender
-		    {255, 150, 50},   // Coral
-		    {150, 255, 150},   // Pale Green
-			{255, 0, 0},      // Pure Red
-					    {255, 64, 64},    // Light Red
-					    {255, 0, 128},    // Rose
-					    {255, 128, 0},    // Orange-Red
-
-					    // Oranges and Yellows
-					    {255, 128, 0},    // Orange
-					    {255, 165, 0},    // Bright Orange
-					    {255, 200, 0},    // Golden Yellow
-					    {255, 255, 0},    // Pure Yellow
-
-					    // Greens
-					    {128, 255, 0},    // Yellow-Green
-					    {0, 255, 0},      // Pure Green
-					    {0, 255, 128},    // Spring Green
-					    {0, 200, 100},    // Medium Green
-					    {0, 255, 200},    // Mint
-
-					    // Cyans and Teals
-					    {0, 255, 255},    // Pure Cyan
-					    {0, 200, 200},    // Teal
-					    {0, 128, 255},    // Sky Blue
-
-					    // Blues
-					    {0, 100, 255},    // Bright Blue
-					    {64, 0, 255},     // Blue-Purple
-					    {0, 0, 255},      // Pure Blue
-					    {100, 100, 255},  // Light Blue
-
-					    // Purples and Magentas
-					    {128, 0, 255},    // Purple
-					    {200, 0, 255},    // Violet
-					    {255, 0, 255},    // Magenta
-					    {255, 0, 200},    // Hot Pink
-					    {255, 100, 255},  // Light Magenta
-
-					    // More distinct colors
-					    {255, 128, 128},  // Light Pink
-					    {200, 255, 100},  // Lime
-					    {180, 100, 255},  // Lavender
-					    {255, 150, 50},   // Coral
-					    {150, 255, 150}
-		};
-
-  Adafruit_NeoPixel strip(NUM_LEDS);
-  uint8_t b(30);
-
-  if (strip.begin(&htim4, TIM_CHANNEL_1))
+  while (1)
   {
-	  strip.presetColors(ledColors);
-	  strip.setBrightness(b);
-
-	  while (1)
-	  {
-		  strip.show();
-	  }
+	  strip.tickOneSystem(cmd.system);
+	  HAL_Delay(1);
   }
 }
 

@@ -37,8 +37,11 @@ class LEDStrip {
 public:
     LEDStrip(uint8_t numLeds);
     void begin(TIM_HandleTypeDef *timer, const uint32_t channel);
+    void setBrightness(uint8_t b);
+    void clear() { _strip.clear(); }
     void applyCommand(const Command& cmd);   // queue-safe “set and forget”
     void tick();                             // call every loop – non‑blocking
+    void tickOneSystem(uint8_t idx);
 
 private:
     uint8_t  _numLeds;
@@ -62,7 +65,7 @@ private:
     void mode1(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b); // ON
     void mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, // BLINK
                uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);
-    void mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed = 50); // FAULT
+    void mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed = 250); // FAULT
     void mode4(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_MOTORS
     void mode5(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_SHUTDOWN
     void mode6(uint8_t idx); // ALL_OFF
