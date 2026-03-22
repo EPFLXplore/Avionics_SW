@@ -104,7 +104,7 @@ void MicroRosThread::updatePubs()
          MassPacket ms;
          while (_reg->mass->popStatus(ms)) {
              micro_ros_custom_msgs__msg__MassPacket msg;
-             msg.data = ms.mass;
+             msg.mass = ms.mass;
              msg.status_code = 15;
              rcl_publish(&g_pub_mass, &msg, nullptr);
          }
@@ -129,10 +129,10 @@ void MicroRosThread::updatePubs()
     }*/
 }
 
-void MicroRosThread::ServoCallback(const std_msgs__msg__Int32 * msg)
+void MicroRosThread::ServoCallback(const micro_ros_custom_msgs__msg__ServoRequest * msg)
 {
     ServoRequest req;
-    req.increment = msg->data; // Using the Int32 data as the target angle
+    req.increment = msg->increment; // Using the Int32 data as the target angle
     req.zero_in = false;
 
     // Push the command to the ServoThread queue
