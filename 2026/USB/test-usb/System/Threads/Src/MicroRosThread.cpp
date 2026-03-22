@@ -14,7 +14,8 @@
 
 #include <cstring>   // for memset
 
-
+#include <micro_ros_custom_msgs/msg/mass_packet.h>
+#include <micro_ros_custom_msgs/msg/servo_request.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -102,8 +103,9 @@ void MicroRosThread::updatePubs()
     if (_reg->mass != nullptr) {
          MassPacket ms;
          while (_reg->mass->popStatus(ms)) {
-             std_msgs__msg__Float32 msg;
+             micro_ros_custom_msgs__msg__MassPacket msg;
              msg.data = ms.mass;
+             msg.status_code = 15;
              rcl_publish(&g_pub_mass, &msg, nullptr);
          }
      }
@@ -200,7 +202,7 @@ bool MicroRosThread::try_connect_and_setup()
     rclc_publisher_init_default(
             &g_pub_mass,
             &g_node,
-            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+            ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, MassPacket),
             "mass");
 
     // New subscriber: any msg on "test_sub" bumps the counter
