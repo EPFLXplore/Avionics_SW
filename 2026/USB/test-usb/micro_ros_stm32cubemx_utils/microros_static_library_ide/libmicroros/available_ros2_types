@@ -228,6 +228,8 @@ tf2_msgs/FrameGraph.srv
 tf2_msgs/LookupTransform.action
 tf2_msgs/TF2Error.msg
 tf2_msgs/TFMessage.msg
+micro_ros_custom_msgs/MassPacket.msg
+micro_ros_custom_msgs/ServoRequest.msg
 control_msgs/SetOdometry.srv
 control_msgs/QueryTrajectoryState.srv
 control_msgs/QueryCalibrationState.srv

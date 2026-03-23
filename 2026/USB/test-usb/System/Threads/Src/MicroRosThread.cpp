@@ -32,6 +32,7 @@ static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
 static rcl_subscription_t   g_sub_servo;
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
+static micro_ros_custom_msgs__msg__ServoRequest g_servo_req_msg;
 
 
 MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
@@ -67,21 +68,18 @@ void MicroRosThread::updateSubs() {
     	this->TestCallback(&g_sub_msg);
     }
 
-    static std_msgs__msg__Int32 servo_msg;
-    if (rcl_take(&g_sub_servo, &servo_msg, NULL, NULL) == RCL_RET_OK) {
-        ServoRequest req;
-        if (servo_msg.data == -999) { // Use -999 as a "Home" command
-                req.zero_in = true;
-                req.increment = 0;
-            } else {
-                req.zero_in = false;
-                req.increment = servo_msg.data;
-            }
+    if (rcl_take(&g_sub_servo, &g_servo_req_msg, NULL, NULL) == RCL_RET_OK) {
+    	g_counter++;
 
-            if (_reg->servo != nullptr) {
-                _reg->servo->pushCommand(req);
-            }
+        ServoRequest req;
+        req.zero_in = g_servo_req_msg.zero_in;
+        req.increment = g_servo_req_msg.increment;
+        req.status_code = g_servo_req_msg.status_code; // Map this too!
+
+        if (_reg->servo != nullptr) {
+            _reg->servo->pushCommand(req);
         }
+    }
 }
 
 void MicroRosThread::updatePubs()
@@ -129,10 +127,10 @@ void MicroRosThread::updatePubs()
     }*/
 }
 
-void MicroRosThread::ServoCallback(const micro_ros_custom_msgs__msg__ServoRequest * msg)
+/*void MicroRosThread::ServoCallback(const std_msgs__msg__Int32 * msg)
 {
     ServoRequest req;
-    req.increment = msg->increment; // Using the Int32 data as the target angle
+    req.increment = msg->data; // Using the Int32 data as the target angle
     req.zero_in = false;
 
     // Push the command to the ServoThread queue
@@ -140,6 +138,7 @@ void MicroRosThread::ServoCallback(const micro_ros_custom_msgs__msg__ServoReques
         _reg->servo->pushCommand(req);
     }
 }
+*/
 
 bool MicroRosThread::try_connect_and_setup()
 {
@@ -215,7 +214,7 @@ bool MicroRosThread::try_connect_and_setup()
     rclc_subscription_init_default(
         &g_sub_servo,
         &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, ServoRequest),
         "servo_angle"); // Topic name
 
     initialized = true;
@@ -233,6 +232,7 @@ void MicroRosThread::loop()
 
         // Destroy subscription and publishers
         rcl_subscription_fini(&g_sub_test, &g_node);
+        rcl_subscription_fini(&g_sub_servo, &g_node);
         rcl_publisher_fini(&g_pub_subs, &g_node);
         rcl_publisher_fini(&g_pub_mass, &g_node);
         rcl_publisher_fini(&g_pub_beat, &g_node);

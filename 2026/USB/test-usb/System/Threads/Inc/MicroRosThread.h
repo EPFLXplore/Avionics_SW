@@ -43,7 +43,7 @@ private:
     bool initialized = false;
 
     void TestCallback(const std_msgs__msg__Int32 * msg);
-    void ServoCallback(const std_msgs__msg__Int32 * msg);
+    //void ServoCallback(const std_msgs__msg__Int32 * msg);
 
     void updateSubs();
     void updatePubs();

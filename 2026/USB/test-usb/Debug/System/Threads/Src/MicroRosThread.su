@@ -1,12 +1,11 @@
 /home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
 /home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
-../System/Threads/Src/MicroRosThread.cpp:36:1:MicroRosThread::MicroRosThread(ThreadsRegistry*)	16	static
-../System/Threads/Src/MicroRosThread.cpp:44:6:void MicroRosThread::TestCallback(const std_msgs__msg__Int32*)	24	static
-../System/Threads/Src/MicroRosThread.cpp:52:6:virtual void MicroRosThread::init()	16	static
-../System/Threads/Src/MicroRosThread.cpp:59:6:void MicroRosThread::updateSubs()	32	static
-../System/Threads/Src/MicroRosThread.cpp:86:6:void MicroRosThread::updatePubs()	56	static
-../System/Threads/Src/MicroRosThread.cpp:130:6:void MicroRosThread::ServoCallback(const std_msgs__msg__Int32*)	32	static
-../System/Threads/Src/MicroRosThread.cpp:142:6:bool MicroRosThread::try_connect_and_setup()	72	static
-../System/Threads/Src/MicroRosThread.cpp:225:6:virtual void MicroRosThread::loop()	16	static
+../System/Threads/Src/MicroRosThread.cpp:38:1:MicroRosThread::MicroRosThread(ThreadsRegistry*)	16	static
+../System/Threads/Src/MicroRosThread.cpp:46:6:void MicroRosThread::TestCallback(const std_msgs__msg__Int32*)	24	static
+../System/Threads/Src/MicroRosThread.cpp:54:6:virtual void MicroRosThread::init()	16	static
+../System/Threads/Src/MicroRosThread.cpp:61:6:void MicroRosThread::updateSubs()	40	static
+../System/Threads/Src/MicroRosThread.cpp:85:6:void MicroRosThread::updatePubs()	56	static
+../System/Threads/Src/MicroRosThread.cpp:143:6:bool MicroRosThread::try_connect_and_setup()	72	static
+../System/Threads/Src/MicroRosThread.cpp:226:6:virtual void MicroRosThread::loop()	16	static
 /home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MicroRosThread.h:33:7:MicroRosThread::~MicroRosThread()	16	static
 /home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MicroRosThread.h:33:7:virtual MicroRosThread::~MicroRosThread()	16	static

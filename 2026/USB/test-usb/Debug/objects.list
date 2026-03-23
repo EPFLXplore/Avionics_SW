@@ -56,7 +56,6 @@
 "./System/Core/Src/HX711.o"
 "./System/Core/Src/Interface.o"
 "./System/Core/Src/PWMDriver.o"
-"./System/Core/Src/Servo.o"
 "./System/Core/Src/System.o"
 "./System/Threads/Src/HeartBeat.o"
 "./System/Threads/Src/MassThread.o"
