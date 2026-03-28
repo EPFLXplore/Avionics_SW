@@ -16,23 +16,34 @@
 
 #include <micro_ros_custom_msgs/msg/mass_packet.h>
 #include <micro_ros_custom_msgs/msg/servo_request.h>
+#include <micro_ros_custom_msgs/msg/led_request.h>
+#include <micro_ros_custom_msgs/msg/mass_request.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 // Globals just for clarity here
 static rclc_support_t    g_support;
 static rcl_node_t        g_node;
+
 static rcl_publisher_t   g_pub_mass;
 static rcl_publisher_t   g_pub_beat;
 static rcl_publisher_t   g_pub_servo_request;
+static rcl_publisher_t   g_pub_mass_request;
+static rcl_publisher_t   g_pub_led_request;
 
 // New globals for test subscriber + counter
 static rcl_publisher_t      g_pub_subs;   // publishes the counter value
 static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
 static rcl_subscription_t   g_sub_servo;
+static rcl_subscription_t   g_sub_mass;
+static rcl_subscription_t   g_sub_led;
+
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
+
 static micro_ros_custom_msgs__msg__ServoRequest g_servo_req_msg;
+static micro_ros_custom_msgs__msg__LEDRequest g_led_req_msg;
+static micro_ros_custom_msgs__msg__MassRequest g_mass_req_msg;
 
 
 MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
@@ -69,7 +80,6 @@ void MicroRosThread::updateSubs() {
     }
 
     if (rcl_take(&g_sub_servo, &g_servo_req_msg, NULL, NULL) == RCL_RET_OK) {
-    	g_counter++;
 
         ServoRequest req;
         req.zero_in = g_servo_req_msg.zero_in;
@@ -80,6 +90,22 @@ void MicroRosThread::updateSubs() {
             _reg->servo->pushCommand(req);
         }
     }
+
+    // --- MASS SUB (Tare) ---
+        if (rcl_take(&g_sub_mass, &g_mass_req_msg, NULL, NULL) == RCL_RET_OK) {
+            MassRequest req;
+            req.tare = g_mass_req_msg.tare;
+            // Note: On envoie la commande au thread Mass
+            if (_reg->mass != nullptr) _reg->mass->pushCommand(req);
+        }
+
+        // --- LED SUB ---
+      /*      if (rcl_take(&g_sub_led, &g_led_req_msg, NULL, NULL) == RCL_RET_OK) {
+                LedRequest req;
+                req.system = g_led_req_msg.system;
+                req.state = g_led_req_msg.state;
+                if (_reg->led != nullptr) _reg->led->pushCommand(req);
+            }*/
 }
 
 void MicroRosThread::updatePubs()
@@ -116,6 +142,30 @@ void MicroRosThread::updatePubs()
              rcl_publish(&g_pub_beat, &msg, nullptr);
          }
     }
+
+    // --- MASS TARE CONFIRMATION ---
+    /*    if (_reg->mass != nullptr) {
+            MassRequest ms_req;
+            // On vérifie s'il y a des réponses de type MassRequest dans la queue status
+            while (_reg->mass->popStatus(ms_req)) {
+                micro_ros_custom_msgs__msg__MassRequest msg;
+                msg.tare = ms_req.tare;
+                msg.status_code = 200; // Exemple: OK
+                rcl_publish(&g_pub_mass_request, &msg, nullptr);
+            }
+        }*/
+
+        // --- LED STATUS/CONFIRMATION ---
+     /*       if (_reg->led != nullptr) {
+                LedRequest lr;
+                while (_reg->led->popStatus(lr)) {
+                    micro_ros_custom_msgs__msg__LEDRequest msg;
+                    msg.system = lr.system;
+                    msg.state = lr.state;
+                    rcl_publish(&g_pub_led_request, &msg, nullptr);
+                }
+            }*/
+
 
    /*if (_reg->servo != nullptr) {
          BeatPacket hb;
@@ -202,7 +252,19 @@ bool MicroRosThread::try_connect_and_setup()
             &g_pub_mass,
             &g_node,
             ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, MassPacket),
-            "mass");
+            "Mass_Info");
+
+    rclc_publisher_init_default(
+                &g_pub_mass_request,
+                &g_node,
+                ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, MassRequest),
+                "Mass_Tare_Status");
+
+    /*rclc_publisher_init_default(
+                &g_pub_led_request,
+                &g_node,
+                ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, LEDRequest),
+                "LED_Status");*/
 
     // New subscriber: any msg on "test_sub" bumps the counter
     rclc_subscription_init_default(
@@ -215,7 +277,19 @@ bool MicroRosThread::try_connect_and_setup()
         &g_sub_servo,
         &g_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, ServoRequest),
-        "servo_angle"); // Topic name
+        "Servo_angle_request"); // Topic name
+
+    rclc_subscription_init_default(
+            &g_sub_mass,
+            &g_node,
+            ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, MassRequest),
+            "Mass_Tare_Command");
+
+    /*rclc_subscription_init_default(
+                &g_sub_led,
+                &g_node,
+                ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, LEDRequest),
+                "LED_Mode_Request");*/
 
     initialized = true;
     g_sub_msg.data = 0;
@@ -233,9 +307,15 @@ void MicroRosThread::loop()
         // Destroy subscription and publishers
         rcl_subscription_fini(&g_sub_test, &g_node);
         rcl_subscription_fini(&g_sub_servo, &g_node);
+        rcl_subscription_fini(&g_sub_mass, &g_node);
+        //rcl_subscription_fini(&g_sub_led, &g_node);
+
+
         rcl_publisher_fini(&g_pub_subs, &g_node);
         rcl_publisher_fini(&g_pub_mass, &g_node);
         rcl_publisher_fini(&g_pub_beat, &g_node);
+        //rcl_publisher_fini(&g_pub_led_request, &g_node);
+        //rcl_publisher_fini(&g_pub_mass_request, &g_node);
 
         // Finally node + support
         rcl_node_fini(&g_node);

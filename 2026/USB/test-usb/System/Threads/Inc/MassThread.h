@@ -28,7 +28,7 @@ struct MassType {
 	float buffer[AVG_SIZE];
 };
 
-class MassThread : public MessageThread<EmptyMessage, MassPacket>{
+class MassThread : public MessageThread<MassRequest, MassPacket>{
 public:
 	MassThread();
 

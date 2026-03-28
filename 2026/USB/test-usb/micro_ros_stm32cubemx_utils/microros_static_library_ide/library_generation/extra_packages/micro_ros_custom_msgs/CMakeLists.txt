@@ -12,6 +12,8 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/ServoRequest.msg"
   "msg/MassPacket.msg"
+  "msg/LEDRequest.msg"
+  "msg/MassRequest.msg"
 )
 
 # 3. Export the dependencies

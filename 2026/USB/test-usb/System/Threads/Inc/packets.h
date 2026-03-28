@@ -30,6 +30,17 @@ struct MassPacket {
     float mass;
 };
 
+struct MassRequest{
+    //uint8_t id;
+    bool tare;
+};
+
+struct LedRequest {
+    //uint8_t id;
+    uint8_t system;
+    uint8_t state;
+};
+
 
 
 

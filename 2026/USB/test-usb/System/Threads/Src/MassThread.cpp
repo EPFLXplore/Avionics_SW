@@ -24,18 +24,27 @@ void MassThread::init(){
 }
 
 void MassThread::loop(){
-	this->update(mass);
-	//raw = mass->hx->read();
-	//this->sendint(raw);
+    // --- 1) GESTION DES COMMANDES (MICRO-ROS) ---
+    MassRequest cmd;
+    // Si MicroRosThread a fait un pushCommand(req), on le récupère ici
+    if (popCommand(cmd)) {
+        if (cmd.tare) {
+            this->tareScale(this->mass);
+        }
+    }
 
-	    // 2) Push status to MicroRosThread
-	    MassPacket st;
-	    st.mass = mass->weight;
-	    pushStatus(st);
+    // --- 2) MISE À JOUR PHYSIQUE ---
+    this->update(mass);
 
-	osDelay(pdMS_TO_TICKS(100));
-	//this->sendfloat(mass->weight);
+    // --- 3) ENVOI DU STATUS VERS MICROROS ---
+    MassPacket st;
+    st.mass = mass->weight;
+    // Note: status_code peut être ajouté dans la struct MassPacket si nécessaire
+    pushStatus(st);
+
+    osDelay(pdMS_TO_TICKS(100));
 }
+
 
 void MassThread::shift(float *array , int N, float valueIn){  //shifts all array values left and adds valueIn at position N-1
   for(int i = 1; i<N ; i++){
