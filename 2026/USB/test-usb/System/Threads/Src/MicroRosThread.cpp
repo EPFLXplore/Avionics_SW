@@ -277,7 +277,7 @@ bool MicroRosThread::try_connect_and_setup()
         &g_sub_servo,
         &g_node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, ServoRequest),
-        "Servo_angle_request"); // Topic name
+        "Servo_angle_request"); // Topic name*/
 
     rclc_subscription_init_default(
             &g_sub_mass,
