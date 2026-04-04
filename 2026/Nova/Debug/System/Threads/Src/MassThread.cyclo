@@ -1,0 +1,16 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:28:8:MassType::MassType()	1
+../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread()	2
+../System/Threads/Src/MassThread.cpp:20:6:virtual void MassThread::init()	1
+../System/Threads/Src/MassThread.cpp:26:6:virtual void MassThread::loop()	2
+../System/Threads/Src/MassThread.cpp:40:6:void MassThread::shift(float*, int, float)	2
+../System/Threads/Src/MassThread.cpp:47:7:float MassThread::movingAverage(const float*, uint8_t)	3
+../System/Threads/Src/MassThread.cpp:54:6:void MassThread::update(MassType*)	4
+../System/Threads/Src/MassThread.cpp:76:6:void MassThread::tareScale(MassType*)	4
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:118:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t) [with CommandMsg = EmptyMessage; StatusMsg = MassPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = MassPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = MassPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:60:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = EmptyMessage; StatusMsg = MassPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:36:7:MassThread::~MassThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:36:7:virtual MassThread::~MassThread()	1

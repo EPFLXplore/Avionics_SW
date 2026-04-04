@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+  <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+    <language id="org.eclipse.cdt.core.assembly" name="s,S">
+      <includepath>Core/Inc</includepath>
+      <includepath>USB_DEVICE/App</includepath>
+      <includepath workspace_path="true">/${ProjName}/System/Core/Inc</includepath>
+      <includepath>USB_DEVICE/Target</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc/Legacy</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/include</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Core/Inc</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc</includepath>
+      <includepath>Drivers/BSP/STM32H7xx_Nucleo</includepath>
+      <includepath>Drivers/CMSIS/Device/ST/STM32H7xx/Include</includepath>
+      <includepath>Drivers/CMSIS/Include</includepath>
+      <includepath workspace_path="true">/${ProjName}/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros/include</includepath>
+    </language>
+    <language id="org.eclipse.cdt.core.gcc" name="C Source File">
+      <includepath>Core/Inc</includepath>
+      <includepath workspace_path="true">/${ProjName}/System/Core/Inc</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc/Legacy</includepath>
+      <includepath>Drivers/BSP/STM32H7xx_Nucleo</includepath>
+      <includepath>Drivers/CMSIS/Device/ST/STM32H7xx/Include</includepath>
+      <includepath>Drivers/CMSIS/Include</includepath>
+      <includepath>USB_DEVICE/App</includepath>
+      <includepath>USB_DEVICE/Target</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Core/Inc</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/include</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F</includepath>
+      <includepath workspace_path="true">/${ProjName}/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros/include</includepath>
+    </language>
+    <language id="org.eclipse.cdt.core.g++" name="C++ Source File">
+      <includepath>Core/Inc</includepath>
+      <includepath workspace_path="true">/${ProjName}/System/Core/Inc</includepath>
+      <includepath workspace_path="true">/${ProjName}/System/Threads/Inc</includepath>
+      <includepath workspace_path="true">/${ProjName}/System/Utils/Inc</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc</includepath>
+      <includepath>Drivers/STM32H7xx_HAL_Driver/Inc/Legacy</includepath>
+      <includepath>Drivers/BSP/STM32H7xx_Nucleo</includepath>
+      <includepath>Drivers/CMSIS/Device/ST/STM32H7xx/Include</includepath>
+      <includepath>Drivers/CMSIS/Include</includepath>
+      <includepath>USB_DEVICE/App</includepath>
+      <includepath>USB_DEVICE/Target</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Core/Inc</includepath>
+      <includepath>Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/include</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</includepath>
+      <includepath>Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F</includepath>
+      <includepath workspace_path="true">/${ProjName}/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros/include</includepath>
+    </language>
+    <language name="Object File"/>
+  </section>
+  <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+    <language id="org.eclipse.cdt.core.assembly" name="s,S">
+      <macro>
+        <name>DEBUG</name>
+        <value/>
+      </macro>
+    </language>
+    <language id="org.eclipse.cdt.core.gcc" name="C Source File">
+      <macro>
+        <name>DEBUG</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_PWR_LDO_SUPPLY</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_NUCLEO_64</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_HAL_DRIVER</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>STM32H753xx</name>
+        <value/>
+      </macro>
+    </language>
+    <language id="org.eclipse.cdt.core.g++" name="C++ Source File">
+      <macro>
+        <name>DEBUG</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_PWR_LDO_SUPPLY</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_NUCLEO_64</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>USE_HAL_DRIVER</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>STM32H753xx</name>
+        <value/>
+      </macro>
+    </language>
+    <language name="Object File"/>
+  </section>
+</cdtprojectproperties>

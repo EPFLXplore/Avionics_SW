@@ -1,0 +1,12 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
+../System/Threads/Src/servoThreadnew.cpp:4:1:ServoThread::ServoThread()	16	static
+../System/Threads/Src/servoThreadnew.cpp:8:1:ServoThread::~ServoThread()	24	static
+../System/Threads/Src/servoThreadnew.cpp:8:1:virtual ServoThread::~ServoThread()	16	static
+../System/Threads/Src/servoThreadnew.cpp:15:6:virtual void ServoThread::init()	32	static
+../System/Threads/Src/servoThreadnew.cpp:21:6:void ServoThread::set_angle(float)	24	static
+../System/Threads/Src/servoThreadnew.cpp:34:6:virtual void ServoThread::loop()	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:118:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	40	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:60:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	32	static,ignoring_inline_asm
