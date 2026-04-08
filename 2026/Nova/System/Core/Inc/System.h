@@ -8,8 +8,8 @@
 #ifndef CORE_INC_SYSTEM_H_
 #define CORE_INC_SYSTEM_H_
 
+#include <LedsThread.h>
 #include <MicroRosThread.h>
-#include "TestTask.h"
 #include "MassThread.h"
 #include "HeartBeat.h"
 #include "servoThreadnew.h"
@@ -17,10 +17,11 @@
 
 
 struct ThreadsRegistry {
+
     HeartBeat* beat;
-    TestTask* test;     // or whatever TestTask really is
     MassThread* mass;
     ServoThread* servo;
+    LedsThread* leds;
     // Add more threads here as you create them
 };
 
@@ -28,7 +29,7 @@ class System {
 public:
 	static void init();
 
-	static TestTask* test;
+	static LedsThread* leds;
 	static MicroRosThread* microros;
 	static HeartBeat* beat;
 	static ThreadsRegistry reg;

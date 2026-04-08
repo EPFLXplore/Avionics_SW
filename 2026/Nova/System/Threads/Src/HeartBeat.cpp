@@ -7,8 +7,8 @@
 
 #include "HeartBeat.h"
 
-HeartBeat::HeartBeat()
-: MessageThread("HeartBeat")
+HeartBeat::HeartBeat(const char* name, osPriority priority)
+: MessageThread(name, priority)
 {
 }
 

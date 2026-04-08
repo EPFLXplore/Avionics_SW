@@ -14,8 +14,8 @@
 
 #include <cstring>   // for memset
 
-#include <micro_ros_custom_msgs/msg/mass_packet.h>
-#include <micro_ros_custom_msgs/msg/servo_request.h>
+#include <custom_msg/msg/mass_packet.h>
+#include <custom_msg/msg/servo_request.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -24,30 +24,19 @@ static rclc_support_t    g_support;
 static rcl_node_t        g_node;
 static rcl_publisher_t   g_pub_mass;
 static rcl_publisher_t   g_pub_beat;
-static rcl_publisher_t   g_pub_servo_request;
-
 // New globals for test subscriber + counter
 static rcl_publisher_t      g_pub_subs;   // publishes the counter value
 static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
 static rcl_subscription_t   g_sub_servo;
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
-static micro_ros_custom_msgs__msg__ServoRequest g_servo_req_msg;
+static custom_msg__msg__ServoRequest g_servo_req_msg;
 
 
-MicroRosThread::MicroRosThread(ThreadsRegistry* registry)
-: Thread("MicroRosThread"),
+MicroRosThread::MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority)
+: Thread(name, priority),
   _reg(registry)
 {
-    setTickDelay(1);
-}
-
-// Callback: each received message increments the counter
-void MicroRosThread::TestCallback(const std_msgs__msg__Int32 * msg)
-{
-    TestPacket testpacket;
-    testpacket.ping = msg->data;
-    _reg->test->pushCommand(testpacket);
 }
 
 
@@ -63,18 +52,13 @@ void MicroRosThread::updateSubs() {
 	        return;
 	}
 
-    rcl_ret_t ret = rcl_take(&g_sub_test, &g_sub_msg, NULL, NULL);
-    if (ret == RCL_RET_OK) {
-    	this->TestCallback(&g_sub_msg);
-    }
-
     if (rcl_take(&g_sub_servo, &g_servo_req_msg, NULL, NULL) == RCL_RET_OK) {
     	g_counter++;
 
         ServoRequest req;
-        req.zero_in = g_servo_req_msg.zero_in;
+        req.id        = g_servo_req_msg.id;
+        req.zero_in   = g_servo_req_msg.zero_in;
         req.increment = g_servo_req_msg.increment;
-        req.status_code = g_servo_req_msg.status_code; // Map this too!
 
         if (_reg->servo != nullptr) {
             _reg->servo->pushCommand(req);
@@ -88,22 +72,12 @@ void MicroRosThread::updatePubs()
         return;
     }
 
-    // 1) TestTask status -> /subs topic
-    if (_reg->test != nullptr) {
-        TestPacket st;
-        while (_reg->test->popStatus(st)) {
-            std_msgs__msg__Int32 msg;
-            msg.data = st.ping;   // this holds the accumulated counter
-            rcl_publish(&g_pub_subs, &msg, nullptr);
-        }
-    }
-
     if (_reg->mass != nullptr) {
          MassPacket ms;
          while (_reg->mass->popStatus(ms)) {
-             micro_ros_custom_msgs__msg__MassPacket msg;
+             custom_msg__msg__MassPacket msg;
+             msg.id   = ms.id;
              msg.mass = ms.mass;
-             msg.status_code = 15;
              rcl_publish(&g_pub_mass, &msg, nullptr);
          }
      }
@@ -117,28 +91,7 @@ void MicroRosThread::updatePubs()
          }
     }
 
-   /*if (_reg->servo != nullptr) {
-         BeatPacket hb;
-         while (_reg->beat->popStatus(hb)) {
-             std_msgs__msg__Float32 msg;
-             msg.data = hb.beat;
-             rcl_publish(&g_pub_beat, &msg, nullptr);
-         }
-    }*/
 }
-
-/*void MicroRosThread::ServoCallback(const std_msgs__msg__Int32 * msg)
-{
-    ServoRequest req;
-    req.increment = msg->data; // Using the Int32 data as the target angle
-    req.zero_in = false;
-
-    // Push the command to the ServoThread queue
-    if (_reg->servo != nullptr) {
-        _reg->servo->pushCommand(req);
-    }
-}
-*/
 
 bool MicroRosThread::try_connect_and_setup()
 {
@@ -201,7 +154,7 @@ bool MicroRosThread::try_connect_and_setup()
     rclc_publisher_init_default(
             &g_pub_mass,
             &g_node,
-            ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, MassPacket),
+            ROSIDL_GET_MSG_TYPE_SUPPORT(custom_msg, msg, MassPacket),
             "mass");
 
     // New subscriber: any msg on "test_sub" bumps the counter
@@ -214,8 +167,8 @@ bool MicroRosThread::try_connect_and_setup()
     rclc_subscription_init_default(
         &g_sub_servo,
         &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(micro_ros_custom_msgs, msg, ServoRequest),
-        "servo_angle"); // Topic name
+        ROSIDL_GET_MSG_TYPE_SUPPORT(custom_msg, msg, ServoRequest),
+        "servo_angle");
 
     initialized = true;
     g_sub_msg.data = 0;

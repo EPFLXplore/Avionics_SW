@@ -32,7 +32,7 @@ struct ThreadsRegistry;
 
 class MicroRosThread : public Thread {
 public:
-    explicit MicroRosThread(ThreadsRegistry* registry);
+    explicit MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority);
 
 protected:
     virtual void init() override;
@@ -41,9 +41,6 @@ protected:
 private:
     ThreadsRegistry* _reg;
     bool initialized = false;
-
-    void TestCallback(const std_msgs__msg__Int32 * msg);
-    //void ServoCallback(const std_msgs__msg__Int32 * msg);
 
     void updateSubs();
     void updatePubs();

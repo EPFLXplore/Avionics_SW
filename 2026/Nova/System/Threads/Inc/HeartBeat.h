@@ -12,7 +12,7 @@
 
 class HeartBeat : public MessageThread<EmptyMessage, BeatPacket> {
 public:
-    HeartBeat();
+    HeartBeat(const char* name, osPriority priority);
     void init() override;
     void loop() override;
 

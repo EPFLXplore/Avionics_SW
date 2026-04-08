@@ -8,10 +8,11 @@
 
 #include "System.h"
 #include "queue.h"
+#include "cmsis_os2.h"
 
 
 
-TestTask* System::test = nullptr;
+LedsThread* System::leds = nullptr;
 MicroRosThread* System::microros = nullptr;
 HeartBeat* System::beat = nullptr;
 MassThread* System::mass = nullptr;
@@ -20,26 +21,32 @@ ThreadsRegistry System::reg{};
 
 void System::init(){
 
-	//Allocate memory for the test thread
-	beat = new HeartBeat();
-	test = new TestTask();
-	mass = new MassThread();
-	servo = new ServoThread();
+	//Allocate memory for the threads
+	//beat = new HeartBeat("beat", osPriorityLow);
+	//test = new TestTask("test", osPriorityLow);
+	mass  = new MassThread("MassThread",  osPriorityNormal);
+	servo = new ServoThread("ServoThread", osPriorityNormal);
+	leds = new LedsThread("LedsThread", osPriorityNormal);
 
+	//Register tasks
     reg.beat = beat;
-    reg.test = test;
+    reg.leds = leds;
     reg.mass = mass;
     reg.servo = servo;
 
-    //servo->init();
-    microros = new MicroRosThread(&reg);
+    // Allocate memory for the MicroRosThread
+    microros = new MicroRosThread(&reg, "mROS", osPriorityHigh);
 
-	test->start();
-	beat->start();
-	mass->start();
+    //Set task timings
+    microros->setDelay(1000); //ms
+    servo->setDelay(100); //ms
+    mass->setDelay(100); //ms
+
+	//test->start();
+	//beat->start();
 	microros->start();
-	servo->init();
 	servo->start();
+	mass->start();
 
 }
 

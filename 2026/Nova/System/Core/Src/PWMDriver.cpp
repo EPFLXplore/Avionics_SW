@@ -1,64 +1,114 @@
 #include "PWMDriver.hpp"
 
-// We only extern the timer that is actually active in CubeMX
-extern "C" {
-    extern TIM_HandleTypeDef htim2;
+static uint32_t channel_to_hal(uint8_t ch)
+{
+    switch (ch) {
+        case 1:  return TIM_CHANNEL_1;
+        case 2:  return TIM_CHANNEL_2;
+        case 3:  return TIM_CHANNEL_3;
+        case 4:  return TIM_CHANNEL_4;
+        default: return TIM_CHANNEL_1;
+    }
 }
 
-PWMDriver::PWMDriver(TIM_HandleTypeDef* tim_, uint8_t channel_,
-                    uint16_t PWM_Pin_, GPIO_TypeDef *PWM_Port_)
-    : tim(tim_), PWM_Pin(PWM_Pin_), PWM_Port(PWM_Port_) {
+PWMDriver::PWMDriver(const PWMConfig& cfg) : cfg_(cfg), channel_hal_(channel_to_hal(cfg.channel))
+{
+    enable_gpio_clock();
 
-    // Map the integer channel to the HAL constant
-    switch (channel_) {
-        case 1: channel = TIM_CHANNEL_1; break;
-        case 2: channel = TIM_CHANNEL_2; break;
-        case 3: channel = TIM_CHANNEL_3; break;
-        case 4: channel = TIM_CHANNEL_4; break;
-        default: channel = TIM_CHANNEL_1; break;
-    }
+    GPIO_InitTypeDef gpio = {0};
+    gpio.Pin       = cfg_.pin;
+    gpio.Mode      = GPIO_MODE_AF_PP;
+    gpio.Pull      = GPIO_NOPULL;
+    gpio.Speed     = GPIO_SPEED_FREQ_LOW;
+    gpio.Alternate = cfg_.af;
+    HAL_GPIO_Init(cfg_.port, &gpio);
 
-    // Enable GPIO Clock
-    if (PWM_Port == GPIOA)      __HAL_RCC_GPIOA_CLK_ENABLE();
-    else if (PWM_Port == GPIOB) __HAL_RCC_GPIOB_CLK_ENABLE();
-    else if (PWM_Port == GPIOC) __HAL_RCC_GPIOC_CLK_ENABLE();
+    set50Hz();
 
-    // Configure GPIO for PWM (Alternate Function)
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin = PWM_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-
-    // Fixed: Only check for htim2. For PA0/TIM2, AF1 is standard.
-    if (tim == &htim2) {
-        GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
-    }
-
-    HAL_GPIO_Init(PWM_Port, &GPIO_InitStruct);
-
-    // Start the PWM hardware immediately
-    HAL_TIM_PWM_Start(tim, channel);
+    if (cfg_.complementary)
+        HAL_TIMEx_PWMN_Start(cfg_.tim, channel_hal_);
+    else
+        HAL_TIM_PWM_Start(cfg_.tim, channel_hal_);
 }
 
-PWMDriver::~PWMDriver() {
-    HAL_TIM_PWM_Stop(tim, channel);
-    HAL_GPIO_DeInit(PWM_Port, PWM_Pin);
+PWMDriver::~PWMDriver()
+{
+    if (cfg_.complementary)
+        HAL_TIMEx_PWMN_Stop(cfg_.tim, channel_hal_);
+    else
+        HAL_TIM_PWM_Stop(cfg_.tim, channel_hal_);
+    HAL_GPIO_DeInit(cfg_.port, cfg_.pin);
 }
 
-void PWMDriver::set_pwm(float duty_cycle) {
-    // Math: pulse = (Period * Duty%) / 100
-    // We use float for precision, then cast to uint32_t for the register
-    uint32_t pulse = (uint32_t)((period * duty_cycle) / 100.0f);
+void PWMDriver::set_pulse_us(uint16_t us)
+{
+    // After set50Hz(), timer runs at 1 MHz so 1 count = 1 µs.
+    // ARR = 19999, so the value is used directly as the CCR.
+    uint32_t pulse = us;
+    if (pulse > 19999U) pulse = 19999U;
 
-    // Safety check to prevent underflow
-    if (pulse > 0) pulse -= 1;
-
-    // Apply directly to the CCR register of TIM2
-    switch (channel) {
-        case TIM_CHANNEL_1: tim->Instance->CCR1 = pulse; break;
-        case TIM_CHANNEL_2: tim->Instance->CCR2 = pulse; break;
-        case TIM_CHANNEL_3: tim->Instance->CCR3 = pulse; break;
-        case TIM_CHANNEL_4: tim->Instance->CCR4 = pulse; break;
+    switch (channel_hal_) {
+        case TIM_CHANNEL_1: cfg_.tim->Instance->CCR1 = pulse; break;
+        case TIM_CHANNEL_2: cfg_.tim->Instance->CCR2 = pulse; break;
+        case TIM_CHANNEL_3: cfg_.tim->Instance->CCR3 = pulse; break;
+        case TIM_CHANNEL_4: cfg_.tim->Instance->CCR4 = pulse; break;
     }
+}
+
+void PWMDriver::set_angle(float angle)
+{
+    if (angle < 0.0f)   angle = 0.0f;
+    if (angle > 180.0f) angle = 180.0f;
+
+    // 0° = 500 µs, 180° = 2500 µs (extended range)
+    uint16_t us = (uint16_t)(500.0f + (angle / 180.0f) * 2000.0f);
+    set_pulse_us(us);
+}
+
+void PWMDriver::zero()
+{
+    set_pulse_us(cfg_.zero_pulse_us);
+}
+
+uint32_t PWMDriver::get_timer_clock(TIM_TypeDef* tim)
+{
+    // On STM32G4: TIM1, TIM8, TIM15, TIM16, TIM17, TIM20 are on APB2.
+    // Everything else (TIM2-7) is on APB1.
+    bool apb2 = (tim == TIM1  || tim == TIM8  ||
+                 tim == TIM15 || tim == TIM16 || tim == TIM17);
+
+    uint32_t pclk = apb2 ? HAL_RCC_GetPCLK2Freq() : HAL_RCC_GetPCLK1Freq();
+
+    // STM32 rule: if the APBx prescaler is not /1, the timer clock is 2x PCLK.
+    RCC_ClkInitTypeDef clk = {0};
+    uint32_t latency;
+    HAL_RCC_GetClockConfig(&clk, &latency);
+
+    uint32_t div = apb2 ? clk.APB2CLKDivider : clk.APB1CLKDivider;
+    if (div != RCC_HCLK_DIV1) pclk *= 2U;
+
+    return pclk;
+}
+
+void PWMDriver::set50Hz()
+{
+    // Prescale to exactly 1 MHz, then ARR = 19999 → 50 Hz (20 ms period).
+    uint32_t timer_clk = get_timer_clock(cfg_.tim->Instance);
+    uint32_t psc       = (timer_clk / 1000000U) - 1U;
+
+    cfg_.tim->Instance->PSC = psc;
+    cfg_.tim->Instance->ARR = 19999U;
+    // Force an update event so PSC and ARR are loaded immediately.
+    cfg_.tim->Instance->EGR = TIM_EGR_UG;
+}
+
+void PWMDriver::enable_gpio_clock() const
+{
+    if      (cfg_.port == GPIOA) __HAL_RCC_GPIOA_CLK_ENABLE();
+    else if (cfg_.port == GPIOB) __HAL_RCC_GPIOB_CLK_ENABLE();
+    else if (cfg_.port == GPIOC) __HAL_RCC_GPIOC_CLK_ENABLE();
+    else if (cfg_.port == GPIOD) __HAL_RCC_GPIOD_CLK_ENABLE();
+    else if (cfg_.port == GPIOE) __HAL_RCC_GPIOE_CLK_ENABLE();
+    else if (cfg_.port == GPIOF) __HAL_RCC_GPIOF_CLK_ENABLE();
+    else if (cfg_.port == GPIOG) __HAL_RCC_GPIOG_CLK_ENABLE();
 }

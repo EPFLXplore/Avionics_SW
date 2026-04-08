@@ -69,6 +69,10 @@ void Error_Handler(void);
 #define TIM_LEDS_1_GPIO_Port GPIOA
 #define TIM_LEDS_2_Pin GPIO_PIN_1
 #define TIM_LEDS_2_GPIO_Port GPIOA
+#define HX2_DATA_Pin GPIO_PIN_2
+#define HX2_DATA_GPIO_Port GPIOA
+#define HX2_CLK_Pin GPIO_PIN_3
+#define HX2_CLK_GPIO_Port GPIOA
 #define TIM_SERVO_4_Pin GPIO_PIN_11
 #define TIM_SERVO_4_GPIO_Port GPIOB
 #define TIM_SERVO_3_Pin GPIO_PIN_13
@@ -77,10 +81,10 @@ void Error_Handler(void);
 #define TIM_SERVO_2_GPIO_Port GPIOB
 #define TIM_SERVO_1_Pin GPIO_PIN_15
 #define TIM_SERVO_1_GPIO_Port GPIOB
-#define HX711_DAT_Pin GPIO_PIN_8
-#define HX711_DAT_GPIO_Port GPIOC
-#define HX711_CLK_Pin GPIO_PIN_9
+#define HX711_CLK_Pin GPIO_PIN_8
 #define HX711_CLK_GPIO_Port GPIOC
+#define HX711_DATA_Pin GPIO_PIN_9
+#define HX711_DATA_GPIO_Port GPIOC
 #define VIN_ALERT_Pin GPIO_PIN_15
 #define VIN_ALERT_GPIO_Port GPIOA
 #define SPI_SENS_CS_Pin GPIO_PIN_2

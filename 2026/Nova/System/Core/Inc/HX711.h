@@ -6,7 +6,6 @@
 #pragma once
 #include "main.h"
 #include <cstdint>
-#include "cmsis_os2.h"   // nécessaire pour osDelay()
 
 class HX711 {
 public:

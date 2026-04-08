@@ -15,7 +15,7 @@
 #include "cmsis_os2.h"
 
 
-TestTask::TestTask() : MessageThread("TestingTask", (osPriority)osPriorityNormal5, (uint32_t) 2048) {}
+TestTask::TestTask(const char* name, osPriority priority) : MessageThread(name, priority) {}
 
 void TestTask::init(){
 	counter = 0;

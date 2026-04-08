@@ -5,20 +5,26 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../System/Core/Src/Adafruit_NeoPixel_STM.cpp \
 ../System/Core/Src/HX711.cpp \
 ../System/Core/Src/Interface.cpp \
+../System/Core/Src/LEDStrip.cpp \
 ../System/Core/Src/PWMDriver.cpp \
 ../System/Core/Src/System.cpp 
 
 OBJS += \
+./System/Core/Src/Adafruit_NeoPixel_STM.o \
 ./System/Core/Src/HX711.o \
 ./System/Core/Src/Interface.o \
+./System/Core/Src/LEDStrip.o \
 ./System/Core/Src/PWMDriver.o \
 ./System/Core/Src/System.o 
 
 CPP_DEPS += \
+./System/Core/Src/Adafruit_NeoPixel_STM.d \
 ./System/Core/Src/HX711.d \
 ./System/Core/Src/Interface.d \
+./System/Core/Src/LEDStrip.d \
 ./System/Core/Src/PWMDriver.d \
 ./System/Core/Src/System.d 
 
@@ -30,7 +36,7 @@ System/Core/Src/%.o System/Core/Src/%.su System/Core/Src/%.cyclo: ../System/Core
 clean: clean-System-2f-Core-2f-Src
 
 clean-System-2f-Core-2f-Src:
-	-$(RM) ./System/Core/Src/HX711.cyclo ./System/Core/Src/HX711.d ./System/Core/Src/HX711.o ./System/Core/Src/HX711.su ./System/Core/Src/Interface.cyclo ./System/Core/Src/Interface.d ./System/Core/Src/Interface.o ./System/Core/Src/Interface.su ./System/Core/Src/PWMDriver.cyclo ./System/Core/Src/PWMDriver.d ./System/Core/Src/PWMDriver.o ./System/Core/Src/PWMDriver.su ./System/Core/Src/System.cyclo ./System/Core/Src/System.d ./System/Core/Src/System.o ./System/Core/Src/System.su
+	-$(RM) ./System/Core/Src/Adafruit_NeoPixel_STM.cyclo ./System/Core/Src/Adafruit_NeoPixel_STM.d ./System/Core/Src/Adafruit_NeoPixel_STM.o ./System/Core/Src/Adafruit_NeoPixel_STM.su ./System/Core/Src/HX711.cyclo ./System/Core/Src/HX711.d ./System/Core/Src/HX711.o ./System/Core/Src/HX711.su ./System/Core/Src/Interface.cyclo ./System/Core/Src/Interface.d ./System/Core/Src/Interface.o ./System/Core/Src/Interface.su ./System/Core/Src/LEDStrip.cyclo ./System/Core/Src/LEDStrip.d ./System/Core/Src/LEDStrip.o ./System/Core/Src/LEDStrip.su ./System/Core/Src/PWMDriver.cyclo ./System/Core/Src/PWMDriver.d ./System/Core/Src/PWMDriver.o ./System/Core/Src/PWMDriver.su ./System/Core/Src/System.cyclo ./System/Core/Src/System.d ./System/Core/Src/System.o ./System/Core/Src/System.su
 
 .PHONY: clean-System-2f-Core-2f-Src
 

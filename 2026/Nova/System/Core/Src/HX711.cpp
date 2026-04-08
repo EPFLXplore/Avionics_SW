@@ -34,22 +34,38 @@ bool HX711::available() const {
 
 int32_t HX711::read()
 {
-    while (HAL_GPIO_ReadPin(dout_port_,dout_pin_) == GPIO_PIN_SET);
-    uint32_t value = 0;
-    for (int i = 0; i < 24; ++i) {
-            value <<=1;
-            if(pulseClock()) {
-            	value++;
-
-            }
+    // Wait for data ready (RTOS can preempt here safely – SCK is low)
+    while (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET) {
+        // busy wait
     }
+
+    // Disable interrupts for the entire bit-bang sequence.
+    // If the RTOS preempts while SCK is HIGH, the HX711 sees SCK high >60 µs
+    // and enters power-down mode, causing DOUT to stick HIGH permanently.
+    __disable_irq();
+
+    uint32_t value = 0;
+
+    // Read 24 bits, MSB first
+    for (int i = 0; i < 24; ++i) {
+        value <<= 1;
+        if (pulseClock()) value++;
+    }
+
+    // One extra pulse: channel A, gain 128
     pulseClock();
 
-    if(value & 0x800000) {
-    	value |= 0xFF000000;
+    __enable_irq();
+
+    // Sign-extend 24-bit value to 32 bits
+    if (value & 0x800000U) {
+        value |= 0xFF000000U;
     }
 
-    return static_cast<int32_t>(value);
+    int32_t signedValue = static_cast<int32_t>(value);
+
+    // Apply stored offset (tare)
+    return signedValue - offset_;
 }
 
 void HX711::tare(uint16_t samples)
@@ -69,7 +85,7 @@ void HX711::tare(uint16_t samples)
 bool HX711::pulseClock() const
 {
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_SET);
-    // short delay: HX711 requires >0.2 µs high
+    // HX711 requires >0.2 µs high; sample DOUT while SCK is still HIGH
     for (volatile int i = 0; i < 20; ++i) { __NOP(); }
 
     bool bit = (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET);

@@ -17,13 +17,14 @@ static char buffer[128];
 void task_run(void* arg) {
 	Thread* thread = (Thread*) arg;
 
-	osDelay(pdMS_TO_TICKS(thread->getTickDelay()));
+	osDelay(pdMS_TO_TICKS(thread->getDelay()));
 
 	thread->init();
 
 	while(thread->isRunning()) {
 		thread->loop();
-		osDelay(pdMS_TO_TICKS(thread->getTickDelay()));
+		osDelay(pdMS_TO_TICKS(thread->getDelay()));
+		//taskYIELD();
 	}
 
 	delete thread;
@@ -74,10 +75,10 @@ void Thread::terminate() {
 }
 
 
-void Thread::setTickDelay(uint32_t ms) {
+void Thread::setDelay(uint32_t ms) {
 	this->delay = ms;
 }
 
-uint32_t Thread::getTickDelay() {
+uint32_t Thread::getDelay() {
 	return this->delay;
 }

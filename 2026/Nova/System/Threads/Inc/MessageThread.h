@@ -66,7 +66,7 @@ public:
         : Thread(name, priority, stackSize)
     {
         // Set loop delay in base Thread
-        setTickDelay(tickDelayMs);
+        setDelay(tickDelayMs);
 
         // Create inbox (command) queue
         _commandQueue = xQueueCreate(commandDepth, sizeof(CommandMsg));

@@ -3,22 +3,44 @@
 
 #include "main.h"
 
-// Define your period based on CubeMX settings (ARR + 1)
-#define DEFAULT_TIM_PERIOD 20000
+struct PWMConfig {
+    TIM_HandleTypeDef* tim;
+    uint8_t            channel;        ///< 1–4
+    uint16_t           pin;
+    GPIO_TypeDef*      port;
+    uint8_t            af;
+    bool               complementary;  ///< true for CHxN (e.g. TIM1_CH1N)
+    uint16_t           zero_pulse_us;  ///< Home/zero position pulse width in µs
+};
 
 class PWMDriver {
 public:
-    PWMDriver(TIM_HandleTypeDef* tim, uint8_t channel, uint16_t PWM_Pin, GPIO_TypeDef *PWM_Port);
+    explicit PWMDriver(const PWMConfig& cfg);
     ~PWMDriver();
 
-    void set_pwm(float duty_cycle);
+    /**
+     * @brief Set pulse width directly in microseconds.
+     * @param us  Pulse width, typ. 500–2500 µs for a servo.
+     */
+    void set_pulse_us(uint16_t us);
+
+    /**
+     * @brief Set servo angle (0–180°). Mapped to 500–2500 µs.
+     */
+    void set_angle(float angle);
+
+    /**
+     * @brief Drive to the zero/home position defined in PWMConfig.
+     */
+    void zero();
 
 private:
-    uint32_t channel;
-    TIM_HandleTypeDef* tim;
-    uint16_t PWM_Pin;
-    GPIO_TypeDef *PWM_Port;
-    uint32_t period = DEFAULT_TIM_PERIOD;
+    PWMConfig cfg_;
+    uint32_t  channel_hal_;
+
+    void     enable_gpio_clock() const;
+    void     set50Hz();
+    static uint32_t get_timer_clock(TIM_TypeDef* tim);
 };
 
-#endif
+#endif /* PWMDRIVER_HPP_ */

@@ -7,14 +7,25 @@
 
 #include <MassThread.h>
 
-MassThread::MassThread()
-: MessageThread("MassThread", (osPriority)osPriorityNormal5, 2048)
+MassThread::MassThread(const char* name, osPriority priority)
+: MessageThread(name, priority)
 {
-	load_cell = new HX711(HD_DOUT_GPIO_Port, HD_DOUT_Pin, HD_SCK_GPIO_Port,  HD_SCK_Pin); //TODO change this pointer thingy to not have two heap allocs
+	load_cell = new HX711(HX711_DATA_GPIO_Port, HX711_DATA_Pin, HX711_CLK_GPIO_Port,  HX711_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
 		mass = new MassType;
 		if (load_cell){
 			mass->hx = load_cell;
 		}
+}
+
+MassThread::~MassThread(){
+	if (load_cell){
+		delete load_cell;
+		load_cell = nullptr;
+	}
+	if (mass){
+		delete mass;
+		mass = nullptr;
+	}
 }
 
 void MassThread::init(){
@@ -24,18 +35,28 @@ void MassThread::init(){
 }
 
 void MassThread::loop(){
-	this->update(mass);
-	//raw = mass->hx->read();
-	//this->sendint(raw);
+    // --- 1) GESTION DES COMMANDES (MICRO-ROS) ---
+    MassRequest cmd;
+    // Si MicroRosThread a fait un pushCommand(req), on le récupère ici
+    /*if (popCommand(cmd)) {
+        if (cmd.tare) {
+            this->tareScale(this->mass);
+        }
+    }*/
 
-	    // 2) Push status to MicroRosThread
-	    MassPacket st;
-	    st.mass = mass->weight;
-	    pushStatus(st);
+    // --- 2) MISE À JOUR PHYSIQUE ---
+    this->update(mass);
 
-	osDelay(pdMS_TO_TICKS(100));
-	//this->sendfloat(mass->weight);
+    // --- 3) ENVOI DU STATUS VERS MICROROS ---
+    MassPacket st;
+    st.mass = mass->weight;
+    st.id = 5;
+    // Note: status_code peut être ajouté dans la struct MassPacket si nécessaire
+    pushStatus(st);
+
+    osDelay(pdMS_TO_TICKS(100));
 }
+
 
 void MassThread::shift(float *array , int N, float valueIn){  //shifts all array values left and adds valueIn at position N-1
   for(int i = 1; i<N ; i++){
@@ -55,7 +76,7 @@ void MassThread::update(MassType* device)
 {
     if (!device->hx->available()) return;
 
-    int32_t raw = device->hx->read();
+    volatile int32_t raw = device->hx->read();
 
     // 1. Shift and average
     this->shift(device->buffer, AVG_SIZE, (float)raw);
@@ -65,12 +86,7 @@ void MassThread::update(MassType* device)
     // Result = (Current - Zero) * CalibrationFactor
    float val = (avg - device->offset) * device->slope;
 
-   // Deadzone: If weight is less than 0.5g, just call it 0.0
-   if (val < 0.5f && val > -0.5f) {
-	   device->weight = 0.0f;
-       } else {
-          device->weight = val;
-   }
+   device->weight = val;
 }
 
 void MassThread::tareScale(MassType* device) {

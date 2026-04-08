@@ -13,7 +13,7 @@
 
 class TestTask : public MessageThread<TestPacket,TestPacket> {
 public:
-	TestTask();
+	TestTask(const char* name, osPriority priority);
 
 	void init();
 	void loop();

@@ -29,8 +29,8 @@ public:
 	osThreadId getHandle();
 	bool isRunning() { return running; }
 	void terminate();
-	void setTickDelay(uint32_t ms);
-	uint32_t getTickDelay();
+	void setDelay(uint32_t ms);
+	uint32_t getDelay();
 
 	void LOG_INFO(const char* format, ...);
 	void LOG_SUCCESS(const char* format, ...);

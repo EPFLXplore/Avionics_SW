@@ -20,11 +20,6 @@
 
 constexpr uint8_t AVG_SIZE = 20;
 
-#define HD_DOUT_Pin GPIO_PIN_8
-#define HD_DOUT_GPIO_Port GPIOB
-#define HD_SCK_Pin GPIO_PIN_9
-#define HD_SCK_GPIO_Port GPIOB //placeholder for debug: correctelly define on ioc
-
 struct MassType {
 	HX711* hx = nullptr;
 	float offset = 0.0f;
@@ -33,9 +28,10 @@ struct MassType {
 	float buffer[AVG_SIZE];
 };
 
-class MassThread : public MessageThread<EmptyMessage, MassPacket>{
+class MassThread : public MessageThread<EmptyMessage, MassPacket>{ //TODO reput the tare
 public:
-	MassThread();
+	MassThread(const char* name, osPriority priority);
+	~MassThread();
 
 	void init();
 

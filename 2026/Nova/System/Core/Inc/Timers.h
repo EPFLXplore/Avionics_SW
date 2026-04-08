@@ -9,6 +9,9 @@ extern "C" {
 
 
 extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim15;
 
 #ifdef __cplusplus
 }
