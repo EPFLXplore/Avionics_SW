@@ -1,11 +1,11 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
 /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/arm-none-eabi/thumb/v7e-m+fp/hard/bits/gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
-../System/Threads/Src/MicroRosThread.cpp:36:1:MicroRosThread::MicroRosThread(ThreadsRegistry*, const char*, osPriority_t)	1
-../System/Threads/Src/MicroRosThread.cpp:43:6:virtual void MicroRosThread::init()	2
-../System/Threads/Src/MicroRosThread.cpp:50:6:void MicroRosThread::updateSubs()	6
-../System/Threads/Src/MicroRosThread.cpp:69:6:void MicroRosThread::updatePubs()	9
-../System/Threads/Src/MicroRosThread.cpp:96:6:bool MicroRosThread::try_connect_and_setup()	3
-../System/Threads/Src/MicroRosThread.cpp:179:6:virtual void MicroRosThread::loop()	7
+../System/Threads/Src/MicroRosThread.cpp:39:1:MicroRosThread::MicroRosThread(ThreadsRegistry*, const char*, osPriority_t)	1
+../System/Threads/Src/MicroRosThread.cpp:46:6:virtual void MicroRosThread::init()	2
+../System/Threads/Src/MicroRosThread.cpp:53:6:void MicroRosThread::updateSubs()	9
+../System/Threads/Src/MicroRosThread.cpp:83:6:void MicroRosThread::updatePubs()	9
+../System/Threads/Src/MicroRosThread.cpp:110:6:bool MicroRosThread::try_connect_and_setup()	3
+../System/Threads/Src/MicroRosThread.cpp:199:6:virtual void MicroRosThread::loop()	7
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MicroRosThread.h:33:7:MicroRosThread::~MicroRosThread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MicroRosThread.h:33:7:virtual MicroRosThread::~MicroRosThread()	1

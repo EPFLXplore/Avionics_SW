@@ -10,51 +10,76 @@
 MassThread::MassThread(const char* name, osPriority priority)
 : MessageThread(name, priority)
 {
-	load_cell = new HX711(HX711_DATA_GPIO_Port, HX711_DATA_Pin, HX711_CLK_GPIO_Port,  HX711_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
-		mass = new MassType;
-		if (load_cell){
-			mass->hx = load_cell;
-		}
+	load_cell_0 = new HX711(HX711_DATA_GPIO_Port, HX711_DATA_Pin, HX711_CLK_GPIO_Port,  HX711_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
+	mass_0 = new MassType;
+	if (load_cell_0){
+		mass_0->hx = load_cell_0;
+	}
+	load_cell_1 = new HX711(HX2_DATA_GPIO_Port, HX2_DATA_Pin, HX2_CLK_GPIO_Port,  HX2_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
+		mass_1 = new MassType;
+	if (load_cell_1){
+		mass_1->hx = load_cell_1;
+	}
 }
 
 MassThread::~MassThread(){
-	if (load_cell){
-		delete load_cell;
-		load_cell = nullptr;
+
+	if (mass_0){
+		if (load_cell_0){
+			delete load_cell_0;
+			load_cell_0 = nullptr;
+		}
+		delete mass_0;
+		mass_0 = nullptr;
 	}
-	if (mass){
-		delete mass;
-		mass = nullptr;
+
+	if (mass_1){
+		if (load_cell_1){
+			delete load_cell_1;
+			load_cell_0 = nullptr;
+		}
+		delete mass_1;
+		mass_1 = nullptr;
 	}
+
 }
 
 void MassThread::init(){
-	mass->hx->begin();
+	mass_0->hx->begin();
 	osDelay(110);
-	this->tareScale(mass);
+	this->tareScale(mass_0);
+
+	mass_1->hx->begin();
+	osDelay(110);
+	this->tareScale(mass_1);
 }
 
 void MassThread::loop(){
-    // --- 1) GESTION DES COMMANDES (MICRO-ROS) ---
     MassRequest cmd;
-    // Si MicroRosThread a fait un pushCommand(req), on le récupère ici
     /*if (popCommand(cmd)) {
         if (cmd.tare) {
-            this->tareScale(this->mass);
+        	if (cmd.id == 0){
+        		this->tareScale(this->mass_0);
+        	} else {
+        		this->tareScale(this->mass_1);
+        	}
         }
     }*/
 
-    // --- 2) MISE À JOUR PHYSIQUE ---
-    this->update(mass);
+    this->updateMass(mass_0);
+    this->updateMass(mass_1);
+}
 
-    // --- 3) ENVOI DU STATUS VERS MICROROS ---
-    MassPacket st;
-    st.mass = mass->weight;
-    st.id = 5;
-    // Note: status_code peut être ajouté dans la struct MassPacket si nécessaire
+void MassThread::updateMass(MassType* device){
+	this->update(device);
+	MassPacket st;
+	st.mass = device->weight;
+	if (device == mass_0){
+	 	st.id = 0;
+	} else  {
+	 	st.id = 1;
+	}
     pushStatus(st);
-
-    osDelay(pdMS_TO_TICKS(100));
 }
 
 
@@ -74,7 +99,7 @@ float MassThread::movingAverage(const float *arr, uint8_t n) {
 
 void MassThread::update(MassType* device)
 {
-    if (!device->hx->available()) return;
+	if (!device->hx->available()) return;
 
     volatile int32_t raw = device->hx->read();
 
@@ -90,6 +115,8 @@ void MassThread::update(MassType* device)
 }
 
 void MassThread::tareScale(MassType* device) {
+	if (!device->hx->available()) return;
+
 	for (uint8_t i = 0; i < AVG_SIZE; ++i) {
 	    	device->buffer[i] = 0;
 	}

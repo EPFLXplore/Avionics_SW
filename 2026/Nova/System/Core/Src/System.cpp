@@ -38,7 +38,7 @@ void System::init(){
     microros = new MicroRosThread(&reg, "mROS", osPriorityHigh);
 
     //Set task timings
-    microros->setDelay(1000); //ms
+    microros->setDelay(700); //ms
     servo->setDelay(100); //ms
     mass->setDelay(100); //ms
 
@@ -47,6 +47,7 @@ void System::init(){
 	microros->start();
 	servo->start();
 	mass->start();
+	leds->start();
 
 }
 

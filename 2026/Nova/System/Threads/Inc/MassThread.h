@@ -35,6 +35,8 @@ public:
 
 	void init();
 
+	void updateMass(MassType* device);
+
 	void shift(float *array , int N, float valueIn);
 
 	float movingAverage(const float *arr, uint8_t n);
@@ -46,8 +48,10 @@ public:
 	void loop();
 
 private:
-	HX711* load_cell;
-	MassType* mass;
+	HX711* load_cell_0;
+	MassType* mass_0;
+	HX711* load_cell_1;
+	MassType* mass_1;
 	int32_t raw = 0;
 
 	char buffer[64];

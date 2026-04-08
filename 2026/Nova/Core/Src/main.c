@@ -632,11 +632,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(NRST_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : HX2_DATA_Pin VIN_ALERT_Pin */
-  GPIO_InitStruct.Pin = HX2_DATA_Pin|VIN_ALERT_Pin;
+  /*Configure GPIO pin : HX2_DATA_Pin */
+  GPIO_InitStruct.Pin = HX2_DATA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(HX2_DATA_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : HX2_CLK_Pin */
   GPIO_InitStruct.Pin = HX2_CLK_Pin;
@@ -651,6 +651,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(HX711_CLK_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : VIN_ALERT_Pin */
+  GPIO_InitStruct.Pin = VIN_ALERT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(VIN_ALERT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SPI_SENS_CS_Pin */
   GPIO_InitStruct.Pin = SPI_SENS_CS_Pin;

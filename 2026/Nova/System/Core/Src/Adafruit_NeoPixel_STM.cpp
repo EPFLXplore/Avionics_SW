@@ -74,9 +74,9 @@ void Adafruit_NeoPixel::setBrightness(uint8_t br)
 
 	for (int i(0); i < numLEDs; i++)
 	{
-		pixels[i].r = pixels_full_b[i].r * ((float) brightness / 255.0);
-		pixels[i].g = pixels_full_b[i].g * ((float) brightness / 255.0);
-		pixels[i].b = pixels_full_b[i].b * ((float) brightness / 255.0);
+		pixels[i].r = pixels_full_b[i].r * ((float) brightness / 255.0f);
+		pixels[i].g = pixels_full_b[i].g * ((float) brightness / 255.0f);
+		pixels[i].b = pixels_full_b[i].b * ((float) brightness / 255.0f);
 		setPixelColor(i, pixels[i], false);
 	}
 }

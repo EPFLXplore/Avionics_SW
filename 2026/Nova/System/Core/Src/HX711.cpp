@@ -28,7 +28,7 @@ void HX711::begin()
 }
 
 bool HX711::available() const {
-    // HX711 pulls DOUT low when data is ready
+    // HX711 pulls DOUT low when data is ready. It needs to be pulled high by pullups in order to not be low without availability
     return (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_RESET);
 }
 

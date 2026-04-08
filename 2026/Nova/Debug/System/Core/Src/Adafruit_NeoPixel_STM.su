@@ -6,6 +6,6 @@
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:24:6:void Adafruit_NeoPixel::begin(TIM_HandleTypeDef*, uint32_t)	32	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:43:6:void Adafruit_NeoPixel::setPixelColor(const uint32_t&, const Color&, bool)	32	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:60:6:void Adafruit_NeoPixel::presetColors(const Color*)	24	static
-../System/Core/Src/Adafruit_NeoPixel_STM.cpp:68:6:void Adafruit_NeoPixel::setBrightness(uint8_t)	40	static
+../System/Core/Src/Adafruit_NeoPixel_STM.cpp:68:6:void Adafruit_NeoPixel::setBrightness(uint8_t)	32	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:84:6:void Adafruit_NeoPixel::show()	16	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:92:6:void Adafruit_NeoPixel::clear()	24	static
