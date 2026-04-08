@@ -31,14 +31,14 @@ struct MassPacket {
 };
 
 struct MassRequest{
-    uint8_t id;
+    uint8_t id; //TODO: add board id and slave id to all cmd
     bool tare;
 };
 
 struct LedRequest {
     uint8_t id;
     uint8_t system;
-    uint8_t state;
+    uint8_t mode;
 };
 
 

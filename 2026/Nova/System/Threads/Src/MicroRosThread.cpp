@@ -16,7 +16,8 @@
 
 #include <custom_msg/msg/mass_packet.h>
 #include <custom_msg/msg/servo_request.h>
-#include <custom_msg/msg/led_message.h>
+#include <custom_msg/msg/led_request.h>
+#include <custom_msg/msg/mass_request.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -30,10 +31,12 @@ static rcl_publisher_t      g_pub_subs;   // publishes the counter value
 static rcl_subscription_t   g_sub_test;   // subscriber to bump the counter
 static rcl_subscription_t   g_sub_servo;
 static rcl_subscription_t   g_sub_led;
+static rcl_subscription_t   g_sub_mass;
 static std_msgs__msg__Int32 g_sub_msg;    // storage for incoming sub msg
 static int32_t              g_counter = 0; // incremented on each received msg
 static custom_msg__msg__ServoRequest g_servo_req_msg;
-static custom_msg__msg__LEDMessage   g_led_req_msg;
+static custom_msg__msg__LEDRequest   g_led_req_msg;
+static custom_msg__msg__MassRequest g_mass_req_msg;
 
 
 MicroRosThread::MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority)
@@ -72,11 +75,18 @@ void MicroRosThread::updateSubs() {
         LedRequest req;
         req.id     = 0;
         req.system = g_led_req_msg.system;
-        req.state  = g_led_req_msg.state;
+        req.mode  = g_led_req_msg.mode;
 
         if (_reg->leds != nullptr) {
             _reg->leds->pushCommand(req);
         }
+    }
+    if (rcl_take(&g_sub_mass, &g_mass_req_msg, NULL, NULL) == RCL_RET_OK) {
+        MassRequest req;
+        req.tare = g_mass_req_msg.tare;
+        req.id = 0;
+
+        if (_reg->mass != nullptr) _reg->mass->pushCommand(req);
     }
 }
 
@@ -187,8 +197,13 @@ bool MicroRosThread::try_connect_and_setup()
     rclc_subscription_init_default(
         &g_sub_led,
         &g_node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(custom_msg, msg, LEDMessage),
+        ROSIDL_GET_MSG_TYPE_SUPPORT(custom_msg, msg, LEDRequest),
         "led_mode");
+    rclc_subscription_init_default(
+        &g_sub_mass,
+        &g_node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(custom_msg, msg, MassRequest),
+        "mass_tare");
 
     initialized = true;
     g_sub_msg.data = 0;

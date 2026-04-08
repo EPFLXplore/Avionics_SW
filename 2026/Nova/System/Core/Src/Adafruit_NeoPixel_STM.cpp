@@ -25,17 +25,17 @@ void Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
 {
 	if (!begun)
 	{
+		neoPixTim = timer;
+		timCH = channel;
+
 		for (int i = 0; i < bufferSize; i++)
 			pBuff[i] = 0;
 
 		// Making sure that the LED strip is cleared.
 		this->clear();
 
-		neoPixTim = timer;
-		timCH = channel;
-
 		begun = true;
-		HAL_Delay(1);
+		osDelay(1);
 	}
 }
 
@@ -85,7 +85,7 @@ void Adafruit_NeoPixel::show()
 {
 	pBuff[bufferSize - 1] = 0;
 	HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,(uint32_t *) pBuff, bufferSize);
-	HAL_Delay(1);
+	osDelay(1);
 }
 
 // Sets color to black (or blank).

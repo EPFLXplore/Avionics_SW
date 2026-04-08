@@ -41,13 +41,15 @@ void System::init(){
     microros->setDelay(700); //ms
     servo->setDelay(100); //ms
     mass->setDelay(100); //ms
+    leds->setDelay(300); //ms
 
 	//test->start();
 	//beat->start();
+
 	microros->start();
 	servo->start();
 	mass->start();
-	leds->start();
+	//leds->start();
 
 }
 

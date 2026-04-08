@@ -26,6 +26,7 @@ void LEDStrip::begin(TIM_HandleTypeDef *timer, uint32_t channel) {
         _cmds[i].segment.r = _cmds[i].segment.g = _cmds[i].segment.b = 0;
         _states[i] = {};  // zero initialize
     }
+    _strip.show();
 }
 
 void LEDStrip::setBrightness(uint8_t b) { _strip.setBrightness(b); }

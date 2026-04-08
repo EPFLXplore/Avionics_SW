@@ -50,6 +50,7 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim5;
 TIM_HandleTypeDef htim15;
 DMA_HandleTypeDef hdma_tim5_ch1;
+DMA_HandleTypeDef hdma_tim5_ch2;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -82,7 +83,9 @@ void StartDefaultTask(void *argument);
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
-	HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+	if (htim->Instance == TIM4) {
+		HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_2);
+	}
 }
 /* USER CODE END 0 */
 
@@ -585,6 +588,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 
 }
 

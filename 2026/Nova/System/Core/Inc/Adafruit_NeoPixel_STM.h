@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <array>
 #include <iostream>
+#include "cmsis_os2.h"
 
 using namespace std;
 

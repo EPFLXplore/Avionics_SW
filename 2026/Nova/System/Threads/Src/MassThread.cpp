@@ -56,7 +56,7 @@ void MassThread::init(){
 
 void MassThread::loop(){
     MassRequest cmd;
-    /*if (popCommand(cmd)) {
+    if (this->popCommand(cmd)) {
         if (cmd.tare) {
         	if (cmd.id == 0){
         		this->tareScale(this->mass_0);
@@ -64,7 +64,7 @@ void MassThread::loop(){
         		this->tareScale(this->mass_1);
         	}
         }
-    }*/
+    }
 
     this->updateMass(mass_0);
     this->updateMass(mass_1);
@@ -124,7 +124,6 @@ void MassThread::tareScale(MassType* device) {
 	int64_t sum = 0;
 	for (uint8_t i = 0; i < 20; ++i) {
 		sum += device->hx->read();
-		osDelay(10);
 	}
 
     device->offset = (float)(sum/20);
