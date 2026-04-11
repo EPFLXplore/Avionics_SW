@@ -61,7 +61,8 @@ void LedsThread::loop(){
 	osDelay(1);
 	strip->setBrightness(1);
 	osDelay(1);
-	strip->tickOneSystem(cmd.system);
+	strip->tick();
+	//strip->tickOneSystem(cmd.system);
 	osDelay(1);
 }
 

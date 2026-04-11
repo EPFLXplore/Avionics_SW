@@ -1,0 +1,77 @@
+/*
+ * LEDStrip.h
+ *
+ *  Created on: Mar 10, 2026
+ *      Author: Mohamed Gdoura  (Original by Eliot)
+ */
+
+#ifndef ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
+#define ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
+
+#include "Adafruit_NeoPixel_STM.h"
+
+struct Segment {
+    uint8_t low;   // percentage 0-100
+    uint8_t high;  // percentage 0-100
+    uint8_t r, g, b;
+};
+
+struct Command {
+    Segment segment;
+    uint8_t emergency_global; // 0 or 1
+    uint8_t emergency_motors; // 0 or 1
+    uint8_t system;  // 0-2
+    uint8_t mode;    // 0-6
+};
+
+struct ModeState {
+    uint32_t lastUpdate = 0;
+    int step   = 0;
+    int phase  = 0;
+    bool initialized = false;
+};
+
+#define MAX_SYSTEMS 4
+
+class LEDStrip {
+public:
+    LEDStrip(uint8_t numLeds);
+    void begin(TIM_HandleTypeDef *timer, const uint32_t channel);
+    void setBrightness(uint8_t b);
+    void clear() { _strip.clear(); }
+    void applyCommand(const Command& cmd);   // queue-safe “set and forget”
+    void tick();                             // call every loop – non‑blocking
+    void tickOneSystem(uint8_t idx);
+
+private:
+    uint8_t  _numLeds;
+    Adafruit_NeoPixel _strip;
+
+    TIM_HandleTypeDef *stripTimer;
+    uint32_t stripChannel;
+
+    bool _processcmd = false;  // true if command received
+
+    Command   _cmds[MAX_SYSTEMS];
+    ModeState _states[MAX_SYSTEMS];
+
+    // helpers
+    int pctToIdx(uint8_t pct) const;
+    void setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b);
+    void handleMode(uint8_t idx);
+
+    // pattern engines – all non‑blocking
+    void mode0(uint8_t idx, int s, int e); // OFF - Blue
+    void mode1(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b); // ON
+    void mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, // BLINK
+               uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);
+    void mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed = 250); // FAULT
+    void mode4(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_MOTORS
+    void mode5(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_SHUTDOWN
+    void mode6(uint8_t idx); // ALL_OFF
+
+};
+
+
+
+#endif /* ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_ */
