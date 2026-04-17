@@ -1,0 +1,26 @@
+/**:
+  ros__parameters:
+    # GENERAL LIST OF EVERY ONE IN THE CODE RIGHT NOW ====================
+
+    # Publishers ============================
+    FOUR_IN_ONE_TOPIC:    "/EL/four_in_one"
+    SERVO_REP_TOPIC:      "/EL/servo_response"
+    BMS_TOPIC:            "/EL/bms_topic"
+    DUST_TOPIC:           "/EL/dust_sensor"
+    MASS_TOPIC:           "/EL/mass_packet"
+
+    # DRILL_MASS_TOPIC:     "/EL/drill/mass"
+    # CONTAINER_MASS_TOPIC: "/EL/container/mass"
+    #LED_TOPIC:            "/EL/led_response" #still in code but not used
+
+    # Config
+    SERVO_CONFIG_REQ_MCU_TOPIC:  "/EL/servo_config_mcu_req"
+    SERVO_CONFIG_TOPIC:          "/EL/servo_config_response"
+
+    # Subscribers ===========================
+    SERVO_REQ_TOPIC:      "/EL/servo_req"
+    LED_COM_TOPIC:        "/EL/LedCommands"
+
+
+    # Config
+    SERVO_CONFIG_REQ_JETSON_TOPIC:  "/EL/servo_config_req"

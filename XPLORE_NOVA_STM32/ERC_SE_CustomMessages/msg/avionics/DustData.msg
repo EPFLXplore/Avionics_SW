@@ -1,0 +1,13 @@
+# DustData.msg
+uint16 pm1_0_std
+uint16 pm2_5_std
+uint16 pm10_std
+uint16 pm1_0_atm
+uint16 pm2_5_atm
+uint16 pm10_atm
+uint16 num_particles_0_3
+uint16 num_particles_0_5
+uint16 num_particles_1_0
+uint16 num_particles_2_5
+uint16 num_particles_5_0
+uint16 num_particles_10

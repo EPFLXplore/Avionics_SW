@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "main.h"
 #include "cmsis_os.h"
-#include "../../System/Threads/Inc/LedsThread.h"
+#include "LedsThread.h"
 
 #define NUM_LEDS 34
 #define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED + RESET_PULSE
@@ -58,8 +58,11 @@ int main(void) {
 
 	osKernelInitialize();
 
-	LedsThread* stripThread1 = new LedsThread("ledTask", osPriorityNormal);
-	stripThread1->start();
+	LedsThread* ledStripThread = new LedsThread("ledTask", osPriorityNormal, &huart3, &htim4, TIM_CHANNEL_1, false);
+	LedsThread* serialLedsThread = new LedsThread("serialTask", osPriorityLow, &huart3, &htim4, TIM_CHANNEL_1, true);
+
+	ledStripThread->start();
+	serialLedsThread->start();
 
 	osKernelStart();
 
@@ -725,34 +728,34 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_LedTask */
-void LedTask(void *argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
-}
-
-/* USER CODE BEGIN Header_SerialTask */
-/**
-* @brief Function implementing the serialTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_SerialTask */
-void SerialTask(void *argument)
-{
-  /* USER CODE BEGIN SerialTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END SerialTask */
-}
+//void LedTask(void *argument)
+//{
+//  /* USER CODE BEGIN 5 */
+//  /* Infinite loop */
+//  for(;;)
+//  {
+//    osDelay(1);
+//  }
+//  /* USER CODE END 5 */
+//}
+//
+///* USER CODE BEGIN Header_SerialTask */
+///**
+//* @brief Function implementing the serialTask thread.
+//* @param argument: Not used
+//* @retval None
+//*/
+///* USER CODE END Header_SerialTask */
+//void SerialTask(void *argument)
+//{
+//  /* USER CODE BEGIN SerialTask */
+//  /* Infinite loop */
+//  for(;;)
+//  {
+//    osDelay(1);
+//  }
+//  /* USER CODE END SerialTask */
+//}
 
  /* MPU Configuration */
 

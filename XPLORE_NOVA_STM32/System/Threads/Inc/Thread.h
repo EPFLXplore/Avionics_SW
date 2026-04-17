@@ -44,7 +44,7 @@ private:
 	osThreadId_t   handle{nullptr};
 	osThreadAttr_t attributes{};                       // saved until start()
 	const char*    name{nullptr};
-	uint32_t       delay{100};
+	uint32_t       delay{1};
 	bool           running{true};
 	bool           started{false};
 };

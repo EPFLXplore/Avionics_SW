@@ -1,0 +1,8 @@
+string[] actions
+---
+string result
+int8 error_type
+string error_message
+---
+string current_command
+string warning_message

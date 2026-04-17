@@ -1,0 +1,10 @@
+string action
+int8 multiple_increment         # For the STEP_UP or STEP_DOWN action
+---
+string result
+int8 error_type
+string error_message
+---
+string current_status
+int8 warning_type
+string warning_message
