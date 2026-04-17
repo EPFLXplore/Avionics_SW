@@ -3,4 +3,16 @@
 	url = git@github.com:EPFLXplore/ERC_SE_CustomMessages.git
 [submodule "2026/Nova/ERC_SE_CustomMessages"]
 	path = 2026/Nova/ERC_SE_CustomMessages
-	url = git@github.com:EPFLXplore/ERC_SE_CustomMessages.git
+	url = https://github.com/EPFLXplore/ERC_SE_CustomMessages.git
+[submodule "micro_ros_stm32cubemx_utils"]
+	path = micro_ros_stm32cubemx_utils
+	url = https://github.com/micro-ROS/micro_ros_stm32cubemx_utils.git
+[submodule "2026/Nova/micro_ros_stm32cubemx_utils"]
+	path = 2026/Nova/micro_ros_stm32cubemx_utils
+	url = https://github.com/micro-ROS/micro_ros_stm32cubemx_utils.git
+[submodule "2026/Nova/Avionics_ROS"]
+	path = 2026/Nova/Avionics_ROS
+	url = https://github.com/EPFLXplore/Avionics_ROS.git
+[submodule "XPLORE_NOVA_STM32/Avionics_ROS"]
+	path = XPLORE_NOVA_STM32/Avionics_ROS
+	url = https://github.com/EPFLXplore/Avionics_ROS.git
