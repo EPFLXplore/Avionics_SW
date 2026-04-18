@@ -25,7 +25,7 @@ struct Command {
 };
 
 struct ModeState {
-    unsigned long lastUpdate = 0;
+    uint32_t lastUpdate = 0;
     int step   = 0;
     int phase  = 0;
     bool initialized = false;

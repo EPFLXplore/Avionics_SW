@@ -14,7 +14,7 @@
 
 #include <sys/time.h>
 #include "cmsis_os2.h"
-#include "usbd_cdc_if.h"
+//#include "usbd_cdc_if.h"
 
 #include <stdio.h>
 

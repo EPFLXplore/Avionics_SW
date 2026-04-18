@@ -17,14 +17,14 @@ extern "C" {
 
 
 extern "C" {
-#include "usb_device.h"
-#include "usbd_core.h"
-#include <rcl/rcl.h>
-#include <rcl/time.h>
-#include <rclc/rclc.h>
-#include <rmw_microros/rmw_microros.h>
-#include <std_msgs/msg/int32.h>
-#include <std_msgs/msg/float32.h>
+//#include "usb_device.h"
+//#include "usbd_core.h"
+//#include <rcl/rcl.h>
+//#include <rcl/time.h>
+//#include <rclc/rclc.h>
+//#include <rmw_microros/rmw_microros.h>
+//#include <std_msgs/msg/int32.h>
+//#include <std_msgs/msg/float32.h>
 }
 
 struct ThreadsRegistry;

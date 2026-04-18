@@ -25,19 +25,19 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Interface.h"
-#include "usb_device.h"
+//#include "usb_device.h"
 
 #include <stdbool.h>
-#include <std_msgs/msg/int32.h>
-
-#include "rcl/error_handling.h"
-#include "rcl/rcl.h"
-#include "rclc/executor.h"
-#include "rclc/rclc.h"
-#include "rmw_microros/rmw_microros.h"
-#include "rmw_microxrcedds_c/config.h"
-#include "std_msgs/msg/int32.h"
-#include "uxr/client/transport.h"
+//#include <std_msgs/msg/int32.h>
+//
+//#include "rcl/error_handling.h"
+//#include "rcl/rcl.h"
+//#include "rclc/executor.h"
+//#include "rclc/rclc.h"
+//#include "rmw_microros/rmw_microros.h"
+//#include "rmw_microxrcedds_c/config.h"
+//#include "std_msgs/msg/int32.h"
+//#include "uxr/client/transport.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

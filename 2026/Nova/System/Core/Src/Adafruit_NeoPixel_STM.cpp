@@ -35,7 +35,7 @@ void Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
 		timCH = channel;
 
 		begun = true;
-		HAL_Delay(1);
+		//HAL_Delay(1);
 	}
 }
 
@@ -85,7 +85,7 @@ void Adafruit_NeoPixel::show()
 {
 	pBuff[bufferSize - 1] = 0;
 	HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,(uint32_t *) pBuff, bufferSize);
-	HAL_Delay(1);
+	//HAL_Delay(1);
 }
 
 // Sets color to black (or blank).

@@ -1,0 +1,11 @@
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
+../System/Threads/Src/servoThreadnew.cpp:3:1:ServoThread::ServoThread(const char*, osPriority_t)	1
+../System/Threads/Src/servoThreadnew.cpp:6:1:ServoThread::~ServoThread()	3
+../System/Threads/Src/servoThreadnew.cpp:6:1:virtual ServoThread::~ServoThread()	1
+../System/Threads/Src/servoThreadnew.cpp:14:6:virtual void ServoThread::init()	1
+../System/Threads/Src/servoThreadnew.cpp:22:6:virtual void ServoThread::loop()	5
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:60:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3

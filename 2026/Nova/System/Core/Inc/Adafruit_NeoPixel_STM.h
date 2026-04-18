@@ -17,9 +17,13 @@
 using namespace std;
 
 // Defining constants.
-#define ARR_PERIOD 179
-#define CCR_B0 60   // 33% duty cycle.
-#define CCR_B1 120   // 66% duty cycle.
+// Timer clock = 64 MHz (HSI, APB1×2), ARR = 79 → 80-count period = 1.25 µs @ 800 kHz (WS2812B).
+// CCR_B0: ~33% of 80 = 26 counts high (0-bit:  ~0.40 µs high, ~0.85 µs low)
+// CCR_B1: ~67% of 80 = 53 counts high (1-bit:  ~0.83 µs high, ~0.42 µs low)
+// If you switch to a 144 MHz timer with ARR=179, restore CCR_B0=60, CCR_B1=120.
+#define ARR_PERIOD 79
+#define CCR_B0 26  // 32.5% duty cycle  (logical 0)
+#define CCR_B1 53   // 66.25% duty cycle (logical 1)
 
 #define BRIGHTNESS_SAFETY_THRESH 200 // DO NOT EXCEED TO AVOID XPLOSION.
 #define PI 3.14

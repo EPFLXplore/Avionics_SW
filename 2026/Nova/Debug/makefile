@@ -9,8 +9,6 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include USB_Device/Target/subdir.mk
--include USB_Device/App/subdir.mk
 -include System/Utils/Src/subdir.mk
 -include System/Threads/Src/subdir.mk
 -include System/Core/Src/subdir.mk
@@ -18,8 +16,6 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
--include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
--include Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/subdir.mk
 -include Drivers/STM32G4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -89,15 +85,14 @@ Nova.list \
 
 
 # All Target
-all:
-	+@$(MAKE) --no-print-directory pre-build && $(MAKE) --no-print-directory main-build
+all: main-build
 
 # Main-build Target
 main-build: Nova.elf secondary-outputs
 
 # Tool invocations
 Nova.elf Nova.map: $(OBJS) $(USER_OBJS) C:\Users\LENOVOµ\OneDrive\Documents\EPFL\ Xplore\ERC\ Electronics\ 25-26\Avionics_SW\2026\Nova\STM32G483RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "Nova.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\LENOVOµ\OneDrive\Documents\EPFL Xplore\ERC Electronics 25-26\Avionics_SW\2026\Nova\STM32G483RETX_FLASH.ld" -Wl,-Map="Nova.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+	arm-none-eabi-g++ -o "Nova.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\LENOVOµ\OneDrive\Documents\EPFL Xplore\ERC Electronics 25-26\Avionics_SW\2026\Nova\STM32G483RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nova.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -116,10 +111,6 @@ clean:
 	-$(RM) Nova.elf Nova.list Nova.map default.size.stdout
 	-@echo ' '
 
-pre-build:
-	docker pull microros/micro_ros_static_library_builder:humble && docker run --rm -v C:\Users\LENOVOµ\OneDrive\Documents\EPFL Xplore\ERC Electronics 25-26\Avionics_SW\2026\Nova:/project --env MICROROS_LIBRARY_FOLDER=micro_ros_stm32cubemx_utils/microros_static_library_ide microros/micro_ros_static_library_builder:humble
-	-@echo ' '
-
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
@@ -129,6 +120,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified pre-build
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
 
 -include ../makefile.targets

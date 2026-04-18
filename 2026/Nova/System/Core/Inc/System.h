@@ -30,7 +30,7 @@ public:
 	static void init();
 
 	static LedsThread* leds;
-	static MicroRosThread* microros;
+	//static MicroRosThread* microros;
 	static HeartBeat* beat;
 	static ThreadsRegistry reg;
 	static MassThread* mass;

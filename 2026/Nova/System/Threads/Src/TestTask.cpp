@@ -7,7 +7,7 @@
 
 #include <TestTask.h>
 #include "System.h"
-#include "usbd_cdc_if.h"
+//#include "usbd_cdc_if.h"
 
 
 // syscalls_time.c

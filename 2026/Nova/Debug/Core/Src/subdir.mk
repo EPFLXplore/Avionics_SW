@@ -4,10 +4,12 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+CPP_SRCS += \
+../Core/Src/main.cpp 
+
 C_SRCS += \
 ../Core/Src/app_freertos.c \
 ../Core/Src/custom_memory_manager.c \
-../Core/Src/main.c \
 ../Core/Src/microros_allocators.c \
 ../Core/Src/microros_time.c \
 ../Core/Src/stm32g4xx_hal_msp.c \
@@ -21,7 +23,6 @@ C_SRCS += \
 C_DEPS += \
 ./Core/Src/app_freertos.d \
 ./Core/Src/custom_memory_manager.d \
-./Core/Src/main.d \
 ./Core/Src/microros_allocators.d \
 ./Core/Src/microros_time.d \
 ./Core/Src/stm32g4xx_hal_msp.d \
@@ -46,10 +47,15 @@ OBJS += \
 ./Core/Src/system_stm32g4xx.o \
 ./Core/Src/usb_cdc_transport.o 
 
+CPP_DEPS += \
+./Core/Src/main.d 
+
 
 # Each subdirectory must supply rules for building sources it contributes
 Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
-	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_PWR_LDO_SUPPLY -DUSE_NUCLEO_64 -DUSE_HAL_DRIVER -DSTM32G483xx -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../USB_Device/App -I../USB_Device/Target -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Utils/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Core/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_PWR_LDO_SUPPLY -DUSE_NUCLEO_64 -DUSE_HAL_DRIVER -DSTM32G483xx -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Utils/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Core/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.cpp Core/Src/subdir.mk
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_PWR_LDO_SUPPLY -DUSE_NUCLEO_64 -DUSE_HAL_DRIVER -DSTM32G483xx -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Utils/Inc" -I"C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Core/Inc" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
 clean: clean-Core-2f-Src
 

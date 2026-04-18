@@ -1,0 +1,12 @@
+C:/Users/LENOVOµ/OneDrive/Documents/EPFL Xplore/ERC Electronics 25-26/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:30:7:bool Thread::isRunning()	1
+../System/Threads/Src/Thread.cpp:17:6:void task_run(void*)	3
+../System/Threads/Src/Thread.cpp:39:1:Thread::Thread(const char*)	1
+../System/Threads/Src/Thread.cpp:43:1:Thread::Thread(const char*, osPriority_t)	1
+../System/Threads/Src/Thread.cpp:47:1:Thread::Thread(const char*, uint32_t)	1
+../System/Threads/Src/Thread.cpp:51:1:Thread::Thread(const char*, osPriority_t, uint32_t)	1
+../System/Threads/Src/Thread.cpp:57:6:void Thread::start()	3
+../System/Threads/Src/Thread.cpp:65:14:void* Thread::getHandle()	1
+../System/Threads/Src/Thread.cpp:69:13:const char* Thread::getName()	1
+../System/Threads/Src/Thread.cpp:73:6:void Thread::terminate()	1
+../System/Threads/Src/Thread.cpp:78:6:void Thread::setDelay(uint32_t)	1
+../System/Threads/Src/Thread.cpp:82:10:uint32_t Thread::getDelay()	1
