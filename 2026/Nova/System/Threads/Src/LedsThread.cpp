@@ -6,6 +6,7 @@
  */
 
 #include <LedsThread.h>
+#include "stm32g4xx.h"
 
 #include "Timers.h"
 
@@ -35,7 +36,7 @@ void LedsThread::init(){
 
 	  strip->applyCommand(cmd);
 	  osDelay(1);
-	  strip->setBrightness(70);
+//	  strip->setBrightness(70);
 
 	  strip->tick();
 
@@ -43,6 +44,9 @@ void LedsThread::init(){
 
 void LedsThread::loop(){
 	while (popCommand(req)) {
+
+    	if (req.mode == 6) HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+    	else HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 
 		cmd.system = req.system;
 		cmd.mode = req.mode;
@@ -66,8 +70,6 @@ void LedsThread::loop(){
 		}
 
 		strip->applyCommand(cmd);
-		osDelay(1);
-		strip->setBrightness(70);
 		osDelay(1);
 		strip->tickOneSystem(cmd.system);
 		osDelay(1);

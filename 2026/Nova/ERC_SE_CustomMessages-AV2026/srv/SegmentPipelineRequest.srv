@@ -1,0 +1,11 @@
+string type
+float32 size_object
+int8 number_element_to_select
+
+---
+
+float32[] x
+float32[] y
+float32[] z
+
+bool success

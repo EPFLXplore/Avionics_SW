@@ -35,7 +35,6 @@ void Adafruit_NeoPixel::begin(TIM_HandleTypeDef *timer, uint32_t channel)
 		this->clear();
 
 		begun = true;
-		osDelay(1);
 	}
 }
 
@@ -84,7 +83,13 @@ void Adafruit_NeoPixel::setBrightness(uint8_t br)
 void Adafruit_NeoPixel::show()
 {
 	pBuff[bufferSize - 1] = 0;
-	HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,(uint32_t *) pBuff, bufferSize);
+	HAL_TIM_PWM_Stop_DMA(neoPixTim, timCH);
+
+	HAL_StatusTypeDef ret = HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,
+			(uint32_t*) pBuff, bufferSize);
+	if (ret != HAL_OK) {
+		__BKPT(0); // breakpoint here — DMA failed
+	}
 	osDelay(1);
 }
 

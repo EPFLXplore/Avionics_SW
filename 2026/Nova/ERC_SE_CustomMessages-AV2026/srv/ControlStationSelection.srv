@@ -1,0 +1,8 @@
+sensor_msgs/CompressedImage image
+int8 number_element_to_select
+
+---
+
+bool success
+float32[] x
+float32[] y

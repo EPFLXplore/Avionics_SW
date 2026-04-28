@@ -11,6 +11,7 @@
 #include "transport_layer.h"
 #include "Thread.h"
 #include "System.h"
+#include "stm32g4xx.h"
 
 #include <cstring>   // for memset
 
@@ -39,8 +40,8 @@ static custom_msg__msg__LEDRequest   g_led_req_msg;
 static custom_msg__msg__MassRequest g_mass_req_msg;
 
 
-MicroRosThread::MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority)
-: Thread(name, priority),
+MicroRosThread::MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority, uint32_t stackSize)
+: Thread(name, priority, stackSize),
   _reg(registry)
 {
 }
@@ -119,6 +120,7 @@ void MicroRosThread::updatePubs()
 
 bool MicroRosThread::try_connect_and_setup()
 {
+	size_t freeHeap = xPortGetFreeHeapSize();
     // 1. Setup Custom Transport
     rmw_uros_set_custom_transport(
         true,

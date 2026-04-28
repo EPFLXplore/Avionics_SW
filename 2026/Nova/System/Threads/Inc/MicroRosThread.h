@@ -32,7 +32,7 @@ struct ThreadsRegistry;
 
 class MicroRosThread : public Thread {
 public:
-    explicit MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority);
+    explicit MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority, uint32_t stackSize = 12288);
 
 protected:
     virtual void init() override;

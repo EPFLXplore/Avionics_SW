@@ -34,13 +34,16 @@ void LEDStrip::setBrightness(uint8_t b) { _strip.setBrightness(b); }
 // convert percentage (0-100) to pixel index
 int LEDStrip::pctToIdx(uint8_t pct) const
 {
-	return (pct * _numLeds) / 100;
+	int idx = (pct * _numLeds) / 100;
+	if (idx >= _numLeds) idx = _numLeds - 1;
+	return idx;
 }
 
 void LEDStrip::applyCommand(const Command& cmd) {
     if (cmd.system >= MAX_SYSTEMS) return;                 // ignore invalid
     _cmds[cmd.system]   = cmd;                             // overwrite
-    _states[cmd.system] = {};                              // reset state
+    if (_cmds[cmd.system].mode != cmd.mode)
+        _states[cmd.system] = {};                              // reset state
 }
 
 void LEDStrip::tick() {
@@ -56,6 +59,7 @@ void LEDStrip::tickOneSystem(uint8_t idx)
 }
 
 void LEDStrip::setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b) {
+	if (end >= _numLeds) end = _numLeds - 1;
     for (int i = start; i <= end; ++i) _strip.setPixelColor(i, {r, g, b}, true);
     //_strip.show();
 }

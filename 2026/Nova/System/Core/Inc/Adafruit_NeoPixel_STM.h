@@ -18,9 +18,9 @@
 using namespace std;
 
 // Defining constants.
-#define ARR_PERIOD 179
-#define CCR_B0 60   // 33% duty cycle.
-#define CCR_B1 120   // 66% duty cycle.
+#define ARR_PERIOD 89
+#define CCR_B0 29   // 33% duty cycle.
+#define CCR_B1 60   // 66% duty cycle.
 
 #define BRIGHTNESS_SAFETY_THRESH 200 // DO NOT EXCEED TO AVOID XPLOSION.
 #define PI 3.14

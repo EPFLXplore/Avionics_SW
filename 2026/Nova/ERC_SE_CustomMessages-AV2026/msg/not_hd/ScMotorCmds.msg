@@ -1,0 +1,6 @@
+bool send_pos
+bool send_vel
+bool change_velocity_translation
+int32 new_velocity_translation
+float64 position
+float64 velocity
