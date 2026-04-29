@@ -46,4 +46,5 @@ private:
     void updatePubs();
 
     bool try_connect_and_setup();
+    void destroy_entities();
 };

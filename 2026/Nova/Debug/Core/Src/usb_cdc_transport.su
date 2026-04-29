@@ -4,4 +4,5 @@
 ../Core/Src/usb_cdc_transport.c:100:6:cubemx_transport_open	16	static
 ../Core/Src/usb_cdc_transport.c:114:6:cubemx_transport_close	16	static
 ../Core/Src/usb_cdc_transport.c:118:8:cubemx_transport_write	56	static
-../Core/Src/usb_cdc_transport.c:138:8:cubemx_transport_read	56	static
+../Core/Src/usb_cdc_transport.c:141:6:cubemx_transport_flush	4	static
+../Core/Src/usb_cdc_transport.c:147:8:cubemx_transport_read	56	static

@@ -116,6 +116,9 @@ bool cubemx_transport_close(struct uxrCustomTransport * transport){
 }
 
 size_t cubemx_transport_write(struct uxrCustomTransport* transport,const uint8_t * buf, size_t len, uint8_t * err){
+    // Clear before transmit: a timed-out previous write may have set this flag late
+    g_write_complete = false;
+
 	uint8_t ret = CDC_Transmit_FS(buf, len);
 
 	if (USBD_OK != ret)
@@ -133,6 +136,12 @@ size_t cubemx_transport_write(struct uxrCustomTransport* transport,const uint8_t
     g_write_complete = false;
 
 	return writed;
+}
+
+void cubemx_transport_flush(void) {
+    it_head = 0;
+    it_tail = 0;
+    g_write_complete = false;
 }
 
 size_t cubemx_transport_read(struct uxrCustomTransport* transport, uint8_t* buf, size_t len, int timeout, uint8_t* err){
