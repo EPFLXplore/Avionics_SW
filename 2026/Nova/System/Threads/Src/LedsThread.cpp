@@ -98,7 +98,7 @@ void LedsThread::loop(){
 
 	while (popCommand(req)) {
 
-		strip->clear();
+//		strip->clear();
 
 		cmd.system = req.system;
 		cmd.mode = req.mode;
@@ -127,7 +127,7 @@ void LedsThread::loop(){
 //		xTaskResumeAll();
 	}
 
-	strip->tick();
+	strip->tickOneSystem(cmd.system);
 }
 
 

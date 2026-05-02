@@ -122,19 +122,33 @@ void LEDStrip::mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
 }
 
 void LEDStrip::mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed) {
-    ModeState& st = _states[idx];
-    if (HAL_GetTick() - st.lastUpdate < speed) return;
+	ModeState &st = _states[idx];
+	if (HAL_GetTick() - st.lastUpdate < speed)
+		return;
 
-    for (int i = s + st.phase; i < e; i += 3)
-        _strip.setPixelColor(i, {r, g, b}, true);
-//    _strip.show();
+	for (int i = s + st.phase; i < e; i += 3)
+		_strip.setPixelColor(i, { r, g, b }, true);
+	_strip.show();
 
-    // clear old
-    for (int i = s + st.phase; i < e; i += 3)
-        _strip.setPixelColor(i, {0, 0, 0}, true);
+	// clear old
+	for (int i = s + st.phase; i < e; i += 3)
+		_strip.setPixelColor(i, { 0, 0, 0 }, true);
 
-    st.phase = (st.phase + 1) % 3;
-    st.lastUpdate = HAL_GetTick();
+	st.phase = (st.phase + 1) % 3;
+	st.lastUpdate = HAL_GetTick();
+//    ModeState& st = _states[idx];
+//    if (HAL_GetTick() - st.lastUpdate < speed) return;
+//
+//    int prevPhase = (st.phase == 0) ? 2 : (st.phase - 1);
+//    for (int i = s + st.phase; i < e; i += 3)
+//        _strip.setPixelColor(i, {0, 0, 0}, true);
+//
+//    // clear old
+//    for (int i = s + st.phase; i < e; i += 3)
+//        _strip.setPixelColor(i, {r, g, b}, true);
+//
+//    st.phase = (st.phase + 1) % 3;
+//    st.lastUpdate = HAL_GetTick();
 }
 
 void LEDStrip::mode4(uint8_t idx, uint8_t r, uint8_t g, uint8_t b) {
