@@ -40,10 +40,10 @@ int LEDStrip::pctToIdx(uint8_t pct) const
 }
 
 void LEDStrip::applyCommand(const Command& cmd) {
-    if (cmd.system >= MAX_SYSTEMS) return;                 // ignore invalid
-    _cmds[cmd.system]   = cmd;                             // overwrite
-    if (_cmds[cmd.system].mode != cmd.mode)
-        _states[cmd.system] = {};                              // reset state
+	if (cmd.system >= MAX_SYSTEMS)
+		return;
+	_cmds[cmd.system] = cmd;
+	_states[cmd.system] = { };                            // reset state
 }
 
 void LEDStrip::tick() {
@@ -61,7 +61,7 @@ void LEDStrip::tickOneSystem(uint8_t idx)
 void LEDStrip::setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b) {
 	if (end >= _numLeds) end = _numLeds - 1;
     for (int i = start; i <= end; ++i) _strip.setPixelColor(i, {r, g, b}, true);
-    //_strip.show();
+//    _strip.show();
 }
 
 void LEDStrip::handleMode(uint8_t idx) {
@@ -111,7 +111,7 @@ void LEDStrip::mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
     for (uint8_t j = 1; j <= eye; ++j)
         _strip.setPixelColor(head + j, {r, g, b}, true);
     _strip.setPixelColor(head + eye + 1, {r / 10, g / 10, b / 10}, true);
-    _strip.show();
+//    _strip.show();
 
     st.lastUpdate = HAL_GetTick();
     st.step += st.phase == 0 ? 1 : -1;
@@ -127,7 +127,7 @@ void LEDStrip::mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
 
     for (int i = s + st.phase; i < e; i += 3)
         _strip.setPixelColor(i, {r, g, b}, true);
-    _strip.show();
+//    _strip.show();
 
     // clear old
     for (int i = s + st.phase; i < e; i += 3)

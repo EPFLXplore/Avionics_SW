@@ -3,7 +3,7 @@
 ../System/Core/Src/LEDStrip.cpp:13:6:void LEDStrip::begin(TIM_HandleTypeDef*, uint32_t)	2
 ../System/Core/Src/LEDStrip.cpp:32:6:void LEDStrip::setBrightness(uint8_t)	1
 ../System/Core/Src/LEDStrip.cpp:35:5:int LEDStrip::pctToIdx(uint8_t) const	2
-../System/Core/Src/LEDStrip.cpp:42:6:void LEDStrip::applyCommand(const Command&)	3
+../System/Core/Src/LEDStrip.cpp:42:6:void LEDStrip::applyCommand(const Command&)	2
 ../System/Core/Src/LEDStrip.cpp:49:6:void LEDStrip::tick()	2
 ../System/Core/Src/LEDStrip.cpp:55:6:void LEDStrip::tickOneSystem(uint8_t)	1
 ../System/Core/Src/LEDStrip.cpp:61:6:void LEDStrip::setAll(int, int, uint8_t, uint8_t, uint8_t)	3

@@ -1,5 +1,5 @@
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:30:7:bool Thread::isRunning()	16	static
-../System/Threads/Src/Thread.cpp:17:6:void task_run(void*)	24	static
+../System/Threads/Src/Thread.cpp:17:6:void task_run(void*)	24	static,ignoring_inline_asm
 ../System/Threads/Src/Thread.cpp:39:1:Thread::Thread(const char*)	16	static
 ../System/Threads/Src/Thread.cpp:43:1:Thread::Thread(const char*, osPriority_t)	24	static
 ../System/Threads/Src/Thread.cpp:47:1:Thread::Thread(const char*, uint32_t)	24	static

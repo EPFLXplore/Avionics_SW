@@ -27,26 +27,78 @@ LedsThread::~LedsThread(){
 
 
 void LedsThread::init(){
-	  strip->begin(&htim5, TIM_CHANNEL_2);
-	  cmd.segment.r = 0;
-	  cmd.segment.g = 255;
-	  cmd.segment.b = 0;
-	  cmd.segment.low = 0;
-	  cmd.segment.high = 50;
-
-	  strip->applyCommand(cmd);
-	  osDelay(1);
+	  strip->begin(&htim15, TIM_CHANNEL_1);
+//	  cmd.segment.r = 0;
+//	  cmd.segment.g = 255;
+//	  cmd.segment.b = 0;
+//	  cmd.segment.low = 0;
+//	  cmd.segment.high = 50;
+//
+//	  strip->applyCommand(cmd);
+//	  osDelay(1);
 //	  strip->setBrightness(70);
 
-	  strip->tick();
+//	  strip->tick();
 
 }
 
 void LedsThread::loop(){
+//	cmd.system = 0;
+//	cmd.mode = 0;
+//	cmd.emergency_global = 1;
+//	cmd.emergency_motors = 0;
+//
+//	switch (cmd.system) {
+//	case 0:
+//		cmd.segment.r = 147;
+//		cmd.segment.g = 0;
+//		cmd.segment.b = 211;
+//		cmd.segment.low = 0, cmd.segment.high = 50;
+//		break; // NAV - Pink
+//	case 1:
+//		cmd.segment.r = 255;
+//		cmd.segment.g = 1401000;
+//		cmd.segment.b = 0;
+//		cmd.segment.low = 51, cmd.segment.high = 100;
+//		break; // HD - Yellow
+//	case 2:
+//		cmd.segment.r = 0;
+//		cmd.segment.g = 255;
+//		cmd.segment.b = 0;
+//		cmd.segment.low = 0, cmd.segment.high = 50;
+//		break; // DRILL - Green
+//	case 3:
+//		cmd.segment.r = 20;
+//		cmd.segment.g = 56;
+//		cmd.segment.b = 50;
+//		cmd.segment.low = 51, cmd.segment.high = 100;
+//		break; // Avionics - Turquoise
+//	}
+//
+//	if (cmd.mode == 4) {
+//		cmd.segment.r = 100;
+//		cmd.segment.g = 81;
+//		cmd.segment.b = 50;
+//		cmd.segment.low = 0;
+//		cmd.segment.high = 50; // AMBER
+//	}
+//
+//	//emergency shutdown
+//	if (cmd.mode == 5) {
+//		cmd.segment.r = 255;
+//		cmd.segment.g = 0;
+//		cmd.segment.b = 0;
+//		cmd.segment.low = 0, cmd.segment.high = 100;
+//	}
+//
+//	strip->applyCommand(cmd);
+//	osDelay(1);
+//	strip->tickOneSystem(cmd.system);
+//	osDelay(1);
+
 	while (popCommand(req)) {
 
-    	if (req.mode == 6) HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-    	else HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+		strip->clear();
 
 		cmd.system = req.system;
 		cmd.mode = req.mode;
@@ -69,11 +121,13 @@ void LedsThread::loop(){
 			cmd.segment.r = 255; cmd.segment.g = 0;   cmd.segment.b = 0; cmd.segment.low = 0, cmd.segment.high= 100;
 		}
 
+//		vTaskSuspendAll();
 		strip->applyCommand(cmd);
-		osDelay(1);
-		strip->tickOneSystem(cmd.system);
-		osDelay(1);
+
+//		xTaskResumeAll();
 	}
+
+	strip->tick();
 }
 
 

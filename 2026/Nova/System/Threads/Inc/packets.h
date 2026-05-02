@@ -41,6 +41,9 @@ struct LedRequest {
     uint8_t mode;
 };
 
+struct ModePacket {
+	uint8_t mode;
+};
 
 
 

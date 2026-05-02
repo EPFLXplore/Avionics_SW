@@ -24,7 +24,7 @@ void task_run(void* arg) {
 	while(thread->isRunning()) {
 		thread->loop();
 		osDelay(pdMS_TO_TICKS(thread->getDelay()));
-		//taskYIELD();
+		taskYIELD();
 	}
 
 	delete thread;

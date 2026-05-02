@@ -135,6 +135,12 @@ size_t cubemx_transport_write(struct uxrCustomTransport* transport,const uint8_t
 	return writed;
 }
 
+void cubemx_transport_flush(void) {
+    it_head = 0;
+    it_tail = 0;
+    g_write_complete = false;
+}
+
 size_t cubemx_transport_read(struct uxrCustomTransport* transport, uint8_t* buf, size_t len, int timeout, uint8_t* err){
 
     int64_t start = uxr_millis();

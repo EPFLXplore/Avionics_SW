@@ -32,7 +32,7 @@ struct ThreadsRegistry;
 
 class MicroRosThread : public Thread {
 public:
-    explicit MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority, uint32_t stackSize = 12288);
+    explicit MicroRosThread(ThreadsRegistry* registry, const char* name, osPriority priority);
 
 protected:
     virtual void init() override;
@@ -46,4 +46,5 @@ private:
     void updatePubs();
 
     bool try_connect_and_setup();
+    void destroy_entities();
 };
