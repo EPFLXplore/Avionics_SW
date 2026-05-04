@@ -7,5 +7,5 @@
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:42:6:void Adafruit_NeoPixel::setPixelColor(const uint32_t&, const Color&, bool)	32	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:59:6:void Adafruit_NeoPixel::presetColors(const Color*)	24	static
 ../System/Core/Src/Adafruit_NeoPixel_STM.cpp:67:6:void Adafruit_NeoPixel::setBrightness(uint8_t)	32	static
-../System/Core/Src/Adafruit_NeoPixel_STM.cpp:83:6:void Adafruit_NeoPixel::show()	24	static,ignoring_inline_asm
-../System/Core/Src/Adafruit_NeoPixel_STM.cpp:97:6:void Adafruit_NeoPixel::clear()	24	static
+../System/Core/Src/Adafruit_NeoPixel_STM.cpp:83:6:void Adafruit_NeoPixel::show()	24	static
+../System/Core/Src/Adafruit_NeoPixel_STM.cpp:95:6:void Adafruit_NeoPixel::clear()	24	static

@@ -87,9 +87,7 @@ void Adafruit_NeoPixel::show()
 
 	HAL_StatusTypeDef ret = HAL_TIM_PWM_Start_DMA(neoPixTim, timCH,
 			(uint32_t*) pBuff, bufferSize);
-	if (ret != HAL_OK) {
-		__BKPT(0); // breakpoint here — DMA failed
-	}
+
 	osDelay(1);
 }
 

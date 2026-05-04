@@ -22,7 +22,7 @@ public:
 private:
 	bool cleared = false;
 	LedRequest req{};
-	LEDStrip* strip;
+	LEDStrip* strip1;
 	Command cmd;
 };
 

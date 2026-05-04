@@ -44,7 +44,7 @@ void System::init(){
     leds->setDelay(80); //ms
 
 	//test->start();
-	beat->start();
+//	beat->start();
 
 	microros->start();
 //	servo->start();

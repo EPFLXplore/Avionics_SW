@@ -1,12 +1,13 @@
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	16	static
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	16	static
 /opt/st/stm32cubeide_1.19.0_2/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/arm-none-eabi/thumb/v7e-m+fp/hard/bits/gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+/home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Core/Inc/LEDStrip.h:41:10:void LEDStrip::clear()	16	static
 ../System/Threads/Src/LedsThread.cpp:17:1:LedsThread::LedsThread(const char*, osPriority_t)	32	static
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Core/Inc/LEDStrip.h:36:7:LEDStrip::~LEDStrip()	16	static
 ../System/Threads/Src/LedsThread.cpp:21:1:LedsThread::~LedsThread()	24	static
 ../System/Threads/Src/LedsThread.cpp:21:1:virtual LedsThread::~LedsThread()	16	static
 ../System/Threads/Src/LedsThread.cpp:29:6:virtual void LedsThread::init()	16	static
-../System/Threads/Src/LedsThread.cpp:45:6:virtual void LedsThread::loop()	24	static
+../System/Threads/Src/LedsThread.cpp:46:6:virtual void LedsThread::loop()	40	static
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LedRequest; StatusMsg = EmptyMessage]	40	static
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LedRequest; StatusMsg = EmptyMessage]	16	static
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LedRequest; StatusMsg = EmptyMessage]	16	static
