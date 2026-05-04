@@ -137,7 +137,7 @@ void LedsThread::loop(){
 		}
 		else
 		{
-			strip1->clear();
+//			strip1->clear();
 			strip1->applyCommand(cmd);
 		}
 

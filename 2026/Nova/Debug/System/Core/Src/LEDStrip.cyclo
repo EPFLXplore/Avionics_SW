@@ -12,7 +12,7 @@
 ../System/Core/Src/LEDStrip.cpp:94:6:void LEDStrip::mode1(uint8_t, int, int, uint8_t, uint8_t, uint8_t)	2
 ../System/Core/Src/LEDStrip.cpp:133:17:LEDStrip::mode2(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)::<lambda(int, uint8_t, uint8_t, uint8_t)>	3
 ../System/Core/Src/LEDStrip.cpp:101:6:void LEDStrip::mode2(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)	6
-../System/Core/Src/LEDStrip.cpp:155:6:void LEDStrip::mode3(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint16_t)	5
-../System/Core/Src/LEDStrip.cpp:186:6:void LEDStrip::mode4(uint8_t, uint8_t, uint8_t, uint8_t)	2
-../System/Core/Src/LEDStrip.cpp:193:6:void LEDStrip::mode5(uint8_t, uint8_t, uint8_t, uint8_t)	2
-../System/Core/Src/LEDStrip.cpp:200:6:void LEDStrip::mode6(uint8_t)	2
+../System/Core/Src/LEDStrip.cpp:155:6:void LEDStrip::mode3(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint16_t)	3
+../System/Core/Src/LEDStrip.cpp:200:6:void LEDStrip::mode4(uint8_t, uint8_t, uint8_t, uint8_t)	2
+../System/Core/Src/LEDStrip.cpp:207:6:void LEDStrip::mode5(uint8_t, uint8_t, uint8_t, uint8_t)	2
+../System/Core/Src/LEDStrip.cpp:214:6:void LEDStrip::mode6(uint8_t)	2
