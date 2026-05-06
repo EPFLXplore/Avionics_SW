@@ -1,0 +1,17 @@
+C:\ST\STM32CubeIDE_1.19.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\arm-none-eabi\include\c++\13.3.1\arm-none-eabi\thumb\v7e-m+dp\hard\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:10:1:LEDStrip::LEDStrip(uint8_t)	16	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:13:6:void LEDStrip::begin(TIM_HandleTypeDef*, uint32_t)	56	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:31:6:void LEDStrip::setBrightness(uint8_t)	16	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:34:5:int LEDStrip::pctToIdx(uint8_t) const	16	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:39:6:void LEDStrip::applyCommand(const Command&)	32	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:45:6:void LEDStrip::tick()	24	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:51:6:void LEDStrip::tickOneSystem(uint8_t)	16	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:57:6:void LEDStrip::setAll(int, int, uint8_t, uint8_t, uint8_t)	40	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:62:6:void LEDStrip::handleMode(uint8_t)	64	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:80:6:void LEDStrip::mode0(uint8_t, int, int)	32	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:87:6:void LEDStrip::mode1(uint8_t, int, int, uint8_t, uint8_t, uint8_t)	32	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:94:6:void LEDStrip::mode2(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)	64	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:119:6:void LEDStrip::mode3(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint16_t)	48	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:135:6:void LEDStrip::mode4(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:142:6:void LEDStrip::mode5(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
+../Core/Adafruit_NeoPixel_STM/LEDStrip.cpp:149:6:void LEDStrip::mode6(uint8_t)	24	static

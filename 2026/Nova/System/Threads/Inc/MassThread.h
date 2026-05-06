@@ -28,6 +28,12 @@ struct MassType {
 	float buffer[AVG_SIZE];
 };
 
+enum Mass_ID{
+	SERVICE_MODULE_LEFT,
+	SERVICE_MODULE_RIGHT,
+	DRILL
+};
+
 class MassThread : public MessageThread<MassRequest, MassPacket>{ //TODO reput the tare
 public:
 	MassThread(const char* name, osPriority priority);

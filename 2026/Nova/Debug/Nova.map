@@ -7072,8 +7072,6 @@ Discarded input sections
                 0x00000000       0x50 ./System/Core/Src/Interface.o
  .rodata._ZL37rcl_action_qos_profile_status_default
                 0x00000000       0x50 ./System/Core/Src/Interface.o
- .rodata._ZL8AVG_SIZE
-                0x00000000        0x1 ./System/Core/Src/Interface.o
  .rodata._ZL11SERVO_0_CFG
                 0x00000000       0x10 ./System/Core/Src/Interface.o
  .rodata._ZL11SERVO_1_CFG
@@ -7082,6 +7080,8 @@ Discarded input sections
                 0x00000000       0x10 ./System/Core/Src/Interface.o
  .rodata._ZL11SERVO_3_CFG
                 0x00000000       0x10 ./System/Core/Src/Interface.o
+ .rodata._ZL8AVG_SIZE
+                0x00000000        0x1 ./System/Core/Src/Interface.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIjEE
                 0x00000000        0x1 ./System/Core/Src/Interface.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedImEE
@@ -7854,8 +7854,6 @@ Discarded input sections
                 0x00000000       0x50 ./System/Core/Src/System.o
  .rodata._ZL37rcl_action_qos_profile_status_default
                 0x00000000       0x50 ./System/Core/Src/System.o
- .rodata._ZL8AVG_SIZE
-                0x00000000        0x1 ./System/Core/Src/System.o
  .rodata._ZL11SERVO_0_CFG
                 0x00000000       0x10 ./System/Core/Src/System.o
  .rodata._ZL11SERVO_1_CFG
@@ -7864,6 +7862,8 @@ Discarded input sections
                 0x00000000       0x10 ./System/Core/Src/System.o
  .rodata._ZL11SERVO_3_CFG
                 0x00000000       0x10 ./System/Core/Src/System.o
+ .rodata._ZL8AVG_SIZE
+                0x00000000        0x1 ./System/Core/Src/System.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIjEE
                 0x00000000        0x1 ./System/Core/Src/System.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedImEE
@@ -8938,8 +8938,6 @@ Discarded input sections
                 0x00000000        0x1 ./System/Threads/Src/MicroRosThread.o
  .text._ZL20__gthread_key_deletei
                 0x00000000       0x16 ./System/Threads/Src/MicroRosThread.o
- .rodata._ZL8AVG_SIZE
-                0x00000000        0x1 ./System/Threads/Src/MicroRosThread.o
  .rodata._ZL11SERVO_0_CFG
                 0x00000000       0x10 ./System/Threads/Src/MicroRosThread.o
  .rodata._ZL11SERVO_1_CFG
@@ -8948,6 +8946,8 @@ Discarded input sections
                 0x00000000       0x10 ./System/Threads/Src/MicroRosThread.o
  .rodata._ZL11SERVO_3_CFG
                 0x00000000       0x10 ./System/Threads/Src/MicroRosThread.o
+ .rodata._ZL8AVG_SIZE
+                0x00000000        0x1 ./System/Threads/Src/MicroRosThread.o
  .rodata._ZTV6Thread
                 0x00000000       0x18 ./System/Threads/Src/MicroRosThread.o
  .rodata._ZNSt8__detail30__integer_to_chars_is_unsignedIjEE
@@ -9156,6 +9156,153 @@ Discarded input sections
  .debug_macro   0x00000000       0x41 ./System/Threads/Src/MicroRosThread.o
  .debug_macro   0x00000000       0x95 ./System/Threads/Src/MicroRosThread.o
  .debug_macro   0x00000000       0x10 ./System/Threads/Src/MicroRosThread.o
+ .group         0x00000000       0x14 ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000       0x14 ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .group         0x00000000        0xc ./System/Threads/Src/ServoThread.o
+ .text          0x00000000        0x0 ./System/Threads/Src/ServoThread.o
+ .data          0x00000000        0x0 ./System/Threads/Src/ServoThread.o
+ .bss           0x00000000        0x0 ./System/Threads/Src/ServoThread.o
+ .text._ZN6ThreadD2Ev
+                0x00000000       0x20 ./System/Threads/Src/ServoThread.o
+ .text._ZN6ThreadD0Ev
+                0x00000000       0x20 ./System/Threads/Src/ServoThread.o
+ .rodata._ZN9ThreadCfgL13TICK_DELAY_MSE
+                0x00000000        0x4 ./System/Threads/Src/ServoThread.o
+ .rodata._ZN9ThreadCfgL11QUEUE_DEPTHE
+                0x00000000        0x4 ./System/Threads/Src/ServoThread.o
+ .rodata._ZN9ThreadCfgL10STACK_SIZEE
+                0x00000000        0x4 ./System/Threads/Src/ServoThread.o
+ .rodata._ZTV6Thread
+                0x00000000       0x18 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0xbbc ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x197 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x1c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x22 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x8e ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x51 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x103 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x6a ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x1df ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x169 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x15a ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xc9 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x1c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x26 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x4c5 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xb5 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xaa ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x6c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x10 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x74 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xdd ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x87 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x9a ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x1f2 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x10 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x409 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x28 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x41 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x167 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x2e ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x28 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x1c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x22 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xf5 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000     0x1011 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x11f ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000    0x134c1 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x6d ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000     0x3558 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x5c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000     0x171f ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x600 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x1b6 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x336 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x50b ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x18b ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x43 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x23d ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000     0x1112 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x72e ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x391 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x211 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x45c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x11c ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0x73 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x22d ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x122 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x3d1 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x2fe ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0xc0b ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x718 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000      0x34a ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00000000       0xf4 ./System/Threads/Src/ServoThread.o
  .group         0x00000000       0x14 ./System/Threads/Src/TestTask.o
  .group         0x00000000        0xc ./System/Threads/Src/TestTask.o
  .group         0x00000000       0x14 ./System/Threads/Src/TestTask.o
@@ -9399,8 +9546,6 @@ Discarded input sections
                 0x00000000       0x50 ./System/Threads/Src/TestTask.o
  .rodata._ZL37rcl_action_qos_profile_status_default
                 0x00000000       0x50 ./System/Threads/Src/TestTask.o
- .rodata._ZL8AVG_SIZE
-                0x00000000        0x1 ./System/Threads/Src/TestTask.o
  .rodata._ZL11SERVO_0_CFG
                 0x00000000       0x10 ./System/Threads/Src/TestTask.o
  .rodata._ZL11SERVO_1_CFG
@@ -9409,6 +9554,8 @@ Discarded input sections
                 0x00000000       0x10 ./System/Threads/Src/TestTask.o
  .rodata._ZL11SERVO_3_CFG
                 0x00000000       0x10 ./System/Threads/Src/TestTask.o
+ .rodata._ZL8AVG_SIZE
+                0x00000000        0x1 ./System/Threads/Src/TestTask.o
  .text._ZN8TestTaskC2EPKc12osPriority_t
                 0x00000000       0x48 ./System/Threads/Src/TestTask.o
  .text._ZN8TestTask4initEv
@@ -9649,7 +9796,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x41 ./System/Threads/Src/TestTask.o
  .debug_macro   0x00000000       0x95 ./System/Threads/Src/TestTask.o
  .debug_macro   0x00000000       0x10 ./System/Threads/Src/TestTask.o
- .debug_line    0x00000000     0x3464 ./System/Threads/Src/TestTask.o
+ .debug_line    0x00000000     0x3461 ./System/Threads/Src/TestTask.o
  .debug_str     0x00000000    0xfe6f8 ./System/Threads/Src/TestTask.o
  .comment       0x00000000       0x44 ./System/Threads/Src/TestTask.o
  .debug_frame   0x00000000      0x1cc ./System/Threads/Src/TestTask.o
@@ -9763,153 +9910,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 ./System/Threads/Src/Thread.o
  .debug_macro   0x00000000      0x409 ./System/Threads/Src/Thread.o
  .debug_macro   0x00000000       0x28 ./System/Threads/Src/Thread.o
- .group         0x00000000       0x14 ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000       0x14 ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .group         0x00000000        0xc ./System/Threads/Src/servoThreadnew.o
- .text          0x00000000        0x0 ./System/Threads/Src/servoThreadnew.o
- .data          0x00000000        0x0 ./System/Threads/Src/servoThreadnew.o
- .bss           0x00000000        0x0 ./System/Threads/Src/servoThreadnew.o
- .text._ZN6ThreadD2Ev
-                0x00000000       0x20 ./System/Threads/Src/servoThreadnew.o
- .text._ZN6ThreadD0Ev
-                0x00000000       0x20 ./System/Threads/Src/servoThreadnew.o
- .rodata._ZN9ThreadCfgL13TICK_DELAY_MSE
-                0x00000000        0x4 ./System/Threads/Src/servoThreadnew.o
- .rodata._ZN9ThreadCfgL11QUEUE_DEPTHE
-                0x00000000        0x4 ./System/Threads/Src/servoThreadnew.o
- .rodata._ZN9ThreadCfgL10STACK_SIZEE
-                0x00000000        0x4 ./System/Threads/Src/servoThreadnew.o
- .rodata._ZTV6Thread
-                0x00000000       0x18 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0xbbc ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x197 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x1c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x22 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x8e ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x51 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x103 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x6a ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x1df ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x169 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x15a ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xc9 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x1c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x26 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x4c5 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xb5 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xaa ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x6c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x10 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x74 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xdd ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x87 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x9a ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x1f2 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x10 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x409 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x28 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x41 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x167 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x2e ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x28 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x1c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x22 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xf5 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000     0x1011 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x11f ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000    0x134c1 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x6d ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000     0x3558 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x5c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000     0x171f ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x600 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x1b6 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x336 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x50b ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x18b ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x43 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x23d ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000     0x1112 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x72e ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x391 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x211 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x45c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x11c ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0x73 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x22d ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x122 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x3d1 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x2fe ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0xc0b ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x718 ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000      0x34a ./System/Threads/Src/servoThreadnew.o
- .debug_macro   0x00000000       0xf4 ./System/Threads/Src/servoThreadnew.o
  .group         0x00000000        0xc ./System/Utils/Src/Operators.o
  .group         0x00000000        0xc ./System/Utils/Src/Operators.o
  .group         0x00000000        0xc ./System/Utils/Src/Operators.o
@@ -12542,9 +12542,9 @@ LOAD ./System/Threads/Src/HeartBeat.o
 LOAD ./System/Threads/Src/LedsThread.o
 LOAD ./System/Threads/Src/MassThread.o
 LOAD ./System/Threads/Src/MicroRosThread.o
+LOAD ./System/Threads/Src/ServoThread.o
 LOAD ./System/Threads/Src/TestTask.o
 LOAD ./System/Threads/Src/Thread.o
-LOAD ./System/Threads/Src/servoThreadnew.o
 LOAD ./System/Utils/Src/Operators.o
 LOAD ./USB_Device/App/usb_device.o
 LOAD ./USB_Device/App/usbd_cdc_if.o
@@ -13844,59 +13844,59 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .text._ZN14MicroRosThreadD0Ev
                 0x0801185c       0x20 ./System/Threads/Src/MicroRosThread.o
                 0x0801185c                MicroRosThread::~MicroRosThread()
- .text._ZN6Thread9isRunningEv
-                0x0801187c       0x1a ./System/Threads/Src/Thread.o
-                0x0801187c                Thread::isRunning()
- *fill*         0x08011896        0x2 
- .text._Z8task_runPv
-                0x08011898       0x94 ./System/Threads/Src/Thread.o
-                0x08011898                task_run(void*)
- .text._ZN6ThreadC2EPKc12osPriority_tm
-                0x0801192c       0x64 ./System/Threads/Src/Thread.o
-                0x0801192c                Thread::Thread(char const*, osPriority_t, unsigned long)
-                0x0801192c                Thread::Thread(char const*, osPriority_t, unsigned long)
- .text._ZN6Thread5startEv
-                0x08011990       0x64 ./System/Threads/Src/Thread.o
-                0x08011990                Thread::start()
- .text._ZN6Thread8setDelayEm
-                0x080119f4       0x1c ./System/Threads/Src/Thread.o
-                0x080119f4                Thread::setDelay(unsigned long)
- .text._ZN6Thread8getDelayEv
-                0x08011a10       0x18 ./System/Threads/Src/Thread.o
-                0x08011a10                Thread::getDelay()
  .text._ZN11ServoThreadC2EPKc12osPriority_t
-                0x08011a28       0x3c ./System/Threads/Src/servoThreadnew.o
-                0x08011a28                ServoThread::ServoThread(char const*, osPriority_t)
-                0x08011a28                ServoThread::ServoThread(char const*, osPriority_t)
+                0x0801187c       0x3c ./System/Threads/Src/ServoThread.o
+                0x0801187c                ServoThread::ServoThread(char const*, osPriority_t)
+                0x0801187c                ServoThread::ServoThread(char const*, osPriority_t)
  .text._ZN11ServoThreadD2Ev
-                0x08011a64       0x60 ./System/Threads/Src/servoThreadnew.o
-                0x08011a64                ServoThread::~ServoThread()
-                0x08011a64                ServoThread::~ServoThread()
+                0x080118b8       0x60 ./System/Threads/Src/ServoThread.o
+                0x080118b8                ServoThread::~ServoThread()
+                0x080118b8                ServoThread::~ServoThread()
  .text._ZN11ServoThreadD0Ev
-                0x08011ac4       0x20 ./System/Threads/Src/servoThreadnew.o
-                0x08011ac4                ServoThread::~ServoThread()
+                0x08011918       0x20 ./System/Threads/Src/ServoThread.o
+                0x08011918                ServoThread::~ServoThread()
  .text._ZN11ServoThread4initEv
-                0x08011ae4       0x78 ./System/Threads/Src/servoThreadnew.o
-                0x08011ae4                ServoThread::init()
+                0x08011938       0x78 ./System/Threads/Src/ServoThread.o
+                0x08011938                ServoThread::init()
  .text._ZN11ServoThread4loopEv
-                0x08011b5c       0x82 ./System/Threads/Src/servoThreadnew.o
-                0x08011b5c                ServoThread::loop()
+                0x080119b0       0x82 ./System/Threads/Src/ServoThread.o
+                0x080119b0                ServoThread::loop()
  .text._ZN13MessageThreadI12ServoRequest12EmptyMessageEC2EPKc12osPriority_t
-                0x08011bde       0x30 ./System/Threads/Src/servoThreadnew.o
-                0x08011bde                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t)
-                0x08011bde                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t)
- *fill*         0x08011c0e        0x2 
+                0x08011a32       0x30 ./System/Threads/Src/ServoThread.o
+                0x08011a32                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t)
+                0x08011a32                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t)
+ *fill*         0x08011a62        0x2 
  .text._ZN13MessageThreadI12ServoRequest12EmptyMessageED2Ev
-                0x08011c10       0x54 ./System/Threads/Src/servoThreadnew.o
-                0x08011c10                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
-                0x08011c10                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
+                0x08011a64       0x54 ./System/Threads/Src/ServoThread.o
+                0x08011a64                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
+                0x08011a64                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
  .text._ZN13MessageThreadI12ServoRequest12EmptyMessageED0Ev
-                0x08011c64       0x20 ./System/Threads/Src/servoThreadnew.o
-                0x08011c64                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
+                0x08011ab8       0x20 ./System/Threads/Src/ServoThread.o
+                0x08011ab8                MessageThread<ServoRequest, EmptyMessage>::~MessageThread()
  .text._ZN13MessageThreadI12ServoRequest12EmptyMessageEC2EPKc12osPriority_tmmjj
-                0x08011c84       0xa4 ./System/Threads/Src/servoThreadnew.o
-                0x08011c84                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t, unsigned long, unsigned long, unsigned int, unsigned int)
-                0x08011c84                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t, unsigned long, unsigned long, unsigned int, unsigned int)
+                0x08011ad8       0xa4 ./System/Threads/Src/ServoThread.o
+                0x08011ad8                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t, unsigned long, unsigned long, unsigned int, unsigned int)
+                0x08011ad8                MessageThread<ServoRequest, EmptyMessage>::MessageThread(char const*, osPriority_t, unsigned long, unsigned long, unsigned int, unsigned int)
+ .text._ZN6Thread9isRunningEv
+                0x08011b7c       0x1a ./System/Threads/Src/Thread.o
+                0x08011b7c                Thread::isRunning()
+ *fill*         0x08011b96        0x2 
+ .text._Z8task_runPv
+                0x08011b98       0x94 ./System/Threads/Src/Thread.o
+                0x08011b98                task_run(void*)
+ .text._ZN6ThreadC2EPKc12osPriority_tm
+                0x08011c2c       0x64 ./System/Threads/Src/Thread.o
+                0x08011c2c                Thread::Thread(char const*, osPriority_t, unsigned long)
+                0x08011c2c                Thread::Thread(char const*, osPriority_t, unsigned long)
+ .text._ZN6Thread5startEv
+                0x08011c90       0x64 ./System/Threads/Src/Thread.o
+                0x08011c90                Thread::start()
+ .text._ZN6Thread8setDelayEm
+                0x08011cf4       0x1c ./System/Threads/Src/Thread.o
+                0x08011cf4                Thread::setDelay(unsigned long)
+ .text._ZN6Thread8getDelayEv
+                0x08011d10       0x18 ./System/Threads/Src/Thread.o
+                0x08011d10                Thread::getDelay()
  .text._Znwj    0x08011d28       0x18 ./System/Utils/Src/Operators.o
                 0x08011d28                operator new(unsigned int)
  .text._Znaj    0x08011d40       0x18 ./System/Utils/Src/Operators.o
@@ -15538,18 +15538,18 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
                 0x0801e36c       0x18 ./System/Threads/Src/MicroRosThread.o
                 0x0801e36c                vtable for MicroRosThread
  .rodata._ZL11SERVO_0_CFG
-                0x0801e384       0x10 ./System/Threads/Src/servoThreadnew.o
+                0x0801e384       0x10 ./System/Threads/Src/ServoThread.o
  .rodata._ZL11SERVO_1_CFG
-                0x0801e394       0x10 ./System/Threads/Src/servoThreadnew.o
+                0x0801e394       0x10 ./System/Threads/Src/ServoThread.o
  .rodata._ZL11SERVO_2_CFG
-                0x0801e3a4       0x10 ./System/Threads/Src/servoThreadnew.o
+                0x0801e3a4       0x10 ./System/Threads/Src/ServoThread.o
  .rodata._ZL11SERVO_3_CFG
-                0x0801e3b4       0x10 ./System/Threads/Src/servoThreadnew.o
+                0x0801e3b4       0x10 ./System/Threads/Src/ServoThread.o
  .rodata._ZTV11ServoThread
-                0x0801e3c4       0x18 ./System/Threads/Src/servoThreadnew.o
+                0x0801e3c4       0x18 ./System/Threads/Src/ServoThread.o
                 0x0801e3c4                vtable for ServoThread
  .rodata._ZTV13MessageThreadI12ServoRequest12EmptyMessageE
-                0x0801e3dc       0x18 ./System/Threads/Src/servoThreadnew.o
+                0x0801e3dc       0x18 ./System/Threads/Src/ServoThread.o
                 0x0801e3dc                vtable for MessageThread<ServoRequest, EmptyMessage>
  .rodata.str1.4
                 0x0801e3f4      0x970 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/micro_ros_stm32cubemx_utils/microros_static_library_ide/libmicroros/libmicroros.a(libcustom_msg__rosidl_typesupport_c-led_request__type_support.cpp.obj)
@@ -16446,9 +16446,9 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .ARM.attributes
                 0x00000a03       0x34 ./System/Threads/Src/MicroRosThread.o
  .ARM.attributes
-                0x00000a37       0x34 ./System/Threads/Src/Thread.o
+                0x00000a37       0x34 ./System/Threads/Src/ServoThread.o
  .ARM.attributes
-                0x00000a6b       0x34 ./System/Threads/Src/servoThreadnew.o
+                0x00000a6b       0x34 ./System/Threads/Src/Thread.o
  .ARM.attributes
                 0x00000a9f       0x34 ./System/Utils/Src/Operators.o
  .ARM.attributes
@@ -16817,7 +16817,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/libgcc.a
 
-.debug_info     0x00000000    0x4e779
+.debug_info     0x00000000    0x4e7b0
  .debug_info    0x00000000      0x30b ./Core/Src/app_freertos.o
  .debug_info    0x0000030b      0x503 ./Core/Src/custom_memory_manager.o
  .debug_info    0x0000080e     0x2191 ./Core/Src/main.o
@@ -16867,15 +16867,15 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_info    0x0003afa3     0x54c5 ./System/Threads/Src/LedsThread.o
  .debug_info    0x00040468     0x2045 ./System/Threads/Src/MassThread.o
  .debug_info    0x000424ad     0x62ac ./System/Threads/Src/MicroRosThread.o
- .debug_info    0x00048759      0xcd8 ./System/Threads/Src/Thread.o
- .debug_info    0x00049431     0x1d2a ./System/Threads/Src/servoThreadnew.o
- .debug_info    0x0004b15b      0x4aa ./System/Utils/Src/Operators.o
- .debug_info    0x0004b605      0x6d7 ./USB_Device/App/usb_device.o
- .debug_info    0x0004bcdc      0x8be ./USB_Device/App/usbd_cdc_if.o
- .debug_info    0x0004c59a      0x45f ./USB_Device/App/usbd_desc.o
- .debug_info    0x0004c9f9     0x1d80 ./USB_Device/Target/usbd_conf.o
+ .debug_info    0x00048759     0x1d61 ./System/Threads/Src/ServoThread.o
+ .debug_info    0x0004a4ba      0xcd8 ./System/Threads/Src/Thread.o
+ .debug_info    0x0004b192      0x4aa ./System/Utils/Src/Operators.o
+ .debug_info    0x0004b63c      0x6d7 ./USB_Device/App/usb_device.o
+ .debug_info    0x0004bd13      0x8be ./USB_Device/App/usbd_cdc_if.o
+ .debug_info    0x0004c5d1      0x45f ./USB_Device/App/usbd_desc.o
+ .debug_info    0x0004ca30     0x1d80 ./USB_Device/Target/usbd_conf.o
 
-.debug_abbrev   0x00000000     0xa69a
+.debug_abbrev   0x00000000     0xa6af
  .debug_abbrev  0x00000000      0x147 ./Core/Src/app_freertos.o
  .debug_abbrev  0x00000147      0x27d ./Core/Src/custom_memory_manager.o
  .debug_abbrev  0x000003c4      0x374 ./Core/Src/main.o
@@ -16925,13 +16925,13 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_abbrev  0x00007db8      0x779 ./System/Threads/Src/LedsThread.o
  .debug_abbrev  0x00008531      0x5cd ./System/Threads/Src/MassThread.o
  .debug_abbrev  0x00008afe      0x83a ./System/Threads/Src/MicroRosThread.o
- .debug_abbrev  0x00009338      0x33d ./System/Threads/Src/Thread.o
- .debug_abbrev  0x00009675      0x557 ./System/Threads/Src/servoThreadnew.o
- .debug_abbrev  0x00009bcc      0x143 ./System/Utils/Src/Operators.o
- .debug_abbrev  0x00009d0f      0x1a4 ./USB_Device/App/usb_device.o
- .debug_abbrev  0x00009eb3      0x2ad ./USB_Device/App/usbd_cdc_if.o
- .debug_abbrev  0x0000a160      0x20e ./USB_Device/App/usbd_desc.o
- .debug_abbrev  0x0000a36e      0x32c ./USB_Device/Target/usbd_conf.o
+ .debug_abbrev  0x00009338      0x56c ./System/Threads/Src/ServoThread.o
+ .debug_abbrev  0x000098a4      0x33d ./System/Threads/Src/Thread.o
+ .debug_abbrev  0x00009be1      0x143 ./System/Utils/Src/Operators.o
+ .debug_abbrev  0x00009d24      0x1a4 ./USB_Device/App/usb_device.o
+ .debug_abbrev  0x00009ec8      0x2ad ./USB_Device/App/usbd_cdc_if.o
+ .debug_abbrev  0x0000a175      0x20e ./USB_Device/App/usbd_desc.o
+ .debug_abbrev  0x0000a383      0x32c ./USB_Device/Target/usbd_conf.o
 
 .debug_aranges  0x00000000     0x2960
  .debug_aranges
@@ -17033,9 +17033,9 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_aranges
                 0x000025e0       0x78 ./System/Threads/Src/MicroRosThread.o
  .debug_aranges
-                0x00002658       0x78 ./System/Threads/Src/Thread.o
+                0x00002658       0x70 ./System/Threads/Src/ServoThread.o
  .debug_aranges
-                0x000026d0       0x70 ./System/Threads/Src/servoThreadnew.o
+                0x000026c8       0x78 ./System/Threads/Src/Thread.o
  .debug_aranges
                 0x00002740       0x38 ./System/Utils/Src/Operators.o
  .debug_aranges
@@ -17148,9 +17148,9 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_rnglists
                 0x00001cd7       0x70 ./System/Threads/Src/MicroRosThread.o
  .debug_rnglists
-                0x00001d47       0x56 ./System/Threads/Src/Thread.o
+                0x00001d47       0x51 ./System/Threads/Src/ServoThread.o
  .debug_rnglists
-                0x00001d9d       0x51 ./System/Threads/Src/servoThreadnew.o
+                0x00001d98       0x56 ./System/Threads/Src/Thread.o
  .debug_rnglists
                 0x00001dee       0x25 ./System/Utils/Src/Operators.o
  .debug_rnglists
@@ -17477,9 +17477,9 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_macro   0x00034947       0x32 ./System/Threads/Src/MicroRosThread.o
  .debug_macro   0x00034979       0x8e ./System/Threads/Src/MicroRosThread.o
  .debug_macro   0x00034a07       0x1c ./System/Threads/Src/MicroRosThread.o
- .debug_macro   0x00034a23      0x23d ./System/Threads/Src/Thread.o
- .debug_macro   0x00034c60       0x58 ./System/Threads/Src/Thread.o
- .debug_macro   0x00034cb8      0x360 ./System/Threads/Src/servoThreadnew.o
+ .debug_macro   0x00034a23      0x360 ./System/Threads/Src/ServoThread.o
+ .debug_macro   0x00034d83      0x23d ./System/Threads/Src/Thread.o
+ .debug_macro   0x00034fc0       0x58 ./System/Threads/Src/Thread.o
  .debug_macro   0x00035018      0x140 ./System/Utils/Src/Operators.o
  .debug_macro   0x00035158      0x3cb ./USB_Device/App/usb_device.o
  .debug_macro   0x00035523       0x22 ./USB_Device/App/usb_device.o
@@ -17489,7 +17489,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_macro   0x00035cd4       0x1c ./USB_Device/App/usbd_desc.o
  .debug_macro   0x00035cf0      0x3af ./USB_Device/Target/usbd_conf.o
 
-.debug_line     0x00000000    0x3f522
+.debug_line     0x00000000    0x3f513
  .debug_line    0x00000000     0x248b ./Core/Src/app_freertos.o
  .debug_line    0x0000248b      0x925 ./Core/Src/custom_memory_manager.o
  .debug_line    0x00002db0      0xf30 ./Core/Src/main.o
@@ -17531,80 +17531,80 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_line    0x00028658      0x8d8 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
  .debug_line    0x00028f30     0x173c ./System/Core/Src/Adafruit_NeoPixel_STM.o
  .debug_line    0x0002a66c      0xaad ./System/Core/Src/HX711.o
- .debug_line    0x0002b119     0x3264 ./System/Core/Src/Interface.o
- .debug_line    0x0002e37d     0x1873 ./System/Core/Src/LEDStrip.o
- .debug_line    0x0002fbf0      0x9e9 ./System/Core/Src/PWMDriver.o
- .debug_line    0x000305d9     0x32bd ./System/Core/Src/System.o
- .debug_line    0x00033896      0x942 ./System/Threads/Src/HeartBeat.o
- .debug_line    0x000341d8     0x18d4 ./System/Threads/Src/LedsThread.o
- .debug_line    0x00035aac     0x143c ./System/Threads/Src/MassThread.o
- .debug_line    0x00036ee8     0x3992 ./System/Threads/Src/MicroRosThread.o
- .debug_line    0x0003a87a      0xa32 ./System/Threads/Src/Thread.o
- .debug_line    0x0003b2ac      0xe0c ./System/Threads/Src/servoThreadnew.o
- .debug_line    0x0003c0b8      0x72a ./System/Utils/Src/Operators.o
- .debug_line    0x0003c7e2      0x9fc ./USB_Device/App/usb_device.o
- .debug_line    0x0003d1de      0xa4f ./USB_Device/App/usbd_cdc_if.o
- .debug_line    0x0003dc2d      0xaa5 ./USB_Device/App/usbd_desc.o
- .debug_line    0x0003e6d2      0xe50 ./USB_Device/Target/usbd_conf.o
+ .debug_line    0x0002b119     0x3261 ./System/Core/Src/Interface.o
+ .debug_line    0x0002e37a     0x1873 ./System/Core/Src/LEDStrip.o
+ .debug_line    0x0002fbed      0x9e9 ./System/Core/Src/PWMDriver.o
+ .debug_line    0x000305d6     0x32ba ./System/Core/Src/System.o
+ .debug_line    0x00033890      0x942 ./System/Threads/Src/HeartBeat.o
+ .debug_line    0x000341d2     0x18d4 ./System/Threads/Src/LedsThread.o
+ .debug_line    0x00035aa6     0x143c ./System/Threads/Src/MassThread.o
+ .debug_line    0x00036ee2     0x398f ./System/Threads/Src/MicroRosThread.o
+ .debug_line    0x0003a871      0xe06 ./System/Threads/Src/ServoThread.o
+ .debug_line    0x0003b677      0xa32 ./System/Threads/Src/Thread.o
+ .debug_line    0x0003c0a9      0x72a ./System/Utils/Src/Operators.o
+ .debug_line    0x0003c7d3      0x9fc ./USB_Device/App/usb_device.o
+ .debug_line    0x0003d1cf      0xa4f ./USB_Device/App/usbd_cdc_if.o
+ .debug_line    0x0003dc1e      0xaa5 ./USB_Device/App/usbd_desc.o
+ .debug_line    0x0003e6c3      0xe50 ./USB_Device/Target/usbd_conf.o
 
-.debug_str      0x00000000   0x110a6b
- .debug_str     0x00000000   0x110a6b ./Core/Src/app_freertos.o
+.debug_str      0x00000000   0x110abe
+ .debug_str     0x00000000   0x110abe ./Core/Src/app_freertos.o
                               0xf4b96 (size before relaxing)
- .debug_str     0x00110a6b     0xb526 ./Core/Src/custom_memory_manager.o
- .debug_str     0x00110a6b    0xf03b2 ./Core/Src/main.o
- .debug_str     0x00110a6b     0xbe6f ./Core/Src/microros_allocators.o
- .debug_str     0x00110a6b     0xd817 ./Core/Src/microros_time.o
- .debug_str     0x00110a6b    0xe6efd ./Core/Src/stm32g4xx_hal_msp.o
- .debug_str     0x00110a6b    0xe6421 ./Core/Src/stm32g4xx_hal_timebase_tim.o
- .debug_str     0x00110a6b    0xe641a ./Core/Src/stm32g4xx_it.o
- .debug_str     0x00110a6b     0x9a03 ./Core/Src/syscalls.o
- .debug_str     0x00110a6b     0x77a1 ./Core/Src/sysmem.o
- .debug_str     0x00110a6b    0xe579d ./Core/Src/system_stm32g4xx.o
- .debug_str     0x00110a6b    0xf4458 ./Core/Src/usb_cdc_transport.o
- .debug_str     0x00110a6b       0x7e ./Core/Startup/startup_stm32g483retx.o
- .debug_str     0x00110a6b    0xe642f ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o
- .debug_str     0x00110a6b    0xe67ca ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.o
- .debug_str     0x00110a6b    0xe6770 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.o
- .debug_str     0x00110a6b    0xe60eb ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o
- .debug_str     0x00110a6b    0xe5b77 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o
- .debug_str     0x00110a6b    0xe5928 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o
- .debug_str     0x00110a6b    0xe5f19 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.o
- .debug_str     0x00110a6b    0xe5b55 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.o
- .debug_str     0x00110a6b    0xe5c8b ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o
- .debug_str     0x00110a6b    0xe5ebc ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o
- .debug_str     0x00110a6b    0xe5ee6 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o
- .debug_str     0x00110a6b    0xe60cf ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.o
- .debug_str     0x00110a6b    0xe6c9b ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o
- .debug_str     0x00110a6b    0xe690f ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o
- .debug_str     0x00110a6b    0xe5a56 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.o
- .debug_str     0x00110a6b    0xea674 ./Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
- .debug_str     0x00110a6b    0xe9f50 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o
- .debug_str     0x00110a6b    0xe9ea2 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
- .debug_str     0x00110a6b    0xe9d97 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
- .debug_str     0x00110a6b    0xf04c0 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
- .debug_str     0x00110a6b     0xac35 ./Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_str     0x00110a6b     0xc775 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_str     0x00110a6b     0xd232 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_str     0x00110a6b     0xcca7 ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
- .debug_str     0x00110a6b     0x87db ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
- .debug_str     0x00110a6b     0xb577 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_str     0x00110a6b    0xf093e ./System/Core/Src/Adafruit_NeoPixel_STM.o
- .debug_str     0x00110a6b    0xe7d4f ./System/Core/Src/HX711.o
- .debug_str     0x00110a6b    0xfd948 ./System/Core/Src/Interface.o
- .debug_str     0x00110a6b    0xf0afd ./System/Core/Src/LEDStrip.o
- .debug_str     0x00110a6b    0xe6b09 ./System/Core/Src/PWMDriver.o
- .debug_str     0x00110a6b    0xfe257 ./System/Core/Src/System.o
- .debug_str     0x00110a6b     0xcf51 ./System/Threads/Src/HeartBeat.o
- .debug_str     0x00110a6b    0xf7429 ./System/Threads/Src/LedsThread.o
- .debug_str     0x00110a6b    0xf4546 ./System/Threads/Src/MassThread.o
- .debug_str     0x00110a6b    0xff92d ./System/Threads/Src/MicroRosThread.o
- .debug_str     0x00110a6b     0xfa28 ./System/Threads/Src/Thread.o
- .debug_str     0x00110a6b    0xef20d ./System/Threads/Src/servoThreadnew.o
- .debug_str     0x00110a6b     0xad0b ./System/Utils/Src/Operators.o
- .debug_str     0x00110a6b    0xea14b ./USB_Device/App/usb_device.o
- .debug_str     0x00110a6b    0xea18a ./USB_Device/App/usbd_cdc_if.o
- .debug_str     0x00110a6b    0xe9ca1 ./USB_Device/App/usbd_desc.o
- .debug_str     0x00110a6b    0xeb1ac ./USB_Device/Target/usbd_conf.o
+ .debug_str     0x00110abe     0xb526 ./Core/Src/custom_memory_manager.o
+ .debug_str     0x00110abe    0xf03b2 ./Core/Src/main.o
+ .debug_str     0x00110abe     0xbe6f ./Core/Src/microros_allocators.o
+ .debug_str     0x00110abe     0xd817 ./Core/Src/microros_time.o
+ .debug_str     0x00110abe    0xe6efd ./Core/Src/stm32g4xx_hal_msp.o
+ .debug_str     0x00110abe    0xe6421 ./Core/Src/stm32g4xx_hal_timebase_tim.o
+ .debug_str     0x00110abe    0xe641a ./Core/Src/stm32g4xx_it.o
+ .debug_str     0x00110abe     0x9a03 ./Core/Src/syscalls.o
+ .debug_str     0x00110abe     0x77a1 ./Core/Src/sysmem.o
+ .debug_str     0x00110abe    0xe579d ./Core/Src/system_stm32g4xx.o
+ .debug_str     0x00110abe    0xf4458 ./Core/Src/usb_cdc_transport.o
+ .debug_str     0x00110abe       0x7e ./Core/Startup/startup_stm32g483retx.o
+ .debug_str     0x00110abe    0xe642f ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o
+ .debug_str     0x00110abe    0xe67ca ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.o
+ .debug_str     0x00110abe    0xe6770 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.o
+ .debug_str     0x00110abe    0xe60eb ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o
+ .debug_str     0x00110abe    0xe5b77 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o
+ .debug_str     0x00110abe    0xe5928 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o
+ .debug_str     0x00110abe    0xe5f19 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.o
+ .debug_str     0x00110abe    0xe5b55 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.o
+ .debug_str     0x00110abe    0xe5c8b ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o
+ .debug_str     0x00110abe    0xe5ebc ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o
+ .debug_str     0x00110abe    0xe5ee6 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o
+ .debug_str     0x00110abe    0xe60cf ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.o
+ .debug_str     0x00110abe    0xe6c9b ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o
+ .debug_str     0x00110abe    0xe690f ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o
+ .debug_str     0x00110abe    0xe5a56 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.o
+ .debug_str     0x00110abe    0xea674 ./Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
+ .debug_str     0x00110abe    0xe9f50 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o
+ .debug_str     0x00110abe    0xe9ea2 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
+ .debug_str     0x00110abe    0xe9d97 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
+ .debug_str     0x00110abe    0xf04c0 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+ .debug_str     0x00110abe     0xac35 ./Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_str     0x00110abe     0xc775 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_str     0x00110abe     0xd232 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_str     0x00110abe     0xcca7 ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
+ .debug_str     0x00110abe     0x87db ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+ .debug_str     0x00110abe     0xb577 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_str     0x00110abe    0xf093e ./System/Core/Src/Adafruit_NeoPixel_STM.o
+ .debug_str     0x00110abe    0xe7d4f ./System/Core/Src/HX711.o
+ .debug_str     0x00110abe    0xfd948 ./System/Core/Src/Interface.o
+ .debug_str     0x00110abe    0xf0afd ./System/Core/Src/LEDStrip.o
+ .debug_str     0x00110abe    0xe6b09 ./System/Core/Src/PWMDriver.o
+ .debug_str     0x00110abe    0xfe257 ./System/Core/Src/System.o
+ .debug_str     0x00110abe     0xcf51 ./System/Threads/Src/HeartBeat.o
+ .debug_str     0x00110abe    0xf7429 ./System/Threads/Src/LedsThread.o
+ .debug_str     0x00110abe    0xf4546 ./System/Threads/Src/MassThread.o
+ .debug_str     0x00110abe    0xff92d ./System/Threads/Src/MicroRosThread.o
+ .debug_str     0x00110abe    0xef260 ./System/Threads/Src/ServoThread.o
+ .debug_str     0x00110abe     0xfa28 ./System/Threads/Src/Thread.o
+ .debug_str     0x00110abe     0xad0b ./System/Utils/Src/Operators.o
+ .debug_str     0x00110abe    0xea14b ./USB_Device/App/usb_device.o
+ .debug_str     0x00110abe    0xea18a ./USB_Device/App/usbd_cdc_if.o
+ .debug_str     0x00110abe    0xe9ca1 ./USB_Device/App/usbd_desc.o
+ .debug_str     0x00110abe    0xeb1ac ./USB_Device/Target/usbd_conf.o
 
 .comment        0x00000000       0x76
  .comment       0x00000000       0x76 ./Core/Src/app_freertos.o
@@ -17656,8 +17656,8 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .comment       0x00000076       0x44 ./System/Threads/Src/LedsThread.o
  .comment       0x00000076       0x44 ./System/Threads/Src/MassThread.o
  .comment       0x00000076       0x44 ./System/Threads/Src/MicroRosThread.o
+ .comment       0x00000076       0x44 ./System/Threads/Src/ServoThread.o
  .comment       0x00000076       0x44 ./System/Threads/Src/Thread.o
- .comment       0x00000076       0x44 ./System/Threads/Src/servoThreadnew.o
  .comment       0x00000076       0x44 ./System/Utils/Src/Operators.o
  .comment       0x00000076       0x44 ./USB_Device/App/usb_device.o
  .comment       0x00000076       0x44 ./USB_Device/App/usbd_cdc_if.o
@@ -17829,8 +17829,8 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_frame   0x00009920      0x1f4 ./System/Threads/Src/LedsThread.o
  .debug_frame   0x00009b14      0x290 ./System/Threads/Src/MassThread.o
  .debug_frame   0x00009da4      0x1c8 ./System/Threads/Src/MicroRosThread.o
- .debug_frame   0x00009f6c      0x1d4 ./System/Threads/Src/Thread.o
- .debug_frame   0x0000a140      0x1a8 ./System/Threads/Src/servoThreadnew.o
+ .debug_frame   0x00009f6c      0x1a8 ./System/Threads/Src/ServoThread.o
+ .debug_frame   0x0000a114      0x1d4 ./System/Threads/Src/Thread.o
  .debug_frame   0x0000a2e8       0xa0 ./System/Utils/Src/Operators.o
  .debug_frame   0x0000a388       0x2c ./USB_Device/App/usb_device.o
  .debug_frame   0x0000a3b4       0xe4 ./USB_Device/App/usbd_cdc_if.o

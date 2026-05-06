@@ -1,0 +1,3 @@
+[submodule "avionics_stack/lib/ERC_SE_CustomMessages"]
+	path = avionics_stack/lib/ERC_SE_CustomMessages
+	url = git@github.com:EPFLXplore/ERC_SE_CustomMessages.git

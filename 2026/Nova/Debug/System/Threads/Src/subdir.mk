@@ -9,27 +9,27 @@ CPP_SRCS += \
 ../System/Threads/Src/LedsThread.cpp \
 ../System/Threads/Src/MassThread.cpp \
 ../System/Threads/Src/MicroRosThread.cpp \
+../System/Threads/Src/ServoThread.cpp \
 ../System/Threads/Src/TestTask.cpp \
-../System/Threads/Src/Thread.cpp \
-../System/Threads/Src/servoThreadnew.cpp 
+../System/Threads/Src/Thread.cpp 
 
 OBJS += \
 ./System/Threads/Src/HeartBeat.o \
 ./System/Threads/Src/LedsThread.o \
 ./System/Threads/Src/MassThread.o \
 ./System/Threads/Src/MicroRosThread.o \
+./System/Threads/Src/ServoThread.o \
 ./System/Threads/Src/TestTask.o \
-./System/Threads/Src/Thread.o \
-./System/Threads/Src/servoThreadnew.o 
+./System/Threads/Src/Thread.o 
 
 CPP_DEPS += \
 ./System/Threads/Src/HeartBeat.d \
 ./System/Threads/Src/LedsThread.d \
 ./System/Threads/Src/MassThread.d \
 ./System/Threads/Src/MicroRosThread.d \
+./System/Threads/Src/ServoThread.d \
 ./System/Threads/Src/TestTask.d \
-./System/Threads/Src/Thread.d \
-./System/Threads/Src/servoThreadnew.d 
+./System/Threads/Src/Thread.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -39,7 +39,7 @@ System/Threads/Src/%.o System/Threads/Src/%.su System/Threads/Src/%.cyclo: ../Sy
 clean: clean-System-2f-Threads-2f-Src
 
 clean-System-2f-Threads-2f-Src:
-	-$(RM) ./System/Threads/Src/HeartBeat.cyclo ./System/Threads/Src/HeartBeat.d ./System/Threads/Src/HeartBeat.o ./System/Threads/Src/HeartBeat.su ./System/Threads/Src/LedsThread.cyclo ./System/Threads/Src/LedsThread.d ./System/Threads/Src/LedsThread.o ./System/Threads/Src/LedsThread.su ./System/Threads/Src/MassThread.cyclo ./System/Threads/Src/MassThread.d ./System/Threads/Src/MassThread.o ./System/Threads/Src/MassThread.su ./System/Threads/Src/MicroRosThread.cyclo ./System/Threads/Src/MicroRosThread.d ./System/Threads/Src/MicroRosThread.o ./System/Threads/Src/MicroRosThread.su ./System/Threads/Src/TestTask.cyclo ./System/Threads/Src/TestTask.d ./System/Threads/Src/TestTask.o ./System/Threads/Src/TestTask.su ./System/Threads/Src/Thread.cyclo ./System/Threads/Src/Thread.d ./System/Threads/Src/Thread.o ./System/Threads/Src/Thread.su ./System/Threads/Src/servoThreadnew.cyclo ./System/Threads/Src/servoThreadnew.d ./System/Threads/Src/servoThreadnew.o ./System/Threads/Src/servoThreadnew.su
+	-$(RM) ./System/Threads/Src/HeartBeat.cyclo ./System/Threads/Src/HeartBeat.d ./System/Threads/Src/HeartBeat.o ./System/Threads/Src/HeartBeat.su ./System/Threads/Src/LedsThread.cyclo ./System/Threads/Src/LedsThread.d ./System/Threads/Src/LedsThread.o ./System/Threads/Src/LedsThread.su ./System/Threads/Src/MassThread.cyclo ./System/Threads/Src/MassThread.d ./System/Threads/Src/MassThread.o ./System/Threads/Src/MassThread.su ./System/Threads/Src/MicroRosThread.cyclo ./System/Threads/Src/MicroRosThread.d ./System/Threads/Src/MicroRosThread.o ./System/Threads/Src/MicroRosThread.su ./System/Threads/Src/ServoThread.cyclo ./System/Threads/Src/ServoThread.d ./System/Threads/Src/ServoThread.o ./System/Threads/Src/ServoThread.su ./System/Threads/Src/TestTask.cyclo ./System/Threads/Src/TestTask.d ./System/Threads/Src/TestTask.o ./System/Threads/Src/TestTask.su ./System/Threads/Src/Thread.cyclo ./System/Threads/Src/Thread.d ./System/Threads/Src/Thread.o ./System/Threads/Src/Thread.su
 
 .PHONY: clean-System-2f-Threads-2f-Src
 

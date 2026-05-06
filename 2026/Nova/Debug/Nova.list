@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00021650  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0004e779  00000000  00000000  00021680  2**0
+ 12 .debug_info   0004e7b0  00000000  00000000  00021680  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000a69a  00000000  00000000  0006fdf9  2**0
+ 13 .debug_abbrev 0000a6af  00000000  00000000  0006fe30  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00002960  00000000  00000000  0007a498  2**3
+ 14 .debug_aranges 00002960  00000000  00000000  0007a4e0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00001f6f  00000000  00000000  0007cdf8  2**0
+ 15 .debug_rnglists 00001f6f  00000000  00000000  0007ce40  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0003609f  00000000  00000000  0007ed67  2**0
+ 16 .debug_macro  0003609f  00000000  00000000  0007edaf  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0003f522  00000000  00000000  000b4e06  2**0
+ 17 .debug_line   0003f513  00000000  00000000  000b4e4e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00110a6b  00000000  00000000  000f4328  2**0
+ 18 .debug_str    00110abe  00000000  00000000  000f4361  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000076  00000000  00000000  00204d93  2**0
+ 19 .comment      00000076  00000000  00000000  00204e1f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000b988  00000000  00000000  00204e0c  2**2
+ 20 .debug_frame  0000b988  00000000  00000000  00204e98  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000062  00000000  00000000  00210794  2**0
+ 21 .debug_line_str 00000062  00000000  00000000  00210820  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -42635,7 +42635,7 @@ void System::init(){
  8010656:	2218      	movs	r2, #24
  8010658:	492e      	ldr	r1, [pc, #184]	@ (8010714 <_ZN6System4initEv+0xe4>)
  801065a:	4620      	mov	r0, r4
- 801065c:	f001 f9e4 	bl	8011a28 <_ZN11ServoThreadC1EPKc12osPriority_t>
+ 801065c:	f001 f90e 	bl	801187c <_ZN11ServoThreadC1EPKc12osPriority_t>
  8010660:	4b2d      	ldr	r3, [pc, #180]	@ (8010718 <_ZN6System4initEv+0xe8>)
  8010662:	601c      	str	r4, [r3, #0]
 	leds = new LedsThread("LedsThread", osPriorityNormal);
@@ -42692,25 +42692,25 @@ void System::init(){
  80106b8:	681b      	ldr	r3, [r3, #0]
  80106ba:	f44f 712f 	mov.w	r1, #700	@ 0x2bc
  80106be:	4618      	mov	r0, r3
- 80106c0:	f001 f998 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 80106c0:	f001 fb18 	bl	8011cf4 <_ZN6Thread8setDelayEm>
     servo->setDelay(100); //ms
  80106c4:	4b14      	ldr	r3, [pc, #80]	@ (8010718 <_ZN6System4initEv+0xe8>)
  80106c6:	681b      	ldr	r3, [r3, #0]
  80106c8:	2164      	movs	r1, #100	@ 0x64
  80106ca:	4618      	mov	r0, r3
- 80106cc:	f001 f992 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 80106cc:	f001 fb12 	bl	8011cf4 <_ZN6Thread8setDelayEm>
     mass->setDelay(100); //ms
  80106d0:	4b0f      	ldr	r3, [pc, #60]	@ (8010710 <_ZN6System4initEv+0xe0>)
  80106d2:	681b      	ldr	r3, [r3, #0]
  80106d4:	2164      	movs	r1, #100	@ 0x64
  80106d6:	4618      	mov	r0, r3
- 80106d8:	f001 f98c 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 80106d8:	f001 fb0c 	bl	8011cf4 <_ZN6Thread8setDelayEm>
     leds->setDelay(300); //ms
  80106dc:	4b10      	ldr	r3, [pc, #64]	@ (8010720 <_ZN6System4initEv+0xf0>)
  80106de:	681b      	ldr	r3, [r3, #0]
  80106e0:	f44f 7196 	mov.w	r1, #300	@ 0x12c
  80106e4:	4618      	mov	r0, r3
- 80106e6:	f001 f985 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 80106e6:	f001 fb05 	bl	8011cf4 <_ZN6Thread8setDelayEm>
 
 	//test->start();
 	//beat->start();
@@ -42719,17 +42719,17 @@ void System::init(){
  80106ea:	4b11      	ldr	r3, [pc, #68]	@ (8010730 <_ZN6System4initEv+0x100>)
  80106ec:	681b      	ldr	r3, [r3, #0]
  80106ee:	4618      	mov	r0, r3
- 80106f0:	f001 f94e 	bl	8011990 <_ZN6Thread5startEv>
+ 80106f0:	f001 face 	bl	8011c90 <_ZN6Thread5startEv>
 	servo->start();
  80106f4:	4b08      	ldr	r3, [pc, #32]	@ (8010718 <_ZN6System4initEv+0xe8>)
  80106f6:	681b      	ldr	r3, [r3, #0]
  80106f8:	4618      	mov	r0, r3
- 80106fa:	f001 f949 	bl	8011990 <_ZN6Thread5startEv>
+ 80106fa:	f001 fac9 	bl	8011c90 <_ZN6Thread5startEv>
 	mass->start();
  80106fe:	4b04      	ldr	r3, [pc, #16]	@ (8010710 <_ZN6System4initEv+0xe0>)
  8010700:	681b      	ldr	r3, [r3, #0]
  8010702:	4618      	mov	r0, r3
- 8010704:	f001 f944 	bl	8011990 <_ZN6Thread5startEv>
+ 8010704:	f001 fac4 	bl	8011c90 <_ZN6Thread5startEv>
 	//leds->start();
 
 }
@@ -43319,7 +43319,7 @@ void LedsThread::loop(){
  8010b58:	683b      	ldr	r3, [r7, #0]
  8010b5a:	687a      	ldr	r2, [r7, #4]
  8010b5c:	68b9      	ldr	r1, [r7, #8]
- 8010b5e:	f000 fee5 	bl	801192c <_ZN6ThreadC1EPKc12osPriority_tm>
+ 8010b5e:	f001 f865 	bl	8011c2c <_ZN6ThreadC1EPKc12osPriority_tm>
  8010b62:	4a21      	ldr	r2, [pc, #132]	@ (8010be8 <_ZN13MessageThreadI10LedRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0xa0>)
  8010b64:	68fb      	ldr	r3, [r7, #12]
  8010b66:	601a      	str	r2, [r3, #0]
@@ -43333,7 +43333,7 @@ void LedsThread::loop(){
  8010b74:	68fb      	ldr	r3, [r7, #12]
  8010b76:	6a39      	ldr	r1, [r7, #32]
  8010b78:	4618      	mov	r0, r3
- 8010b7a:	f000 ff3b 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 8010b7a:	f001 f8bb 	bl	8011cf4 <_ZN6Thread8setDelayEm>
         _commandQueue = xQueueCreate(commandDepth, sizeof(CommandMsg));
  8010b7e:	2200      	movs	r2, #0
  8010b80:	2103      	movs	r1, #3
@@ -44227,7 +44227,7 @@ void MassThread::tareScale(MassType* device) {
  80111ac:	683b      	ldr	r3, [r7, #0]
  80111ae:	687a      	ldr	r2, [r7, #4]
  80111b0:	68b9      	ldr	r1, [r7, #8]
- 80111b2:	f000 fbbb 	bl	801192c <_ZN6ThreadC1EPKc12osPriority_tm>
+ 80111b2:	f000 fd3b 	bl	8011c2c <_ZN6ThreadC1EPKc12osPriority_tm>
  80111b6:	4a21      	ldr	r2, [pc, #132]	@ (801123c <_ZN13MessageThreadI11MassRequest10MassPacketEC1EPKc12osPriority_tmmjj+0xa0>)
  80111b8:	68fb      	ldr	r3, [r7, #12]
  80111ba:	601a      	str	r2, [r3, #0]
@@ -44241,7 +44241,7 @@ void MassThread::tareScale(MassType* device) {
  80111c8:	68fb      	ldr	r3, [r7, #12]
  80111ca:	6a39      	ldr	r1, [r7, #32]
  80111cc:	4618      	mov	r0, r3
- 80111ce:	f000 fc11 	bl	80119f4 <_ZN6Thread8setDelayEm>
+ 80111ce:	f000 fd91 	bl	8011cf4 <_ZN6Thread8setDelayEm>
         _commandQueue = xQueueCreate(commandDepth, sizeof(CommandMsg));
  80111d2:	2200      	movs	r2, #0
  80111d4:	2102      	movs	r1, #2
@@ -44316,7 +44316,7 @@ MicroRosThread::MicroRosThread(ThreadsRegistry* registry, const char* name, osPr
  8011250:	f44f 5300 	mov.w	r3, #8192	@ 0x2000
  8011254:	683a      	ldr	r2, [r7, #0]
  8011256:	6879      	ldr	r1, [r7, #4]
- 8011258:	f000 fb68 	bl	801192c <_ZN6ThreadC1EPKc12osPriority_tm>
+ 8011258:	f000 fce8 	bl	8011c2c <_ZN6ThreadC1EPKc12osPriority_tm>
  801125c:	4a07      	ldr	r2, [pc, #28]	@ (801127c <_ZN14MicroRosThreadC1EP15ThreadsRegistryPKc12osPriority_t+0x3c>)
  801125e:	68fb      	ldr	r3, [r7, #12]
  8011260:	601a      	str	r2, [r3, #0]
@@ -45183,681 +45183,681 @@ class MicroRosThread : public Thread {
  8011878:	46bd      	mov	sp, r7
  801187a:	bd80      	pop	{r7, pc}
 
-0801187c <_ZN6Thread9isRunningEv>:
+0801187c <_ZN11ServoThreadC1EPKc12osPriority_t>:
+#include <ServoThread.h>
+
+ServoThread::ServoThread(const char* name, osPriority priority)
+ 801187c:	b580      	push	{r7, lr}
+ 801187e:	b084      	sub	sp, #16
+ 8011880:	af00      	add	r7, sp, #0
+ 8011882:	60f8      	str	r0, [r7, #12]
+ 8011884:	60b9      	str	r1, [r7, #8]
+ 8011886:	607a      	str	r2, [r7, #4]
+    : MessageThread(name, priority), servo{}  {}
+ 8011888:	68fb      	ldr	r3, [r7, #12]
+ 801188a:	687a      	ldr	r2, [r7, #4]
+ 801188c:	68b9      	ldr	r1, [r7, #8]
+ 801188e:	4618      	mov	r0, r3
+ 8011890:	f000 f8cf 	bl	8011a32 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_t>
+ 8011894:	4a07      	ldr	r2, [pc, #28]	@ (80118b4 <_ZN11ServoThreadC1EPKc12osPriority_t+0x38>)
+ 8011896:	68fb      	ldr	r3, [r7, #12]
+ 8011898:	601a      	str	r2, [r3, #0]
+ 801189a:	68fb      	ldr	r3, [r7, #12]
+ 801189c:	3340      	adds	r3, #64	@ 0x40
+ 801189e:	2200      	movs	r2, #0
+ 80118a0:	601a      	str	r2, [r3, #0]
+ 80118a2:	605a      	str	r2, [r3, #4]
+ 80118a4:	609a      	str	r2, [r3, #8]
+ 80118a6:	60da      	str	r2, [r3, #12]
+ 80118a8:	68fb      	ldr	r3, [r7, #12]
+ 80118aa:	4618      	mov	r0, r3
+ 80118ac:	3710      	adds	r7, #16
+ 80118ae:	46bd      	mov	sp, r7
+ 80118b0:	bd80      	pop	{r7, pc}
+ 80118b2:	bf00      	nop
+ 80118b4:	0801e3cc 	.word	0x0801e3cc
+
+080118b8 <_ZN11ServoThreadD1Ev>:
+
+ServoThread::~ServoThread()
+ 80118b8:	b590      	push	{r4, r7, lr}
+ 80118ba:	b085      	sub	sp, #20
+ 80118bc:	af00      	add	r7, sp, #0
+ 80118be:	6078      	str	r0, [r7, #4]
+ 80118c0:	4a14      	ldr	r2, [pc, #80]	@ (8011914 <_ZN11ServoThreadD1Ev+0x5c>)
+ 80118c2:	687b      	ldr	r3, [r7, #4]
+ 80118c4:	601a      	str	r2, [r3, #0]
+{
+    for (int i = 0; i < 4; i++) {
+ 80118c6:	2300      	movs	r3, #0
+ 80118c8:	60fb      	str	r3, [r7, #12]
+ 80118ca:	e016      	b.n	80118fa <_ZN11ServoThreadD1Ev+0x42>
+        delete servo[i];
+ 80118cc:	687b      	ldr	r3, [r7, #4]
+ 80118ce:	68fa      	ldr	r2, [r7, #12]
+ 80118d0:	3210      	adds	r2, #16
+ 80118d2:	f853 4022 	ldr.w	r4, [r3, r2, lsl #2]
+ 80118d6:	2c00      	cmp	r4, #0
+ 80118d8:	d006      	beq.n	80118e8 <_ZN11ServoThreadD1Ev+0x30>
+ 80118da:	4620      	mov	r0, r4
+ 80118dc:	f7fe fccf 	bl	801027e <_ZN9PWMDriverD1Ev>
+ 80118e0:	2114      	movs	r1, #20
+ 80118e2:	4620      	mov	r0, r4
+ 80118e4:	f00b f8f0 	bl	801cac8 <_ZdlPvj>
+        servo[i] = nullptr;
+ 80118e8:	687b      	ldr	r3, [r7, #4]
+ 80118ea:	68fa      	ldr	r2, [r7, #12]
+ 80118ec:	3210      	adds	r2, #16
+ 80118ee:	2100      	movs	r1, #0
+ 80118f0:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+    for (int i = 0; i < 4; i++) {
+ 80118f4:	68fb      	ldr	r3, [r7, #12]
+ 80118f6:	3301      	adds	r3, #1
+ 80118f8:	60fb      	str	r3, [r7, #12]
+ 80118fa:	68fb      	ldr	r3, [r7, #12]
+ 80118fc:	2b03      	cmp	r3, #3
+ 80118fe:	dde5      	ble.n	80118cc <_ZN11ServoThreadD1Ev+0x14>
+    }
+}
+ 8011900:	687b      	ldr	r3, [r7, #4]
+ 8011902:	4618      	mov	r0, r3
+ 8011904:	f000 f8ae 	bl	8011a64 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>
+ 8011908:	687b      	ldr	r3, [r7, #4]
+ 801190a:	4618      	mov	r0, r3
+ 801190c:	3714      	adds	r7, #20
+ 801190e:	46bd      	mov	sp, r7
+ 8011910:	bd90      	pop	{r4, r7, pc}
+ 8011912:	bf00      	nop
+ 8011914:	0801e3cc 	.word	0x0801e3cc
+
+08011918 <_ZN11ServoThreadD0Ev>:
+ServoThread::~ServoThread()
+ 8011918:	b580      	push	{r7, lr}
+ 801191a:	b082      	sub	sp, #8
+ 801191c:	af00      	add	r7, sp, #0
+ 801191e:	6078      	str	r0, [r7, #4]
+}
+ 8011920:	6878      	ldr	r0, [r7, #4]
+ 8011922:	f7ff ffc9 	bl	80118b8 <_ZN11ServoThreadD1Ev>
+ 8011926:	2150      	movs	r1, #80	@ 0x50
+ 8011928:	6878      	ldr	r0, [r7, #4]
+ 801192a:	f00b f8cd 	bl	801cac8 <_ZdlPvj>
+ 801192e:	687b      	ldr	r3, [r7, #4]
+ 8011930:	4618      	mov	r0, r3
+ 8011932:	3708      	adds	r7, #8
+ 8011934:	46bd      	mov	sp, r7
+ 8011936:	bd80      	pop	{r7, pc}
+
+08011938 <_ZN11ServoThread4initEv>:
+
+void ServoThread::init()
+{
+ 8011938:	b590      	push	{r4, r7, lr}
+ 801193a:	b083      	sub	sp, #12
+ 801193c:	af00      	add	r7, sp, #0
+ 801193e:	6078      	str	r0, [r7, #4]
+    servo[FRONT_CAM] = new PWMDriver(SERVO_0_CFG); //front camera
+ 8011940:	2014      	movs	r0, #20
+ 8011942:	f000 f9f1 	bl	8011d28 <_Znwj>
+ 8011946:	4603      	mov	r3, r0
+ 8011948:	461c      	mov	r4, r3
+ 801194a:	4915      	ldr	r1, [pc, #84]	@ (80119a0 <_ZN11ServoThread4initEv+0x68>)
+ 801194c:	4620      	mov	r0, r4
+ 801194e:	f7fe fc47 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
+ 8011952:	687b      	ldr	r3, [r7, #4]
+ 8011954:	641c      	str	r4, [r3, #64]	@ 0x40
+    servo[LEFT_SERVICE_MODULE] = new PWMDriver(SERVO_1_CFG); //right side servicxe module
+ 8011956:	2014      	movs	r0, #20
+ 8011958:	f000 f9e6 	bl	8011d28 <_Znwj>
+ 801195c:	4603      	mov	r3, r0
+ 801195e:	461c      	mov	r4, r3
+ 8011960:	4910      	ldr	r1, [pc, #64]	@ (80119a4 <_ZN11ServoThread4initEv+0x6c>)
+ 8011962:	4620      	mov	r0, r4
+ 8011964:	f7fe fc3c 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
+ 8011968:	687b      	ldr	r3, [r7, #4]
+ 801196a:	645c      	str	r4, [r3, #68]	@ 0x44
+    servo[RIGHT_SERVICE_MODULE] = new PWMDriver(SERVO_2_CFG); //left side servicxe module
+ 801196c:	2014      	movs	r0, #20
+ 801196e:	f000 f9db 	bl	8011d28 <_Znwj>
+ 8011972:	4603      	mov	r3, r0
+ 8011974:	461c      	mov	r4, r3
+ 8011976:	490c      	ldr	r1, [pc, #48]	@ (80119a8 <_ZN11ServoThread4initEv+0x70>)
+ 8011978:	4620      	mov	r0, r4
+ 801197a:	f7fe fc31 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
+ 801197e:	687b      	ldr	r3, [r7, #4]
+ 8011980:	649c      	str	r4, [r3, #72]	@ 0x48
+    servo[3] = new PWMDriver(SERVO_3_CFG); //
+ 8011982:	2014      	movs	r0, #20
+ 8011984:	f000 f9d0 	bl	8011d28 <_Znwj>
+ 8011988:	4603      	mov	r3, r0
+ 801198a:	461c      	mov	r4, r3
+ 801198c:	4907      	ldr	r1, [pc, #28]	@ (80119ac <_ZN11ServoThread4initEv+0x74>)
+ 801198e:	4620      	mov	r0, r4
+ 8011990:	f7fe fc26 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
+ 8011994:	687b      	ldr	r3, [r7, #4]
+ 8011996:	64dc      	str	r4, [r3, #76]	@ 0x4c
+}
+ 8011998:	bf00      	nop
+ 801199a:	370c      	adds	r7, #12
+ 801199c:	46bd      	mov	sp, r7
+ 801199e:	bd90      	pop	{r4, r7, pc}
+ 80119a0:	0801e384 	.word	0x0801e384
+ 80119a4:	0801e394 	.word	0x0801e394
+ 80119a8:	0801e3a4 	.word	0x0801e3a4
+ 80119ac:	0801e3b4 	.word	0x0801e3b4
+
+080119b0 <_ZN11ServoThread4loopEv>:
+
+void ServoThread::loop()
+{
+ 80119b0:	b580      	push	{r7, lr}
+ 80119b2:	b088      	sub	sp, #32
+ 80119b4:	af00      	add	r7, sp, #0
+ 80119b6:	6078      	str	r0, [r7, #4]
+    ServoRequest req;
+    if (this->popCommand(req)) {
+ 80119b8:	687b      	ldr	r3, [r7, #4]
+ 80119ba:	61fb      	str	r3, [r7, #28]
+        if (_commandQueue) {
+ 80119bc:	69fb      	ldr	r3, [r7, #28]
+ 80119be:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
+ 80119c0:	2b00      	cmp	r3, #0
+ 80119c2:	d00e      	beq.n	80119e2 <_ZN11ServoThread4loopEv+0x32>
+            return (xQueueReceive(_commandQueue, &cmd, 0) == pdTRUE);
+ 80119c4:	69fb      	ldr	r3, [r7, #28]
+ 80119c6:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
+ 80119c8:	f107 010c 	add.w	r1, r7, #12
+ 80119cc:	2200      	movs	r2, #0
+ 80119ce:	4618      	mov	r0, r3
+ 80119d0:	f7fb faa4 	bl	800cf1c <xQueueReceive>
+ 80119d4:	4603      	mov	r3, r0
+ 80119d6:	2b01      	cmp	r3, #1
+ 80119d8:	bf0c      	ite	eq
+ 80119da:	2301      	moveq	r3, #1
+ 80119dc:	2300      	movne	r3, #0
+ 80119de:	b2db      	uxtb	r3, r3
+ 80119e0:	e000      	b.n	80119e4 <_ZN11ServoThread4loopEv+0x34>
+        return false;
+ 80119e2:	2300      	movs	r3, #0
+ 80119e4:	2b00      	cmp	r3, #0
+ 80119e6:	d021      	beq.n	8011a2c <_ZN11ServoThread4loopEv+0x7c>
+        if (req.id > 3) return;
+ 80119e8:	7b3b      	ldrb	r3, [r7, #12]
+ 80119ea:	2b03      	cmp	r3, #3
+ 80119ec:	d81d      	bhi.n	8011a2a <_ZN11ServoThread4loopEv+0x7a>
+
+        if (req.zero_in) {
+ 80119ee:	7d3b      	ldrb	r3, [r7, #20]
+ 80119f0:	2b00      	cmp	r3, #0
+ 80119f2:	d009      	beq.n	8011a08 <_ZN11ServoThread4loopEv+0x58>
+            servo[req.id]->zero();
+ 80119f4:	7b3b      	ldrb	r3, [r7, #12]
+ 80119f6:	461a      	mov	r2, r3
+ 80119f8:	687b      	ldr	r3, [r7, #4]
+ 80119fa:	3210      	adds	r2, #16
+ 80119fc:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+ 8011a00:	4618      	mov	r0, r3
+ 8011a02:	f7fe fcf3 	bl	80103ec <_ZN9PWMDriver4zeroEv>
+ 8011a06:	e011      	b.n	8011a2c <_ZN11ServoThread4loopEv+0x7c>
+        } else {
+            servo[req.id]->set_angle((float)req.increment);
+ 8011a08:	7b3b      	ldrb	r3, [r7, #12]
+ 8011a0a:	461a      	mov	r2, r3
+ 8011a0c:	687b      	ldr	r3, [r7, #4]
+ 8011a0e:	3210      	adds	r2, #16
+ 8011a10:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+ 8011a14:	693a      	ldr	r2, [r7, #16]
+ 8011a16:	ee07 2a90 	vmov	s15, r2
+ 8011a1a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+ 8011a1e:	eeb0 0a67 	vmov.f32	s0, s15
+ 8011a22:	4618      	mov	r0, r3
+ 8011a24:	f7fe fca2 	bl	801036c <_ZN9PWMDriver9set_angleEf>
+ 8011a28:	e000      	b.n	8011a2c <_ZN11ServoThread4loopEv+0x7c>
+        if (req.id > 3) return;
+ 8011a2a:	bf00      	nop
+        }
+    }
+}
+ 8011a2c:	3720      	adds	r7, #32
+ 8011a2e:	46bd      	mov	sp, r7
+ 8011a30:	bd80      	pop	{r7, pc}
+
+08011a32 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_t>:
+    MessageThread(const char* name, osPriority priority)
+ 8011a32:	b580      	push	{r7, lr}
+ 8011a34:	b088      	sub	sp, #32
+ 8011a36:	af04      	add	r7, sp, #16
+ 8011a38:	60f8      	str	r0, [r7, #12]
+ 8011a3a:	60b9      	str	r1, [r7, #8]
+ 8011a3c:	607a      	str	r2, [r7, #4]
+              ThreadCfg::QUEUE_DEPTH)
+ 8011a3e:	2305      	movs	r3, #5
+ 8011a40:	9302      	str	r3, [sp, #8]
+ 8011a42:	2305      	movs	r3, #5
+ 8011a44:	9301      	str	r3, [sp, #4]
+ 8011a46:	230a      	movs	r3, #10
+ 8011a48:	9300      	str	r3, [sp, #0]
+ 8011a4a:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+ 8011a4e:	687a      	ldr	r2, [r7, #4]
+ 8011a50:	68b9      	ldr	r1, [r7, #8]
+ 8011a52:	68f8      	ldr	r0, [r7, #12]
+ 8011a54:	f000 f840 	bl	8011ad8 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj>
+    {}
+ 8011a58:	68fb      	ldr	r3, [r7, #12]
+ 8011a5a:	4618      	mov	r0, r3
+ 8011a5c:	3710      	adds	r7, #16
+ 8011a5e:	46bd      	mov	sp, r7
+ 8011a60:	bd80      	pop	{r7, pc}
+	...
+
+08011a64 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>:
+    virtual ~MessageThread() {
+ 8011a64:	b580      	push	{r7, lr}
+ 8011a66:	b082      	sub	sp, #8
+ 8011a68:	af00      	add	r7, sp, #0
+ 8011a6a:	6078      	str	r0, [r7, #4]
+    }
+ 8011a6c:	4a11      	ldr	r2, [pc, #68]	@ (8011ab4 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x50>)
+ 8011a6e:	687b      	ldr	r3, [r7, #4]
+ 8011a70:	601a      	str	r2, [r3, #0]
+        if (_commandQueue) {
+ 8011a72:	687b      	ldr	r3, [r7, #4]
+ 8011a74:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
+ 8011a76:	2b00      	cmp	r3, #0
+ 8011a78:	d007      	beq.n	8011a8a <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x26>
+            vQueueDelete(_commandQueue);
+ 8011a7a:	687b      	ldr	r3, [r7, #4]
+ 8011a7c:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
+ 8011a7e:	4618      	mov	r0, r3
+ 8011a80:	f7fb fb2e 	bl	800d0e0 <vQueueDelete>
+            _commandQueue = nullptr;
+ 8011a84:	687b      	ldr	r3, [r7, #4]
+ 8011a86:	2200      	movs	r2, #0
+ 8011a88:	639a      	str	r2, [r3, #56]	@ 0x38
+        if (_statusQueue) {
+ 8011a8a:	687b      	ldr	r3, [r7, #4]
+ 8011a8c:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
+ 8011a8e:	2b00      	cmp	r3, #0
+ 8011a90:	d007      	beq.n	8011aa2 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x3e>
+            vQueueDelete(_statusQueue);
+ 8011a92:	687b      	ldr	r3, [r7, #4]
+ 8011a94:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
+ 8011a96:	4618      	mov	r0, r3
+ 8011a98:	f7fb fb22 	bl	800d0e0 <vQueueDelete>
+            _statusQueue = nullptr;
+ 8011a9c:	687b      	ldr	r3, [r7, #4]
+ 8011a9e:	2200      	movs	r2, #0
+ 8011aa0:	63da      	str	r2, [r3, #60]	@ 0x3c
+    }
+ 8011aa2:	687b      	ldr	r3, [r7, #4]
+ 8011aa4:	4618      	mov	r0, r3
+ 8011aa6:	f7fe fe45 	bl	8010734 <_ZN6ThreadD1Ev>
+ 8011aaa:	687b      	ldr	r3, [r7, #4]
+ 8011aac:	4618      	mov	r0, r3
+ 8011aae:	3708      	adds	r7, #8
+ 8011ab0:	46bd      	mov	sp, r7
+ 8011ab2:	bd80      	pop	{r7, pc}
+ 8011ab4:	0801e3e4 	.word	0x0801e3e4
+
+08011ab8 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED0Ev>:
+    virtual ~MessageThread() {
+ 8011ab8:	b580      	push	{r7, lr}
+ 8011aba:	b082      	sub	sp, #8
+ 8011abc:	af00      	add	r7, sp, #0
+ 8011abe:	6078      	str	r0, [r7, #4]
+    }
+ 8011ac0:	6878      	ldr	r0, [r7, #4]
+ 8011ac2:	f7ff ffcf 	bl	8011a64 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>
+ 8011ac6:	2140      	movs	r1, #64	@ 0x40
+ 8011ac8:	6878      	ldr	r0, [r7, #4]
+ 8011aca:	f00a fffd 	bl	801cac8 <_ZdlPvj>
+ 8011ace:	687b      	ldr	r3, [r7, #4]
+ 8011ad0:	4618      	mov	r0, r3
+ 8011ad2:	3708      	adds	r7, #8
+ 8011ad4:	46bd      	mov	sp, r7
+ 8011ad6:	bd80      	pop	{r7, pc}
+
+08011ad8 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj>:
+    MessageThread(const char*   name,
+ 8011ad8:	b580      	push	{r7, lr}
+ 8011ada:	b086      	sub	sp, #24
+ 8011adc:	af00      	add	r7, sp, #0
+ 8011ade:	60f8      	str	r0, [r7, #12]
+ 8011ae0:	60b9      	str	r1, [r7, #8]
+ 8011ae2:	607a      	str	r2, [r7, #4]
+ 8011ae4:	603b      	str	r3, [r7, #0]
+        : Thread(name, priority, stackSize)
+ 8011ae6:	68f8      	ldr	r0, [r7, #12]
+ 8011ae8:	683b      	ldr	r3, [r7, #0]
+ 8011aea:	687a      	ldr	r2, [r7, #4]
+ 8011aec:	68b9      	ldr	r1, [r7, #8]
+ 8011aee:	f000 f89d 	bl	8011c2c <_ZN6ThreadC1EPKc12osPriority_tm>
+ 8011af2:	4a21      	ldr	r2, [pc, #132]	@ (8011b78 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0xa0>)
+ 8011af4:	68fb      	ldr	r3, [r7, #12]
+ 8011af6:	601a      	str	r2, [r3, #0]
+ 8011af8:	68fb      	ldr	r3, [r7, #12]
+ 8011afa:	2200      	movs	r2, #0
+ 8011afc:	639a      	str	r2, [r3, #56]	@ 0x38
+ 8011afe:	68fb      	ldr	r3, [r7, #12]
+ 8011b00:	2200      	movs	r2, #0
+ 8011b02:	63da      	str	r2, [r3, #60]	@ 0x3c
+        setDelay(tickDelayMs);
+ 8011b04:	68fb      	ldr	r3, [r7, #12]
+ 8011b06:	6a39      	ldr	r1, [r7, #32]
+ 8011b08:	4618      	mov	r0, r3
+ 8011b0a:	f000 f8f3 	bl	8011cf4 <_ZN6Thread8setDelayEm>
+        _commandQueue = xQueueCreate(commandDepth, sizeof(CommandMsg));
+ 8011b0e:	2200      	movs	r2, #0
+ 8011b10:	2110      	movs	r1, #16
+ 8011b12:	6a78      	ldr	r0, [r7, #36]	@ 0x24
+ 8011b14:	f7fb f803 	bl	800cb1e <xQueueGenericCreate>
+ 8011b18:	4602      	mov	r2, r0
+ 8011b1a:	68fb      	ldr	r3, [r7, #12]
+ 8011b1c:	639a      	str	r2, [r3, #56]	@ 0x38
+        configASSERT(_commandQueue);
+ 8011b1e:	68fb      	ldr	r3, [r7, #12]
+ 8011b20:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
+ 8011b22:	2b00      	cmp	r3, #0
+ 8011b24:	d10b      	bne.n	8011b3e <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x66>
+	__asm volatile
+ 8011b26:	f04f 0350 	mov.w	r3, #80	@ 0x50
+ 8011b2a:	f383 8811 	msr	BASEPRI, r3
+ 8011b2e:	f3bf 8f6f 	isb	sy
+ 8011b32:	f3bf 8f4f 	dsb	sy
+ 8011b36:	617b      	str	r3, [r7, #20]
+}
+ 8011b38:	bf00      	nop
+ 8011b3a:	bf00      	nop
+ 8011b3c:	e7fd      	b.n	8011b3a <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x62>
+        _statusQueue = xQueueCreate(statusDepth, sizeof(StatusMsg));
+ 8011b3e:	2200      	movs	r2, #0
+ 8011b40:	2101      	movs	r1, #1
+ 8011b42:	6ab8      	ldr	r0, [r7, #40]	@ 0x28
+ 8011b44:	f7fa ffeb 	bl	800cb1e <xQueueGenericCreate>
+ 8011b48:	4602      	mov	r2, r0
+ 8011b4a:	68fb      	ldr	r3, [r7, #12]
+ 8011b4c:	63da      	str	r2, [r3, #60]	@ 0x3c
+        configASSERT(_statusQueue);
+ 8011b4e:	68fb      	ldr	r3, [r7, #12]
+ 8011b50:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
+ 8011b52:	2b00      	cmp	r3, #0
+ 8011b54:	d10b      	bne.n	8011b6e <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x96>
+	__asm volatile
+ 8011b56:	f04f 0350 	mov.w	r3, #80	@ 0x50
+ 8011b5a:	f383 8811 	msr	BASEPRI, r3
+ 8011b5e:	f3bf 8f6f 	isb	sy
+ 8011b62:	f3bf 8f4f 	dsb	sy
+ 8011b66:	613b      	str	r3, [r7, #16]
+}
+ 8011b68:	bf00      	nop
+ 8011b6a:	bf00      	nop
+ 8011b6c:	e7fd      	b.n	8011b6a <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x92>
+    }
+ 8011b6e:	68fb      	ldr	r3, [r7, #12]
+ 8011b70:	4618      	mov	r0, r3
+ 8011b72:	3718      	adds	r7, #24
+ 8011b74:	46bd      	mov	sp, r7
+ 8011b76:	bd80      	pop	{r7, pc}
+ 8011b78:	0801e3e4 	.word	0x0801e3e4
+
+08011b7c <_ZN6Thread9isRunningEv>:
 	virtual void loop() = 0;
 
 	void start();
 
 	osThreadId getHandle();
 	bool isRunning() { return running; }
- 801187c:	b480      	push	{r7}
- 801187e:	b083      	sub	sp, #12
- 8011880:	af00      	add	r7, sp, #0
- 8011882:	6078      	str	r0, [r7, #4]
- 8011884:	687b      	ldr	r3, [r7, #4]
- 8011886:	f893 3034 	ldrb.w	r3, [r3, #52]	@ 0x34
- 801188a:	4618      	mov	r0, r3
- 801188c:	370c      	adds	r7, #12
- 801188e:	46bd      	mov	sp, r7
- 8011890:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8011894:	4770      	bx	lr
+ 8011b7c:	b480      	push	{r7}
+ 8011b7e:	b083      	sub	sp, #12
+ 8011b80:	af00      	add	r7, sp, #0
+ 8011b82:	6078      	str	r0, [r7, #4]
+ 8011b84:	687b      	ldr	r3, [r7, #4]
+ 8011b86:	f893 3034 	ldrb.w	r3, [r3, #52]	@ 0x34
+ 8011b8a:	4618      	mov	r0, r3
+ 8011b8c:	370c      	adds	r7, #12
+ 8011b8e:	46bd      	mov	sp, r7
+ 8011b90:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8011b94:	4770      	bx	lr
 	...
 
-08011898 <_Z8task_runPv>:
+08011b98 <_Z8task_runPv>:
 
 #define DEFAULT_STACK_SIZE (2048) // Danger zone: changing the stack size might create very nasty bugs
 
 static char buffer[128];
 
 void task_run(void* arg) {
- 8011898:	b580      	push	{r7, lr}
- 801189a:	b084      	sub	sp, #16
- 801189c:	af00      	add	r7, sp, #0
- 801189e:	6078      	str	r0, [r7, #4]
+ 8011b98:	b580      	push	{r7, lr}
+ 8011b9a:	b084      	sub	sp, #16
+ 8011b9c:	af00      	add	r7, sp, #0
+ 8011b9e:	6078      	str	r0, [r7, #4]
 	Thread* thread = (Thread*) arg;
- 80118a0:	687b      	ldr	r3, [r7, #4]
- 80118a2:	60fb      	str	r3, [r7, #12]
+ 8011ba0:	687b      	ldr	r3, [r7, #4]
+ 8011ba2:	60fb      	str	r3, [r7, #12]
 
 	osDelay(pdMS_TO_TICKS(thread->getDelay()));
- 80118a4:	68f8      	ldr	r0, [r7, #12]
- 80118a6:	f000 f8b3 	bl	8011a10 <_ZN6Thread8getDelayEv>
- 80118aa:	4603      	mov	r3, r0
- 80118ac:	f44f 727a 	mov.w	r2, #1000	@ 0x3e8
- 80118b0:	fb02 f303 	mul.w	r3, r2, r3
- 80118b4:	4a1c      	ldr	r2, [pc, #112]	@ (8011928 <_Z8task_runPv+0x90>)
- 80118b6:	fba2 2303 	umull	r2, r3, r2, r3
- 80118ba:	099b      	lsrs	r3, r3, #6
- 80118bc:	4618      	mov	r0, r3
- 80118be:	f7fa ff43 	bl	800c748 <osDelay>
+ 8011ba4:	68f8      	ldr	r0, [r7, #12]
+ 8011ba6:	f000 f8b3 	bl	8011d10 <_ZN6Thread8getDelayEv>
+ 8011baa:	4603      	mov	r3, r0
+ 8011bac:	f44f 727a 	mov.w	r2, #1000	@ 0x3e8
+ 8011bb0:	fb02 f303 	mul.w	r3, r2, r3
+ 8011bb4:	4a1c      	ldr	r2, [pc, #112]	@ (8011c28 <_Z8task_runPv+0x90>)
+ 8011bb6:	fba2 2303 	umull	r2, r3, r2, r3
+ 8011bba:	099b      	lsrs	r3, r3, #6
+ 8011bbc:	4618      	mov	r0, r3
+ 8011bbe:	f7fa fdc3 	bl	800c748 <osDelay>
 
 	thread->init();
- 80118c2:	68fb      	ldr	r3, [r7, #12]
- 80118c4:	681b      	ldr	r3, [r3, #0]
- 80118c6:	3308      	adds	r3, #8
- 80118c8:	681b      	ldr	r3, [r3, #0]
- 80118ca:	68f8      	ldr	r0, [r7, #12]
- 80118cc:	4798      	blx	r3
+ 8011bc2:	68fb      	ldr	r3, [r7, #12]
+ 8011bc4:	681b      	ldr	r3, [r3, #0]
+ 8011bc6:	3308      	adds	r3, #8
+ 8011bc8:	681b      	ldr	r3, [r3, #0]
+ 8011bca:	68f8      	ldr	r0, [r7, #12]
+ 8011bcc:	4798      	blx	r3
 
 	while(thread->isRunning()) {
- 80118ce:	e014      	b.n	80118fa <_Z8task_runPv+0x62>
+ 8011bce:	e014      	b.n	8011bfa <_Z8task_runPv+0x62>
 		thread->loop();
- 80118d0:	68fb      	ldr	r3, [r7, #12]
- 80118d2:	681b      	ldr	r3, [r3, #0]
- 80118d4:	330c      	adds	r3, #12
- 80118d6:	681b      	ldr	r3, [r3, #0]
- 80118d8:	68f8      	ldr	r0, [r7, #12]
- 80118da:	4798      	blx	r3
+ 8011bd0:	68fb      	ldr	r3, [r7, #12]
+ 8011bd2:	681b      	ldr	r3, [r3, #0]
+ 8011bd4:	330c      	adds	r3, #12
+ 8011bd6:	681b      	ldr	r3, [r3, #0]
+ 8011bd8:	68f8      	ldr	r0, [r7, #12]
+ 8011bda:	4798      	blx	r3
 		osDelay(pdMS_TO_TICKS(thread->getDelay()));
- 80118dc:	68f8      	ldr	r0, [r7, #12]
- 80118de:	f000 f897 	bl	8011a10 <_ZN6Thread8getDelayEv>
- 80118e2:	4603      	mov	r3, r0
- 80118e4:	f44f 727a 	mov.w	r2, #1000	@ 0x3e8
- 80118e8:	fb02 f303 	mul.w	r3, r2, r3
- 80118ec:	4a0e      	ldr	r2, [pc, #56]	@ (8011928 <_Z8task_runPv+0x90>)
- 80118ee:	fba2 2303 	umull	r2, r3, r2, r3
- 80118f2:	099b      	lsrs	r3, r3, #6
- 80118f4:	4618      	mov	r0, r3
- 80118f6:	f7fa ff27 	bl	800c748 <osDelay>
+ 8011bdc:	68f8      	ldr	r0, [r7, #12]
+ 8011bde:	f000 f897 	bl	8011d10 <_ZN6Thread8getDelayEv>
+ 8011be2:	4603      	mov	r3, r0
+ 8011be4:	f44f 727a 	mov.w	r2, #1000	@ 0x3e8
+ 8011be8:	fb02 f303 	mul.w	r3, r2, r3
+ 8011bec:	4a0e      	ldr	r2, [pc, #56]	@ (8011c28 <_Z8task_runPv+0x90>)
+ 8011bee:	fba2 2303 	umull	r2, r3, r2, r3
+ 8011bf2:	099b      	lsrs	r3, r3, #6
+ 8011bf4:	4618      	mov	r0, r3
+ 8011bf6:	f7fa fda7 	bl	800c748 <osDelay>
 	while(thread->isRunning()) {
- 80118fa:	68f8      	ldr	r0, [r7, #12]
- 80118fc:	f7ff ffbe 	bl	801187c <_ZN6Thread9isRunningEv>
- 8011900:	4603      	mov	r3, r0
- 8011902:	2b00      	cmp	r3, #0
- 8011904:	d1e4      	bne.n	80118d0 <_Z8task_runPv+0x38>
+ 8011bfa:	68f8      	ldr	r0, [r7, #12]
+ 8011bfc:	f7ff ffbe 	bl	8011b7c <_ZN6Thread9isRunningEv>
+ 8011c00:	4603      	mov	r3, r0
+ 8011c02:	2b00      	cmp	r3, #0
+ 8011c04:	d1e4      	bne.n	8011bd0 <_Z8task_runPv+0x38>
 		//taskYIELD();
 	}
 
 	delete thread;
- 8011906:	68fb      	ldr	r3, [r7, #12]
- 8011908:	2b00      	cmp	r3, #0
- 801190a:	d004      	beq.n	8011916 <_Z8task_runPv+0x7e>
- 801190c:	681a      	ldr	r2, [r3, #0]
- 801190e:	3204      	adds	r2, #4
- 8011910:	6812      	ldr	r2, [r2, #0]
- 8011912:	4618      	mov	r0, r3
- 8011914:	4790      	blx	r2
+ 8011c06:	68fb      	ldr	r3, [r7, #12]
+ 8011c08:	2b00      	cmp	r3, #0
+ 8011c0a:	d004      	beq.n	8011c16 <_Z8task_runPv+0x7e>
+ 8011c0c:	681a      	ldr	r2, [r3, #0]
+ 8011c0e:	3204      	adds	r2, #4
+ 8011c10:	6812      	ldr	r2, [r2, #0]
+ 8011c12:	4618      	mov	r0, r3
+ 8011c14:	4790      	blx	r2
 
 	vTaskDelete(nullptr);
- 8011916:	2000      	movs	r0, #0
- 8011918:	f7fb ff44 	bl	800d7a4 <vTaskDelete>
+ 8011c16:	2000      	movs	r0, #0
+ 8011c18:	f7fb fdc4 	bl	800d7a4 <vTaskDelete>
 
 	while(true) {
 		osDelay(pdMS_TO_TICKS(1000));
- 801191c:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
- 8011920:	f7fa ff12 	bl	800c748 <osDelay>
- 8011924:	e7fa      	b.n	801191c <_Z8task_runPv+0x84>
- 8011926:	bf00      	nop
- 8011928:	10624dd3 	.word	0x10624dd3
+ 8011c1c:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
+ 8011c20:	f7fa fd92 	bl	800c748 <osDelay>
+ 8011c24:	e7fa      	b.n	8011c1c <_Z8task_runPv+0x84>
+ 8011c26:	bf00      	nop
+ 8011c28:	10624dd3 	.word	0x10624dd3
 
-0801192c <_ZN6ThreadC1EPKc12osPriority_tm>:
+08011c2c <_ZN6ThreadC1EPKc12osPriority_tm>:
 
 Thread::Thread(const char* name, uint32_t stackSize) : Thread(name, (osPriority) osPriorityNormal, stackSize) {
 	;
 }
 
 Thread::Thread(const char* name, osPriority priority, uint32_t stackSize){
- 801192c:	b580      	push	{r7, lr}
- 801192e:	b084      	sub	sp, #16
- 8011930:	af00      	add	r7, sp, #0
- 8011932:	60f8      	str	r0, [r7, #12]
- 8011934:	60b9      	str	r1, [r7, #8]
- 8011936:	607a      	str	r2, [r7, #4]
- 8011938:	603b      	str	r3, [r7, #0]
- 801193a:	4a14      	ldr	r2, [pc, #80]	@ (801198c <_ZN6ThreadC1EPKc12osPriority_tm+0x60>)
- 801193c:	68fb      	ldr	r3, [r7, #12]
- 801193e:	601a      	str	r2, [r3, #0]
- 8011940:	68fb      	ldr	r3, [r7, #12]
- 8011942:	2200      	movs	r2, #0
- 8011944:	605a      	str	r2, [r3, #4]
- 8011946:	68fb      	ldr	r3, [r7, #12]
- 8011948:	3308      	adds	r3, #8
- 801194a:	2224      	movs	r2, #36	@ 0x24
- 801194c:	2100      	movs	r1, #0
- 801194e:	4618      	mov	r0, r3
- 8011950:	f00b fc70 	bl	801d234 <memset>
- 8011954:	68fb      	ldr	r3, [r7, #12]
- 8011956:	2200      	movs	r2, #0
- 8011958:	62da      	str	r2, [r3, #44]	@ 0x2c
- 801195a:	68fb      	ldr	r3, [r7, #12]
- 801195c:	2264      	movs	r2, #100	@ 0x64
- 801195e:	631a      	str	r2, [r3, #48]	@ 0x30
- 8011960:	68fb      	ldr	r3, [r7, #12]
- 8011962:	2201      	movs	r2, #1
- 8011964:	f883 2034 	strb.w	r2, [r3, #52]	@ 0x34
- 8011968:	68fb      	ldr	r3, [r7, #12]
- 801196a:	2200      	movs	r2, #0
- 801196c:	f883 2035 	strb.w	r2, [r3, #53]	@ 0x35
+ 8011c2c:	b580      	push	{r7, lr}
+ 8011c2e:	b084      	sub	sp, #16
+ 8011c30:	af00      	add	r7, sp, #0
+ 8011c32:	60f8      	str	r0, [r7, #12]
+ 8011c34:	60b9      	str	r1, [r7, #8]
+ 8011c36:	607a      	str	r2, [r7, #4]
+ 8011c38:	603b      	str	r3, [r7, #0]
+ 8011c3a:	4a14      	ldr	r2, [pc, #80]	@ (8011c8c <_ZN6ThreadC1EPKc12osPriority_tm+0x60>)
+ 8011c3c:	68fb      	ldr	r3, [r7, #12]
+ 8011c3e:	601a      	str	r2, [r3, #0]
+ 8011c40:	68fb      	ldr	r3, [r7, #12]
+ 8011c42:	2200      	movs	r2, #0
+ 8011c44:	605a      	str	r2, [r3, #4]
+ 8011c46:	68fb      	ldr	r3, [r7, #12]
+ 8011c48:	3308      	adds	r3, #8
+ 8011c4a:	2224      	movs	r2, #36	@ 0x24
+ 8011c4c:	2100      	movs	r1, #0
+ 8011c4e:	4618      	mov	r0, r3
+ 8011c50:	f00b faf0 	bl	801d234 <memset>
+ 8011c54:	68fb      	ldr	r3, [r7, #12]
+ 8011c56:	2200      	movs	r2, #0
+ 8011c58:	62da      	str	r2, [r3, #44]	@ 0x2c
+ 8011c5a:	68fb      	ldr	r3, [r7, #12]
+ 8011c5c:	2264      	movs	r2, #100	@ 0x64
+ 8011c5e:	631a      	str	r2, [r3, #48]	@ 0x30
+ 8011c60:	68fb      	ldr	r3, [r7, #12]
+ 8011c62:	2201      	movs	r2, #1
+ 8011c64:	f883 2034 	strb.w	r2, [r3, #52]	@ 0x34
+ 8011c68:	68fb      	ldr	r3, [r7, #12]
+ 8011c6a:	2200      	movs	r2, #0
+ 8011c6c:	f883 2035 	strb.w	r2, [r3, #53]	@ 0x35
 	this->attributes.name = (char*) name;
- 8011970:	68fb      	ldr	r3, [r7, #12]
- 8011972:	68ba      	ldr	r2, [r7, #8]
- 8011974:	609a      	str	r2, [r3, #8]
+ 8011c70:	68fb      	ldr	r3, [r7, #12]
+ 8011c72:	68ba      	ldr	r2, [r7, #8]
+ 8011c74:	609a      	str	r2, [r3, #8]
 	this->attributes.stack_size = stackSize;
- 8011976:	68fb      	ldr	r3, [r7, #12]
- 8011978:	683a      	ldr	r2, [r7, #0]
- 801197a:	61da      	str	r2, [r3, #28]
+ 8011c76:	68fb      	ldr	r3, [r7, #12]
+ 8011c78:	683a      	ldr	r2, [r7, #0]
+ 8011c7a:	61da      	str	r2, [r3, #28]
 	this->attributes.priority = (osPriority_t) priority;
- 801197c:	68fb      	ldr	r3, [r7, #12]
- 801197e:	687a      	ldr	r2, [r7, #4]
- 8011980:	621a      	str	r2, [r3, #32]
+ 8011c7c:	68fb      	ldr	r3, [r7, #12]
+ 8011c7e:	687a      	ldr	r2, [r7, #4]
+ 8011c80:	621a      	str	r2, [r3, #32]
 }
- 8011982:	68fb      	ldr	r3, [r7, #12]
- 8011984:	4618      	mov	r0, r3
- 8011986:	3710      	adds	r7, #16
- 8011988:	46bd      	mov	sp, r7
- 801198a:	bd80      	pop	{r7, pc}
- 801198c:	0801e2fc 	.word	0x0801e2fc
+ 8011c82:	68fb      	ldr	r3, [r7, #12]
+ 8011c84:	4618      	mov	r0, r3
+ 8011c86:	3710      	adds	r7, #16
+ 8011c88:	46bd      	mov	sp, r7
+ 8011c8a:	bd80      	pop	{r7, pc}
+ 8011c8c:	0801e2fc 	.word	0x0801e2fc
 
-08011990 <_ZN6Thread5startEv>:
+08011c90 <_ZN6Thread5startEv>:
 
 void Thread::start() {
- 8011990:	b580      	push	{r7, lr}
- 8011992:	b084      	sub	sp, #16
- 8011994:	af00      	add	r7, sp, #0
- 8011996:	6078      	str	r0, [r7, #4]
+ 8011c90:	b580      	push	{r7, lr}
+ 8011c92:	b084      	sub	sp, #16
+ 8011c94:	af00      	add	r7, sp, #0
+ 8011c96:	6078      	str	r0, [r7, #4]
     if (started) return;
- 8011998:	687b      	ldr	r3, [r7, #4]
- 801199a:	f893 3035 	ldrb.w	r3, [r3, #53]	@ 0x35
- 801199e:	2b00      	cmp	r3, #0
- 80119a0:	d122      	bne.n	80119e8 <_ZN6Thread5startEv+0x58>
+ 8011c98:	687b      	ldr	r3, [r7, #4]
+ 8011c9a:	f893 3035 	ldrb.w	r3, [r3, #53]	@ 0x35
+ 8011c9e:	2b00      	cmp	r3, #0
+ 8011ca0:	d122      	bne.n	8011ce8 <_ZN6Thread5startEv+0x58>
     this->started = true;
- 80119a2:	687b      	ldr	r3, [r7, #4]
- 80119a4:	2201      	movs	r2, #1
- 80119a6:	f883 2035 	strb.w	r2, [r3, #53]	@ 0x35
+ 8011ca2:	687b      	ldr	r3, [r7, #4]
+ 8011ca4:	2201      	movs	r2, #1
+ 8011ca6:	f883 2035 	strb.w	r2, [r3, #53]	@ 0x35
     this->handle = osThreadNew(task_run, this, &attributes);
- 80119aa:	687b      	ldr	r3, [r7, #4]
- 80119ac:	3308      	adds	r3, #8
- 80119ae:	461a      	mov	r2, r3
- 80119b0:	6879      	ldr	r1, [r7, #4]
- 80119b2:	480f      	ldr	r0, [pc, #60]	@ (80119f0 <_ZN6Thread5startEv+0x60>)
- 80119b4:	f7fa fe36 	bl	800c624 <osThreadNew>
- 80119b8:	4602      	mov	r2, r0
- 80119ba:	687b      	ldr	r3, [r7, #4]
- 80119bc:	605a      	str	r2, [r3, #4]
+ 8011caa:	687b      	ldr	r3, [r7, #4]
+ 8011cac:	3308      	adds	r3, #8
+ 8011cae:	461a      	mov	r2, r3
+ 8011cb0:	6879      	ldr	r1, [r7, #4]
+ 8011cb2:	480f      	ldr	r0, [pc, #60]	@ (8011cf0 <_ZN6Thread5startEv+0x60>)
+ 8011cb4:	f7fa fcb6 	bl	800c624 <osThreadNew>
+ 8011cb8:	4602      	mov	r2, r0
+ 8011cba:	687b      	ldr	r3, [r7, #4]
+ 8011cbc:	605a      	str	r2, [r3, #4]
     configASSERT(handle);
- 80119be:	687b      	ldr	r3, [r7, #4]
- 80119c0:	685b      	ldr	r3, [r3, #4]
- 80119c2:	2b00      	cmp	r3, #0
- 80119c4:	d10b      	bne.n	80119de <_ZN6Thread5startEv+0x4e>
+ 8011cbe:	687b      	ldr	r3, [r7, #4]
+ 8011cc0:	685b      	ldr	r3, [r3, #4]
+ 8011cc2:	2b00      	cmp	r3, #0
+ 8011cc4:	d10b      	bne.n	8011cde <_ZN6Thread5startEv+0x4e>
 	__asm volatile
- 80119c6:	f04f 0350 	mov.w	r3, #80	@ 0x50
- 80119ca:	f383 8811 	msr	BASEPRI, r3
- 80119ce:	f3bf 8f6f 	isb	sy
- 80119d2:	f3bf 8f4f 	dsb	sy
- 80119d6:	60fb      	str	r3, [r7, #12]
+ 8011cc6:	f04f 0350 	mov.w	r3, #80	@ 0x50
+ 8011cca:	f383 8811 	msr	BASEPRI, r3
+ 8011cce:	f3bf 8f6f 	isb	sy
+ 8011cd2:	f3bf 8f4f 	dsb	sy
+ 8011cd6:	60fb      	str	r3, [r7, #12]
 }
- 80119d8:	bf00      	nop
- 80119da:	bf00      	nop
- 80119dc:	e7fd      	b.n	80119da <_ZN6Thread5startEv+0x4a>
+ 8011cd8:	bf00      	nop
+ 8011cda:	bf00      	nop
+ 8011cdc:	e7fd      	b.n	8011cda <_ZN6Thread5startEv+0x4a>
     this->name = name;
- 80119de:	687b      	ldr	r3, [r7, #4]
- 80119e0:	6ada      	ldr	r2, [r3, #44]	@ 0x2c
- 80119e2:	687b      	ldr	r3, [r7, #4]
- 80119e4:	62da      	str	r2, [r3, #44]	@ 0x2c
- 80119e6:	e000      	b.n	80119ea <_ZN6Thread5startEv+0x5a>
+ 8011cde:	687b      	ldr	r3, [r7, #4]
+ 8011ce0:	6ada      	ldr	r2, [r3, #44]	@ 0x2c
+ 8011ce2:	687b      	ldr	r3, [r7, #4]
+ 8011ce4:	62da      	str	r2, [r3, #44]	@ 0x2c
+ 8011ce6:	e000      	b.n	8011cea <_ZN6Thread5startEv+0x5a>
     if (started) return;
- 80119e8:	bf00      	nop
+ 8011ce8:	bf00      	nop
 }
- 80119ea:	3710      	adds	r7, #16
- 80119ec:	46bd      	mov	sp, r7
- 80119ee:	bd80      	pop	{r7, pc}
- 80119f0:	08011899 	.word	0x08011899
+ 8011cea:	3710      	adds	r7, #16
+ 8011cec:	46bd      	mov	sp, r7
+ 8011cee:	bd80      	pop	{r7, pc}
+ 8011cf0:	08011b99 	.word	0x08011b99
 
-080119f4 <_ZN6Thread8setDelayEm>:
+08011cf4 <_ZN6Thread8setDelayEm>:
 void Thread::terminate() {
 	this->running = false;
 }
 
 
 void Thread::setDelay(uint32_t ms) {
- 80119f4:	b480      	push	{r7}
- 80119f6:	b083      	sub	sp, #12
- 80119f8:	af00      	add	r7, sp, #0
- 80119fa:	6078      	str	r0, [r7, #4]
- 80119fc:	6039      	str	r1, [r7, #0]
+ 8011cf4:	b480      	push	{r7}
+ 8011cf6:	b083      	sub	sp, #12
+ 8011cf8:	af00      	add	r7, sp, #0
+ 8011cfa:	6078      	str	r0, [r7, #4]
+ 8011cfc:	6039      	str	r1, [r7, #0]
 	this->delay = ms;
- 80119fe:	687b      	ldr	r3, [r7, #4]
- 8011a00:	683a      	ldr	r2, [r7, #0]
- 8011a02:	631a      	str	r2, [r3, #48]	@ 0x30
+ 8011cfe:	687b      	ldr	r3, [r7, #4]
+ 8011d00:	683a      	ldr	r2, [r7, #0]
+ 8011d02:	631a      	str	r2, [r3, #48]	@ 0x30
 }
- 8011a04:	bf00      	nop
- 8011a06:	370c      	adds	r7, #12
- 8011a08:	46bd      	mov	sp, r7
- 8011a0a:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8011a0e:	4770      	bx	lr
+ 8011d04:	bf00      	nop
+ 8011d06:	370c      	adds	r7, #12
+ 8011d08:	46bd      	mov	sp, r7
+ 8011d0a:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8011d0e:	4770      	bx	lr
 
-08011a10 <_ZN6Thread8getDelayEv>:
+08011d10 <_ZN6Thread8getDelayEv>:
 
 uint32_t Thread::getDelay() {
- 8011a10:	b480      	push	{r7}
- 8011a12:	b083      	sub	sp, #12
- 8011a14:	af00      	add	r7, sp, #0
- 8011a16:	6078      	str	r0, [r7, #4]
+ 8011d10:	b480      	push	{r7}
+ 8011d12:	b083      	sub	sp, #12
+ 8011d14:	af00      	add	r7, sp, #0
+ 8011d16:	6078      	str	r0, [r7, #4]
 	return this->delay;
- 8011a18:	687b      	ldr	r3, [r7, #4]
- 8011a1a:	6b1b      	ldr	r3, [r3, #48]	@ 0x30
+ 8011d18:	687b      	ldr	r3, [r7, #4]
+ 8011d1a:	6b1b      	ldr	r3, [r3, #48]	@ 0x30
 }
- 8011a1c:	4618      	mov	r0, r3
- 8011a1e:	370c      	adds	r7, #12
- 8011a20:	46bd      	mov	sp, r7
- 8011a22:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8011a26:	4770      	bx	lr
-
-08011a28 <_ZN11ServoThreadC1EPKc12osPriority_t>:
-#include "servoThreadnew.h"
-
-ServoThread::ServoThread(const char* name, osPriority priority)
- 8011a28:	b580      	push	{r7, lr}
- 8011a2a:	b084      	sub	sp, #16
- 8011a2c:	af00      	add	r7, sp, #0
- 8011a2e:	60f8      	str	r0, [r7, #12]
- 8011a30:	60b9      	str	r1, [r7, #8]
- 8011a32:	607a      	str	r2, [r7, #4]
-    : MessageThread(name, priority), servo{}  {}
- 8011a34:	68fb      	ldr	r3, [r7, #12]
- 8011a36:	687a      	ldr	r2, [r7, #4]
- 8011a38:	68b9      	ldr	r1, [r7, #8]
- 8011a3a:	4618      	mov	r0, r3
- 8011a3c:	f000 f8cf 	bl	8011bde <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_t>
- 8011a40:	4a07      	ldr	r2, [pc, #28]	@ (8011a60 <_ZN11ServoThreadC1EPKc12osPriority_t+0x38>)
- 8011a42:	68fb      	ldr	r3, [r7, #12]
- 8011a44:	601a      	str	r2, [r3, #0]
- 8011a46:	68fb      	ldr	r3, [r7, #12]
- 8011a48:	3340      	adds	r3, #64	@ 0x40
- 8011a4a:	2200      	movs	r2, #0
- 8011a4c:	601a      	str	r2, [r3, #0]
- 8011a4e:	605a      	str	r2, [r3, #4]
- 8011a50:	609a      	str	r2, [r3, #8]
- 8011a52:	60da      	str	r2, [r3, #12]
- 8011a54:	68fb      	ldr	r3, [r7, #12]
- 8011a56:	4618      	mov	r0, r3
- 8011a58:	3710      	adds	r7, #16
- 8011a5a:	46bd      	mov	sp, r7
- 8011a5c:	bd80      	pop	{r7, pc}
- 8011a5e:	bf00      	nop
- 8011a60:	0801e3cc 	.word	0x0801e3cc
-
-08011a64 <_ZN11ServoThreadD1Ev>:
-
-ServoThread::~ServoThread()
- 8011a64:	b590      	push	{r4, r7, lr}
- 8011a66:	b085      	sub	sp, #20
- 8011a68:	af00      	add	r7, sp, #0
- 8011a6a:	6078      	str	r0, [r7, #4]
- 8011a6c:	4a14      	ldr	r2, [pc, #80]	@ (8011ac0 <_ZN11ServoThreadD1Ev+0x5c>)
- 8011a6e:	687b      	ldr	r3, [r7, #4]
- 8011a70:	601a      	str	r2, [r3, #0]
-{
-    for (int i = 0; i < 4; i++) {
- 8011a72:	2300      	movs	r3, #0
- 8011a74:	60fb      	str	r3, [r7, #12]
- 8011a76:	e016      	b.n	8011aa6 <_ZN11ServoThreadD1Ev+0x42>
-        delete servo[i];
- 8011a78:	687b      	ldr	r3, [r7, #4]
- 8011a7a:	68fa      	ldr	r2, [r7, #12]
- 8011a7c:	3210      	adds	r2, #16
- 8011a7e:	f853 4022 	ldr.w	r4, [r3, r2, lsl #2]
- 8011a82:	2c00      	cmp	r4, #0
- 8011a84:	d006      	beq.n	8011a94 <_ZN11ServoThreadD1Ev+0x30>
- 8011a86:	4620      	mov	r0, r4
- 8011a88:	f7fe fbf9 	bl	801027e <_ZN9PWMDriverD1Ev>
- 8011a8c:	2114      	movs	r1, #20
- 8011a8e:	4620      	mov	r0, r4
- 8011a90:	f00b f81a 	bl	801cac8 <_ZdlPvj>
-        servo[i] = nullptr;
- 8011a94:	687b      	ldr	r3, [r7, #4]
- 8011a96:	68fa      	ldr	r2, [r7, #12]
- 8011a98:	3210      	adds	r2, #16
- 8011a9a:	2100      	movs	r1, #0
- 8011a9c:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
-    for (int i = 0; i < 4; i++) {
- 8011aa0:	68fb      	ldr	r3, [r7, #12]
- 8011aa2:	3301      	adds	r3, #1
- 8011aa4:	60fb      	str	r3, [r7, #12]
- 8011aa6:	68fb      	ldr	r3, [r7, #12]
- 8011aa8:	2b03      	cmp	r3, #3
- 8011aaa:	dde5      	ble.n	8011a78 <_ZN11ServoThreadD1Ev+0x14>
-    }
-}
- 8011aac:	687b      	ldr	r3, [r7, #4]
- 8011aae:	4618      	mov	r0, r3
- 8011ab0:	f000 f8ae 	bl	8011c10 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>
- 8011ab4:	687b      	ldr	r3, [r7, #4]
- 8011ab6:	4618      	mov	r0, r3
- 8011ab8:	3714      	adds	r7, #20
- 8011aba:	46bd      	mov	sp, r7
- 8011abc:	bd90      	pop	{r4, r7, pc}
- 8011abe:	bf00      	nop
- 8011ac0:	0801e3cc 	.word	0x0801e3cc
-
-08011ac4 <_ZN11ServoThreadD0Ev>:
-ServoThread::~ServoThread()
- 8011ac4:	b580      	push	{r7, lr}
- 8011ac6:	b082      	sub	sp, #8
- 8011ac8:	af00      	add	r7, sp, #0
- 8011aca:	6078      	str	r0, [r7, #4]
-}
- 8011acc:	6878      	ldr	r0, [r7, #4]
- 8011ace:	f7ff ffc9 	bl	8011a64 <_ZN11ServoThreadD1Ev>
- 8011ad2:	2150      	movs	r1, #80	@ 0x50
- 8011ad4:	6878      	ldr	r0, [r7, #4]
- 8011ad6:	f00a fff7 	bl	801cac8 <_ZdlPvj>
- 8011ada:	687b      	ldr	r3, [r7, #4]
- 8011adc:	4618      	mov	r0, r3
- 8011ade:	3708      	adds	r7, #8
- 8011ae0:	46bd      	mov	sp, r7
- 8011ae2:	bd80      	pop	{r7, pc}
-
-08011ae4 <_ZN11ServoThread4initEv>:
-
-void ServoThread::init()
-{
- 8011ae4:	b590      	push	{r4, r7, lr}
- 8011ae6:	b083      	sub	sp, #12
- 8011ae8:	af00      	add	r7, sp, #0
- 8011aea:	6078      	str	r0, [r7, #4]
-    servo[0] = new PWMDriver(SERVO_0_CFG);
- 8011aec:	2014      	movs	r0, #20
- 8011aee:	f000 f91b 	bl	8011d28 <_Znwj>
- 8011af2:	4603      	mov	r3, r0
- 8011af4:	461c      	mov	r4, r3
- 8011af6:	4915      	ldr	r1, [pc, #84]	@ (8011b4c <_ZN11ServoThread4initEv+0x68>)
- 8011af8:	4620      	mov	r0, r4
- 8011afa:	f7fe fb71 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
- 8011afe:	687b      	ldr	r3, [r7, #4]
- 8011b00:	641c      	str	r4, [r3, #64]	@ 0x40
-    servo[1] = new PWMDriver(SERVO_1_CFG);
- 8011b02:	2014      	movs	r0, #20
- 8011b04:	f000 f910 	bl	8011d28 <_Znwj>
- 8011b08:	4603      	mov	r3, r0
- 8011b0a:	461c      	mov	r4, r3
- 8011b0c:	4910      	ldr	r1, [pc, #64]	@ (8011b50 <_ZN11ServoThread4initEv+0x6c>)
- 8011b0e:	4620      	mov	r0, r4
- 8011b10:	f7fe fb66 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
- 8011b14:	687b      	ldr	r3, [r7, #4]
- 8011b16:	645c      	str	r4, [r3, #68]	@ 0x44
-    servo[2] = new PWMDriver(SERVO_2_CFG);
- 8011b18:	2014      	movs	r0, #20
- 8011b1a:	f000 f905 	bl	8011d28 <_Znwj>
- 8011b1e:	4603      	mov	r3, r0
- 8011b20:	461c      	mov	r4, r3
- 8011b22:	490c      	ldr	r1, [pc, #48]	@ (8011b54 <_ZN11ServoThread4initEv+0x70>)
- 8011b24:	4620      	mov	r0, r4
- 8011b26:	f7fe fb5b 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
- 8011b2a:	687b      	ldr	r3, [r7, #4]
- 8011b2c:	649c      	str	r4, [r3, #72]	@ 0x48
-    servo[3] = new PWMDriver(SERVO_3_CFG);
- 8011b2e:	2014      	movs	r0, #20
- 8011b30:	f000 f8fa 	bl	8011d28 <_Znwj>
- 8011b34:	4603      	mov	r3, r0
- 8011b36:	461c      	mov	r4, r3
- 8011b38:	4907      	ldr	r1, [pc, #28]	@ (8011b58 <_ZN11ServoThread4initEv+0x74>)
- 8011b3a:	4620      	mov	r0, r4
- 8011b3c:	f7fe fb50 	bl	80101e0 <_ZN9PWMDriverC1ERK9PWMConfig>
- 8011b40:	687b      	ldr	r3, [r7, #4]
- 8011b42:	64dc      	str	r4, [r3, #76]	@ 0x4c
-}
- 8011b44:	bf00      	nop
- 8011b46:	370c      	adds	r7, #12
- 8011b48:	46bd      	mov	sp, r7
- 8011b4a:	bd90      	pop	{r4, r7, pc}
- 8011b4c:	0801e384 	.word	0x0801e384
- 8011b50:	0801e394 	.word	0x0801e394
- 8011b54:	0801e3a4 	.word	0x0801e3a4
- 8011b58:	0801e3b4 	.word	0x0801e3b4
-
-08011b5c <_ZN11ServoThread4loopEv>:
-
-void ServoThread::loop()
-{
- 8011b5c:	b580      	push	{r7, lr}
- 8011b5e:	b088      	sub	sp, #32
- 8011b60:	af00      	add	r7, sp, #0
- 8011b62:	6078      	str	r0, [r7, #4]
-    ServoRequest req;
-    if (this->popCommand(req)) {
- 8011b64:	687b      	ldr	r3, [r7, #4]
- 8011b66:	61fb      	str	r3, [r7, #28]
-        if (_commandQueue) {
- 8011b68:	69fb      	ldr	r3, [r7, #28]
- 8011b6a:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
- 8011b6c:	2b00      	cmp	r3, #0
- 8011b6e:	d00e      	beq.n	8011b8e <_ZN11ServoThread4loopEv+0x32>
-            return (xQueueReceive(_commandQueue, &cmd, 0) == pdTRUE);
- 8011b70:	69fb      	ldr	r3, [r7, #28]
- 8011b72:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
- 8011b74:	f107 010c 	add.w	r1, r7, #12
- 8011b78:	2200      	movs	r2, #0
- 8011b7a:	4618      	mov	r0, r3
- 8011b7c:	f7fb f9ce 	bl	800cf1c <xQueueReceive>
- 8011b80:	4603      	mov	r3, r0
- 8011b82:	2b01      	cmp	r3, #1
- 8011b84:	bf0c      	ite	eq
- 8011b86:	2301      	moveq	r3, #1
- 8011b88:	2300      	movne	r3, #0
- 8011b8a:	b2db      	uxtb	r3, r3
- 8011b8c:	e000      	b.n	8011b90 <_ZN11ServoThread4loopEv+0x34>
-        return false;
- 8011b8e:	2300      	movs	r3, #0
- 8011b90:	2b00      	cmp	r3, #0
- 8011b92:	d021      	beq.n	8011bd8 <_ZN11ServoThread4loopEv+0x7c>
-        if (req.id > 3) return;
- 8011b94:	7b3b      	ldrb	r3, [r7, #12]
- 8011b96:	2b03      	cmp	r3, #3
- 8011b98:	d81d      	bhi.n	8011bd6 <_ZN11ServoThread4loopEv+0x7a>
-
-        if (req.zero_in) {
- 8011b9a:	7d3b      	ldrb	r3, [r7, #20]
- 8011b9c:	2b00      	cmp	r3, #0
- 8011b9e:	d009      	beq.n	8011bb4 <_ZN11ServoThread4loopEv+0x58>
-            servo[req.id]->zero();
- 8011ba0:	7b3b      	ldrb	r3, [r7, #12]
- 8011ba2:	461a      	mov	r2, r3
- 8011ba4:	687b      	ldr	r3, [r7, #4]
- 8011ba6:	3210      	adds	r2, #16
- 8011ba8:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
- 8011bac:	4618      	mov	r0, r3
- 8011bae:	f7fe fc1d 	bl	80103ec <_ZN9PWMDriver4zeroEv>
- 8011bb2:	e011      	b.n	8011bd8 <_ZN11ServoThread4loopEv+0x7c>
-        } else {
-            servo[req.id]->set_angle((float)req.increment);
- 8011bb4:	7b3b      	ldrb	r3, [r7, #12]
- 8011bb6:	461a      	mov	r2, r3
- 8011bb8:	687b      	ldr	r3, [r7, #4]
- 8011bba:	3210      	adds	r2, #16
- 8011bbc:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
- 8011bc0:	693a      	ldr	r2, [r7, #16]
- 8011bc2:	ee07 2a90 	vmov	s15, r2
- 8011bc6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
- 8011bca:	eeb0 0a67 	vmov.f32	s0, s15
- 8011bce:	4618      	mov	r0, r3
- 8011bd0:	f7fe fbcc 	bl	801036c <_ZN9PWMDriver9set_angleEf>
- 8011bd4:	e000      	b.n	8011bd8 <_ZN11ServoThread4loopEv+0x7c>
-        if (req.id > 3) return;
- 8011bd6:	bf00      	nop
-        }
-    }
-}
- 8011bd8:	3720      	adds	r7, #32
- 8011bda:	46bd      	mov	sp, r7
- 8011bdc:	bd80      	pop	{r7, pc}
-
-08011bde <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_t>:
-    MessageThread(const char* name, osPriority priority)
- 8011bde:	b580      	push	{r7, lr}
- 8011be0:	b088      	sub	sp, #32
- 8011be2:	af04      	add	r7, sp, #16
- 8011be4:	60f8      	str	r0, [r7, #12]
- 8011be6:	60b9      	str	r1, [r7, #8]
- 8011be8:	607a      	str	r2, [r7, #4]
-              ThreadCfg::QUEUE_DEPTH)
- 8011bea:	2305      	movs	r3, #5
- 8011bec:	9302      	str	r3, [sp, #8]
- 8011bee:	2305      	movs	r3, #5
- 8011bf0:	9301      	str	r3, [sp, #4]
- 8011bf2:	230a      	movs	r3, #10
- 8011bf4:	9300      	str	r3, [sp, #0]
- 8011bf6:	f44f 6300 	mov.w	r3, #2048	@ 0x800
- 8011bfa:	687a      	ldr	r2, [r7, #4]
- 8011bfc:	68b9      	ldr	r1, [r7, #8]
- 8011bfe:	68f8      	ldr	r0, [r7, #12]
- 8011c00:	f000 f840 	bl	8011c84 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj>
-    {}
- 8011c04:	68fb      	ldr	r3, [r7, #12]
- 8011c06:	4618      	mov	r0, r3
- 8011c08:	3710      	adds	r7, #16
- 8011c0a:	46bd      	mov	sp, r7
- 8011c0c:	bd80      	pop	{r7, pc}
-	...
-
-08011c10 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>:
-    virtual ~MessageThread() {
- 8011c10:	b580      	push	{r7, lr}
- 8011c12:	b082      	sub	sp, #8
- 8011c14:	af00      	add	r7, sp, #0
- 8011c16:	6078      	str	r0, [r7, #4]
-    }
- 8011c18:	4a11      	ldr	r2, [pc, #68]	@ (8011c60 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x50>)
- 8011c1a:	687b      	ldr	r3, [r7, #4]
- 8011c1c:	601a      	str	r2, [r3, #0]
-        if (_commandQueue) {
- 8011c1e:	687b      	ldr	r3, [r7, #4]
- 8011c20:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
- 8011c22:	2b00      	cmp	r3, #0
- 8011c24:	d007      	beq.n	8011c36 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x26>
-            vQueueDelete(_commandQueue);
- 8011c26:	687b      	ldr	r3, [r7, #4]
- 8011c28:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
- 8011c2a:	4618      	mov	r0, r3
- 8011c2c:	f7fb fa58 	bl	800d0e0 <vQueueDelete>
-            _commandQueue = nullptr;
- 8011c30:	687b      	ldr	r3, [r7, #4]
- 8011c32:	2200      	movs	r2, #0
- 8011c34:	639a      	str	r2, [r3, #56]	@ 0x38
-        if (_statusQueue) {
- 8011c36:	687b      	ldr	r3, [r7, #4]
- 8011c38:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
- 8011c3a:	2b00      	cmp	r3, #0
- 8011c3c:	d007      	beq.n	8011c4e <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev+0x3e>
-            vQueueDelete(_statusQueue);
- 8011c3e:	687b      	ldr	r3, [r7, #4]
- 8011c40:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
- 8011c42:	4618      	mov	r0, r3
- 8011c44:	f7fb fa4c 	bl	800d0e0 <vQueueDelete>
-            _statusQueue = nullptr;
- 8011c48:	687b      	ldr	r3, [r7, #4]
- 8011c4a:	2200      	movs	r2, #0
- 8011c4c:	63da      	str	r2, [r3, #60]	@ 0x3c
-    }
- 8011c4e:	687b      	ldr	r3, [r7, #4]
- 8011c50:	4618      	mov	r0, r3
- 8011c52:	f7fe fd6f 	bl	8010734 <_ZN6ThreadD1Ev>
- 8011c56:	687b      	ldr	r3, [r7, #4]
- 8011c58:	4618      	mov	r0, r3
- 8011c5a:	3708      	adds	r7, #8
- 8011c5c:	46bd      	mov	sp, r7
- 8011c5e:	bd80      	pop	{r7, pc}
- 8011c60:	0801e3e4 	.word	0x0801e3e4
-
-08011c64 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED0Ev>:
-    virtual ~MessageThread() {
- 8011c64:	b580      	push	{r7, lr}
- 8011c66:	b082      	sub	sp, #8
- 8011c68:	af00      	add	r7, sp, #0
- 8011c6a:	6078      	str	r0, [r7, #4]
-    }
- 8011c6c:	6878      	ldr	r0, [r7, #4]
- 8011c6e:	f7ff ffcf 	bl	8011c10 <_ZN13MessageThreadI12ServoRequest12EmptyMessageED1Ev>
- 8011c72:	2140      	movs	r1, #64	@ 0x40
- 8011c74:	6878      	ldr	r0, [r7, #4]
- 8011c76:	f00a ff27 	bl	801cac8 <_ZdlPvj>
- 8011c7a:	687b      	ldr	r3, [r7, #4]
- 8011c7c:	4618      	mov	r0, r3
- 8011c7e:	3708      	adds	r7, #8
- 8011c80:	46bd      	mov	sp, r7
- 8011c82:	bd80      	pop	{r7, pc}
-
-08011c84 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj>:
-    MessageThread(const char*   name,
- 8011c84:	b580      	push	{r7, lr}
- 8011c86:	b086      	sub	sp, #24
- 8011c88:	af00      	add	r7, sp, #0
- 8011c8a:	60f8      	str	r0, [r7, #12]
- 8011c8c:	60b9      	str	r1, [r7, #8]
- 8011c8e:	607a      	str	r2, [r7, #4]
- 8011c90:	603b      	str	r3, [r7, #0]
-        : Thread(name, priority, stackSize)
- 8011c92:	68f8      	ldr	r0, [r7, #12]
- 8011c94:	683b      	ldr	r3, [r7, #0]
- 8011c96:	687a      	ldr	r2, [r7, #4]
- 8011c98:	68b9      	ldr	r1, [r7, #8]
- 8011c9a:	f7ff fe47 	bl	801192c <_ZN6ThreadC1EPKc12osPriority_tm>
- 8011c9e:	4a21      	ldr	r2, [pc, #132]	@ (8011d24 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0xa0>)
- 8011ca0:	68fb      	ldr	r3, [r7, #12]
- 8011ca2:	601a      	str	r2, [r3, #0]
- 8011ca4:	68fb      	ldr	r3, [r7, #12]
- 8011ca6:	2200      	movs	r2, #0
- 8011ca8:	639a      	str	r2, [r3, #56]	@ 0x38
- 8011caa:	68fb      	ldr	r3, [r7, #12]
- 8011cac:	2200      	movs	r2, #0
- 8011cae:	63da      	str	r2, [r3, #60]	@ 0x3c
-        setDelay(tickDelayMs);
- 8011cb0:	68fb      	ldr	r3, [r7, #12]
- 8011cb2:	6a39      	ldr	r1, [r7, #32]
- 8011cb4:	4618      	mov	r0, r3
- 8011cb6:	f7ff fe9d 	bl	80119f4 <_ZN6Thread8setDelayEm>
-        _commandQueue = xQueueCreate(commandDepth, sizeof(CommandMsg));
- 8011cba:	2200      	movs	r2, #0
- 8011cbc:	2110      	movs	r1, #16
- 8011cbe:	6a78      	ldr	r0, [r7, #36]	@ 0x24
- 8011cc0:	f7fa ff2d 	bl	800cb1e <xQueueGenericCreate>
- 8011cc4:	4602      	mov	r2, r0
- 8011cc6:	68fb      	ldr	r3, [r7, #12]
- 8011cc8:	639a      	str	r2, [r3, #56]	@ 0x38
-        configASSERT(_commandQueue);
- 8011cca:	68fb      	ldr	r3, [r7, #12]
- 8011ccc:	6b9b      	ldr	r3, [r3, #56]	@ 0x38
- 8011cce:	2b00      	cmp	r3, #0
- 8011cd0:	d10b      	bne.n	8011cea <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x66>
-	__asm volatile
- 8011cd2:	f04f 0350 	mov.w	r3, #80	@ 0x50
- 8011cd6:	f383 8811 	msr	BASEPRI, r3
- 8011cda:	f3bf 8f6f 	isb	sy
- 8011cde:	f3bf 8f4f 	dsb	sy
- 8011ce2:	617b      	str	r3, [r7, #20]
-}
- 8011ce4:	bf00      	nop
- 8011ce6:	bf00      	nop
- 8011ce8:	e7fd      	b.n	8011ce6 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x62>
-        _statusQueue = xQueueCreate(statusDepth, sizeof(StatusMsg));
- 8011cea:	2200      	movs	r2, #0
- 8011cec:	2101      	movs	r1, #1
- 8011cee:	6ab8      	ldr	r0, [r7, #40]	@ 0x28
- 8011cf0:	f7fa ff15 	bl	800cb1e <xQueueGenericCreate>
- 8011cf4:	4602      	mov	r2, r0
- 8011cf6:	68fb      	ldr	r3, [r7, #12]
- 8011cf8:	63da      	str	r2, [r3, #60]	@ 0x3c
-        configASSERT(_statusQueue);
- 8011cfa:	68fb      	ldr	r3, [r7, #12]
- 8011cfc:	6bdb      	ldr	r3, [r3, #60]	@ 0x3c
- 8011cfe:	2b00      	cmp	r3, #0
- 8011d00:	d10b      	bne.n	8011d1a <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x96>
-	__asm volatile
- 8011d02:	f04f 0350 	mov.w	r3, #80	@ 0x50
- 8011d06:	f383 8811 	msr	BASEPRI, r3
- 8011d0a:	f3bf 8f6f 	isb	sy
- 8011d0e:	f3bf 8f4f 	dsb	sy
- 8011d12:	613b      	str	r3, [r7, #16]
-}
- 8011d14:	bf00      	nop
- 8011d16:	bf00      	nop
- 8011d18:	e7fd      	b.n	8011d16 <_ZN13MessageThreadI12ServoRequest12EmptyMessageEC1EPKc12osPriority_tmmjj+0x92>
-    }
- 8011d1a:	68fb      	ldr	r3, [r7, #12]
  8011d1c:	4618      	mov	r0, r3
- 8011d1e:	3718      	adds	r7, #24
+ 8011d1e:	370c      	adds	r7, #12
  8011d20:	46bd      	mov	sp, r7
- 8011d22:	bd80      	pop	{r7, pc}
- 8011d24:	0801e3e4 	.word	0x0801e3e4
+ 8011d22:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8011d26:	4770      	bx	lr
 
 08011d28 <_Znwj>:
  */

@@ -1,0 +1,13 @@
+C:\ST\STM32CubeIDE_1.19.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\arm-none-eabi\include\c++\13.3.1\arm-none-eabi\thumb\v7e-m+dp\hard\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
+../Core/Src/../Adafruit_NeoPixel_STM/LEDStrip.h:41:10:void LEDStrip::clear()	1
+../Core/Src/main.cpp:25:6:void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef*)	1
+../Core/Src/main.cpp:30:5:int main()	7
+../Core/Src/main.cpp:94:6:void SystemClock_Config()	4
+../Core/Src/main.cpp:155:13:void MX_SPI1_Init()	2
+../Core/Src/main.cpp:203:13:void MX_TIM4_Init()	6
+../Core/Src/main.cpp:262:13:void MX_UART4_Init()	5
+../Core/Src/main.cpp:310:13:void MX_USB_OTG_HS_USB_Init()	1
+../Core/Src/main.cpp:329:13:void MX_DMA_Init()	1
+../Core/Src/main.cpp:347:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:407:6:void MPU_Config()	1
+../Core/Src/main.cpp:438:6:void Error_Handler()	1

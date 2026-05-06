@@ -1,0 +1,11 @@
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:Thread::~Thread()	1
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/Thread.h:23:10:virtual Thread::~Thread()	1
+../System/Threads/Src/HeartBeat.cpp:10:1:HeartBeat::HeartBeat()	1
+../System/Threads/Src/HeartBeat.cpp:15:6:virtual void HeartBeat::init()	1
+../System/Threads/Src/HeartBeat.cpp:20:6:virtual void HeartBeat::loop()	2
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:85:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*) [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	1
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	3
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	1
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/MessageThread.h:60:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	3
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/HeartBeat.h:13:7:HeartBeat::~HeartBeat()	1
+/home/xplore/Desktop/2026_microros/Avionics_SW/2026/USB/test-usb/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	1
