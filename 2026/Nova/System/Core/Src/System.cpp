@@ -22,16 +22,16 @@ ThreadsRegistry System::reg{};
 void System::init(){
 
 	//Allocate memory for the threads
-//	beat = new HeartBeat("beat", osPriorityLow);
+	beat = new HeartBeat("beat", osPriorityLow);
 	//test = new TestTask("test", osPriorityLow);
-//	mass  = new MassThread("MassThread",  osPriorityNormal);
+	mass  = new MassThread("MassThread",  osPriorityNormal);
 //	servo = new ServoThread("ServoThread", osPriorityNormal);
 	leds = new LedsThread("LedsThread", osPriorityNormal);
 
 	//Register tasks
-//    reg.beat = beat;
+    reg.beat = beat;
     reg.leds = leds;
-//    reg.mass = mass;
+    reg.mass = mass;
 //    reg.servo = servo;
 
     // Allocate memory for the MicroRosThread
@@ -40,15 +40,15 @@ void System::init(){
     //Set task timings
     microros->setDelay(1000); //ms
 //    servo->setDelay(100); //ms
-//    mass->setDelay(100); //ms
+    mass->setDelay(100); //ms
     leds->setDelay(80); //ms
 
 	//test->start();
-//	beat->start();
+	beat->start();
 
 	microros->start();
 //	servo->start();
-//	mass->start();
+	mass->start();
 	leds->start();
 
 }

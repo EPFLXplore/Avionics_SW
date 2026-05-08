@@ -98,14 +98,14 @@ void MicroRosThread::updateSubs() {
         req.mode   = g_led_req_msg.mode;
         if (_reg->leds != nullptr) _reg->leds->pushCommand(req);
 
-//        if (_reg->beat != nullptr) {
-//			BeatPacket hb;
-//			while (_reg->beat->popStatus(hb)) {
-//				std_msgs__msg__Float32 msg;
-//				msg.data = hb.beat;
-//				rcl_publish(&g_pub_beat, &msg, nullptr);
-//			}
-//		}
+        if (_reg->beat != nullptr) {
+			BeatPacket hb;
+			while (_reg->beat->popStatus(hb)) {
+				std_msgs__msg__Float32 msg;
+				msg.data = hb.beat;
+				rcl_publish(&g_pub_beat, &msg, nullptr);
+			}
+		}
     }
 
 //    if (rcl_take(&g_sub_mass, &g_mass_req_msg, NULL, NULL) == RCL_RET_OK) {
@@ -119,15 +119,15 @@ void MicroRosThread::updateSubs() {
 void MicroRosThread::updatePubs() {
     if (!initialized || _reg == nullptr) return;
 
-//    if (_reg->mass != nullptr) {
-//        MassPacket ms;
-//        while (_reg->mass->popStatus(ms)) {
-//            custom_msg__msg__MassPacket msg;
-//            msg.id   = ms.id;
-//            msg.mass = ms.mass;
-//            rcl_publish(&g_pub_mass, &msg, nullptr);
-//        }
-//    }
+    if (_reg->mass != nullptr) {
+        MassPacket ms;
+        while (_reg->mass->popStatus(ms)) {
+            custom_msg__msg__MassPacket msg;
+            msg.id   = ms.id;
+            msg.mass = ms.mass;
+            rcl_publish(&g_pub_mass, &msg, nullptr);
+        }
+    }
 
 //    if (_reg->beat != nullptr) {
 //        BeatPacket hb;

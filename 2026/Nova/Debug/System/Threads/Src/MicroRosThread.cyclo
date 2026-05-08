@@ -4,8 +4,8 @@
 ../System/Threads/Src/MicroRosThread.cpp:41:1:MicroRosThread::MicroRosThread(ThreadsRegistry*, const char*, osPriority_t)	1
 ../System/Threads/Src/MicroRosThread.cpp:48:6:virtual void MicroRosThread::init()	1
 ../System/Threads/Src/MicroRosThread.cpp:69:6:void MicroRosThread::destroy_entities()	1
-../System/Threads/Src/MicroRosThread.cpp:82:6:void MicroRosThread::updateSubs()	6
-../System/Threads/Src/MicroRosThread.cpp:119:6:void MicroRosThread::updatePubs()	2
+../System/Threads/Src/MicroRosThread.cpp:82:6:void MicroRosThread::updateSubs()	9
+../System/Threads/Src/MicroRosThread.cpp:119:6:void MicroRosThread::updatePubs()	6
 ../System/Threads/Src/MicroRosThread.cpp:142:6:bool MicroRosThread::try_connect_and_setup()	4
 ../System/Threads/Src/MicroRosThread.cpp:192:6:virtual void MicroRosThread::loop()	6
 /home/xplore/Desktop/nova_v2/Avionics_SW/2026/Nova/System/Threads/Inc/MicroRosThread.h:33:7:MicroRosThread::~MicroRosThread()	1
