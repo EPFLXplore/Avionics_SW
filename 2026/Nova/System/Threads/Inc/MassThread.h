@@ -29,9 +29,8 @@ struct MassType {
 };
 
 enum Mass_ID{
-	SERVICE_MODULE_LEFT,
-	SERVICE_MODULE_RIGHT,
-	DRILL
+	SAND_ROCKS,
+	MASS_DRILL
 };
 
 class MassThread : public MessageThread<MassRequest, MassPacket>{ //TODO reput the tare
