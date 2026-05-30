@@ -46512,7 +46512,7 @@ void ServoThread::init()
         do {
             if (req.id == SERVICE_MODULE_BOTH) {
  80120a0:	7e3b      	ldrb	r3, [r7, #24]
- 80120a2:	2b64      	cmp	r3, #100	@ 0x64
+ 80120a2:	2b0a      	cmp	r3, #10
  80120a4:	d11b      	bne.n	80120de <_ZN11ServoThread4loopEv+0x92>
                 apply(LEFT_SERVICE_MODULE, req);
  80120a6:	f107 0218 	add.w	r2, r7, #24
