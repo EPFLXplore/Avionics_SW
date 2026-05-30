@@ -38,8 +38,8 @@ void System::init(){
     microros = new MicroRosThread(&reg, "mROS", osPriorityHigh);
 
     //Set task timings
-    microros->setDelay(700); //ms
-    servo->setDelay(100); //ms
+    microros->setDelay(10); //ms — fast subscription drain; both servo msgs batch in one tick
+    // servo: leave at 0 (set in ctor) so it blocks in waitCommand() and wakes the instant a command queues
     mass->setDelay(100); //ms
     leds->setDelay(300); //ms
 

@@ -9,7 +9,11 @@ enum Servos_ID {
 	RIGHT_SERVICE_MODULE,
 	LEFT_LED,
 	RIGHT_LED,
-	DRILL
+	DRILL,
+
+	// Sentinel id: one ServoRequest drives BOTH service modules atomically.
+	// Publish a single message with id = SERVICE_MODULE_BOTH instead of two.
+	SERVICE_MODULE_BOTH = 10
 };
 
 class ServoThread : public MessageThread<ServoRequest, EmptyMessage> {
@@ -21,10 +25,9 @@ public:
     void loop() override;
 
 private:
-    PWMDriver* servo[4];
+    PWMDriver*   servo[4];
 
-    // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE):
-    // 1 s after the last command the servo is driven to 90° (neutral/stop).
-    TickType_t _last_cmd_tick[4] = {};
-    bool       _stop_pending[4]  = {};
+    // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE)
+    TickType_t   _last_cmd_tick[4] = {};
+    bool         _stop_pending[4]  = {};
 };

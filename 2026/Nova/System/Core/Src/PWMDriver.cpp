@@ -24,6 +24,7 @@ PWMDriver::PWMDriver(const PWMConfig& cfg) : cfg_(cfg), channel_hal_(channel_to_
     HAL_GPIO_Init(cfg_.port, &gpio);
 
     set50Hz();
+    disable_ccr_preload();
 
     if (cfg_.complementary)
         HAL_TIMEx_PWMN_Start(cfg_.tim, channel_hal_);
@@ -100,6 +101,16 @@ void PWMDriver::set50Hz()
     cfg_.tim->Instance->ARR = 19999U;
     // Force an update event so PSC and ARR are loaded immediately.
     cfg_.tim->Instance->EGR = TIM_EGR_UG;
+}
+
+void PWMDriver::disable_ccr_preload()
+{
+    switch (cfg_.channel) {
+        case 1: cfg_.tim->Instance->CCMR1 &= ~TIM_CCMR1_OC1PE; break;
+        case 2: cfg_.tim->Instance->CCMR1 &= ~TIM_CCMR1_OC2PE; break;
+        case 3: cfg_.tim->Instance->CCMR2 &= ~TIM_CCMR2_OC3PE; break;
+        case 4: cfg_.tim->Instance->CCMR2 &= ~TIM_CCMR2_OC4PE; break;
+    }
 }
 
 void PWMDriver::enable_gpio_clock() const

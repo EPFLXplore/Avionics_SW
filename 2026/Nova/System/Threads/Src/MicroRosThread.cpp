@@ -82,7 +82,7 @@ void MicroRosThread::destroy_entities() {
 void MicroRosThread::updateSubs() {
     if (!initialized || _reg == nullptr) return;
 
-    if (rcl_take(&g_sub_servo, &g_servo_req_msg, NULL, NULL) == RCL_RET_OK) {
+    while (rcl_take(&g_sub_servo, &g_servo_req_msg, NULL, NULL) == RCL_RET_OK) {
         g_counter++;
         ServoRequest req;
         req.id        = g_servo_req_msg.id;

@@ -40,6 +40,7 @@ private:
 
     void     enable_gpio_clock() const;
     void     set50Hz();
+    void     disable_ccr_preload();
     static uint32_t get_timer_clock(TIM_TypeDef* tim);
 };
 
