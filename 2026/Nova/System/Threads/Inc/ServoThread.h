@@ -22,4 +22,9 @@ public:
 
 private:
     PWMDriver* servo[4];
+
+    // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE):
+    // 1 s after the last command the servo is driven to 90° (neutral/stop).
+    TickType_t _last_cmd_tick[4] = {};
+    bool       _stop_pending[4]  = {};
 };
