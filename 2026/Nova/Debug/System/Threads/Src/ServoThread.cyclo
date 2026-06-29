@@ -5,7 +5,7 @@
 ../System/Threads/Src/ServoThread.cpp:11:1:virtual ServoThread::~ServoThread()	1
 ../System/Threads/Src/ServoThread.cpp:19:6:virtual void ServoThread::init()	1
 ../System/Threads/Src/ServoThread.cpp:38:18:ServoThread::loop()::<lambda(uint8_t, const ServoRequest&)>	4
-../System/Threads/Src/ServoThread.cpp:32:6:virtual void ServoThread::loop()	10
+../System/Threads/Src/ServoThread.cpp:32:6:virtual void ServoThread::loop()	16
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:131:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1

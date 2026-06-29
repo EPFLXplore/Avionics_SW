@@ -32,7 +32,7 @@ void ServoThread::init()
 void ServoThread::loop()
 {
     const TickType_t now        = xTaskGetTickCount();
-    const TickType_t STOP_DELAY = pdMS_TO_TICKS(1000);
+    const TickType_t STOP_DELAY = pdMS_TO_TICKS(600);
 
     // Apply one command to one servo, arming auto-stop for the service modules.
     auto apply = [&](uint8_t id, const ServoRequest& r) {
@@ -52,6 +52,12 @@ void ServoThread::loop()
     if (this->waitCommand(req, pdMS_TO_TICKS(10))) {
         do {
             if (req.id == SERVICE_MODULE_BOTH) {
+                // Block duplicate open (0) or close (180) commands.
+                const bool is_toggle = !req.zero_in &&
+                                       (req.increment == 0 || req.increment == 180);
+                if (is_toggle && req.increment == _last_both_cmd) continue;
+                if (is_toggle) _last_both_cmd = req.increment;
+
                 apply(LEFT_SERVICE_MODULE, req);
 
                 // RIGHT is mounted opposite LEFT: mirror the angle so the two

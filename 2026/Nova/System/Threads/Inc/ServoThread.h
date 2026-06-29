@@ -30,4 +30,7 @@ private:
     // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE)
     TickType_t   _last_cmd_tick[4] = {};
     bool         _stop_pending[4]  = {};
+
+    // Last SERVICE_MODULE_BOTH open/close command: 0=open, 180=close, -1=none
+    int16_t      _last_both_cmd    = -1;
 };
