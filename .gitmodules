@@ -4,3 +4,4 @@
 [submodule "2026/Nova/ERC_SE_CustomMessages"]
 	path = 2026/Nova/ERC_SE_CustomMessages
 	url = git@github.com:EPFLXplore/ERC_SE_CustomMessages.git
+	branch = AV2026
