@@ -5,7 +5,7 @@
 
 struct PWMConfig {
     TIM_HandleTypeDef* tim;
-    uint8_t            channel;        ///< 1–4
+    uint8_t            channel;        ///< 1-4
     uint16_t           pin;
     GPIO_TypeDef*      port;
     uint8_t            af;
@@ -20,12 +20,12 @@ public:
 
     /**
      * @brief Set pulse width directly in microseconds.
-     * @param us  Pulse width, typ. 500–2500 µs for a servo.
+     * @param us  Pulse width, typ. 500-2500 µs for a servo.
      */
     void set_pulse_us(uint16_t us);
 
     /**
-     * @brief Set servo angle (0–180°). Mapped to 500–2500 µs.
+     * @brief Set servo angle (0-180°). Mapped to 500-2500 µs.
      */
     void set_angle(float angle);
 

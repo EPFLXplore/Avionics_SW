@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Bridge.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,15 +52,10 @@ TIM_HandleTypeDef htim5;
 TIM_HandleTypeDef htim7;
 TIM_HandleTypeDef htim15;
 DMA_HandleTypeDef hdma_tim5_ch1;
-DMA_HandleTypeDef hdma_tim5_ch2;
+DMA_HandleTypeDef hdma_tim15_ch1;
 
 /* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
-};
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -153,11 +149,11 @@ int main(void)
 
   /* Create the thread(s) */
   /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  MX_USB_Device_Init();
+  BridgeSystemInit();
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  InitSystem();
+  /* System threads are created from StartDefaultTask, after USB is initialised. */
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -590,7 +586,7 @@ static void MX_TIM15_Init(void)
   htim15.Instance = TIM15;
   htim15.Init.Prescaler = 0;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 65535;
+  htim15.Init.Period = 179;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -777,8 +773,10 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* init code for USB_Device */
-  MX_USB_Device_Init();
+
   /* USER CODE BEGIN 5 */
+  /* USB is up: now create the application threads. */
+
   /* Infinite loop */
   for(;;)
   {

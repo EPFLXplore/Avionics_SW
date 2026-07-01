@@ -27,8 +27,7 @@ void task_run(void* arg) {
 		//taskYIELD();
 	}
 
-	delete thread;
-
+	// Thread objects are statically allocated (see System.cpp) - never deleted.
 	vTaskDelete(nullptr);
 
 	while(true) {
@@ -57,6 +56,16 @@ Thread::Thread(const char* name, osPriority priority, uint32_t stackSize){
 void Thread::start() {
     if (started) return;
     this->started = true;
+
+    // Static allocation: hand the task its stack + control block so osThreadNew
+    // creates it via xTaskCreateStatic (no pvPortMalloc).
+    if (attributes.stack_size == 0 || attributes.stack_size > sizeof(stackBuffer_)) {
+        attributes.stack_size = sizeof(stackBuffer_);
+    }
+    attributes.stack_mem = stackBuffer_;
+    attributes.cb_mem    = &tcbBuffer_;
+    attributes.cb_size   = sizeof(tcbBuffer_);
+
     this->handle = osThreadNew(task_run, this, &attributes);
     configASSERT(handle);
     this->name = name;

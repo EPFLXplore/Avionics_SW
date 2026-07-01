@@ -11,7 +11,7 @@
 #include "MessageThread.h"
 #include "LEDStrip.h"
 
-class LedsThread : public MessageThread<LedRequest, EmptyMessage> {
+class LedsThread : public MessageThread<LEDRequest, EmptyMessage> {
 public:
 	LedsThread(const char* name, osPriority priority);
 	~LedsThread();
@@ -21,8 +21,8 @@ public:
 
 private:
 	bool cleared = false;
-	LedRequest req{};
-	LEDStrip* strip;
+	LEDRequest req{};
+	LEDStrip strip1{60};          // the strip as a plain object (<= WS2812_MAX_LEDS)
 	Command cmd;
 };
 

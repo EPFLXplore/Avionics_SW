@@ -25,7 +25,14 @@ public:
     void loop() override;
 
 private:
-    PWMDriver*   servo[4];
+    // Plain objects. Safe because ServoThread is constructed at runtime (from
+    // System::init, after HAL), so PWMDriver's HAL timer setup runs post-HAL.
+    PWMDriver servo[4] = {
+        PWMDriver(SERVO_0_CFG),
+        PWMDriver(SERVO_1_CFG),
+        PWMDriver(SERVO_2_CFG),
+        PWMDriver(SERVO_3_CFG),
+    };
 
     // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE)
     TickType_t   _last_cmd_tick[4] = {};

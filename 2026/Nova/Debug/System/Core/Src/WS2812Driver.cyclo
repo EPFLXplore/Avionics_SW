@@ -1,0 +1,9 @@
+../System/Core/Src/WS2812Driver.cpp:3:10:uint32_t colorCode(const Color&)	1
+../System/Core/Src/WS2812Driver.cpp:8:1:WS2812Driver::WS2812Driver(uint16_t)	2
+../System/Core/Src/WS2812Driver.cpp:16:1:WS2812Driver::~WS2812Driver()	2
+../System/Core/Src/WS2812Driver.cpp:25:6:void WS2812Driver::begin(TIM_HandleTypeDef*, uint32_t)	3
+../System/Core/Src/WS2812Driver.cpp:43:6:void WS2812Driver::setPixelColor(const uint32_t&, const Color&, bool)	4
+../System/Core/Src/WS2812Driver.cpp:57:6:void WS2812Driver::presetColors(const Color*)	2
+../System/Core/Src/WS2812Driver.cpp:65:6:void WS2812Driver::setBrightness(uint8_t)	3
+../System/Core/Src/WS2812Driver.cpp:81:6:void WS2812Driver::show()	1
+../System/Core/Src/WS2812Driver.cpp:94:6:void WS2812Driver::clear()	2

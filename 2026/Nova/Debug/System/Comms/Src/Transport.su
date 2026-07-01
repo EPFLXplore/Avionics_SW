@@ -1,0 +1,8 @@
+../System/Comms/Src/Transport.cpp:17:6:void CdcTransport::begin()	16	static
+../System/Comms/Src/Transport.cpp:23:6:void CdcTransport::onRxISR(const uint8_t*, uint16_t)	32	static
+../System/Comms/Src/Transport.cpp:32:10:uint16_t CdcTransport::read(uint8_t*, uint16_t)	32	static
+../System/Comms/Src/Transport.cpp:43:6:bool CdcTransport::write(const uint8_t*, uint16_t)	32	static
+../System/Comms/Src/Transport.cpp:59:6:void CdcTransport::onTxCpltISR()	24	static
+../System/Comms/Src/Transport.cpp:77:6:void CdcTransport::pump()	24	static
+../System/Comms/Src/Transport.cpp:97:6:static void CdcTransport::dispatchRxISR(const uint8_t*, uint16_t)	16	static
+../System/Comms/Src/Transport.cpp:101:6:static void CdcTransport::dispatchTxCpltISR()	8	static

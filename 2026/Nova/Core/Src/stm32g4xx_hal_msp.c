@@ -25,7 +25,7 @@
 /* USER CODE END Includes */
 extern DMA_HandleTypeDef hdma_tim5_ch1;
 
-extern DMA_HandleTypeDef hdma_tim5_ch2;
+extern DMA_HandleTypeDef hdma_tim15_ch1;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
@@ -277,6 +277,25 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     /* USER CODE END TIM15_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM15_CLK_ENABLE();
+
+    /* TIM15 DMA Init */
+    /* TIM15_CH1 Init */
+    hdma_tim15_ch1.Instance = DMA1_Channel2;
+    hdma_tim15_ch1.Init.Request = DMA_REQUEST_TIM15_CH1;
+    hdma_tim15_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_tim15_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_tim15_ch1.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_tim15_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_tim15_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_tim15_ch1.Init.Mode = DMA_NORMAL;
+    hdma_tim15_ch1.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+    if (HAL_DMA_Init(&hdma_tim15_ch1) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(htim_base,hdma[TIM_DMA_ID_CC1],hdma_tim15_ch1);
+
     /* USER CODE BEGIN TIM15_MspInit 1 */
 
     /* USER CODE END TIM15_MspInit 1 */
@@ -317,23 +336,6 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
     }
 
     __HAL_LINKDMA(htim_pwm,hdma[TIM_DMA_ID_CC1],hdma_tim5_ch1);
-
-    /* TIM5_CH2 Init */
-    hdma_tim5_ch2.Instance = DMA1_Channel2;
-    hdma_tim5_ch2.Init.Request = DMA_REQUEST_TIM5_CH2;
-    hdma_tim5_ch2.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_tim5_ch2.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_tim5_ch2.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_tim5_ch2.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim5_ch2.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_tim5_ch2.Init.Mode = DMA_NORMAL;
-    hdma_tim5_ch2.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-    if (HAL_DMA_Init(&hdma_tim5_ch2) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(htim_pwm,hdma[TIM_DMA_ID_CC2],hdma_tim5_ch2);
 
     /* USER CODE BEGIN TIM5_MspInit 1 */
 
@@ -481,6 +483,9 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
     /* USER CODE END TIM15_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM15_CLK_DISABLE();
+
+    /* TIM15 DMA DeInit */
+    HAL_DMA_DeInit(htim_base->hdma[TIM_DMA_ID_CC1]);
     /* USER CODE BEGIN TIM15_MspDeInit 1 */
 
     /* USER CODE END TIM15_MspDeInit 1 */
@@ -506,7 +511,6 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* htim_pwm)
 
     /* TIM5 DMA DeInit */
     HAL_DMA_DeInit(htim_pwm->hdma[TIM_DMA_ID_CC1]);
-    HAL_DMA_DeInit(htim_pwm->hdma[TIM_DMA_ID_CC2]);
     /* USER CODE BEGIN TIM5_MspDeInit 1 */
 
     /* USER CODE END TIM5_MspDeInit 1 */

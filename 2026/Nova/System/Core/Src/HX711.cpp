@@ -34,7 +34,7 @@ bool HX711::available() const {
 
 int32_t HX711::read()
 {
-    // Wait for data ready (RTOS can preempt here safely – SCK is low)
+    // Wait for data ready (RTOS can preempt here safely: SCK is low)
     while (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET) {
         // busy wait
     }

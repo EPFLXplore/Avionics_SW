@@ -10,46 +10,19 @@
 MassThread::MassThread(const char* name, osPriority priority)
 : MessageThread(name, priority)
 {
-	load_cell_0 = new HX711(HX711_DATA_GPIO_Port, HX711_DATA_Pin, HX711_CLK_GPIO_Port,  HX711_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
-	mass_0 = new MassType;
-	if (load_cell_0){
-		mass_0->hx = load_cell_0;
-	}
-	load_cell_1 = new HX711(HX2_DATA_GPIO_Port, HX2_DATA_Pin, HX2_CLK_GPIO_Port,  HX2_CLK_Pin); //TODO change this pointer thingy to not have two heap allocs
-		mass_1 = new MassType;
-	if (load_cell_1){
-		mass_1->hx = load_cell_1;
-	}
+	// mass_0 / mass_1 own their HX711 (constructed in the header) - nothing to wire.
 }
 
 MassThread::~MassThread(){
-
-	if (mass_0){
-		if (load_cell_0){
-			delete load_cell_0;
-			load_cell_0 = nullptr;
-		}
-		delete mass_0;
-		mass_0 = nullptr;
-	}
-
-	if (mass_1){
-		if (load_cell_1){
-			delete load_cell_1;
-			load_cell_0 = nullptr;
-		}
-		delete mass_1;
-		mass_1 = nullptr;
-	}
-
+	// mass_0 / mass_1 are statically allocated members: nothing to free.
 }
 
 void MassThread::init(){
-	mass_0->hx->begin();
+	mass_0.hx.begin();
 	osDelay(110);
 	this->tareScale(mass_0);
 
-	mass_1->hx->begin();
+	mass_1.hx.begin();
 	osDelay(110);
 	this->tareScale(mass_1);
 }
@@ -59,9 +32,9 @@ void MassThread::loop(){
     if (this->popCommand(cmd)) {
         if (cmd.tare) {
         	if (cmd.id == 0){
-        		this->tareScale(this->mass_0);
+        		this->tareScale(mass_0);
         	} else {
-        		this->tareScale(this->mass_1);
+        		this->tareScale(mass_1);
         	}
         }
     }
@@ -70,15 +43,11 @@ void MassThread::loop(){
     this->updateMass(mass_1);
 }
 
-void MassThread::updateMass(MassType* device){
+void MassThread::updateMass(MassType& device){
 	this->update(device);
 	MassPacket st;
-	st.mass = device->weight;
-	if (device == mass_0){
-	 	st.id = 0;
-	} else  {
-	 	st.id = 1;
-	}
+	st.mass = device.weight;
+	st.id = (&device == &mass_0) ? 0 : 1;
     pushStatus(st);
 }
 
@@ -97,39 +66,39 @@ float MassThread::movingAverage(const float *arr, uint8_t n) {
   return sum / n;
 }
 
-void MassThread::update(MassType* device)
+void MassThread::update(MassType& device)
 {
-	if (!device->hx->available()) return;
+	if (!device.hx.available()) return;
 
-    volatile int32_t raw = device->hx->read();
+    volatile int32_t raw = device.hx.read();
 
     // 1. Shift and average
-    this->shift(device->buffer, AVG_SIZE, (float)raw);
-    float avg = this->movingAverage(device->buffer, AVG_SIZE);
+    this->shift(device.buffer, AVG_SIZE, (float)raw);
+    float avg = this->movingAverage(device.buffer, AVG_SIZE);
 
     // 2. Apply offset AND slope
     // Result = (Current - Zero) * CalibrationFactor
-   float val = (avg - device->offset) * device->slope;
+   float val = (avg - device.offset) * device.slope;
 
-   device->weight = val;
+   device.weight = val;
 }
 
-void MassThread::tareScale(MassType* device) {
-	if (!device->hx->available()) return;
+void MassThread::tareScale(MassType& device) {
+	if (!device.hx.available()) return;
 
 	for (uint8_t i = 0; i < AVG_SIZE; ++i) {
-	    	device->buffer[i] = 0;
+	    	device.buffer[i] = 0;
 	}
 
 	int64_t sum = 0;
 	for (uint8_t i = 0; i < 20; ++i) {
-		sum += device->hx->read();
+		sum += device.hx.read();
 	}
 
-    device->offset = (float)(sum/20);
+    device.offset = (float)(sum/20);
 
     for (uint8_t i = 0; i < AVG_SIZE; ++i) {
-    	device->buffer[i] = device->offset;
+    	device.buffer[i] = device.offset;
     }
 }
 

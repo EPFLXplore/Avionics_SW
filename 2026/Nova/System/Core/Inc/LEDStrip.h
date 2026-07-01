@@ -8,7 +8,7 @@
 #ifndef ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
 #define ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
 
-#include "Adafruit_NeoPixel_STM.h"
+#include "WS2812Driver.h"
 
 struct Segment {
     uint8_t low;   // percentage 0-100
@@ -39,13 +39,13 @@ public:
     void begin(TIM_HandleTypeDef *timer, const uint32_t channel);
     void setBrightness(uint8_t b);
     void clear() { _strip.clear(); }
-    void applyCommand(const Command& cmd);   // queue-safe “set and forget”
-    void tick();                             // call every loop – non‑blocking
+    void applyCommand(const Command& cmd);   // queue-safe "set and forget"
+    void tick();                             // call every loop: non-blocking
     void tickOneSystem(uint8_t idx);
 
 private:
     uint8_t  _numLeds;
-    Adafruit_NeoPixel _strip;
+    WS2812Driver _strip;
 
     TIM_HandleTypeDef *stripTimer;
     uint32_t stripChannel;
@@ -60,8 +60,8 @@ private:
     void setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b);
     void handleMode(uint8_t idx);
 
-    // pattern engines – all non‑blocking
-    void mode0(uint8_t idx, int s, int e); // OFF - Blue
+    // pattern engines: all non-blocking
+    void mode0(uint8_t idx, int s, int e); // OFF: Blue
     void mode1(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b); // ON
     void mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, // BLINK
                uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);

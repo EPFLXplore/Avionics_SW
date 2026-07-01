@@ -1,0 +1,22 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/Transport.hpp:23:7:CdcTransport::CdcTransport()	16	static
+../System/Threads/Src/SerialThread.cpp:24:1:SerialThread::SerialThread(const char*, osPriority_t)	24	static
+../System/Threads/Src/SerialThread.cpp:28:6:virtual void SerialThread::init()	16	static
+../System/Threads/Src/SerialThread.cpp:36:35:SerialThread::loop()::<lambda(const SerialThread::Frame&)>	16	static
+../System/Threads/Src/SerialThread.cpp:32:6:virtual void SerialThread::loop()	104	static
+../System/Threads/Src/SerialThread.cpp:43:6:void SerialThread::dispatch(const Frame&)	56	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:55:14:SerialProtocol<MaxPayload, Transport>::SerialProtocol(Transport&) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:111:10:void SerialProtocol<MaxPayload, Transport>::parse(const uint8_t*, uint16_t, OnFrame&&) [with OnFrame = SerialThread::loop()::<lambda(const SerialThread::Frame&)>; unsigned int MaxPayload = 128; Transport = CdcTransport]	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:68:10:bool SerialProtocol<MaxPayload, Transport>::send(uint8_t, const void*, uint16_t) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	176	static
+../System/Threads/Src/SerialThread.cpp:17:3:T {anonymous}::frame_as(const SerialProtocol<128, CdcTransport>::Frame&) [with T = ServoRequest]	16	static
+../System/Threads/Src/SerialThread.cpp:17:3:T {anonymous}::frame_as(const SerialProtocol<128, CdcTransport>::Frame&) [with T = MassRequest]	16	static
+../System/Threads/Src/SerialThread.cpp:17:3:T {anonymous}::frame_as(const SerialProtocol<128, CdcTransport>::Frame&) [with T = LEDRequest]	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:130:10:bool SerialProtocol<MaxPayload, Transport>::processByte(uint8_t) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:230:21:static uint16_t SerialProtocol<MaxPayload, Transport>::crc16(uint8_t, const uint8_t*, uint16_t) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	24	static
+/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/array:281:7:const std::array<_Tp, _Nm>::value_type* std::array<_Tp, _Nm>::data() const [with _Tp = unsigned char; unsigned int _Nm = 128]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:219:10:void SerialProtocol<MaxPayload, Transport>::reset() [with unsigned int MaxPayload = 128; Transport = CdcTransport]	16	static
+/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/array:200:7:std::array<_Tp, _Nm>::value_type& std::array<_Tp, _Nm>::operator[](size_type) [with _Tp = unsigned char; unsigned int _Nm = 128]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:224:21:static uint16_t SerialProtocol<MaxPayload, Transport>::updateCrc(uint16_t, uint8_t) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:SerialThread::~SerialThread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:virtual SerialThread::~SerialThread()	16	static

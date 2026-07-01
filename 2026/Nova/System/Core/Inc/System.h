@@ -9,32 +9,21 @@
 #define CORE_INC_SYSTEM_H_
 
 #include <LedsThread.h>
-#include <MicroRosThread.h>
 #include <ServoThread.h>
 #include "MassThread.h"
-#include "HeartBeat.h"
-
-
-
-struct ThreadsRegistry {
-
-    HeartBeat* beat;
-    MassThread* mass;
-    ServoThread* servo;
-    LedsThread* leds;
-    // Add more threads here as you create them
-};
+#include "SerialThread.h"
 
 class System {
 public:
 	static void init();
 
-	static LedsThread* leds;
-	static MicroRosThread* microros;
-	static HeartBeat* beat;
-	static ThreadsRegistry reg;
-	static MassThread* mass;
-	static ServoThread* servo;
+	// The threads, as objects constructed on first use (from init(), i.e. AFTER
+	// HAL + the kernel are up). Every driver they own is therefore built post-HAL.
+	// Access them as objects: System::servo().pushCommand(...).
+	static SerialThread& comms();
+	static ServoThread&  servo();
+	static MassThread&   mass();
+	static LedsThread&   leds();
 };
 
 #endif /* CORE_INC_SYSTEM_H_ */

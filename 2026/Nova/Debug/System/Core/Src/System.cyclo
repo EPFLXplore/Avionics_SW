@@ -1,2 +1,13 @@
-/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/arm-none-eabi/include/c++/13.3.1/arm-none-eabi/thumb/v7e-m+fp/hard/bits/gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
-../System/Core/Src/System.cpp:22:6:static void System::init()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:SerialThread::~SerialThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:virtual SerialThread::~SerialThread()	1
+../System/Core/Src/System.cpp:25:94:void __tcf_0()	1
+../System/Core/Src/System.cpp:25:15:static SerialThread& System::comms()	3
+../System/Core/Src/System.cpp:26:101:void __tcf_1()	1
+../System/Core/Src/System.cpp:26:15:static ServoThread& System::servo()	3
+../System/Core/Src/System.cpp:27:96:void __tcf_2()	1
+../System/Core/Src/System.cpp:27:15:static MassThread& System::mass()	3
+../System/Core/Src/System.cpp:28:96:void __tcf_3()	1
+../System/Core/Src/System.cpp:28:15:static LedsThread& System::leds()	3
+../System/Core/Src/System.cpp:30:6:static void System::init()	3

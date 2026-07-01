@@ -24,7 +24,7 @@
 #include "usbd_conf.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "Bridge.h"   /* Board_MasterId() */
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -287,7 +287,7 @@ uint8_t * USBD_CDC_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
   Get_SerialNum();
 
   /* USER CODE BEGIN USBD_CDC_SerialStrDescriptor */
-
+  Bridge_UsbSerial(USBD_StringSerial, length);  /* serial = "NOVA<id>", built in Bridge.cpp */
   /* USER CODE END USBD_CDC_SerialStrDescriptor */
 
   return (uint8_t *) USBD_StringSerial;
