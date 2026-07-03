@@ -19,23 +19,12 @@ void HeartBeat::init()
 
 void HeartBeat::loop()
 {
-    // If you ever add commands, handle them here:
-    // EmptyMessage cmd;
-    // while (popCommand(cmd)) {
-    //     // no-op for now
-    // }
-
-    // 1) Update your heartbeat value
-    // For now let's just increment a counter as a test signal.
-    // Later you can set this from a real sensor / timer.
-	_beat += 1.0f;
-
-    // 2) Push status to MicroRosThread
-    BeatPacket st;
-    st.beat = _beat;
+    // Liveness beat: one status per loop; the wire owner (SerialThread) drains
+    // it onto the link. The counter lets the receiver spot dropped beats.
+    // Loop period is controlled by Thread::setDelay().
+    Heartbeat st{};
+    st.dummy = ++_count;
     pushStatus(st);
-
-    // loop period is controlled by Thread::setTickDelay()
 }
 
 

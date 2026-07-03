@@ -12,6 +12,7 @@
 #include <ServoThread.h>
 #include "MassThread.h"
 #include "SerialThread.h"
+#include "HeartBeat.h"
 
 class System {
 public:
@@ -24,6 +25,7 @@ public:
 	static ServoThread&  servo();
 	static MassThread&   mass();
 	static LedsThread&   leds();
+	static HeartBeat&    heartbeat();
 };
 
 #endif /* CORE_INC_SYSTEM_H_ */

@@ -3,9 +3,9 @@
 ../System/Threads/Src/HeartBeat.cpp:10:1:HeartBeat::HeartBeat(const char*, osPriority_t)	1
 ../System/Threads/Src/HeartBeat.cpp:15:6:virtual void HeartBeat::init()	1
 ../System/Threads/Src/HeartBeat.cpp:20:6:virtual void HeartBeat::loop()	2
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = EmptyMessage; StatusMsg = BeatPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:HeartBeat::~HeartBeat()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	1

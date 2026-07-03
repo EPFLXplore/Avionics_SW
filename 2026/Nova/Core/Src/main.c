@@ -19,14 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
-#include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Bridge.h"
+#include "usb_device.h" /* MX_USB_Device_Init: its generated call is disabled */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticTask_t osStaticThreadDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -55,7 +56,17 @@ DMA_HandleTypeDef hdma_tim5_ch1;
 DMA_HandleTypeDef hdma_tim15_ch1;
 
 /* Definitions for defaultTask */
-
+osThreadId_t defaultTaskHandle;
+uint32_t defaultTaskBuffer[ 128 ];
+osStaticThreadDef_t defaultTaskControlBlock;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_mem = &defaultTaskBuffer[0],
+  .stack_size = sizeof(defaultTaskBuffer),
+  .cb_mem = &defaultTaskControlBlock,
+  .cb_size = sizeof(defaultTaskControlBlock),
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -144,16 +155,17 @@ int main(void)
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
+  MX_USB_Device_Init();
+  BridgeSystemInit();
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
   /* creation of defaultTask */
-  MX_USB_Device_Init();
-  BridgeSystemInit();
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* System threads are created from StartDefaultTask, after USB is initialised. */
+  /* USB + system init happen above (RTOS_QUEUES); defaultTask just idles. */
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -696,8 +708,8 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LAM3_EN_Pin|LAM2_EN_Pin|LAM1_EN_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : ST_MUX_Pin PG_VBAT_Pin HX711_DATA_Pin */
-  GPIO_InitStruct.Pin = ST_MUX_Pin|PG_VBAT_Pin|HX711_DATA_Pin;
+  /*Configure GPIO pins : ST_MUX_Pin PG_VBAT_Pin */
+  GPIO_InitStruct.Pin = ST_MUX_Pin|PG_VBAT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -728,6 +740,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(HX711_CLK_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : HX711_DATA_Pin */
+  GPIO_InitStruct.Pin = HX711_DATA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(HX711_DATA_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : VIN_ALERT_Pin */
   GPIO_InitStruct.Pin = VIN_ALERT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -744,7 +762,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : BOARD_ID_01_Pin BOARD_ID_02_Pin */
   GPIO_InitStruct.Pin = BOARD_ID_01_Pin|BOARD_ID_02_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LAM3_EN_Pin LAM2_EN_Pin LAM1_EN_Pin */
@@ -772,10 +790,9 @@ static void MX_GPIO_Init(void)
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-  /* init code for USB_Device */
-
   /* USER CODE BEGIN 5 */
-  /* USB is up: now create the application threads. */
+  /* All init happens in main() (USER CODE RTOS_QUEUES): USB + BridgeSystemInit.
+   * This task is only here because CubeMX insists on one; it just idles. */
 
   /* Infinite loop */
   for(;;)

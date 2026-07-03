@@ -4,8 +4,8 @@
 ../System/Threads/Src/SerialThread.cpp:24:1:SerialThread::SerialThread(const char*, osPriority_t)	1
 ../System/Threads/Src/SerialThread.cpp:28:6:virtual void SerialThread::init()	1
 ../System/Threads/Src/SerialThread.cpp:36:35:SerialThread::loop()::<lambda(const SerialThread::Frame&)>	1
-../System/Threads/Src/SerialThread.cpp:32:6:virtual void SerialThread::loop()	4
-../System/Threads/Src/SerialThread.cpp:43:6:void SerialThread::dispatch(const Frame&)	8
+../System/Threads/Src/SerialThread.cpp:32:6:virtual void SerialThread::loop()	6
+../System/Threads/Src/SerialThread.cpp:46:6:void SerialThread::dispatch(const Frame&)	8
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:55:14:SerialProtocol<MaxPayload, Transport>::SerialProtocol(Transport&) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:111:10:void SerialProtocol<MaxPayload, Transport>::parse(const uint8_t*, uint16_t, OnFrame&&) [with OnFrame = SerialThread::loop()::<lambda(const SerialThread::Frame&)>; unsigned int MaxPayload = 128; Transport = CdcTransport]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Comms/Inc/SerialProtocol.hpp:68:10:bool SerialProtocol<MaxPayload, Transport>::send(uint8_t, const void*, uint16_t) [with unsigned int MaxPayload = 128; Transport = CdcTransport]	3

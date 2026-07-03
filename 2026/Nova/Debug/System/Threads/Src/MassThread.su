@@ -1,16 +1,16 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:29:11:MassType::MassType(const HX711&)	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:38:11:MassType::MassType(const HX711&)	24	static
 ../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(const char*, osPriority_t)	80	static
 ../System/Threads/Src/MassThread.cpp:16:1:MassThread::~MassThread()	16	static
 ../System/Threads/Src/MassThread.cpp:16:1:virtual MassThread::~MassThread()	16	static
 ../System/Threads/Src/MassThread.cpp:20:6:virtual void MassThread::init()	16	static
-../System/Threads/Src/MassThread.cpp:30:6:virtual void MassThread::loop()	32	static
-../System/Threads/Src/MassThread.cpp:46:6:void MassThread::updateMass(MassType&)	32	static
-../System/Threads/Src/MassThread.cpp:55:6:void MassThread::shift(float*, int, float)	32	static
-../System/Threads/Src/MassThread.cpp:62:7:float MassThread::movingAverage(const float*, uint8_t)	32	static
-../System/Threads/Src/MassThread.cpp:69:6:void MassThread::update(MassType&)	32	static
-../System/Threads/Src/MassThread.cpp:86:6:void MassThread::tareScale(MassType&)	56	static
+../System/Threads/Src/MassThread.cpp:35:6:virtual void MassThread::loop()	32	static
+../System/Threads/Src/MassThread.cpp:51:6:void MassThread::updateMass(MassType&)	32	static
+../System/Threads/Src/MassThread.cpp:60:6:void MassThread::shift(float*, int, float)	32	static
+../System/Threads/Src/MassThread.cpp:67:7:float MassThread::movingAverage(const float*, uint8_t)	32	static
+../System/Threads/Src/MassThread.cpp:74:6:void MassThread::update(MassType&)	32	static
+../System/Threads/Src/MassThread.cpp:98:6:void MassThread::tareScale(MassType&)	56	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	40	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	16	static

@@ -22,14 +22,16 @@
  * The same id drives the USB serial ("NOVA<id>") so udev can name the port.
  */
 
-SerialThread& System::comms() { static SerialThread commsThread{"Comms",       osPriorityHigh};        return commsThread; }
-ServoThread&  System::servo() { static ServoThread  servoThread{"ServoThread", osPriorityAboveNormal}; return servoThread; }
-MassThread&   System::mass()  { static MassThread   massThread {"MassThread",  osPriorityNormal};      return massThread; }
-LedsThread&   System::leds()  { static LedsThread   ledsThread {"LedsThread",  osPriorityNormal};      return ledsThread; }
+SerialThread& System::comms()     { static SerialThread commsThread{"Comms",       osPriorityHigh};        return commsThread; }
+ServoThread&  System::servo()     { static ServoThread  servoThread{"ServoThread", osPriorityAboveNormal}; return servoThread; }
+MassThread&   System::mass()      { static MassThread   massThread {"MassThread",  osPriorityNormal};      return massThread; }
+LedsThread&   System::leds()      { static LedsThread   ledsThread {"LedsThread",  osPriorityNormal};      return ledsThread; }
+HeartBeat&    System::heartbeat() { static HeartBeat    beatThread {"HeartBeat",   osPriorityLow};         return beatThread; }
 
 void System::init(){
 
-	comms().setDelay(1); //ms: poll USB RX ring + drain status queues
+	comms().setDelay(1);       //ms: poll USB RX ring + drain status queues
+	heartbeat().setDelay(100); //ms: ~2 Hz liveness beat (runs on every board)
 
 	// Construct every thread now (single-threaded, post-HAL) so later access from
 	// the wire-owner never triggers lazy construction on another task.
@@ -37,13 +39,16 @@ void System::init(){
 	(void)mass();
 	(void)leds();
 
+	// Liveness runs regardless of board profile, alongside the comms link.
+	heartbeat().start();
+
 	switch (Board_MasterId()) {
 
 	case 0: // servo master: actuators + load cells
 		mass().setDelay(100); //ms
 		// servo: 0 (set in ctor) - blocks in waitCommand()
 		comms().start();
-		servo().start();
+		//servo().start();
 		mass().start();
 		break;
 

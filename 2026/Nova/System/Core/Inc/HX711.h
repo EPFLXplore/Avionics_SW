@@ -18,14 +18,31 @@ public:
     HX711(GPIO_TypeDef* dout_port, uint16_t dout_pin,
           GPIO_TypeDef* sck_port,  uint16_t sck_pin);
 
+    /// Outcome of one 24-bit read attempt. Each failure points at a different wire:
+    enum class ReadResult : uint8_t {
+        Ok,         ///< out contains a fresh sample
+        Timeout,    ///< DOUT never went low: no conversion (chip unpowered / DOUT line open)
+        ClockFault, ///< DOUT still low after the 25th pulse: chip never saw SCK (CLK line open)
+    };
+
     /// Put SCK low and let the chip settle
     void begin();
+
+    /// One-shot wiring probe (chip idle; resets it via a power-down cycle).
+    /// Bit set = check passed:
+    ///   bit0 (0x1) SCK pad reads back HIGH while driven HIGH (not shorted to GND)
+    ///   bit1 (0x2) DOUT went HIGH during forced power-down (chip actually sees SCK)
+    ///   bit2 (0x4) DOUT still HIGH right after wake (sane reset, no data yet)
+    /// 7 = wiring looks good. 1 = chip never reacts to SCK (open SCK line, swapped
+    /// SCK/DOUT, or DOUT stuck low). 0 = SCK net shorted / pin misconfigured.
+    uint8_t lineTest();
 
     /// true when data is ready (DOUT == LOW)
     bool available() const;
 
-    /// Blocking read of one 24-bit sample (signed). Returns raw value minus stored offset.
-    int32_t read();
+    /// Read one 24-bit sample (signed, minus stored offset) into out.
+    /// Blocks until data is ready, bounded by timeout_ms (10 SPS chip -> 200 ms default).
+    ReadResult read(volatile int32_t& out, uint32_t timeout_ms = 200);
 
     /// Average a few samples and use that as offset (tare)
     void tare(uint16_t samples = 10);

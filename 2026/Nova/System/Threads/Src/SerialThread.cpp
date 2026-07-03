@@ -35,9 +35,12 @@ void SerialThread::loop() {
     uint16_t n = io_.read(chunk, sizeof chunk);
     if (n) proto_.parse(chunk, n, [this](const Frame& f) { dispatch(f); });
 
-    /* TX: worker status queues -> serial (only mass produces telemetry today) */
+    /* TX: worker status queues -> serial */
     MassPacket mp;
     while (System::mass().popStatus(mp)) proto_.send(MassPacket_ID, &mp, sizeof mp);
+
+    Heartbeat hb;
+    while (System::heartbeat().popStatus(hb)) proto_.send(Heartbeat_ID, &hb, sizeof hb);
 }
 
 void SerialThread::dispatch(const Frame& f) {

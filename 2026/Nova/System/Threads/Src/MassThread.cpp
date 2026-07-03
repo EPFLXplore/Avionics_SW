@@ -19,23 +19,28 @@ MassThread::~MassThread(){
 
 void MassThread::init(){
 	mass_0.hx.begin();
-	osDelay(110);
-	this->tareScale(mass_0);
-
 	mass_1.hx.begin();
-	osDelay(110);
+
+	// Wiring probe (debugger-visible verdict per channel, see HX711::lineTest).
+	mass_0.lineTest = mass_0.hx.lineTest();
+	mass_1.lineTest = mass_1.hx.lineTest();
+
+	// The probe power-cycles the chips: first conversion lands ~400 ms after
+	// wake (10 SPS settling), so give them time before taring.
+	osDelay(600);
+	this->tareScale(mass_0);
 	this->tareScale(mass_1);
 }
 
 void MassThread::loop(){
     MassRequest cmd;
     if (this->popCommand(cmd)) {
+    	MassType& dev = (cmd.id == 0) ? mass_0 : mass_1;
+    	if (cmd.change_scale) {
+    		dev.slope = cmd.scale; // runtime calibration override
+    	}
         if (cmd.tare) {
-        	if (cmd.id == 0){
-        		this->tareScale(mass_0);
-        	} else {
-        		this->tareScale(mass_1);
-        	}
+        	this->tareScale(dev);
         }
     }
 
@@ -68,9 +73,16 @@ float MassThread::movingAverage(const float *arr, uint8_t n) {
 
 void MassThread::update(MassType& device)
 {
-	if (!device.hx.available()) return;
+	if (!device.hx.available()) { device.nNotReady++; return; }
 
-    volatile int32_t raw = device.hx.read();
+	volatile int32_t raw = 0;
+	switch (device.hx.read(raw)) {
+	    case HX711::ReadResult::Timeout:    device.nTimeout++;    return;
+	    case HX711::ReadResult::ClockFault: device.nClockFault++; return;
+	    case HX711::ReadResult::Ok:         break;
+	}
+	device.nGood++;
+	device.lastRaw = raw;
 
     // 1. Shift and average
     this->shift(device.buffer, AVG_SIZE, (float)raw);
@@ -84,18 +96,21 @@ void MassThread::update(MassType& device)
 }
 
 void MassThread::tareScale(MassType& device) {
-	if (!device.hx.available()) return;
-
-	for (uint8_t i = 0; i < AVG_SIZE; ++i) {
-	    	device.buffer[i] = 0;
-	}
-
+	// Average 20 fresh samples. read() blocks (bounded) until each one is
+	// ready, so no available() pre-check: the old guard silently SKIPPED the
+	// tare whenever the chip wasn't ready yet (it rarely is 110 ms after
+	// power-up), leaving offset = 0.
 	int64_t sum = 0;
+	uint8_t good = 0;
 	for (uint8_t i = 0; i < 20; ++i) {
-		sum += device.hx.read();
+		int32_t raw = 0;
+		HX711::ReadResult res = device.hx.read(raw);
+		if (res == HX711::ReadResult::Ok)      { sum += raw; ++good; }
+		else if (res == HX711::ReadResult::Timeout) break; // sensor absent: stop waiting
 	}
+	if (good == 0) return; // no data at all: keep the previous offset
 
-    device.offset = (float)(sum/20);
+    device.offset = (float)(sum / good);
 
     for (uint8_t i = 0; i < AVG_SIZE; ++i) {
     	device.buffer[i] = device.offset;

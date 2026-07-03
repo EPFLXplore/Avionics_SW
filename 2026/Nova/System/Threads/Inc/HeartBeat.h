@@ -10,14 +10,14 @@
 
 #include "MessageThread.h"
 
-class HeartBeat : public MessageThread<EmptyMessage, BeatPacket> {
+class HeartBeat : public MessageThread<EmptyMessage, Heartbeat> {
 public:
     HeartBeat(const char* name, osPriority priority);
     void init() override;
     void loop() override;
 
 private:
-    float _beat = 0.0f;   // or int32_t, etc.
+    uint8_t _count = 0;   // free-running beat counter (wraps at 256)
 };
 
 

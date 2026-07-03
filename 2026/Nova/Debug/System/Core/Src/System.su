@@ -2,12 +2,18 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:SerialThread::~SerialThread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:virtual SerialThread::~SerialThread()	16	static
-../System/Core/Src/System.cpp:25:94:void __tcf_0()	8	static
+../System/Core/Src/System.cpp:25:98:void __tcf_0()	8	static
 ../System/Core/Src/System.cpp:25:15:static SerialThread& System::comms()	8	static
-../System/Core/Src/System.cpp:26:101:void __tcf_1()	8	static
+../System/Core/Src/System.cpp:26:105:void __tcf_1()	8	static
 ../System/Core/Src/System.cpp:26:15:static ServoThread& System::servo()	8	static
-../System/Core/Src/System.cpp:27:96:void __tcf_2()	8	static
+../System/Core/Src/System.cpp:27:100:void __tcf_2()	8	static
 ../System/Core/Src/System.cpp:27:15:static MassThread& System::mass()	8	static
-../System/Core/Src/System.cpp:28:96:void __tcf_3()	8	static
+../System/Core/Src/System.cpp:28:100:void __tcf_3()	8	static
 ../System/Core/Src/System.cpp:28:15:static LedsThread& System::leds()	8	static
-../System/Core/Src/System.cpp:30:6:static void System::init()	8	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:HeartBeat::~HeartBeat()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	16	static
+../System/Core/Src/System.cpp:29:97:void __tcf_4()	8	static
+../System/Core/Src/System.cpp:29:15:static HeartBeat& System::heartbeat()	8	static
+../System/Core/Src/System.cpp:31:6:static void System::init()	8	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static
