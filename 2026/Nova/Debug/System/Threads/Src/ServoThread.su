@@ -1,5 +1,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/ServoConfigs.h:19:20:bool servoTimerFree(const PWMConfig&)	16	static
 ../System/Threads/Src/ServoThread.cpp:3:1:ServoThread::ServoThread(const char*, osPriority_t)	32	static
 ../System/Threads/Src/ServoThread.cpp:9:1:ServoThread::~ServoThread()	24	static
 ../System/Threads/Src/ServoThread.cpp:9:1:virtual ServoThread::~ServoThread()	16	static

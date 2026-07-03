@@ -90,10 +90,17 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* Counts completed WS2812 DMA transfers on TIM15_CH1 (watch in Live
+ * Expressions alongside ws2812_show_calls / ws2812_start_errors) and
+ * releases the driver's frame semaphore so the next show() can start. */
+volatile uint32_t ws2812_dma_complete = 0;
+extern void WS2812_FrameCompleteISR(void);
+
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
-	if (htim->Instance == TIM4) {
-		HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_2);
+	if (htim->Instance == TIM15) {
+		ws2812_dma_complete++;
+		WS2812_FrameCompleteISR();
 	}
 }
 /* USER CODE END 0 */
@@ -587,7 +594,7 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 0 */
 
-  TIM_SlaveConfigTypeDef sSlaveConfig = {0};
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
@@ -606,13 +613,12 @@ static void MX_TIM15_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_Init(&htim15) != HAL_OK)
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim15, &sClockSourceConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_RESET;
-  sSlaveConfig.InputTrigger = TIM_TS_ITR7;
-  if (HAL_TIM_SlaveConfigSynchro(&htim15, &sSlaveConfig) != HAL_OK)
+  if (HAL_TIM_PWM_Init(&htim15) != HAL_OK)
   {
     Error_Handler();
   }

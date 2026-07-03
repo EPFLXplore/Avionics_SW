@@ -15,7 +15,15 @@ struct PWMConfig {
 
 class PWMDriver {
 public:
-    explicit PWMDriver(const PWMConfig& cfg);
+    /**
+     * @param cfg     Pin/timer/AF configuration.
+     * @param enabled When false the driver is fully inert: the constructor
+     *                touches no GPIO or timer register and every command is a
+     *                no-op. Used for servos whose timer belongs to another
+     *                subsystem on this board role (e.g. TIM15 servos on the
+     *                LED master, where the WS2812 strip owns TIM15).
+     */
+    explicit PWMDriver(const PWMConfig& cfg, bool enabled = true);
     ~PWMDriver();
 
     /**
@@ -37,6 +45,7 @@ public:
 private:
     PWMConfig cfg_;
     uint32_t  channel_hal_;
+    bool      enabled_;
 
     void     enable_gpio_clock() const;
     void     set50Hz();

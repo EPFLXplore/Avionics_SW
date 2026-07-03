@@ -11,8 +11,12 @@ static uint32_t channel_to_hal(uint8_t ch)
     }
 }
 
-PWMDriver::PWMDriver(const PWMConfig& cfg) : cfg_(cfg), channel_hal_(channel_to_hal(cfg.channel))
+PWMDriver::PWMDriver(const PWMConfig& cfg, bool enabled)
+    : cfg_(cfg), channel_hal_(channel_to_hal(cfg.channel)), enabled_(enabled)
 {
+    if (!enabled_)
+        return;   // inert: another subsystem owns this timer on this board
+
     enable_gpio_clock();
 
     GPIO_InitTypeDef gpio = {0};
@@ -34,6 +38,9 @@ PWMDriver::PWMDriver(const PWMConfig& cfg) : cfg_(cfg), channel_hal_(channel_to_
 
 PWMDriver::~PWMDriver()
 {
+    if (!enabled_)
+        return;
+
     if (cfg_.complementary)
         HAL_TIMEx_PWMN_Stop(cfg_.tim, channel_hal_);
     else
@@ -43,6 +50,9 @@ PWMDriver::~PWMDriver()
 
 void PWMDriver::set_pulse_us(uint16_t us)
 {
+    if (!enabled_)
+        return;
+
     // After set50Hz(), timer runs at 1 MHz so 1 count = 1 µs.
     // ARR = 19999, so the value is used directly as the CCR.
     uint32_t pulse = us;

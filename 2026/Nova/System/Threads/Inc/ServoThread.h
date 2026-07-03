@@ -27,11 +27,13 @@ public:
 private:
     // Plain objects. Safe because ServoThread is constructed at runtime (from
     // System::init, after HAL), so PWMDriver's HAL timer setup runs post-HAL.
+    // servoTimerFree() constructs a servo inert when its timer is owned by
+    // another subsystem on this board role (TIM15 -> LED strip on id 3).
     PWMDriver servo[4] = {
-        PWMDriver(SERVO_0_CFG),
-        PWMDriver(SERVO_1_CFG),
-        PWMDriver(SERVO_2_CFG),
-        PWMDriver(SERVO_3_CFG),
+        PWMDriver(SERVO_0_CFG, servoTimerFree(SERVO_0_CFG)),
+        PWMDriver(SERVO_1_CFG, servoTimerFree(SERVO_1_CFG)),
+        PWMDriver(SERVO_2_CFG, servoTimerFree(SERVO_2_CFG)),
+        PWMDriver(SERVO_3_CFG, servoTimerFree(SERVO_3_CFG)),
     };
 
     // Auto-stop for continuous-rotation servos (LEFT/RIGHT_SERVICE_MODULE)

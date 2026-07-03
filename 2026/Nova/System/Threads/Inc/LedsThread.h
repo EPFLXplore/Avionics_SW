@@ -22,7 +22,7 @@ public:
 private:
 	bool cleared = false;
 	LEDRequest req{};
-	LEDStrip strip1{60};          // the strip as a plain object (<= WS2812_MAX_LEDS)
+	LEDStrip strip{75};          // the strip as a plain object (<= WS2812_MAX_LEDS)
 	Command cmd;
 };
 

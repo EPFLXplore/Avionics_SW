@@ -52,10 +52,14 @@ void System::init(){
 		mass().start();
 		break;
 
-	case 3: // LED master: WS2812 strip on TIM15_CH1 + DMA
-		leds().setDelay(20); //ms
+	case 3: // LED master: WS2812 strip on TIM15_CH1 + DMA, servos on TIM1/TIM2
+		leds().setDelay(80); //ms: matches CLEANED_LEDS (tick() rate = animation speed)
 		comms().start();
 		leds().start();
+		// Servos 0/1 (TIM15) are constructed inert on this board - the strip
+		// owns TIM15 (see servoTimerFree in ServoConfigs.h); 2/3 run normally.
+		// Disabled while bringing up the LEDs:
+		//servo().start();
 		break;
 
 	default: // reserved ids 2,1: bring up only the comms link

@@ -10,12 +10,12 @@
 
 #include "Timers.h"
 
-#define NUM_LEDS 60
+#define NUM_LEDS 75
 #define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED + RESET_PULSE
 
 
 LedsThread::LedsThread(const char* name, osPriority priority) : MessageThread(name, priority) {
-	// strip1 points at the static LEDStrip member (no heap).
+	// strip points at the static LEDStrip member (no heap).
 }
 
 LedsThread::~LedsThread(){
@@ -24,19 +24,18 @@ LedsThread::~LedsThread(){
 
 
 void LedsThread::init(){
-	strip1.begin(&htim15, TIM_CHANNEL_1);
+	strip.begin(&htim15, TIM_CHANNEL_1);
 
-//	  cmd.segment.r = 0;
-//	  cmd.segment.g = 255;
-//	  cmd.segment.b = 0;
-//	  cmd.segment.low = 0;
-//	  cmd.segment.high = 50;
-//
-//	  strip->applyCommand(cmd);
-//	  osDelay(1);
-//	  strip->setBrightness(70);
+	  cmd.segment.r = 0;
+	  cmd.segment.g = 255;
+	  cmd.segment.b = 0;
+	  cmd.segment.low = 0;
+	  cmd.segment.high = 50;
 
-//	  strip->tick();
+	  strip.applyCommand(cmd);
+	  osDelay(1);
+	  strip.setBrightness(70);
+	  strip.tick();
 
 }
 
@@ -116,35 +115,35 @@ void LedsThread::loop(){
 			for (int i = 0; i < MAX_SYSTEMS; i++)
 			{
 				cmd.system = i;
-				strip1.applyCommand(cmd);
+				strip.applyCommand(cmd);
 			}
 		}	//emergency shutdown
 		else if (cmd.mode == 5) {
 			cmd.segment.r = 255; cmd.segment.g = 0;   cmd.segment.b = 0; cmd.segment.low = 0, cmd.segment.high= 100;
 			for (int i = 0; i < MAX_SYSTEMS; i++) {
 				cmd.system = i;
-				strip1.applyCommand(cmd);
+				strip.applyCommand(cmd);
 			}
 		}
 		else if (cmd.mode == 6) {
 			for (int i = 0; i < MAX_SYSTEMS; i++) {
 				cmd.system = i;
-				strip1.applyCommand(cmd);
+				strip.applyCommand(cmd);
 			}
 		}
 		else
 		{
-//			strip1.clear();
-			strip1.applyCommand(cmd);
+//			strip.clear();
+			strip.applyCommand(cmd);
 		}
 
 
 	}
 
 //	if (cmd.mode == 4 || cmd.mode == 5 || cmd.mode == 6)
-//		strip1.tickOneSystem(cmd.system);
+//		strip.tickOneSystem(cmd.system);
 //	else
-		strip1.tick();
+		strip.tick();
 }
 
 
