@@ -7,8 +7,20 @@
  * Hardware PWM configs for the four servo outputs.
  * IDs 0-3 map directly to servo[0-3] in ServoThread.
  * Pin/timer/AF from stm32g4xx_hal_msp.c MspPostInit.
- * zero_pulse_us: pulse width in µs that defines the home/zero position.
+ * zero_pulse_us: pulse width in µs that defines the home/zero position. Write
+ * it as an angle via angle_to_pulse_us() - that helper is constexpr, so the
+ * conversion happens at compile time and the field still holds plain µs.
  */
+
+/** Home angle for every servo, in degrees. 90° = mid-travel for a positional
+ *  servo, and the neutral "stop" pulse for a continuous-rotation one. */
+static constexpr float SERVO_ZERO_DEG = 90.0f;
+
+/* Proves the map really is compile-time evaluable, and pins it: a static_assert
+ * can only use a constant expression, so this fails to build if it ever isn't. */
+static_assert(angle_to_pulse_us(SERVO_ZERO_DEG) == 1500, "servo zero drifted from 1500 us");
+static_assert(angle_to_pulse_us(0.0f)   == kPulseMinUs, "0 deg must map to kPulseMinUs");
+static_assert(angle_to_pulse_us(180.0f) == kPulseMaxUs, "180 deg must map to kPulseMaxUs");
 
 /**
  * Timer-ownership rule: on the LED-master board (id 3) TIM15 belongs to the
@@ -26,7 +38,7 @@ static const PWMConfig SERVO_0_CFG = {
     .port           = TIM_SERVO_1_GPIO_Port,
     .af             = GPIO_AF1_TIM15,  // PB15 → TIM15_CH2
     .complementary  = false,
-    .zero_pulse_us  = 1500,
+    .zero_pulse_us  = angle_to_pulse_us(SERVO_ZERO_DEG),
 };
 
 static const PWMConfig SERVO_1_CFG = {
@@ -36,7 +48,7 @@ static const PWMConfig SERVO_1_CFG = {
     .port           = TIM_SERVO_2_GPIO_Port,
     .af             = GPIO_AF1_TIM15,  // PB14 → TIM15_CH1
     .complementary  = false,
-    .zero_pulse_us  = 1500,
+    .zero_pulse_us  = angle_to_pulse_us(SERVO_ZERO_DEG),
 };
 
 static const PWMConfig SERVO_2_CFG = {
@@ -46,7 +58,7 @@ static const PWMConfig SERVO_2_CFG = {
     .port           = TIM_SERVO_3_GPIO_Port,
     .af             = GPIO_AF6_TIM1,   // PB13 → TIM1_CH1N (complementary)
     .complementary  = true,
-    .zero_pulse_us  = 1500,
+    .zero_pulse_us  = angle_to_pulse_us(SERVO_ZERO_DEG),
 };
 
 static const PWMConfig SERVO_3_CFG = {
@@ -56,5 +68,5 @@ static const PWMConfig SERVO_3_CFG = {
     .port           = TIM_SERVO_4_GPIO_Port,
     .af             = GPIO_AF1_TIM2,   // PB11 → TIM2_CH4
     .complementary  = false,
-    .zero_pulse_us  = 1500,
+    .zero_pulse_us  = angle_to_pulse_us(SERVO_ZERO_DEG),
 };

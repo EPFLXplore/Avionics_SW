@@ -41,6 +41,8 @@ void System::init(){
 
 	// Liveness runs regardless of board profile, alongside the comms link.
 	heartbeat().start();
+	//Set ID as the dummy packet
+	heartbeat().setID(Board_MasterId());
 
 	switch (Board_MasterId()) {
 
@@ -48,7 +50,7 @@ void System::init(){
 		mass().setDelay(100); //ms
 		// servo: 0 (set in ctor) - blocks in waitCommand()
 		comms().start();
-		//servo().start();
+		servo().start();
 		mass().start();
 		break;
 

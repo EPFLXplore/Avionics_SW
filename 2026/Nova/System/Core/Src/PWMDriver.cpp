@@ -68,12 +68,9 @@ void PWMDriver::set_pulse_us(uint16_t us)
 
 void PWMDriver::set_angle(float angle)
 {
-    if (angle < 0.0f)   angle = 0.0f;
-    if (angle > 180.0f) angle = 180.0f;
-
-    // 0° = 500 µs, 180° = 2500 µs (extended range)
-    uint16_t us = (uint16_t)(500.0f + (angle / 180.0f) * 2000.0f);
-    set_pulse_us(us);
+    // Clamping and the 0-180° -> 500-2500 µs map both live in the constexpr
+    // helper, so a runtime angle and a config-file angle resolve identically.
+    set_pulse_us(angle_to_pulse_us(angle));
 }
 
 void PWMDriver::zero()

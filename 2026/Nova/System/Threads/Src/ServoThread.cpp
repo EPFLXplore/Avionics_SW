@@ -14,7 +14,18 @@ ServoThread::~ServoThread()
 void ServoThread::init()
 {
     // servo[] are already constructed (member objects, built when this thread
-    // was constructed at runtime in System::init, after HAL). Nothing to do.
+    // was constructed at runtime in System::init, after HAL), but their CCRs
+    // are still at CubeMX's Pulse = 0: the channel is running with no pulse at
+    // all, so the servo is unpowered and free to drift until the first command.
+    //
+    // Home every servo through the same path a ServoRequest{go_to_zero = true}
+    // takes, so boot position and commanded zero can never disagree. Servos
+    // constructed inert (servoTimerFree) no-op inside zero().
+    for (uint8_t id = 0; id < 4; id++)
+        servo[id].zero();
+
+    // Continuous-rotation servos read zero_pulse_us as "stop", not a position,
+    // so they need no auto-stop arming here - they are already stopped.
 }
 
 void ServoThread::loop()
@@ -24,8 +35,8 @@ void ServoThread::loop()
 
     // Apply one command to one servo, arming auto-stop for the service modules.
     auto apply = [&](uint8_t id, const ServoRequest& r) {
-        if (r.zero_in) servo[id].zero();
-        else           servo[id].set_angle((float)r.increment);
+        if (r.go_to_zero) servo[id].zero();
+        else              servo[id].set_angle((float)r.angle);
 
         if (id == LEFT_SERVICE_MODULE || id == RIGHT_SERVICE_MODULE) {
             _last_cmd_tick[id] = now;
@@ -41,18 +52,18 @@ void ServoThread::loop()
         do {
             if (req.id == SERVICE_MODULE_BOTH) {
                 // Block duplicate open (0) or close (180) commands.
-                const bool is_toggle = !req.zero_in &&
-                                       (req.increment == 0 || req.increment == 180);
-                if (is_toggle && req.increment == _last_both_cmd) continue;
-                if (is_toggle) _last_both_cmd = req.increment;
+                const bool is_toggle = !req.go_to_zero &&
+                                       (req.angle == 0 || req.angle == 180);
+                if (is_toggle && req.angle == _last_both_cmd) continue;
+                if (is_toggle) _last_both_cmd = req.angle;
 
                 apply(LEFT_SERVICE_MODULE, req);
 
                 // RIGHT is mounted opposite LEFT: mirror the angle so the two
                 // drive in opposite directions. 90 (stop) maps to itself.
-                // zero_in is unaffected: zero() homes both to the same stop.
+                // go_to_zero is unaffected: zero() homes both to the same stop.
                 ServoRequest mir = req;
-                mir.increment = 180 - req.increment;
+                mir.angle = 180 - req.angle;
                 apply(RIGHT_SERVICE_MODULE, mir);
             } else if (req.id <= 3) {
                 apply(req.id, req);

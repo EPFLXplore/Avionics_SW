@@ -14,6 +14,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	16	static
 ../System/Core/Src/System.cpp:29:97:void __tcf_4()	8	static
 ../System/Core/Src/System.cpp:29:15:static HeartBeat& System::heartbeat()	8	static
-../System/Core/Src/System.cpp:31:6:static void System::init()	8	static
+../System/Core/Src/System.cpp:31:6:static void System::init()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static

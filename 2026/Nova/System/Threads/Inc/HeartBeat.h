@@ -15,9 +15,10 @@ public:
     HeartBeat(const char* name, osPriority priority);
     void init() override;
     void loop() override;
+    void setID(uint8_t id);
 
 private:
-    uint8_t _count = 0;   // free-running beat counter (wraps at 256)
+    uint8_t _board_id = 0;   // this master's 2-bit strap id, set via setID()
 };
 
 

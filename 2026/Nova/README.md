@@ -66,10 +66,10 @@ To command a servo over ROS2:
 
 ```bash
 # Set servo 0 to 90 degrees
-ros2 topic pub --once /servo_angle custom_msg/msg/avionics/ServoRequest "{id: 0, increment: 90, zero_in: false}"
+ros2 topic pub --once /servo_angle custom_msg/msg/avionics/ServoRequest "{id: 0, angle: 90, go_to_zero: false}"
 
 # Send servo 2 to zero position
-ros2 topic pub --once /servo_angle custom_msg/msg/avionics/ServoRequest "{id: 2, increment: 0, zero_in: true}"
+ros2 topic pub --once /servo_angle custom_msg/msg/avionics/ServoRequest "{id: 2, angle: 0, go_to_zero: true}"
 ```
 
 ---

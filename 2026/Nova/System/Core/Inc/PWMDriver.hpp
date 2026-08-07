@@ -3,6 +3,30 @@
 
 #include "main.h"
 
+/**
+ * Servo travel limits: 0° is kPulseMinUs, kAngleMaxDeg is kPulseMaxUs.
+ * These are the single source of truth for the angle<->pulse map; change them
+ * and both set_angle() and every angle_to_pulse_us() in ServoConfigs.h follow.
+ */
+constexpr uint16_t kPulseMinUs  = 500;
+constexpr uint16_t kPulseMaxUs  = 2500;
+constexpr float    kAngleMaxDeg = 180.0f;
+
+/**
+ * @brief Angle in degrees -> pulse width in µs, clamped to 0-kAngleMaxDeg.
+ *
+ * constexpr so ServoConfigs.h can state home positions as angles rather than
+ * hand-computed microseconds, at zero runtime cost. set_angle() calls the same
+ * function, so the compile-time and runtime mappings cannot drift apart.
+ */
+constexpr uint16_t angle_to_pulse_us(float angle)
+{
+    return angle <= 0.0f         ? kPulseMinUs
+         : angle >= kAngleMaxDeg ? kPulseMaxUs
+         : static_cast<uint16_t>(kPulseMinUs +
+                                 (angle / kAngleMaxDeg) * (kPulseMaxUs - kPulseMinUs));
+}
+
 struct PWMConfig {
     TIM_HandleTypeDef* tim;
     uint8_t            channel;        ///< 1-4
@@ -33,7 +57,8 @@ public:
     void set_pulse_us(uint16_t us);
 
     /**
-     * @brief Set servo angle (0-180°). Mapped to 500-2500 µs.
+     * @brief Set servo angle in degrees. Clamped and mapped by
+     *        angle_to_pulse_us() (0-kAngleMaxDeg -> kPulseMinUs-kPulseMaxUs).
      */
     void set_angle(float angle);
 

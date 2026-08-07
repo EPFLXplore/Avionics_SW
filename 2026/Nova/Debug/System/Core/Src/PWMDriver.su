@@ -1,10 +1,11 @@
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/PWMDriver.hpp:22:20:constexpr uint16_t angle_to_pulse_us(float)	16	static
 ../System/Core/Src/PWMDriver.cpp:3:17:uint32_t channel_to_hal(uint8_t)	16	static
 ../System/Core/Src/PWMDriver.cpp:14:1:PWMDriver::PWMDriver(const PWMConfig&, bool)	56	static
 ../System/Core/Src/PWMDriver.cpp:39:1:PWMDriver::~PWMDriver()	16	static
 ../System/Core/Src/PWMDriver.cpp:51:6:void PWMDriver::set_pulse_us(uint16_t)	24	static
-../System/Core/Src/PWMDriver.cpp:69:6:void PWMDriver::set_angle(float)	24	static
-../System/Core/Src/PWMDriver.cpp:79:6:void PWMDriver::zero()	16	static
-../System/Core/Src/PWMDriver.cpp:84:10:static uint32_t PWMDriver::get_timer_clock(TIM_TypeDef*)	56	static
-../System/Core/Src/PWMDriver.cpp:104:6:void PWMDriver::set50Hz()	24	static
-../System/Core/Src/PWMDriver.cpp:116:6:void PWMDriver::disable_ccr_preload()	16	static
-../System/Core/Src/PWMDriver.cpp:126:6:void PWMDriver::enable_gpio_clock() const	48	static
+../System/Core/Src/PWMDriver.cpp:69:6:void PWMDriver::set_angle(float)	16	static
+../System/Core/Src/PWMDriver.cpp:76:6:void PWMDriver::zero()	16	static
+../System/Core/Src/PWMDriver.cpp:81:10:static uint32_t PWMDriver::get_timer_clock(TIM_TypeDef*)	56	static
+../System/Core/Src/PWMDriver.cpp:101:6:void PWMDriver::set50Hz()	24	static
+../System/Core/Src/PWMDriver.cpp:113:6:void PWMDriver::disable_ccr_preload()	16	static
+../System/Core/Src/PWMDriver.cpp:123:6:void PWMDriver::enable_gpio_clock() const	48	static

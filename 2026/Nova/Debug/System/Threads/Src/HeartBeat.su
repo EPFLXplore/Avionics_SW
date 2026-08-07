@@ -2,7 +2,8 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	16	static
 ../System/Threads/Src/HeartBeat.cpp:10:1:HeartBeat::HeartBeat(const char*, osPriority_t)	24	static
 ../System/Threads/Src/HeartBeat.cpp:15:6:virtual void HeartBeat::init()	16	static
-../System/Threads/Src/HeartBeat.cpp:20:6:virtual void HeartBeat::loop()	24	static
+../System/Threads/Src/HeartBeat.cpp:20:6:void HeartBeat::setID(uint8_t)	16	static
+../System/Threads/Src/HeartBeat.cpp:24:6:virtual void HeartBeat::loop()	24	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	40	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	16	static
