@@ -37,6 +37,15 @@ void Cdc_onTxCpltISR(void) {
 	CdcTransport::dispatchTxCpltISR();
 }
 
+/* Called from usbd_cdc_if.c (CDC_Init_FS) every time the host configures the
+ * interface - so on first enumeration AND on every re-enumeration after a
+ * replug. Drops the previous link's in-flight TX so a transfer that never
+ * completed cannot latch the transport busy forever. USBD_CDC_Init resets its
+ * own TxState immediately after calling us, so both halves clear together. */
+void Cdc_onCdcInit(void) {
+	CdcTransport::dispatchReset();
+}
+
 /* Called from usbd_desc.c  (USBD_CDC_SerialStrDescriptor). Builds the USB serial
  * string "NOVA<board-id>" into buf, so udev can name each master's port. */
 void Bridge_UsbSerial(uint8_t* buf, uint16_t* length) {

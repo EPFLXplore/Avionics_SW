@@ -31,6 +31,33 @@ class CdcTransport {
     /** Copy up to max bytes currently available from the RX ring (non-blocking). */
     uint16_t read(uint8_t* dst, uint16_t max);
 
+    /**
+     * @brief Drop every in-flight TX transfer and re-arm the ring.
+     *
+     * Called on CDC (re)configuration. Without it a TX outstanding when the
+     * host vanishes leaves busy_ latched true forever: pump() then returns at
+     * its first line for the rest of the run, the ring fills, and write() fails
+     * silently. The USB stack clears its own TxState in USBD_CDC_Init, so this
+     * is the missing half of that reset. Only matters when the MCU survives the
+     * disconnect (externally powered); on USB power the reboot does it for us.
+     */
+    void reset();
+
+    /**
+     * @brief Force-release a TX that never completed. Call periodically from
+     *        the comms thread (task context - it reads the FreeRTOS tick).
+     *
+     * Covers the case reset() cannot: a completion lost to a USB suspend or a
+     * host driver reset, where CDC_Init never runs, so nothing re-arms us.
+     * @param now_ticks xTaskGetTickCount() from the caller.
+     */
+    void serviceTx(uint32_t now_ticks);
+
+    /** Frames dropped because the ring was full (diagnostic). */
+    uint16_t txDropped() const { return txDropped_; }
+    /** TX transfers force-released by serviceTx() (diagnostic). */
+    uint16_t txTimeouts() const { return txTimeouts_; }
+
     /* ---- called from the CDC ISR (via the C bridge in Bridge.cpp) -------- */
     void onRxISR(const uint8_t* d, uint16_t n);
     void onTxCpltISR();
@@ -38,6 +65,7 @@ class CdcTransport {
     /* Static forwarders to the singleton transport: the C bridge calls these. */
     static void dispatchRxISR(const uint8_t* d, uint16_t n);
     static void dispatchTxCpltISR();
+    static void dispatchReset();
 
   private:
     void pump(); // start at most one IN packet; runs in thread (IRQ-masked) or ISR
@@ -46,6 +74,11 @@ class CdcTransport {
     static constexpr uint16_t kMaxFrame = 135;   // SerialProtocol<128>: 128 + 7
     static constexpr uint8_t kRingN = 8;         // frames in flight
     static constexpr uint16_t kUsbPacket = 64;   // USB FS bulk max packet
+
+    /* A 64-byte FS bulk IN completes in well under a millisecond when the host
+     * is polling. 100 ms of "busy" therefore means the transfer is never coming
+     * back, not that the link is merely slow. */
+    static constexpr uint32_t kTxTimeoutTicks = 100; // configTICK_RATE_HZ = 1000
 
     /* RX: single-producer (ISR) / single-consumer (thread) byte ring */
     volatile uint8_t rxBuf_[kRxBufSize];
@@ -63,6 +96,11 @@ class CdcTransport {
     uint16_t off_ = 0;           // bytes of the head frame already sent
     volatile bool busy_ = false; // an IN packet is outstanding
     volatile bool zlp_ = false;  // a terminating zero-length packet is owed
+
+    /* Stall recovery + diagnostics */
+    volatile uint32_t busySince_ = 0; // tick busy_ was first observed set (0 = idle)
+    volatile uint16_t txDropped_ = 0; // frames lost to a full ring
+    volatile uint16_t txTimeouts_ = 0; // transfers force-released by serviceTx()
 };
 
 #endif /* CDC_TRANSPORT_HPP */

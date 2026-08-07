@@ -155,6 +155,7 @@ static int8_t CDC_Init_FS(void)
   /* Set Application Buffers */
   USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBufferFS);
+  Cdc_onCdcInit();                         /* drop the dead link's in-flight TX */
   return (USBD_OK);
   /* USER CODE END 3 */
 }

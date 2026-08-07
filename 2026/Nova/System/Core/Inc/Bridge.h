@@ -27,6 +27,10 @@ void Cdc_onRxISR(uint8_t* buf, uint32_t len);
 /** CDC IN transfer complete (called from CDC_TransmitCplt_FS, USB IRQ). */
 void Cdc_onTxCpltISR(void);
 
+/** CDC interface (re)configured by the host (called from CDC_Init_FS). Drops any
+ *  in-flight TX left over from the previous link. */
+void Cdc_onCdcInit(void);
+
 /** Build the USB serial string "NOVA<board-id>" into buf (called from
  *  USBD_CDC_SerialStrDescriptor in usbd_desc.c). */
 void Bridge_UsbSerial(uint8_t* buf, uint16_t* length);

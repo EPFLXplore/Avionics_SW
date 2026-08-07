@@ -51,9 +51,47 @@ bool CdcTransport::write(const uint8_t* d, uint16_t n) {
         tail_ = next;
         pump();
         ok = true;
+    } else {
+        ++txDropped_; // ring full: caller already dequeued this frame, so it is lost
     }
     taskEXIT_CRITICAL();
     return ok;
+}
+
+void CdcTransport::reset() {
+    /* ISR CONTEXT. Reached from CDC_Init_FS, which the stack calls while
+     * handling SET_CONFIGURATION inside the USB IRQ. Do NOT take a critical
+     * section here: taskENTER_CRITICAL() asserts when called from an ISR, which
+     * hangs the interrupt handler and makes the host time out the control
+     * transfer ("can't set config #1, error -110" -> the device never
+     * enumerates at all).
+     *
+     * No guard is needed anyway. The only concurrent writer is write(), running
+     * on the comms task, and it masks this very IRQ for its whole body - so it
+     * and this function can never interleave. */
+    head_ = tail_ = 0;   // discard anything queued for the link that just died
+    off_ = 0;
+    zlp_ = false;
+    busy_ = false;       // the missing half of USBD_CDC_Init's TxState = 0
+    busySince_ = 0;
+}
+
+void CdcTransport::serviceTx(uint32_t now_ticks) {
+    taskENTER_CRITICAL();
+    if (!busy_) {
+        busySince_ = 0;                  // idle, or a transfer completed normally
+    } else if (busySince_ == 0) {
+        busySince_ = now_ticks ? now_ticks : 1; // first tick we saw it busy (0 = sentinel)
+    } else if ((now_ticks - busySince_) >= kTxTimeoutTicks) {
+        // The completion is never coming. Releasing the flag is safe even if the
+        // transfer is somehow still live: CDC_Transmit_FS re-checks TxState and
+        // returns USBD_BUSY, which pump() handles by leaving the frame queued.
+        busy_ = false;
+        busySince_ = 0;
+        ++txTimeouts_;
+        pump();
+    }
+    taskEXIT_CRITICAL();
 }
 
 void CdcTransport::onTxCpltISR() {
@@ -100,4 +138,8 @@ void CdcTransport::dispatchRxISR(const uint8_t* d, uint16_t n) {
 
 void CdcTransport::dispatchTxCpltISR() {
     if (g_cdc) g_cdc->onTxCpltISR();
+}
+
+void CdcTransport::dispatchReset() {
+    if (g_cdc) g_cdc->reset();
 }

@@ -30,6 +30,11 @@ void SerialThread::init() {
 }
 
 void SerialThread::loop() {
+    /* Release a TX that never completed (USB suspend / host driver reset, where
+     * CDC_Init never runs to re-arm us). Runs first so a recovered link can send
+     * this iteration's telemetry rather than waiting for the next. */
+    io_.serviceTx(xTaskGetTickCount());
+
     /* RX: serial -> worker command queues */
     uint8_t chunk[64];
     uint16_t n = io_.read(chunk, sizeof chunk);
