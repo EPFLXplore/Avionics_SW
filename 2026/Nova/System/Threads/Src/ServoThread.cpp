@@ -23,25 +23,19 @@ void ServoThread::init()
     // constructed inert (servoTimerFree) no-op inside zero().
     for (uint8_t id = 0; id < 4; id++)
         servo[id].zero();
-
-    // Continuous-rotation servos read zero_pulse_us as "stop", not a position,
-    // so they need no auto-stop arming here - they are already stopped.
 }
 
 void ServoThread::loop()
 {
-    const TickType_t now        = xTaskGetTickCount();
-    const TickType_t STOP_DELAY = pdMS_TO_TICKS(600);
-
-    // Apply one command to one servo, arming auto-stop for the service modules.
-    auto apply = [&](uint8_t id, const ServoRequest& r) {
+    // Every channel drives a POSITIONAL servo: the angle written to the CCR is
+    // a commanded position, held until the next command. Nothing rewrites it
+    // behind the operator's back - the service modules used to be auto-stopped
+    // back to 90 deg 600 ms after each command, which is correct for a
+    // continuous-rotation servo (90 = neutral "stop" pulse) but on a positional
+    // one just snapped it home again.
+    auto apply = [this](uint8_t id, const ServoRequest& r) {
         if (r.go_to_zero) servo[id].zero();
         else              servo[id].set_angle((float)r.angle);
-
-        if (id == LEFT_SERVICE_MODULE || id == RIGHT_SERVICE_MODULE) {
-            _last_cmd_tick[id] = now;
-            _stop_pending[id]  = true;
-        }
     };
 
     // Block for a command, then drain and execute the whole queue.
@@ -60,8 +54,8 @@ void ServoThread::loop()
                 apply(LEFT_SERVICE_MODULE, req);
 
                 // RIGHT is mounted opposite LEFT: mirror the angle so the two
-                // drive in opposite directions. 90 (stop) maps to itself.
-                // go_to_zero is unaffected: zero() homes both to the same stop.
+                // reach mirrored positions. 90 (mid-travel) maps to itself.
+                // go_to_zero is unaffected: zero() homes both to the same angle.
                 ServoRequest mir = req;
                 mir.angle = 180 - req.angle;
                 apply(RIGHT_SERVICE_MODULE, mir);
@@ -69,13 +63,5 @@ void ServoThread::loop()
                 apply(req.id, req);
             }
         } while (this->popCommand(req));
-    }
-
-    // Auto-stop continuous-rotation servos 1 s after last command
-    for (uint8_t id = LEFT_SERVICE_MODULE; id <= RIGHT_SERVICE_MODULE; id++) {
-        if (_stop_pending[id] && (now - _last_cmd_tick[id]) >= STOP_DELAY) {
-            servo[id].set_angle(90.0f);
-            _stop_pending[id] = false;
-        }
     }
 }

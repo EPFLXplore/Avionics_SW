@@ -12,13 +12,14 @@
  * conversion happens at compile time and the field still holds plain µs.
  */
 
-/** Home angle for every servo, in degrees. 90° = mid-travel for a positional
- *  servo, and the neutral "stop" pulse for a continuous-rotation one. */
-static constexpr float SERVO_ZERO_DEG = 90.0f;
+/** Home angle for every servo, in degrees. 0° is one end of travel, i.e.
+ *  kPulseMinUs (500 µs) - every channel drives a positional servo, so this is
+ *  a commanded position and nothing re-asserts it behind a command. */
+static constexpr float SERVO_ZERO_DEG = 0.0f;
 
 /* Proves the map really is compile-time evaluable, and pins it: a static_assert
  * can only use a constant expression, so this fails to build if it ever isn't. */
-static_assert(angle_to_pulse_us(SERVO_ZERO_DEG) == 1500, "servo zero drifted from 1500 us");
+static_assert(angle_to_pulse_us(SERVO_ZERO_DEG) == kPulseMinUs, "servo zero drifted from 0 deg");
 static_assert(angle_to_pulse_us(0.0f)   == kPulseMinUs, "0 deg must map to kPulseMinUs");
 static_assert(angle_to_pulse_us(180.0f) == kPulseMaxUs, "180 deg must map to kPulseMaxUs");
 

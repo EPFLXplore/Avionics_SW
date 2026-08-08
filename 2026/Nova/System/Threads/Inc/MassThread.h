@@ -23,7 +23,7 @@ constexpr uint8_t AVG_SIZE = 20;
 struct MassType {
 	HX711 hx;                          // each cell owns its sensor (no pointers)
 	float offset = 0.0f;
-	float slope = -0.0014164446f;
+	float slope = -0.0014164446f; // fallback: overridden at runtime by the slope Nexus replays from mass_cal.yaml
 	float weight = 0.0f;
 	float buffer[AVG_SIZE] = {};
 	// Live diagnostics. Members of the static MassThread (fixed addresses), so
