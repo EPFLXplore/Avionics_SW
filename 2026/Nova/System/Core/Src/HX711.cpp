@@ -6,6 +6,21 @@
 #include <HX711.h>
 #include "cmsis_os2.h"   // osDelay in the bounded ready-wait
 
+namespace {
+/* Same if-chain as PWMDriver::enable_gpio_clock(): a port handle is a pointer,
+ * not an index, so there is nothing to switch on. */
+void enable_gpio_clock(GPIO_TypeDef* port)
+{
+    if      (port == GPIOA) __HAL_RCC_GPIOA_CLK_ENABLE();
+    else if (port == GPIOB) __HAL_RCC_GPIOB_CLK_ENABLE();
+    else if (port == GPIOC) __HAL_RCC_GPIOC_CLK_ENABLE();
+    else if (port == GPIOD) __HAL_RCC_GPIOD_CLK_ENABLE();
+    else if (port == GPIOE) __HAL_RCC_GPIOE_CLK_ENABLE();
+    else if (port == GPIOF) __HAL_RCC_GPIOF_CLK_ENABLE();
+    else if (port == GPIOG) __HAL_RCC_GPIOG_CLK_ENABLE();
+}
+} // namespace
+
 // ---- Constructor -----------------------------------------------------------
 HX711::HX711(GPIO_TypeDef* dout_port, uint16_t dout_pin,
              GPIO_TypeDef* sck_port,  uint16_t sck_pin)
@@ -14,15 +29,42 @@ HX711::HX711(GPIO_TypeDef* dout_port, uint16_t dout_pin,
       sck_port_(sck_port),
       sck_pin_(sck_pin)
 {
-    // GPIO modes must be configured in CubeMX:
-    // - dout_pin_  : Input (with pull-up)
-    // - sck_pin_   : Output, push-pull, low speed
+    // Pin modes are NOT set here: the constructor runs before HAL is guaranteed
+    // ready in some paths, and begin() is the driver's post-HAL entry point.
 }
 
 // ---- Public API ------------------------------------------------------------
 
 void HX711::begin()
 {
+    // Own the pins rather than trusting CubeMX to have configured them.
+    //
+    // A connector's pins can be plain GPIO for this bit-banged driver or handed
+    // to a real peripheral (AF) on a board that uses the connector differently,
+    // and MX_GPIO_Init() only sets whatever the .ioc last said they were. Since
+    // HAL_GPIO_Init is last-writer-wins, the driver that actually runs claiming
+    // its own pins is what makes the two cases safe - the same thing PWMDriver
+    // already does for its AF pin.
+    enable_gpio_clock(dout_port_);
+    enable_gpio_clock(sck_port_);
+
+    // DOUT: input. The chip drives it push-pull while awake but releases it in
+    // power-down, so the pull-up is what makes "DOUT went HIGH" mean something
+    // in lineTest(), and what stops available() reading a floating low.
+    GPIO_InitTypeDef g = {};
+    g.Pin   = dout_pin_;
+    g.Mode  = GPIO_MODE_INPUT;
+    g.Pull  = GPIO_PULLUP;
+    g.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(dout_port_, &g);
+
+    // SCK: output push-pull. Pulses are ~1 us, so LOW speed is ample.
+    g.Pin   = sck_pin_;
+    g.Mode  = GPIO_MODE_OUTPUT_PP;
+    g.Pull  = GPIO_NOPULL;
+    g.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(sck_port_, &g);
+
     // Make sure clock is low and give the chip some time
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_RESET);
     //HAL_Delay(100); //not compatible with RTOS
@@ -120,14 +162,14 @@ bool HX711::pulseClock() const
     // high and <60 µs (power-down); the extra width survives degraded edges on
     // marginal lines (cable capacitance / contact resistance) where ~1 µs
     // pulses can fall below the chip's input threshold.
-    constexpr int kPhaseLoops = 60;
+    constexpr int PHASE_LOOPS = 60;
 
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_SET);
-    for (volatile int i = 0; i < kPhaseLoops; ++i) { __NOP(); }
+    for (volatile int i = 0; i < PHASE_LOOPS; ++i) { __NOP(); }
 
     bool bit = (HAL_GPIO_ReadPin(dout_port_, dout_pin_) == GPIO_PIN_SET);
     HAL_GPIO_WritePin(sck_port_, sck_pin_, GPIO_PIN_RESET);
-    for (volatile int i = 0; i < kPhaseLoops; ++i) { __NOP(); }
+    for (volatile int i = 0; i < PHASE_LOOPS; ++i) { __NOP(); }
 
     return bit;
 }

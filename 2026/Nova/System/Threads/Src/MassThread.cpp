@@ -10,49 +10,62 @@
 MassThread::MassThread(const char* name, osPriority priority)
 : MessageThread(name, priority)
 {
-	// mass_0 / mass_1 own their HX711 (constructed in the header) - nothing to wire.
+	// cell[] own their HX711 (constructed in the header) - nothing to wire.
+	// The board profile is NOT read here: see init().
 }
 
 MassThread::~MassThread(){
-	// mass_0 / mass_1 are statically allocated members: nothing to free.
+	// cell[] are statically allocated members: nothing to free.
 }
 
 void MassThread::init(){
-	mass_0.hx.begin();
-	mass_1.hx.begin();
+	// Bind local connectors to global device ids. HERE, not in the constructor:
+	// init() only runs because Thread::start() was called, which only happened
+	// because System asked hasDevices() - and hasDevices() answers off the
+	// profile directly, so it never needed the binding. Keeping the read in task
+	// context means nothing about the board identity is latched before the
+	// scheduler is up.
+	//
+	// This is the ONLY place the board profile is bound; everything else works
+	// off cell[i].global_id, so swapping this for hardware detection later
+	// changes nothing beyond this one line.
+	bindDevices(cell, profile().mass);
 
-	// Wiring probe (debugger-visible verdict per channel, see HX711::lineTest).
-	mass_0.lineTest = mass_0.hx.lineTest();
-	mass_1.lineTest = mass_1.hx.lineTest();
+	for (MassType& c : cell) c.hx.begin();
+
+	// Wiring probe (debugger-visible verdict per connector, see HX711::lineTest).
+	for (MassType& c : cell) c.lineTest = c.hx.lineTest();
 
 	// The probe power-cycles the chips: first conversion lands ~400 ms after
 	// wake (10 SPS settling), so give them time before taring.
 	osDelay(600);
-	this->tareScale(mass_0);
-	this->tareScale(mass_1);
+	for (MassType& c : cell) this->tareScale(c);
 }
 
 void MassThread::loop(){
+    // Always pop, so the queue drains even for devices this board does not have.
     MassRequest cmd;
     if (this->popCommand(cmd)) {
-    	MassType& dev = (cmd.id == 0) ? mass_0 : mass_1;
-    	if (cmd.change_scale) {
-    		dev.slope = cmd.scale; // runtime calibration override
+    	if (MassType* dev = deviceFor(cell, cmd.id)) {
+    		if (cmd.change_scale) {
+    			dev->slope = cmd.scale; // runtime calibration override
+    		}
+    		if (cmd.tare) {
+    			this->tareScale(*dev);
+    		}
     	}
-        if (cmd.tare) {
-        	this->tareScale(dev);
-        }
     }
 
-    this->updateMass(mass_0);
-    this->updateMass(mass_1);
+    // Publish only bound cells, so a global id means one physical scale fleet-wide.
+    for (MassType& c : cell)
+    	if (c.global_id != NO_DEVICE) this->updateMass(c);
 }
 
 void MassThread::updateMass(MassType& device){
 	this->update(device);
 	MassPacket st;
 	st.mass = device.weight;
-	st.id = (&device == &mass_0) ? 0 : 1;
+	st.id = device.global_id;
     pushStatus(st);
 }
 

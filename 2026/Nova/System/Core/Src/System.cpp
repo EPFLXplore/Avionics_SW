@@ -44,29 +44,25 @@ void System::init(){
 	//Set ID as the dummy packet
 	heartbeat().setID(Board_MasterId());
 
-	switch (Board_MasterId()) {
+	// Bring-up order below is HEAD's, spelled out rather than switched on:
+	// tick rates first, then the link, then the workers. Nothing here is latched
+	// anywhere earlier - each hasDevices() is a live profile read taken at this
+	// point, exactly as HEAD's `switch (Board_MasterId())` was.
+	if (mass().hasDevices()) mass().setDelay(100); //ms
+	if (leds().hasDevices()) leds().setDelay(80);  //ms: matches CLEANED_LEDS (tick() rate = animation speed)
 
-	case 0: // servo master: actuators + load cells
-		mass().setDelay(100); //ms
-		// servo: 0 (set in ctor) - blocks in waitCommand()
-		comms().start();
-		servo().start();
-		mass().start();
-		break;
+	// The comms link runs on every board, and comes up before any worker so the
+	// wire has an owner before anything can push to it.
+	comms().start();
 
-	case 3: // LED master: WS2812 strip on TIM15_CH1 + DMA, servos on TIM1/TIM2
-		leds().setDelay(80); //ms: matches CLEANED_LEDS (tick() rate = animation speed)
-		comms().start();
-		leds().start();
-		// Servos 0/1 (TIM15) are constructed inert on this board - the strip
-		// owns TIM15 (see servoTimerFree in ServoConfigs.h); 2/3 run normally.
-		// Disabled while bringing up the LEDs:
-		//servo().start();
-		break;
+	// Which threads run follows from what the board actually carries. We ask
+	// each thread, never the board profile: System deals in threads, threads
+	// deal in devices. A thread with nothing bound is simply never started.
+	if (servo().hasDevices()) servo().start(); // servo: 0 (set in ctor) - blocks in waitCommand()
+	if (mass().hasDevices())  mass().start();
 
-	default: // reserved ids 2,1: bring up only the comms link
-		comms().start();
-		break;
-	}
-
+	// The strip has no id (LEDRequest carries none), but whether it is fitted is
+	// still a profile fact - and the same one that keeps TIM15 clear for it, see
+	// noTim15Conflict() in ServoConfigs.h.
+	if (leds().hasDevices()) leds().start();
 }

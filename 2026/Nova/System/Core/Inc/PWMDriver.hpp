@@ -4,16 +4,16 @@
 #include "main.h"
 
 /**
- * Servo travel limits: 0° is kPulseMinUs, kAngleMaxDeg is kPulseMaxUs.
+ * Servo travel limits: 0° is PULSE_MIN_US, ANGLE_MAX_DEG is PULSE_MAX_US.
  * These are the single source of truth for the angle<->pulse map; change them
  * and both set_angle() and every angle_to_pulse_us() in ServoConfigs.h follow.
  */
-constexpr uint16_t kPulseMinUs  = 500;
-constexpr uint16_t kPulseMaxUs  = 2500;
-constexpr float    kAngleMaxDeg = 180.0f;
+constexpr uint16_t PULSE_MIN_US  = 500;
+constexpr uint16_t PULSE_MAX_US  = 2500;
+constexpr float    ANGLE_MAX_DEG = 180.0f;
 
 /**
- * @brief Angle in degrees -> pulse width in µs, clamped to 0-kAngleMaxDeg.
+ * @brief Angle in degrees -> pulse width in µs, clamped to 0-ANGLE_MAX_DEG.
  *
  * constexpr so ServoConfigs.h can state home positions as angles rather than
  * hand-computed microseconds, at zero runtime cost. set_angle() calls the same
@@ -21,10 +21,10 @@ constexpr float    kAngleMaxDeg = 180.0f;
  */
 constexpr uint16_t angle_to_pulse_us(float angle)
 {
-    return angle <= 0.0f         ? kPulseMinUs
-         : angle >= kAngleMaxDeg ? kPulseMaxUs
-         : static_cast<uint16_t>(kPulseMinUs +
-                                 (angle / kAngleMaxDeg) * (kPulseMaxUs - kPulseMinUs));
+    return angle <= 0.0f         ? PULSE_MIN_US
+         : angle >= ANGLE_MAX_DEG ? PULSE_MAX_US
+         : static_cast<uint16_t>(PULSE_MIN_US +
+                                 (angle / ANGLE_MAX_DEG) * (PULSE_MAX_US - PULSE_MIN_US));
 }
 
 struct PWMConfig {
@@ -58,7 +58,7 @@ public:
 
     /**
      * @brief Set servo angle in degrees. Clamped and mapped by
-     *        angle_to_pulse_us() (0-kAngleMaxDeg -> kPulseMinUs-kPulseMaxUs).
+     *        angle_to_pulse_us() (0-ANGLE_MAX_DEG -> PULSE_MIN_US-PULSE_MAX_US).
      */
     void set_angle(float angle);
 
@@ -66,6 +66,14 @@ public:
      * @brief Drive to the zero/home position defined in PWMConfig.
      */
     void zero();
+
+    /**
+     * Global device id this channel drives, bound in ServoThread::init() from
+     * the board profile, or NO_DEVICE when this board has nothing on the pin.
+     * The driver never reads it - it is identity for the thread to match
+     * incoming requests against, kept here so a device carries its own name.
+     */
+    uint8_t global_id = 0xFF;   // NO_DEVICE; device_ids.h is not pulled in here
 
 private:
     PWMConfig cfg_;

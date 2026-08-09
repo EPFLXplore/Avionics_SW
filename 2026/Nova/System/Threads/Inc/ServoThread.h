@@ -1,51 +1,45 @@
 #pragma once
 #include "MessageThread.h"
 #include "packets.h"
+#include "device_ids.h"    // ServoId: the shared, fleet-wide device ids
+#include "BoardProfile.h"  // which ServoId sits on which SPI pin, per board
 #include "ServoConfigs.h"
 
-/**
- * A servo id IS the index into servo[] below, i.e. the physical channel: id N
- * drives SERVO_N_CFG. Renumbering these therefore moves wiring, not just the
- * value carried in a ServoRequest - see ServoConfigs.h for the pin per channel.
- *
- * Only ids 0..3 exist as outputs (four PWM channels). LEFT_LED / RIGHT_LED sit
- * past that on purpose: the strips are driven by LedsThread over LEDRequest,
- * not as servos, and a ServoRequest naming them is ignored by loop().
- */
-enum Servos_ID {
-	FRONT_CAM            = 0,  // PB15 TIM15_CH2
-	DRILL                = 1,  // PB14 TIM15_CH1
-	LEFT_SERVICE_MODULE  = 2,  // PB13 TIM1_CH1N (complementary)
-	RIGHT_SERVICE_MODULE = 3,  // PB11 TIM2_CH4
-
-	LEFT_LED             = 4,  // not a servo channel (see above)
-	RIGHT_LED            = 5,  // not a servo channel (see above)
-
-	// Sentinel id: one ServoRequest drives BOTH service modules atomically.
-	// Publish a single message with id = SERVICE_MODULE_BOTH instead of two.
-	SERVICE_MODULE_BOTH = 10
-};
+// ServoChannel / SERVO_CHANNEL_COUNT live in BoardProfile.h, beside the table
+// they index. Only the wire speaks ServoId; everything here speaks channels.
+//
+// The LED strips are not servos: they go through LedsThread over LEDRequest and
+// have neither a channel nor a ServoId.
 
 class ServoThread : public MessageThread<ServoRequest, EmptyMessage> {
 public:
     ServoThread(const char* name, osPriority priority);
     virtual ~ServoThread();
 
+    /** True when this board carries at least one servo. Read live off the
+     *  profile at the moment System asks, NOT latched at construction: that
+     *  keeps the start decision where HEAD had it - in System::init, at start
+     *  time - instead of freezing it into a bool several statements earlier.
+     *  System asks this instead of reading the profile itself, so nothing above
+     *  the threads knows what a channel is. */
+    bool hasDevices() const { return anyDevice(profile().servo); }
+
     void init() override;
     void loop() override;
 
 private:
+
     // Plain objects. Safe because ServoThread is constructed at runtime (from
     // System::init, after HAL), so PWMDriver's HAL timer setup runs post-HAL.
-    // servoTimerFree() constructs a servo inert when its timer is owned by
-    // another subsystem on this board role (TIM15 -> LED strip on id 3).
-    PWMDriver servo[4] = {
-        PWMDriver(SERVO_0_CFG, servoTimerFree(SERVO_0_CFG)),
-        PWMDriver(SERVO_1_CFG, servoTimerFree(SERVO_1_CFG)),
-        PWMDriver(SERVO_2_CFG, servoTimerFree(SERVO_2_CFG)),
-        PWMDriver(SERVO_3_CFG, servoTimerFree(SERVO_3_CFG)),
+    //
+    // A channel is constructed live only when the profile declares a device on
+    // it; otherwise it is inert and touches neither pin nor timer. That is what
+    // keeps TIM15 clear for the WS2812 strip on a board that declares no servos,
+    // and stops boards with none from configuring timers they never use.
+    PWMDriver servo[SERVO_CHANNEL_COUNT] = {
+        PWMDriver(SERVO_0_CFG, profile().servo[0] != NO_DEVICE),
+        PWMDriver(SERVO_1_CFG, profile().servo[1] != NO_DEVICE),
+        PWMDriver(SERVO_2_CFG, profile().servo[2] != NO_DEVICE),
+        PWMDriver(SERVO_3_CFG, profile().servo[3] != NO_DEVICE),
     };
-
-    // Last SERVICE_MODULE_BOTH open/close command: 0=open, 180=close, -1=none
-    int16_t      _last_both_cmd    = -1;
 };

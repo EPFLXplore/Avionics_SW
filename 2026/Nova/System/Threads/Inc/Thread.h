@@ -42,7 +42,7 @@ private:
 
 	// Per-thread static storage so the FreeRTOS task uses NO heap. Sized for the
 	// largest stack any thread requests (4 KB); smaller requests use part of it.
-	static constexpr uint32_t kStackBytes = 4096;
+	static constexpr uint32_t STACK_BYTES = 4096;
 
 	osThreadId_t   handle{nullptr};
 	osThreadAttr_t attributes{};                       // saved until start()
@@ -51,7 +51,7 @@ private:
 	bool           running{true};
 	bool           started{false};
 
-	StackType_t    stackBuffer_[kStackBytes / sizeof(StackType_t)]{};
+	StackType_t    stackBuffer_[STACK_BYTES / sizeof(StackType_t)]{};
 	StaticTask_t   tcbBuffer_{};
 };
 

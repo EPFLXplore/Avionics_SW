@@ -4,6 +4,7 @@ ServoThread::ServoThread(const char* name, osPriority priority)
     : MessageThread(name, priority)
 {
     setDelay(0);  // blocking done inside loop() via waitCommand
+    // Device ids are NOT bound here: see init().
 }
 
 ServoThread::~ServoThread()
@@ -13,16 +14,27 @@ ServoThread::~ServoThread()
 
 void ServoThread::init()
 {
+    // Bind local channels to global device ids. HERE, not in the constructor:
+    // init() only runs because Thread::start() was called, which only happened
+    // because System asked hasDevices() - and hasDevices() answers off the
+    // profile directly, so it never needed the binding. Keeping the read in task
+    // context means nothing about the board identity is latched before the
+    // scheduler is up.
+    //
+    // This is the ONLY place the board profile is bound; everything else works
+    // off servo[].global_id.
+    bindDevices(servo, profile().servo);
+
     // servo[] are already constructed (member objects, built when this thread
     // was constructed at runtime in System::init, after HAL), but their CCRs
     // are still at CubeMX's Pulse = 0: the channel is running with no pulse at
     // all, so the servo is unpowered and free to drift until the first command.
     //
     // Home every servo through the same path a ServoRequest{go_to_zero = true}
-    // takes, so boot position and commanded zero can never disagree. Servos
-    // constructed inert (servoTimerFree) no-op inside zero().
-    for (uint8_t id = 0; id < 4; id++)
-        servo[id].zero();
+    // takes, so boot position and commanded zero can never disagree. Channels
+    // the profile left empty are constructed inert and no-op inside zero().
+    for (uint8_t ch = 0; ch < SERVO_CHANNEL_COUNT; ch++)
+        servo[ch].zero();
 }
 
 void ServoThread::loop()
@@ -33,34 +45,14 @@ void ServoThread::loop()
     // back to 90 deg 600 ms after each command, which is correct for a
     // continuous-rotation servo (90 = neutral "stop" pulse) but on a positional
     // one just snapped it home again.
-    auto apply = [this](uint8_t id, const ServoRequest& r) {
-        if (r.go_to_zero) servo[id].zero();
-        else              servo[id].set_angle((float)r.angle);
-    };
-
-    // Block for a command, then drain and execute the whole queue.
-    // SERVICE_MODULE_BOTH expands into both service modules in the same
-    // iteration, so their CCR writes land before TIM7 can fire -> simultaneous.
+    // Block for a command, then drain and execute the whole queue. Commands for
+    // devices this board does not carry are popped and dropped.
     ServoRequest req;
     if (this->waitCommand(req, pdMS_TO_TICKS(10))) {
         do {
-            if (req.id == SERVICE_MODULE_BOTH) {
-                // Block duplicate open (0) or close (180) commands.
-                const bool is_toggle = !req.go_to_zero &&
-                                       (req.angle == 0 || req.angle == 180);
-                if (is_toggle && req.angle == _last_both_cmd) continue;
-                if (is_toggle) _last_both_cmd = req.angle;
-
-                apply(LEFT_SERVICE_MODULE, req);
-
-                // RIGHT is mounted opposite LEFT: mirror the angle so the two
-                // reach mirrored positions. 90 (mid-travel) maps to itself.
-                // go_to_zero is unaffected: zero() homes both to the same angle.
-                ServoRequest mir = req;
-                mir.angle = 180 - req.angle;
-                apply(RIGHT_SERVICE_MODULE, mir);
-            } else if (req.id <= 3) {
-                apply(req.id, req);
+            if (PWMDriver* s = deviceFor(servo, req.id)) {
+                if (req.go_to_zero) s->zero();
+                else                s->set_angle((float)req.angle);
             }
         } while (this->popCommand(req));
     }

@@ -143,7 +143,11 @@ int main(void)
   MX_TIM15_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-
+  /* Latch the PB4/PB5 board straps here: after MX_SPI3_Init (which owns those
+   * pins as AF6) and before MX_USB_Device_Init, so the USB serial descriptor and
+   * the board profile are built from one settled sample taken in thread context.
+   * Without this the first sample can land inside the USB IRQ, mid-enumeration. */
+  Board_LatchMasterId();
   /* USER CODE END 2 */
 
   /* Init scheduler */

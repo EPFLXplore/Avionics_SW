@@ -25,7 +25,11 @@ public:
         ClockFault, ///< DOUT still low after the 25th pulse: chip never saw SCK (CLK line open)
     };
 
-    /// Put SCK low and let the chip settle
+    /// Claim the two pins (DOUT input pull-up, SCK output push-pull), enable
+    /// their port clocks, and put SCK low. Call once, post-HAL, before any read:
+    /// the driver configures its own pins rather than trusting the .ioc, so a
+    /// connector whose pins belong to a peripheral on another board profile
+    /// cannot leave this one bit-banging an alternate-function pad.
     void begin();
 
     /// One-shot wiring probe (chip idle; resets it via a power-down cycle).

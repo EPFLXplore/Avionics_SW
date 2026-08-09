@@ -36,6 +36,7 @@
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../USB_DEVICE/App"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Core/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Config/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="../USB_DEVICE/Target"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/include"/>
 									<listOptionValue builtIn="false" value="../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"/>
@@ -80,6 +81,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Threads/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Utils/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Core/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Config/Inc}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.181274384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -105,6 +107,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Threads/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Utils/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Core/Inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Config/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/System/Comms/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/ERC_SE_CustomMessages/include}&quot;"/>
 								</option>

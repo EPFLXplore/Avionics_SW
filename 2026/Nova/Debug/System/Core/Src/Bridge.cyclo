@@ -3,4 +3,6 @@
 ../System/Core/Src/Bridge.cpp:36:6:void Cdc_onTxCpltISR()	1
 ../System/Core/Src/Bridge.cpp:45:6:void Cdc_onCdcInit()	1
 ../System/Core/Src/Bridge.cpp:51:6:void Bridge_UsbSerial(uint8_t*, uint16_t*)	1
-../System/Core/Src/Bridge.cpp:68:9:uint8_t Board_MasterId()	5
+../System/Core/Src/Bridge.cpp:73:16:uint8_t Board_ReadStraps()	4
+../System/Core/Src/Bridge.cpp:92:6:void Board_LatchMasterId()	2
+../System/Core/Src/Bridge.cpp:99:9:uint8_t Board_MasterId()	2

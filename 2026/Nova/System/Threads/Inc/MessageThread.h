@@ -51,7 +51,7 @@ class MessageThread : public Thread {
 
 private:
     // Fixed compile-time depth so the queue storage can be statically allocated.
-    static constexpr std::size_t kDepth = ThreadCfg::QUEUE_DEPTH;
+    static constexpr std::size_t DEPTH = ThreadCfg::QUEUE_DEPTH;
 
     QueueHandle_t _commandQueue = nullptr;
     QueueHandle_t _statusQueue  = nullptr;
@@ -59,8 +59,8 @@ private:
     // Static queue storage: no heap.
     StaticQueue_t _commandQueueCb{};
     StaticQueue_t _statusQueueCb{};
-    uint8_t       _commandQueueStorage[kDepth * sizeof(CommandMsg)]{};
-    uint8_t       _statusQueueStorage[kDepth * sizeof(StatusMsg)]{};
+    uint8_t       _commandQueueStorage[DEPTH * sizeof(CommandMsg)]{};
+    uint8_t       _statusQueueStorage[DEPTH * sizeof(StatusMsg)]{};
 
 public:
     // ------------------------------------------------------------------------
@@ -77,18 +77,18 @@ public:
         // Set loop delay in base Thread
         setDelay(tickDelayMs);
 
-        // Depths are fixed at kDepth so the storage can be static; the runtime
-        // depth params are kept for API compatibility but clamped to kDepth.
+        // Depths are fixed at DEPTH so the storage can be static; the runtime
+        // depth params are kept for API compatibility but clamped to DEPTH.
         (void)commandDepth;
         (void)statusDepth;
 
         // Create inbox (command) queue: statically allocated
-        _commandQueue = xQueueCreateStatic(kDepth, sizeof(CommandMsg),
+        _commandQueue = xQueueCreateStatic(DEPTH, sizeof(CommandMsg),
                                            _commandQueueStorage, &_commandQueueCb);
         configASSERT(_commandQueue);
 
         // Create outbox (status) queue: statically allocated
-        _statusQueue = xQueueCreateStatic(kDepth, sizeof(StatusMsg),
+        _statusQueue = xQueueCreateStatic(DEPTH, sizeof(StatusMsg),
                                           _statusQueueStorage, &_statusQueueCb);
         configASSERT(_statusQueue);
     }

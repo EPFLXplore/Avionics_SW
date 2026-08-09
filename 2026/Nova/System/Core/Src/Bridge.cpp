@@ -54,29 +54,51 @@ void Bridge_UsbSerial(uint8_t* buf, uint16_t* length) {
 	USBD_GetString((uint8_t*)nova_serial, buf, length);
 }
 
-/* Called from System.cpp (System::init) and from Bridge_UsbSerial (above).
- * 2-bit board id strapped on PB4 (bit0) / PB5 (bit1); read + configured once and
- * cached, so calls from the USB IRQ never re-run HAL_GPIO_Init. PB4 is NJTRST ->
- * the debug interface must be SWD for it to be a free GPIO.
+/* 2-bit board id strapped on PB4 (bit0) / PB5 (bit1). PB4 is NJTRST -> the debug
+ * interface must be SWD for it to be a free GPIO. PB4/PB5 are also SPI3
+ * MISO/MOSI, so MX_SPI3_Init() hands them to AF6; claiming them back as GPIO has
+ * to happen after that, which is why the latch lives in main()'s USER CODE 2.
  *
  * PB4's NJTRST pull-up is active from reset until the pin is reconfigured, so a
- * "low" strap starts charged HIGH. Internal pull-down + a settle spin make the
- * read deterministic: a high strap overrides the ~40k pull-down, an absent or
- * weak low strap no longer floats at whatever charge the pull-up left. The spin
- * (not HAL_Delay: this can run in the USB IRQ) covers the RC decay to the real
- * strap level. */
+ * "low" strap starts charged HIGH. Internal pull-down + a settle make the read
+ * deterministic: a high strap overrides the ~40k pull-down, an absent or weak
+ * low strap no longer floats at whatever charge the pull-up left. */
+static int board_master_id = -1;   // -1 = not yet latched
+
+/* Debugger handles: watch these in Live Expressions to see what the pins
+ * actually did. board_strap_raw is the IDR bits (bit0 = PB4, bit1 = PB5) taken
+ * on the settled read, i.e. the same sample board_master_id is built from. */
+volatile uint8_t board_strap_raw = 0xFF;
+
+static uint8_t Board_ReadStraps(void) {
+	GPIO_InitTypeDef g = {};
+	g.Pin  = GPIO_PIN_4 | GPIO_PIN_5;
+	g.Mode = GPIO_MODE_INPUT;
+	g.Pull = GPIO_PULLDOWN;          // the board straps each line high or low
+	HAL_GPIO_Init(GPIOB, &g);
+	for (volatile uint32_t i = 0; i < 3000; ++i) { __NOP(); } // ~20-60 us settle
+	const uint8_t b0 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_SET) ? 1 : 0;
+	const uint8_t b1 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == GPIO_PIN_SET) ? 1 : 0;
+	board_strap_raw = (uint8_t)((b1 << 1) | b0);
+	return board_strap_raw;
+}
+
+/* Called once from main(), before MX_USB_Device_Init. Two passes: the first
+ * takes the pins off SPI3's alternate function and turns the pull-down on, the
+ * second reads them once the NJTRST pull-up's charge has actually decayed.
+ * HAL_Delay is legal here - this runs in main(), before the kernel, and never
+ * from the USB IRQ. That is the whole point of latching here: the ISR path
+ * below can then only ever hit the cache. */
+void Board_LatchMasterId(void) {
+	if (board_master_id >= 0) return;
+	(void)Board_ReadStraps();   // claim the pins from AF6, enable the pull-down
+	HAL_Delay(2);               // full RC settle, not a NOP-count guess
+	board_master_id = (int)Board_ReadStraps();
+}
+
 uint8_t Board_MasterId(void) {
-	static int cached = -1;
-	if (cached < 0) {
-		GPIO_InitTypeDef g = {};
-		g.Pin  = GPIO_PIN_4 | GPIO_PIN_5;
-		g.Mode = GPIO_MODE_INPUT;
-		g.Pull = GPIO_PULLDOWN;          // the board straps each line high or low
-		HAL_GPIO_Init(GPIOB, &g);
-		for (volatile uint32_t i = 0; i < 3000; ++i) { __NOP(); } // ~20-60 us settle
-		const uint8_t b0 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_SET) ? 1 : 0;
-		const uint8_t b1 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == GPIO_PIN_SET) ? 1 : 0;
-		cached = (int)((b1 << 1) | b0);
-	}
-	return (uint8_t)cached;
+	/* Fallback only: if something asks before main() latched, sample inline.
+	 * The NOP spin (not HAL_Delay) is what makes that safe from an ISR. */
+	if (board_master_id < 0) board_master_id = (int)Board_ReadStraps();
+	return (uint8_t)board_master_id;
 }

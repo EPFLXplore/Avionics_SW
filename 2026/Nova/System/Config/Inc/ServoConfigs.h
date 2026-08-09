@@ -1,7 +1,7 @@
 #pragma once
 #include "PWMDriver.hpp"
 #include "Timers.h"
-#include "Bridge.h"   // Board_MasterId()
+#include "BoardProfile.h"   // profile().led_strip
 
 /**
  * Hardware PWM configs for the four servo outputs.
@@ -13,25 +13,16 @@
  */
 
 /** Home angle for every servo, in degrees. 0° is one end of travel, i.e.
- *  kPulseMinUs (500 µs) - every channel drives a positional servo, so this is
+ *  PULSE_MIN_US (500 µs) - every channel drives a positional servo, so this is
  *  a commanded position and nothing re-asserts it behind a command. */
 static constexpr float SERVO_ZERO_DEG = 0.0f;
 
 /* Proves the map really is compile-time evaluable, and pins it: a static_assert
  * can only use a constant expression, so this fails to build if it ever isn't. */
-static_assert(angle_to_pulse_us(SERVO_ZERO_DEG) == kPulseMinUs, "servo zero drifted from 0 deg");
-static_assert(angle_to_pulse_us(0.0f)   == kPulseMinUs, "0 deg must map to kPulseMinUs");
-static_assert(angle_to_pulse_us(180.0f) == kPulseMaxUs, "180 deg must map to kPulseMaxUs");
+static_assert(angle_to_pulse_us(SERVO_ZERO_DEG) == PULSE_MIN_US, "servo zero drifted from 0 deg");
+static_assert(angle_to_pulse_us(0.0f)   == PULSE_MIN_US, "0 deg must map to PULSE_MIN_US");
+static_assert(angle_to_pulse_us(180.0f) == PULSE_MAX_US, "180 deg must map to PULSE_MAX_US");
 
-/**
- * Timer-ownership rule: on the LED-master board (id 3) TIM15 belongs to the
- * WS2812 strip driver, which owns the timer's PSC/ARR/DMA. Servos configured
- * on TIM15 (0 and 1 below) must be constructed inert there, or their 50 Hz
- * time-base setup corrupts the LED bitstream. Servos on TIM1/TIM2 always run.
- */
-static inline bool servoTimerFree(const PWMConfig& cfg) {
-    return !(Board_MasterId() == 3 && cfg.tim == &htim15);
-}
 static const PWMConfig SERVO_0_CFG = {
     .tim            = &htim15,
     .channel        = 2,
@@ -71,3 +62,31 @@ static const PWMConfig SERVO_3_CFG = {
     .complementary  = false,
     .zero_pulse_us  = angle_to_pulse_us(SERVO_ZERO_DEG),
 };
+
+/**
+ * SERVO_0_CFG and SERVO_1_CFG share TIM15 with the WS2812 strip, and PSC/ARR
+ * are per-timer: the strip's 800 kHz bit period and a servo's 50 Hz base cannot
+ * both be programmed into one timer, whichever channels they use. So a board
+ * row may declare a strip OR servos on those channels, never both.
+ *
+ * Nothing checks this at runtime, and nothing needs to: ServoThread constructs
+ * a channel inert unless the profile declares a device on it, so a strip board
+ * that declares no servos never touches TIM15 at all. The only way to break the
+ * strip is to write a row claiming both - which is what this rejects.
+ *
+ * The channel numbers are spelled out because PWMConfig cannot be constexpr (it
+ * holds GPIOB, an integer-to-pointer cast), so SERVO_n_CFG.tim is not readable
+ * in a constant expression. They live here, under the configs that define them:
+ * retime a servo above and this list is in your line of sight.
+ */
+constexpr uint8_t TIM15_SERVO_CHANNELS[] = { 0, 1 };
+
+constexpr bool noTim15Conflict() {
+    for (const BoardProfile& p : PROFILES) {
+        if (!p.led_strip) continue;
+        for (uint8_t ch : TIM15_SERVO_CHANNELS)
+            if (p.servo[ch] != NO_DEVICE) return false;
+    }
+    return true;
+}
+static_assert(noTim15Conflict(), "a strip board declares a servo on TIM15 (channels 0-1)");

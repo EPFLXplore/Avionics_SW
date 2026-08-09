@@ -1,17 +1,20 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:38:11:MassType::MassType(const HX711&)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:112:28:const BoardProfile& profile()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:44:11:MassType::MassType(const HX711&)	1
 ../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(const char*, osPriority_t)	1
-../System/Threads/Src/MassThread.cpp:16:1:MassThread::~MassThread()	1
-../System/Threads/Src/MassThread.cpp:16:1:virtual MassThread::~MassThread()	1
-../System/Threads/Src/MassThread.cpp:20:6:virtual void MassThread::init()	1
-../System/Threads/Src/MassThread.cpp:35:6:virtual void MassThread::loop()	6
-../System/Threads/Src/MassThread.cpp:51:6:void MassThread::updateMass(MassType&)	2
-../System/Threads/Src/MassThread.cpp:60:6:void MassThread::shift(float*, int, float)	2
-../System/Threads/Src/MassThread.cpp:67:7:float MassThread::movingAverage(const float*, uint8_t)	3
-../System/Threads/Src/MassThread.cpp:74:6:void MassThread::update(MassType&)	6
-../System/Threads/Src/MassThread.cpp:98:6:void MassThread::tareScale(MassType&)	6
+../System/Threads/Src/MassThread.cpp:17:1:MassThread::~MassThread()	1
+../System/Threads/Src/MassThread.cpp:17:1:virtual MassThread::~MassThread()	1
+../System/Threads/Src/MassThread.cpp:21:6:virtual void MassThread::init()	4
+../System/Threads/Src/MassThread.cpp:45:6:virtual void MassThread::loop()	8
+../System/Threads/Src/MassThread.cpp:64:6:void MassThread::updateMass(MassType&)	2
+../System/Threads/Src/MassThread.cpp:73:6:void MassThread::shift(float*, int, float)	2
+../System/Threads/Src/MassThread.cpp:80:7:float MassThread::movingAverage(const float*, uint8_t)	3
+../System/Threads/Src/MassThread.cpp:87:6:void MassThread::update(MassType&)	6
+../System/Threads/Src/MassThread.cpp:111:6:void MassThread::tareScale(MassType&)	6
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:139:13:void bindDevices(T (&)[N], const uint8_t (&)[N]) [with T = MassType; unsigned int N = 2]	2
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:150:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3

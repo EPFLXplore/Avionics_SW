@@ -1,13 +1,14 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/ServoConfigs.h:32:20:bool servoTimerFree(const PWMConfig&)	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:112:28:const BoardProfile& profile()	1
 ../System/Threads/Src/ServoThread.cpp:3:1:ServoThread::ServoThread(const char*, osPriority_t)	1
-../System/Threads/Src/ServoThread.cpp:9:1:ServoThread::~ServoThread()	3
-../System/Threads/Src/ServoThread.cpp:9:1:virtual ServoThread::~ServoThread()	1
-../System/Threads/Src/ServoThread.cpp:14:6:virtual void ServoThread::init()	2
-../System/Threads/Src/ServoThread.cpp:36:18:ServoThread::loop()::<lambda(uint8_t, const ServoRequest&)>	2
-../System/Threads/Src/ServoThread.cpp:28:6:virtual void ServoThread::loop()	13
+../System/Threads/Src/ServoThread.cpp:10:1:ServoThread::~ServoThread()	3
+../System/Threads/Src/ServoThread.cpp:10:1:virtual ServoThread::~ServoThread()	1
+../System/Threads/Src/ServoThread.cpp:15:6:virtual void ServoThread::init()	2
+../System/Threads/Src/ServoThread.cpp:40:6:virtual void ServoThread::loop()	7
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:139:13:void bindDevices(T (&)[N], const uint8_t (&)[N]) [with T = PWMDriver; unsigned int N = 4]	2
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:150:11:T* deviceFor(T (&)[N], uint8_t) [with T = PWMDriver; unsigned int N = 4]	4
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3

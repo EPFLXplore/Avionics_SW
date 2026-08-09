@@ -1,7 +1,8 @@
-../System/Core/Src/HX711.cpp:10:1:HX711::HX711(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	24	static
-../System/Core/Src/HX711.cpp:24:6:void HX711::begin()	16	static
-../System/Core/Src/HX711.cpp:31:9:uint8_t HX711::lineTest()	24	static
-../System/Core/Src/HX711.cpp:50:6:bool HX711::available() const	16	static
-../System/Core/Src/HX711.cpp:55:19:HX711::ReadResult HX711::read(volatile int32_t&, uint32_t)	40	static,ignoring_inline_asm
-../System/Core/Src/HX711.cpp:101:6:void HX711::tare(uint16_t)	56	static
-../System/Core/Src/HX711.cpp:117:6:bool HX711::pulseClock() const	32	static,ignoring_inline_asm
+../System/Core/Src/HX711.cpp:12:6:void {anonymous}::enable_gpio_clock(GPIO_TypeDef*)	48	static
+../System/Core/Src/HX711.cpp:25:1:HX711::HX711(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	24	static
+../System/Core/Src/HX711.cpp:38:6:void HX711::begin()	40	static
+../System/Core/Src/HX711.cpp:73:9:uint8_t HX711::lineTest()	24	static
+../System/Core/Src/HX711.cpp:92:6:bool HX711::available() const	16	static
+../System/Core/Src/HX711.cpp:97:19:HX711::ReadResult HX711::read(volatile int32_t&, uint32_t)	40	static,ignoring_inline_asm
+../System/Core/Src/HX711.cpp:143:6:void HX711::tare(uint16_t)	56	static
+../System/Core/Src/HX711.cpp:159:6:bool HX711::pulseClock() const	32	static,ignoring_inline_asm

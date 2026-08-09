@@ -70,27 +70,27 @@ class CdcTransport {
   private:
     void pump(); // start at most one IN packet; runs in thread (IRQ-masked) or ISR
 
-    static constexpr uint16_t kRxBufSize = 2048; // RX byte ring
-    static constexpr uint16_t kMaxFrame = 135;   // SerialProtocol<128>: 128 + 7
-    static constexpr uint8_t kRingN = 8;         // frames in flight
-    static constexpr uint16_t kUsbPacket = 64;   // USB FS bulk max packet
+    static constexpr uint16_t RX_BUF_SIZE = 2048; // RX byte ring
+    static constexpr uint16_t MAX_FRAME = 135;   // SerialProtocol<128>: 128 + 7
+    static constexpr uint8_t RING_N = 8;         // frames in flight
+    static constexpr uint16_t USB_PACKET = 64;   // USB FS bulk max packet
 
     /* A 64-byte FS bulk IN completes in well under a millisecond when the host
      * is polling. 100 ms of "busy" therefore means the transfer is never coming
      * back, not that the link is merely slow. */
-    static constexpr uint32_t kTxTimeoutTicks = 100; // configTICK_RATE_HZ = 1000
+    static constexpr uint32_t TX_TIMEOUT_TICKS = 100; // configTICK_RATE_HZ = 1000
 
     /* RX: single-producer (ISR) / single-consumer (thread) byte ring */
-    volatile uint8_t rxBuf_[kRxBufSize];
+    volatile uint8_t rxBuf_[RX_BUF_SIZE];
     volatile uint16_t rxHead_ = 0; // written by ISR
     volatile uint16_t rxTail_ = 0; // written by thread
 
     /* TX: frame ring drained one USB packet at a time */
     struct OutFrame {
-        uint8_t buf[kMaxFrame];
+        uint8_t buf[MAX_FRAME];
         uint16_t len;
     };
-    OutFrame ring_[kRingN];
+    OutFrame ring_[RING_N];
     volatile uint16_t head_ = 0; // consumer (ISR/pump)
     volatile uint16_t tail_ = 0; // producer (write)
     uint16_t off_ = 0;           // bytes of the head frame already sent
