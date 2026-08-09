@@ -5,12 +5,10 @@
  *      Author: pedro
  */
 
-#ifndef THREADS_INC_LEDSTHREAD_H_
-#define THREADS_INC_LEDSTHREAD_H_
-
+#pragma once
 #include "MessageThread.h"
 #include "LEDStrip.h"
-#include "BoardProfile.h"   // profile().led_strip
+#include "BoardProfile.h"   // ConnType, DeviceType
 
 class LedsThread : public MessageThread<LEDRequest, EmptyMessage> {
 public:
@@ -21,16 +19,15 @@ public:
 	 *  MassThread and ServoThread, so nothing above the threads reads the
 	 *  profile. A strip has no id (LEDRequest carries none), so this is a plain
 	 *  capability rather than a bound device. */
-	bool hasDevices() const { return profile().led_strip; }
+	bool hasDevices() const { return anySlot(DeviceType::LedStrip); }
 
 	void init();
 	void loop();
 
 private:
-	bool cleared = false;
-	LEDRequest req{};
-	LEDStrip strip{75};          // the strip as a plain object (<= WS2812_MAX_LEDS)
-	Command cmd;
+	bool _cleared = false;
+	LEDRequest _req{};
+	LEDStrip _strip{WS2812_MAX_LEDS};          // the strip as a plain object (<= WS2812_MAX_LEDS)
+	Command _cmd;
 };
 
-#endif /* THREADS_INC_LEDSTHREAD_H_ */

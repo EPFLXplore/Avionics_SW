@@ -1,7 +1,9 @@
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:112:28:const BoardProfile& profile()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:44:11:MassType::MassType(const HX711&)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:81:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:134:34:constexpr const ConnPads& pinOf(ConnType)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:225:28:const BoardProfile& profile()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:45:11:MassType::MassType(const HX711&)	1
 ../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(const char*, osPriority_t)	1
 ../System/Threads/Src/MassThread.cpp:17:1:MassThread::~MassThread()	1
 ../System/Threads/Src/MassThread.cpp:17:1:virtual MassThread::~MassThread()	1
@@ -15,6 +17,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:139:13:void bindDevices(T (&)[N], const uint8_t (&)[N]) [with T = MassType; unsigned int N = 2]	2
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:150:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:252:13:void bindSlots(T (&)[N], DeviceType, ConnType) [with T = MassType; unsigned int N = 2]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:266:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3

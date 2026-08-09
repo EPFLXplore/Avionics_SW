@@ -1,5 +1,5 @@
 /**
- * @file Transport.hpp
+ * @file Transport.h
  * @brief CdcTransport: the STM32 side of the SerialProtocol Transport concept.
  *
  * Mirror of the RPi's PosixTransport. Provides exactly the two buffer-oriented
@@ -15,9 +15,7 @@
  *     spins on USBD_BUSY. ZLP is appended when a frame ends on a 64-B boundary.
  */
 
-#ifndef CDC_TRANSPORT_HPP
-#define CDC_TRANSPORT_HPP
-
+#pragma once
 #include <cstdint>
 
 class CdcTransport {
@@ -35,7 +33,7 @@ class CdcTransport {
      * @brief Drop every in-flight TX transfer and re-arm the ring.
      *
      * Called on CDC (re)configuration. Without it a TX outstanding when the
-     * host vanishes leaves busy_ latched true forever: pump() then returns at
+     * host vanishes leaves _busy latched true forever: pump() then returns at
      * its first line for the rest of the run, the ring fills, and write() fails
      * silently. The USB stack clears its own TxState in USBD_CDC_Init, so this
      * is the missing half of that reset. Only matters when the MCU survives the
@@ -49,14 +47,14 @@ class CdcTransport {
      *
      * Covers the case reset() cannot: a completion lost to a USB suspend or a
      * host driver reset, where CDC_Init never runs, so nothing re-arms us.
-     * @param now_ticks xTaskGetTickCount() from the caller.
+     * @param nowTicks xTaskGetTickCount() from the caller.
      */
-    void serviceTx(uint32_t now_ticks);
+    void serviceTx(uint32_t nowTicks);
 
     /** Frames dropped because the ring was full (diagnostic). */
-    uint16_t txDropped() const { return txDropped_; }
+    uint16_t txDropped() const { return _txDropped; }
     /** TX transfers force-released by serviceTx() (diagnostic). */
-    uint16_t txTimeouts() const { return txTimeouts_; }
+    uint16_t txTimeouts() const { return _txTimeouts; }
 
     /* ---- called from the CDC ISR (via the C bridge in Bridge.cpp) -------- */
     void onRxISR(const uint8_t* d, uint16_t n);
@@ -81,26 +79,25 @@ class CdcTransport {
     static constexpr uint32_t TX_TIMEOUT_TICKS = 100; // configTICK_RATE_HZ = 1000
 
     /* RX: single-producer (ISR) / single-consumer (thread) byte ring */
-    volatile uint8_t rxBuf_[RX_BUF_SIZE];
-    volatile uint16_t rxHead_ = 0; // written by ISR
-    volatile uint16_t rxTail_ = 0; // written by thread
+    volatile uint8_t _rxBuf[RX_BUF_SIZE];
+    volatile uint16_t _rxHead = 0; // written by ISR
+    volatile uint16_t _rxTail = 0; // written by thread
 
     /* TX: frame ring drained one USB packet at a time */
     struct OutFrame {
         uint8_t buf[MAX_FRAME];
         uint16_t len;
     };
-    OutFrame ring_[RING_N];
-    volatile uint16_t head_ = 0; // consumer (ISR/pump)
-    volatile uint16_t tail_ = 0; // producer (write)
-    uint16_t off_ = 0;           // bytes of the head frame already sent
-    volatile bool busy_ = false; // an IN packet is outstanding
-    volatile bool zlp_ = false;  // a terminating zero-length packet is owed
+    OutFrame _ring[RING_N];
+    volatile uint16_t _head = 0; // consumer (ISR/pump)
+    volatile uint16_t _tail = 0; // producer (write)
+    uint16_t _off = 0;           // bytes of the head frame already sent
+    volatile bool _busy = false; // an IN packet is outstanding
+    volatile bool _zlp = false;  // a terminating zero-length packet is owed
 
     /* Stall recovery + diagnostics */
-    volatile uint32_t busySince_ = 0; // tick busy_ was first observed set (0 = idle)
-    volatile uint16_t txDropped_ = 0; // frames lost to a full ring
-    volatile uint16_t txTimeouts_ = 0; // transfers force-released by serviceTx()
+    volatile uint32_t _busySince = 0; // tick _busy was first observed set (0 = idle)
+    volatile uint16_t _txDropped = 0; // frames lost to a full ring
+    volatile uint16_t _txTimeouts = 0; // transfers force-released by serviceTx()
 };
 
-#endif /* CDC_TRANSPORT_HPP */

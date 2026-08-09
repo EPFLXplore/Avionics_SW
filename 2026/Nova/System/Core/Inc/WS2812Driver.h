@@ -8,8 +8,7 @@
  *  (Renamed from Adafruit_NeoPixel_STM; statically allocated: no heap.)
  */
 
-#ifndef WS2812_DRIVER_H_
-#define WS2812_DRIVER_H_
+#pragma once
 
 #include "stm32g4xx_hal.h"
 #include <math.h>
@@ -35,22 +34,22 @@
 //      bit period 1.25 us, latch/reset low held > 50 us.
 // begin() forces ARR to ARR_PERIOD so the CubeMX TIM15 Period does not matter.
 // ---------------------------------------------------------------------------
-static constexpr uint32_t WS2812_TIM_CLK_HZ = 144000000u;
-static constexpr uint32_t WS2812_BIT_HZ     = 800000u;    // 1.25 us bit period
+inline constexpr uint32_t WS2812_TIM_CLK_HZ = 144000000u;
+inline constexpr uint32_t WS2812_BIT_HZ     = 800000u;    // 1.25 us bit period
 
-static constexpr uint32_t ws2812NsToTicks(uint32_t ns) {
+inline constexpr uint32_t ws2812NsToTicks(uint32_t ns) {
 	return (uint32_t)(((uint64_t)WS2812_TIM_CLK_HZ * ns + 500000000ULL) / 1000000000ULL);
 }
-static constexpr uint32_t ws2812TicksToNs(uint32_t ticks) {
+inline constexpr uint32_t ws2812TicksToNs(uint32_t ticks) {
 	return (uint32_t)(((uint64_t)ticks * 1000000000ULL) / WS2812_TIM_CLK_HZ);
 }
 
 static_assert(WS2812_TIM_CLK_HZ % WS2812_BIT_HZ == 0,
 	"timer clock must be an integer multiple of 800 kHz or the bit period drifts");
 
-static constexpr uint32_t ARR_PERIOD = WS2812_TIM_CLK_HZ / WS2812_BIT_HZ - 1; // 179 @ 144 MHz
-static constexpr uint32_t CCR_B0 = ws2812NsToTicks(350); // 0-bit high time (50 @ 144 MHz)
-static constexpr uint32_t CCR_B1 = ws2812NsToTicks(700); // 1-bit high time (101 @ 144 MHz)
+inline constexpr uint32_t ARR_PERIOD = WS2812_TIM_CLK_HZ / WS2812_BIT_HZ - 1; // 179 @ 144 MHz
+inline constexpr uint32_t CCR_B0 = ws2812NsToTicks(350); // 0-bit high time (50 @ 144 MHz)
+inline constexpr uint32_t CCR_B1 = ws2812NsToTicks(700); // 1-bit high time (101 @ 144 MHz)
 
 static_assert(ws2812TicksToNs(CCR_B0) >= 220 && ws2812TicksToNs(CCR_B0) <= 380,
 	"T0H outside WS2812B spec window");
@@ -60,18 +59,19 @@ static_assert(CCR_B1 < ARR_PERIOD,
 	"1-bit high time must leave a low tail inside the bit period");
 static_assert(ARR_PERIOD <= 0xFFFFu, "TIM15 ARR is 16-bit");
 
-#define BRIGHTNESS_SAFETY_THRESH 200 // DO NOT EXCEED TO AVOID XPLOSION.
-#define PI 3.14
+/** Hard ceiling on strip _brightness: the supply cannot carry a full-white
+ *  strip above this. DO NOT EXCEED. */
+inline constexpr uint8_t BRIGHTNESS_SAFETY_THRESH = 200;
 
-static constexpr uint16_t BITS_PER_LED = 24;
-static constexpr uint16_t RESET_PULSE  = 50; // zero-duty tail slots appended to each frame
+inline constexpr uint16_t BITS_PER_LED = 24;
+inline constexpr uint16_t RESET_PULSE  = 50; // zero-duty tail slots appended to each frame
 
 static_assert((uint64_t)RESET_PULSE * 1000000000ULL / WS2812_BIT_HZ >= 50000u,
 	"reset tail shorter than the 50 us latch the strip needs");
 
 // Compile-time maximum strip length: sizes the static buffers (no heap).
-static constexpr uint16_t WS2812_MAX_LEDS   = 75;
-static constexpr uint16_t WS2812_MAX_BUFFER = WS2812_MAX_LEDS * BITS_PER_LED + RESET_PULSE;
+inline constexpr uint16_t WS2812_MAX_LEDS   = 75;
+inline constexpr uint16_t WS2812_MAX_BUFFER = WS2812_MAX_LEDS * BITS_PER_LED + RESET_PULSE;
 
 static_assert(WS2812_MAX_BUFFER <= 0xFFFFu,
 	"frame + reset tail must fit a 16-bit DMA transfer count (NDTR)");
@@ -106,35 +106,35 @@ public:
 
 	// False if the runtime clock tree does not match WS2812_TIM_CLK_HZ (see
 	// the assumptions block above): the strip would get out-of-spec timing.
-	bool clockOk() const { return clockValid; }
+	bool clockOk() const { return _clockValid; }
 
-	uint16_t* getBuffer() { return pBuff; }
+	uint16_t* getBuffer() { return _pBuff; }
 
-	uint8_t getBrightness(void) const { return brightness; }
+	uint8_t getBrightness(void) const { return _brightness; }
 
-	uint16_t numPixels(void) const { return numLEDs; }
-	Color getPixelColor(const uint8_t ID) const { return pixels[ID]; }
+	uint16_t numPixels(void) const { return _numLeds; }
+	Color getPixelColor(const uint8_t ID) const { return _pixels[ID]; }
 
-	bool hasBegun() { return begun; }
+	bool hasBegun() { return _begun; }
 
 	private:
 		// Static storage: sized for WS2812_MAX_LEDS, no dynamic allocation.
-		Color    pixels[WS2812_MAX_LEDS] = {};
-		Color    pixels_full_b[WS2812_MAX_LEDS] = {};
-		uint16_t pBuff[WS2812_MAX_BUFFER] = {};
+		Color    _pixels[WS2812_MAX_LEDS] = {};
+		Color    _pixelsFullB[WS2812_MAX_LEDS] = {};
+		uint16_t _pBuff[WS2812_MAX_BUFFER] = {};
 
-		TIM_HandleTypeDef *neoPixTim = nullptr;
-		uint32_t timCH = 0;
-		uint16_t numLEDs;   // Number of LEDs in strip (<= WS2812_MAX_LEDS)
-		uint16_t bufferSize;
-		uint8_t brightness = 128; // Strip brightness (0-255)
-		bool begun = false;
-		bool clockValid = false;
+		TIM_HandleTypeDef *_neoPixTim = nullptr;
+		uint32_t _timCh = 0;
+		uint16_t _numLeds;   // Number of LEDs in strip (<= WS2812_MAX_LEDS)
+		uint16_t _bufferSize;
+		uint8_t _brightness = 128; // Strip _brightness (0-255)
+		bool _begun = false;
+		bool _clockValid = false;
 
 		// Given = no frame in flight. Taken by show() before starting a DMA
 		// transfer, given back from the transfer-complete ISR. Static storage.
-		SemaphoreHandle_t frameDone = nullptr;
-		StaticSemaphore_t frameDoneCb{};
+		SemaphoreHandle_t _frameDone = nullptr;
+		StaticSemaphore_t _frameDoneCb{};
 
 };
 
@@ -142,4 +142,3 @@ public:
 // transfer-complete event to the active driver instance.
 extern "C" void WS2812_FrameCompleteISR(void);
 
-#endif

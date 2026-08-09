@@ -10,11 +10,12 @@
 #include <Thread.h>
 
 
-#define DEFAULT_STACK_SIZE (2048) // Danger zone: changing the stack size might create very nasty bugs
+/** Danger zone: changing the stack size might create very nasty bugs. Capped by
+ *  Thread::start() to the per-thread static buffer (STACK_BYTES). */
+inline constexpr uint32_t DEFAULT_STACK_SIZE = 2048;
 
-static char buffer[128];
 
-void task_run(void* arg) {
+void taskRun(void* arg) {
 	Thread* thread = (Thread*) arg;
 
 	osDelay(pdMS_TO_TICKS(thread->getDelay()));
@@ -48,46 +49,46 @@ Thread::Thread(const char* name, uint32_t stackSize) : Thread(name, (osPriority)
 }
 
 Thread::Thread(const char* name, osPriority priority, uint32_t stackSize){
-	this->attributes.name = (char*) name;
-	this->attributes.stack_size = stackSize;
-	this->attributes.priority = (osPriority_t) priority;
+	this->_attributes.name = (char*) name;
+	this->_attributes.stack_size = stackSize;
+	this->_attributes.priority = (osPriority_t) priority;
 }
 
 void Thread::start() {
-    if (started) return;
-    this->started = true;
+    if (_started) return;
+    this->_started = true;
 
     // Static allocation: hand the task its stack + control block so osThreadNew
     // creates it via xTaskCreateStatic (no pvPortMalloc).
-    if (attributes.stack_size == 0 || attributes.stack_size > sizeof(stackBuffer_)) {
-        attributes.stack_size = sizeof(stackBuffer_);
+    if (_attributes.stack_size == 0 || _attributes.stack_size > sizeof(_stackBuffer)) {
+        _attributes.stack_size = sizeof(_stackBuffer);
     }
-    attributes.stack_mem = stackBuffer_;
-    attributes.cb_mem    = &tcbBuffer_;
-    attributes.cb_size   = sizeof(tcbBuffer_);
+    _attributes.stack_mem = _stackBuffer;
+    _attributes.cb_mem    = &_tcbBuffer;
+    _attributes.cb_size   = sizeof(_tcbBuffer);
 
-    this->handle = osThreadNew(task_run, this, &attributes);
-    configASSERT(handle);
-    this->name = name;
+    this->_handle = osThreadNew(taskRun, this, &_attributes);
+    configASSERT(_handle);
+    this->_name = _attributes.name;
 }
 
 osThreadId_t Thread::getHandle() {
-	return handle;
+	return _handle;
 }
 
 const char* Thread::getName(){
-	return this->name;
+	return this->_name;
 }
 
 void Thread::terminate() {
-	this->running = false;
+	this->_running = false;
 }
 
 
 void Thread::setDelay(uint32_t ms) {
-	this->delay = ms;
+	this->_delay = ms;
 }
 
 uint32_t Thread::getDelay() {
-	return this->delay;
+	return this->_delay;
 }

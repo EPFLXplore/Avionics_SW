@@ -1,25 +1,27 @@
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:22:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:112:28:const BoardProfile& profile()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/LedsThread.h:24:7:bool LedsThread::hasDevices() const	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:225:28:const BoardProfile& profile()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:238:13:bool anySlot(DeviceType)	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/LedsThread.h:22:7:bool LedsThread::hasDevices() const	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/ServoThread.h:25:10:bool ServoThread::hasDevices() const	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:61:7:bool MassThread::hasDevices() const	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:SerialThread::~SerialThread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:18:7:virtual SerialThread::~SerialThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:62:7:bool MassThread::hasDevices() const	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/pHMeterThread.h:86:10:bool pHMeterThread::hasDevices() const	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:SerialThread::~SerialThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:virtual SerialThread::~SerialThread()	1
 ../System/Core/Src/System.cpp:25:98:void __tcf_0()	1
 ../System/Core/Src/System.cpp:25:15:static SerialThread& System::comms()	3
 ../System/Core/Src/System.cpp:26:105:void __tcf_1()	1
 ../System/Core/Src/System.cpp:26:15:static ServoThread& System::servo()	3
 ../System/Core/Src/System.cpp:27:100:void __tcf_2()	1
 ../System/Core/Src/System.cpp:27:15:static MassThread& System::mass()	3
-../System/Core/Src/System.cpp:28:100:void __tcf_3()	1
-../System/Core/Src/System.cpp:28:15:static LedsThread& System::leds()	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:HeartBeat::~HeartBeat()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeat.h:13:7:virtual HeartBeat::~HeartBeat()	1
-../System/Core/Src/System.cpp:29:97:void __tcf_4()	1
-../System/Core/Src/System.cpp:29:15:static HeartBeat& System::heartbeat()	3
-../System/Core/Src/System.cpp:31:6:static void System::init()	6
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:126:13:bool anyDevice(const uint8_t (&)[N]) [with unsigned int N = 4]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:126:13:bool anyDevice(const uint8_t (&)[N]) [with unsigned int N = 2]	3
+../System/Core/Src/System.cpp:28:99:void __tcf_3()	1
+../System/Core/Src/System.cpp:28:16:static pHMeterThread& System::ph()	3
+../System/Core/Src/System.cpp:29:100:void __tcf_4()	1
+../System/Core/Src/System.cpp:29:15:static LedsThread& System::leds()	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeatThread.h:11:7:HeartBeatThread::~HeartBeatThread()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/HeartBeatThread.h:11:7:virtual HeartBeatThread::~HeartBeatThread()	1
+../System/Core/Src/System.cpp:30:109:void __tcf_5()	1
+../System/Core/Src/System.cpp:30:21:static HeartBeatThread& System::heartbeat()	3
+../System/Core/Src/System.cpp:32:6:static void System::init()	8
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = EmptyMessage; StatusMsg = Heartbeat]	1

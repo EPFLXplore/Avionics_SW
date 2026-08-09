@@ -5,9 +5,7 @@
  *  Bridge.cpp implements them on top of the C++ System / CdcTransport.
  */
 
-#ifndef BRIDGE_H_
-#define BRIDGE_H_
-
+#pragma once
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -45,4 +43,3 @@ void Bridge_UsbSerial(uint8_t* buf, uint16_t* length);
 }
 #endif
 
-#endif /* BRIDGE_H_ */

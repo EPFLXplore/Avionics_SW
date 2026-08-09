@@ -5,9 +5,7 @@
  *      Author: AV Team 2020
  */
 
-#ifndef THREAD_H_
-#define THREAD_H_
-
+#pragma once
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os.h"
@@ -15,10 +13,10 @@
 
 class Thread {
 public:
-	Thread(const char* name);
-	Thread(const char* name, osPriority priority);
-	Thread(const char* name, uint32_t stackSize);
-	Thread(const char* name, osPriority priority, uint32_t stackSize);
+	Thread(const char* _name);
+	Thread(const char* _name, osPriority priority);
+	Thread(const char* _name, uint32_t stackSize);
+	Thread(const char* _name, osPriority priority, uint32_t stackSize);
 	virtual ~Thread() {};
 	virtual void init() = 0;
 	virtual void loop() = 0;
@@ -26,7 +24,7 @@ public:
 	void start();
 
 	osThreadId getHandle();
-	bool isRunning() { return running; }
+	bool isRunning() { return _running; }
 	void terminate();
 	void setDelay(uint32_t ms);
 	uint32_t getDelay();
@@ -44,17 +42,15 @@ private:
 	// largest stack any thread requests (4 KB); smaller requests use part of it.
 	static constexpr uint32_t STACK_BYTES = 4096;
 
-	osThreadId_t   handle{nullptr};
-	osThreadAttr_t attributes{};                       // saved until start()
-	const char*    name{nullptr};
-	uint32_t       delay{100};
-	bool           running{true};
-	bool           started{false};
+	osThreadId_t   _handle{nullptr};
+	osThreadAttr_t _attributes{};                       // saved until start()
+	const char*    _name{nullptr};
+	uint32_t       _delay{100};
+	bool           _running{true};
+	bool           _started{false};
 
-	StackType_t    stackBuffer_[STACK_BYTES / sizeof(StackType_t)]{};
-	StaticTask_t   tcbBuffer_{};
+	StackType_t    _stackBuffer[STACK_BYTES / sizeof(StackType_t)]{};
+	StaticTask_t   _tcbBuffer{};
 };
 
-
-#endif /* THREAD_H_ */
 

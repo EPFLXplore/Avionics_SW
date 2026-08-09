@@ -1,8 +1,13 @@
-../System/Core/Src/HX711.cpp:12:6:void {anonymous}::enable_gpio_clock(GPIO_TypeDef*)	48	static
-../System/Core/Src/HX711.cpp:25:1:HX711::HX711(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t)	24	static
-../System/Core/Src/HX711.cpp:38:6:void HX711::begin()	40	static
-../System/Core/Src/HX711.cpp:73:9:uint8_t HX711::lineTest()	24	static
-../System/Core/Src/HX711.cpp:92:6:bool HX711::available() const	16	static
-../System/Core/Src/HX711.cpp:97:19:HX711::ReadResult HX711::read(volatile int32_t&, uint32_t)	40	static,ignoring_inline_asm
-../System/Core/Src/HX711.cpp:143:6:void HX711::tare(uint16_t)	56	static
-../System/Core/Src/HX711.cpp:159:6:bool HX711::pulseClock() const	32	static,ignoring_inline_asm
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:51:20:constexpr uint16_t maskOf(PinId)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:26:22:GPIO_TypeDef* portOf(PortId)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:40:13:void enableGpioClock(PortId)	48	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:76:13:void writePin(PinId, GPIO_PinState)	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:80:22:GPIO_PinState readPin(PinId)	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:129:13:void configPin(PinId, uint32_t, uint32_t, uint32_t, uint8_t)	48	static
+../System/Core/Src/HX711.cpp:11:1:HX711::HX711(const ConnPads&)	16	static
+../System/Core/Src/HX711.cpp:21:6:void HX711::begin()	24	static
+../System/Core/Src/HX711.cpp:42:9:uint8_t HX711::lineTest()	24	static
+../System/Core/Src/HX711.cpp:61:6:bool HX711::available() const	16	static
+../System/Core/Src/HX711.cpp:66:23:HX711::ReadResultType HX711::read(volatile int32_t&, uint32_t)	40	static,ignoring_inline_asm
+../System/Core/Src/HX711.cpp:112:6:void HX711::tare(uint16_t)	56	static
+../System/Core/Src/HX711.cpp:128:6:bool HX711::pulseClock() const	32	static,ignoring_inline_asm

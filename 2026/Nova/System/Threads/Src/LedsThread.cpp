@@ -8,10 +8,8 @@
 #include <LedsThread.h>
 #include "stm32g4xx.h"
 
-#include "Timers.h"
+#include "Pins.h"
 
-#define NUM_LEDS 75
-#define DMA_BUFF_SIZE NUM_LEDS*BITS_PER_LED + RESET_PULSE
 
 
 LedsThread::LedsThread(const char* name, osPriority priority) : MessageThread(name, priority) {
@@ -24,126 +22,128 @@ LedsThread::~LedsThread(){
 
 
 void LedsThread::init(){
-	strip.begin(&htim15, TIM_CHANNEL_1);
+	// Same lookup a servo on this slot would do: the strip and Pwm1 are the
+	// same physical output, so the timer and channel come from one table.
+	_strip.begin(pwmTimerOf(ConnType::Pwm1), pwmChannelOf(ConnType::Pwm1));
 
-	  cmd.segment.r = 0;
-	  cmd.segment.g = 255;
-	  cmd.segment.b = 0;
-	  cmd.segment.low = 0;
-	  cmd.segment.high = 50;
+	  _cmd.segment.r = 0;
+	  _cmd.segment.g = 255;
+	  _cmd.segment.b = 0;
+	  _cmd.segment.low = 0;
+	  _cmd.segment.high = 50;
 
-	  strip.applyCommand(cmd);
+	  _strip.applyCommand(_cmd);
 	  osDelay(1);
-	  strip.setBrightness(70);
-	  strip.tick();
+	  _strip.setBrightness(70);
+	  _strip.tick();
 
 }
 
 void LedsThread::loop(){
-//	cmd.system = 0;
-//	cmd.mode = 0;
-//	cmd.emergency_global = 1;
-//	cmd.emergency_motors = 0;
+//	_cmd.system = 0;
+//	_cmd.mode = 0;
+//	_cmd.emergency_global = 1;
+//	_cmd.emergency_motors = 0;
 //
-//	switch (cmd.system) {
+//	switch (_cmd.system) {
 //	case 0:
-//		cmd.segment.r = 147;
-//		cmd.segment.g = 0;
-//		cmd.segment.b = 211;
-//		cmd.segment.low = 0, cmd.segment.high = 50;
+//		_cmd.segment.r = 147;
+//		_cmd.segment.g = 0;
+//		_cmd.segment.b = 211;
+//		_cmd.segment.low = 0, _cmd.segment.high = 50;
 //		break; // NAV: Pink
 //	case 1:
-//		cmd.segment.r = 255;
-//		cmd.segment.g = 1401000;
-//		cmd.segment.b = 0;
-//		cmd.segment.low = 51, cmd.segment.high = 100;
+//		_cmd.segment.r = 255;
+//		_cmd.segment.g = 1401000;
+//		_cmd.segment.b = 0;
+//		_cmd.segment.low = 51, _cmd.segment.high = 100;
 //		break; // HD: Yellow
 //	case 2:
-//		cmd.segment.r = 0;
-//		cmd.segment.g = 255;
-//		cmd.segment.b = 0;
-//		cmd.segment.low = 0, cmd.segment.high = 50;
+//		_cmd.segment.r = 0;
+//		_cmd.segment.g = 255;
+//		_cmd.segment.b = 0;
+//		_cmd.segment.low = 0, _cmd.segment.high = 50;
 //		break; // DRILL: Green
 //	case 3:
-//		cmd.segment.r = 20;
-//		cmd.segment.g = 56;
-//		cmd.segment.b = 50;
-//		cmd.segment.low = 51, cmd.segment.high = 100;
+//		_cmd.segment.r = 20;
+//		_cmd.segment.g = 56;
+//		_cmd.segment.b = 50;
+//		_cmd.segment.low = 51, _cmd.segment.high = 100;
 //		break; // Avionics: Turquoise
 //	}
 //
-//	if (cmd.mode == 4) {
-//		cmd.segment.r = 100;
-//		cmd.segment.g = 81;
-//		cmd.segment.b = 50;
-//		cmd.segment.low = 0;
-//		cmd.segment.high = 50; // AMBER
+//	if (_cmd.mode == 4) {
+//		_cmd.segment.r = 100;
+//		_cmd.segment.g = 81;
+//		_cmd.segment.b = 50;
+//		_cmd.segment.low = 0;
+//		_cmd.segment.high = 50; // AMBER
 //	}
 //
 //	//emergency shutdown
-//	if (cmd.mode == 5) {
-//		cmd.segment.r = 255;
-//		cmd.segment.g = 0;
-//		cmd.segment.b = 0;
-//		cmd.segment.low = 0, cmd.segment.high = 100;
+//	if (_cmd.mode == 5) {
+//		_cmd.segment.r = 255;
+//		_cmd.segment.g = 0;
+//		_cmd.segment.b = 0;
+//		_cmd.segment.low = 0, _cmd.segment.high = 100;
 //	}
 //
-//	strip->applyCommand(cmd);
+//	strip->applyCommand(_cmd);
 //	osDelay(1);
-//	strip->tickOneSystem(cmd.system);
+//	strip->tickOneSystem(_cmd.system);
 //	osDelay(1);
 
 
-	while (popCommand(req)) {
+	while (popCommand(_req)) {
 
 //		strip->clear();
 
-		cmd.system = req.system;
-		cmd.mode = req.mode;
-		cmd.emergency_global = 1;
-		cmd.emergency_motors = 0;
+		_cmd.system = _req.system;
+		_cmd.mode = _req.mode;
+		_cmd.emergency_global = 1;
+		_cmd.emergency_motors = 0;
 
-		switch (cmd.system) {
-			case 0: cmd.segment.r = 147; cmd.segment.g = 0;   cmd.segment.b = 211; cmd.segment.low = 0, cmd.segment.high= 25; break; // NAV: Pink
-			case 1: cmd.segment.r = 255; cmd.segment.g = 140; cmd.segment.b = 0;   cmd.segment.low = 26, cmd.segment.high=50; break; // HD: Yellow
-			case 2: cmd.segment.r = 0;   cmd.segment.g = 255; cmd.segment.b = 0;   cmd.segment.low = 51, cmd.segment.high=75; break; // DRILL: Green
-			case 3: cmd.segment.r = 20; cmd.segment.g = 56; cmd.segment.b = 50; cmd.segment.low = 76, cmd.segment.high=100; break; // Avionics: Turquoise
+		switch (_cmd.system) {
+			case 0: _cmd.segment.r = 147; _cmd.segment.g = 0;   _cmd.segment.b = 211; _cmd.segment.low = 0, _cmd.segment.high= 25; break; // NAV: Pink
+			case 1: _cmd.segment.r = 255; _cmd.segment.g = 140; _cmd.segment.b = 0;   _cmd.segment.low = 26, _cmd.segment.high=50; break; // HD: Yellow
+			case 2: _cmd.segment.r = 0;   _cmd.segment.g = 255; _cmd.segment.b = 0;   _cmd.segment.low = 51, _cmd.segment.high=75; break; // DRILL: Green
+			case 3: _cmd.segment.r = 20; _cmd.segment.g = 56; _cmd.segment.b = 50; _cmd.segment.low = 76, _cmd.segment.high=100; break; // Avionics: Turquoise
 		}
 
-		if (cmd.mode == 4) {
-			cmd.segment.r = 100; cmd.segment.g = 81; cmd.segment.b = 50; cmd.segment.low = 0; cmd.segment.high = 100; // AMBER
+		if (_cmd.mode == 4) {
+			_cmd.segment.r = 100; _cmd.segment.g = 81; _cmd.segment.b = 50; _cmd.segment.low = 0; _cmd.segment.high = 100; // AMBER
 			for (int i = 0; i < MAX_SYSTEMS; i++)
 			{
-				cmd.system = i;
-				strip.applyCommand(cmd);
+				_cmd.system = i;
+				_strip.applyCommand(_cmd);
 			}
 		}	//emergency shutdown
-		else if (cmd.mode == 5) {
-			cmd.segment.r = 255; cmd.segment.g = 0;   cmd.segment.b = 0; cmd.segment.low = 0, cmd.segment.high= 100;
+		else if (_cmd.mode == 5) {
+			_cmd.segment.r = 255; _cmd.segment.g = 0;   _cmd.segment.b = 0; _cmd.segment.low = 0, _cmd.segment.high= 100;
 			for (int i = 0; i < MAX_SYSTEMS; i++) {
-				cmd.system = i;
-				strip.applyCommand(cmd);
+				_cmd.system = i;
+				_strip.applyCommand(_cmd);
 			}
 		}
-		else if (cmd.mode == 6) {
+		else if (_cmd.mode == 6) {
 			for (int i = 0; i < MAX_SYSTEMS; i++) {
-				cmd.system = i;
-				strip.applyCommand(cmd);
+				_cmd.system = i;
+				_strip.applyCommand(_cmd);
 			}
 		}
 		else
 		{
-//			strip.clear();
-			strip.applyCommand(cmd);
+//			_strip.clear();
+			_strip.applyCommand(_cmd);
 		}
 
 
 	}
 
-//	if (cmd.mode == 4 || cmd.mode == 5 || cmd.mode == 6)
-//		strip.tickOneSystem(cmd.system);
+//	if (_cmd.mode == 4 || _cmd.mode == 5 || _cmd.mode == 6)
+//		_strip.tickOneSystem(_cmd.system);
 //	else
-		strip.tick();
+		_strip.tick();
 }
 
 

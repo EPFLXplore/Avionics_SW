@@ -7,22 +7,23 @@
 
 #include "LEDStrip.h"
 
-#define NOW_MS xTaskGetTickCount();
+/** Milliseconds since boot, as the pattern engines measure time. */
+static inline unsigned long nowMs() { return xTaskGetTickCount(); }
 
 LEDStrip::LEDStrip(uint8_t numLeds)
     : _numLeds(numLeds), _strip(numLeds) {}
 
 void LEDStrip::begin(TIM_HandleTypeDef *timer, uint32_t channel) {
-    stripTimer = timer;
-    stripChannel = channel;
-	_strip.begin(stripTimer, stripChannel);
+    _stripTimer = timer;
+    _stripChannel = channel;
+	_strip.begin(_stripTimer, _stripChannel);
     _strip.setBrightness(70);
     _strip.show();
 
     uint8_t segmentSize = 100 / MAX_SYSTEMS;
 
     for (uint8_t i = 0; i < MAX_SYSTEMS; ++i) {
-        _cmds[i].mode = 0;   // default off
+        _cmds[i].mode = static_cast<uint8_t>(LedModeType::Off);
         _cmds[i].segment.low  = i * segmentSize;
         _cmds[i].segment.high = (i + 1) * segmentSize - 1;
         _cmds[i].segment.r = _cmds[i].segment.g = _cmds[i].segment.b = 0;
@@ -70,35 +71,34 @@ void LEDStrip::handleMode(uint8_t idx) {
     const Command& cmd = _cmds[idx];
     int start = pctToIdx(cmd.segment.low);
     int end   = pctToIdx(cmd.segment.high);
-    switch (cmd.mode) {
-        case 0: mode0(idx, start, end); break; // OFF
-        case 1: mode1(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break; // ON
-        case 2: mode2(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break; // BLINK
-        case 3: mode3(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break; // FAULT
-        case 4: mode4(idx, cmd.segment.r, cmd.segment.g, cmd.segment.b); break; // EMERGENCY_MOTORS
-        case 5: mode5(idx, cmd.segment.r, cmd.segment.g, cmd.segment.b); break; // EMERGENCY_GLOBAL
-        case 6: mode6(idx); break; // ALL_OFF
-        default: break;
+    switch (static_cast<LedModeType>(cmd.mode)) {
+        case LedModeType::Off:   modeOff(idx, start, end); break;
+        case LedModeType::On:    modeOn(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break;
+        case LedModeType::Blink: modeBlink(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break;
+        case LedModeType::Fault: modeFault(idx, start, end, cmd.segment.r, cmd.segment.g, cmd.segment.b); break;
+        case LedModeType::EmergencyMotors:   modeEmergencyMotors(idx, cmd.segment.r, cmd.segment.g, cmd.segment.b); break;
+        case LedModeType::EmergencyShutdown: modeEmergencyShutdown(idx, cmd.segment.r, cmd.segment.g, cmd.segment.b); break;
+        case LedModeType::AllOff: modeAllOff(idx); break;
     }
 
 }
 
 /******************  MODE IMPLEMENTATIONS  ******************/
-void LEDStrip::mode0(uint8_t idx, int s, int e) {
+void LEDStrip::modeOff(uint8_t idx, int s, int e) {
     if (!_states[idx].initialized) {
         setAll(s, e, 0, 0, 255);
         _states[idx].initialized = true;
     }
 }
 
-void LEDStrip::mode1(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b) {
+void LEDStrip::modeOn(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b) {
     if (!_states[idx].initialized) {
         setAll(s, e, r, g, b);
         _states[idx].initialized = true;
     }
 }
 
-void LEDStrip::mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
+void LEDStrip::modeBlink(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
                      uint8_t eye, uint16_t speed, uint16_t pause) {
 //    ModeState& st = _states[idx];
 //    if (HAL_GetTick() - st.lastUpdate < speed) return;
@@ -152,7 +152,7 @@ void LEDStrip::mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
 	}
 }
 
-void LEDStrip::mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed) {
+void LEDStrip::modeFault(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed) {
 	ModeState &st = _states[idx];
 	if (HAL_GetTick() - st.lastUpdate < speed)
 		return;
@@ -197,21 +197,21 @@ void LEDStrip::mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
 //    st.lastUpdate = HAL_GetTick();
 }
 
-void LEDStrip::mode4(uint8_t idx, uint8_t r, uint8_t g, uint8_t b) {
+void LEDStrip::modeEmergencyMotors(uint8_t idx, uint8_t r, uint8_t g, uint8_t b) {
     if (!_states[idx].initialized) {
         setAll(0, 100, r, g, b);
         _states[idx].initialized = true;
     }
 }
 
-void LEDStrip::mode5(uint8_t idx, uint8_t r, uint8_t g, uint8_t b) {
+void LEDStrip::modeEmergencyShutdown(uint8_t idx, uint8_t r, uint8_t g, uint8_t b) {
     if (!_states[idx].initialized) {
         setAll(0, 100, r, g, b);
         _states[idx].initialized = true;
     }
 }
 
-void LEDStrip::mode6(uint8_t idx) {
+void LEDStrip::modeAllOff(uint8_t idx) {
     if (!_states[idx].initialized) {
         setAll(0, 100, 0, 0, 255);
         _states[idx].initialized = true;

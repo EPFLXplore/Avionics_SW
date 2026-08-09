@@ -25,8 +25,9 @@
 SerialThread& System::comms()     { static SerialThread commsThread{"Comms",       osPriorityHigh};        return commsThread; }
 ServoThread&  System::servo()     { static ServoThread  servoThread{"ServoThread", osPriorityAboveNormal}; return servoThread; }
 MassThread&   System::mass()      { static MassThread   massThread {"MassThread",  osPriorityNormal};      return massThread; }
+pHMeterThread& System::ph()       { static pHMeterThread phThread  {"pHMeter",    osPriorityNormal};      return phThread; }
 LedsThread&   System::leds()      { static LedsThread   ledsThread {"LedsThread",  osPriorityNormal};      return ledsThread; }
-HeartBeat&    System::heartbeat() { static HeartBeat    beatThread {"HeartBeat",   osPriorityLow};         return beatThread; }
+HeartBeatThread&    System::heartbeat() { static HeartBeatThread    beatThread {"HeartBeat",   osPriorityLow};         return beatThread; }
 
 void System::init(){
 
@@ -37,6 +38,7 @@ void System::init(){
 	// the wire-owner never triggers lazy construction on another task.
 	(void)servo();
 	(void)mass();
+	(void)ph();
 	(void)leds();
 
 	// Liveness runs regardless of board profile, alongside the comms link.
@@ -49,6 +51,9 @@ void System::init(){
 	// anywhere earlier - each hasDevices() is a live profile read taken at this
 	// point, exactly as HEAD's `switch (Board_MasterId())` was.
 	if (mass().hasDevices()) mass().setDelay(100); //ms
+	// pH: 500 ms. The probe is a slow chemical sensor and the ADS1114 runs at
+	// 8 SPS (125 ms/conversion), so anything faster just resamples noise.
+	if (ph().hasDevices())   ph().setDelay(500);   //ms
 	if (leds().hasDevices()) leds().setDelay(80);  //ms: matches CLEANED_LEDS (tick() rate = animation speed)
 
 	// The comms link runs on every board, and comes up before any worker so the
@@ -60,6 +65,7 @@ void System::init(){
 	// deal in devices. A thread with nothing bound is simply never started.
 	if (servo().hasDevices()) servo().start(); // servo: 0 (set in ctor) - blocks in waitCommand()
 	if (mass().hasDevices())  mass().start();
+	if (ph().hasDevices())    ph().start();
 
 	// The strip has no id (LEDRequest carries none), but whether it is fitted is
 	// still a profile fact - and the same one that keeps TIM15 clear for it, see

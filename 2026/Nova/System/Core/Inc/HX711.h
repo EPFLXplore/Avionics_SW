@@ -4,22 +4,17 @@
  */
 
 #pragma once
-#include "main.h"
+#include "BoardProfile.h"   // ConnPads, PinId
 #include <cstdint>
 
 class HX711 {
 public:
-    /**
-     * @param dout_port  GPIO port for DOUT pin (e.g. GPIOB)
-     * @param dout_pin   GPIO pin for DOUT pin (e.g. GPIO_PIN_9)
-     * @param sck_port   GPIO port for SCK pin
-     * @param sck_pin    GPIO pin for SCK pin
-     */
-    HX711(GPIO_TypeDef* dout_port, uint16_t dout_pin,
-          GPIO_TypeDef* sck_port,  uint16_t sck_pin);
+    /** @param hw  the connector this cell is plugged into; the driver takes its
+     *             clock and data pads from there and nothing else. */
+    explicit HX711(const ConnPads& hw);
 
     /// Outcome of one 24-bit read attempt. Each failure points at a different wire:
-    enum class ReadResult : uint8_t {
+    enum class ReadResultType : uint8_t {
         Ok,         ///< out contains a fresh sample
         Timeout,    ///< DOUT never went low: no conversion (chip unpowered / DOUT line open)
         ClockFault, ///< DOUT still low after the 25th pulse: chip never saw SCK (CLK line open)
@@ -45,23 +40,21 @@ public:
     bool available() const;
 
     /// Read one 24-bit sample (signed, minus stored offset) into out.
-    /// Blocks until data is ready, bounded by timeout_ms (10 SPS chip -> 200 ms default).
-    ReadResult read(volatile int32_t& out, uint32_t timeout_ms = 200);
+    /// Blocks until data is ready, bounded by timeoutMs (10 SPS chip -> 200 ms default).
+    ReadResultType read(volatile int32_t& out, uint32_t timeoutMs = 200);
 
     /// Average a few samples and use that as offset (tare)
     void tare(uint16_t samples = 10);
 
     /// Get / set offset used in read()
-    int32_t getOffset() const { return offset_; }
-    void setOffset(int32_t o) { offset_ = o; }
+    int32_t getOffset() const { return _offset; }
+    void setOffset(int32_t o) { _offset = o; }
 
 
 private:
     bool pulseClock() const;
 
-    GPIO_TypeDef* dout_port_;
-    uint16_t      dout_pin_;
-    GPIO_TypeDef* sck_port_;
-    uint16_t      sck_pin_;
-    int32_t       offset_ = 0;
+    PinId _dout;   // the connector's data pad
+    PinId _sck;    // the connector's clock pad
+    int32_t       _offset = 0;
 };

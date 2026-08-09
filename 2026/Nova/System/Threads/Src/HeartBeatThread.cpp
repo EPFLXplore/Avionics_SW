@@ -1,0 +1,38 @@
+/*
+ * TestTask.cpp
+ *
+ *  Created on: Jul 9, 2025
+ *      Author: pedro
+ */
+
+#include "HeartBeatThread.h"
+
+HeartBeatThread::HeartBeatThread(const char* name, osPriority priority)
+: MessageThread(name, priority)
+{
+}
+
+void HeartBeatThread::init()
+{
+    // Any hardware init if needed
+}
+
+void HeartBeatThread::setID(uint8_t id){
+	_boardId = id;
+}
+
+void HeartBeatThread::loop()
+{
+    // Liveness beat: one status per loop; the wire owner (SerialThread) drains
+    // it onto the link. The payload identifies which master board is alive.
+    // Loop period is controlled by Thread::setDelay().
+    Heartbeat st{};
+    st.board_id = _boardId;
+    pushStatus(st);
+}
+
+
+
+
+
+

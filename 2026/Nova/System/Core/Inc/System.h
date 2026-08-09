@@ -5,14 +5,13 @@
  *      Author: pcsal
  */
 
-#ifndef CORE_INC_SYSTEM_H_
-#define CORE_INC_SYSTEM_H_
-
+#pragma once
 #include <LedsThread.h>
 #include <ServoThread.h>
 #include "MassThread.h"
+#include "pHMeterThread.h"
 #include "SerialThread.h"
-#include "HeartBeat.h"
+#include "HeartBeatThread.h"
 
 class System {
 public:
@@ -24,8 +23,8 @@ public:
 	static SerialThread& comms();
 	static ServoThread&  servo();
 	static MassThread&   mass();
+	static pHMeterThread& ph();
 	static LedsThread&   leds();
-	static HeartBeat&    heartbeat();
+	static HeartBeatThread&    heartbeat();
 };
 
-#endif /* CORE_INC_SYSTEM_H_ */

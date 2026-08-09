@@ -5,10 +5,10 @@
  *      Author: Mohamed Gdoura  (Original by Eliot)
  */
 
-#ifndef ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
-#define ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_
+#pragma once
 
 #include "WS2812Driver.h"
+#include "device_ids.h"   // LedSystemType, LedModeType: the shared wire vocabulary
 
 struct Segment {
     uint8_t low;   // percentage 0-100
@@ -31,7 +31,16 @@ struct ModeState {
     bool initialized = false;
 };
 
-#define MAX_SYSTEMS 4
+/**
+ * One segment of the strip per rover subsystem.
+ *
+ * DERIVED from LedSystemType rather than stated again: _cmds[] and _states[] are
+ * indexed by cmd.system, so a subsystem added to the enum without growing this
+ * would write past the end of both arrays (applyCommand only guards
+ * `>= MAX_SYSTEMS`). Taking it from the sentinel makes the two impossible to
+ * disagree, which is better than asserting that they agree.
+ */
+inline constexpr uint8_t MAX_SYSTEMS = static_cast<uint8_t>(LedSystemType::Count);
 
 class LEDStrip {
 public:
@@ -47,10 +56,10 @@ private:
     uint8_t  _numLeds;
     WS2812Driver _strip;
 
-    TIM_HandleTypeDef *stripTimer;
-    uint32_t stripChannel;
+    TIM_HandleTypeDef *_stripTimer;
+    uint32_t _stripChannel;
 
-    bool _processcmd = false;  // true if command received
+    bool _processCmd = false;  // true if command received
 
     Command   _cmds[MAX_SYSTEMS];
     ModeState _states[MAX_SYSTEMS];
@@ -60,18 +69,23 @@ private:
     void setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b);
     void handleMode(uint8_t idx);
 
-    // pattern engines: all non-blocking
-    void mode0(uint8_t idx, int s, int e); // OFF: Blue
-    void mode1(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b); // ON
-    void mode2(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, // BLINK
-               uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);
-    void mode3(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b, uint16_t speed = 250); // FAULT
-    void mode4(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_MOTORS
-    void mode5(uint8_t idx, uint8_t r, uint8_t g, uint8_t b); // EMERGENCY_SHUTDOWN
-    void mode6(uint8_t idx); // ALL_OFF
+    /* Pattern engines, one per LedModeType. All non-blocking: each is called
+     * once per tick() and advances its own ModeState. */
+    void modeOff(uint8_t idx, int s, int e);
+    void modeOn(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b);
+    void modeBlink(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
+                   uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);
+    void modeFault(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
+                   uint16_t speed = 250);
+    void modeEmergencyMotors(uint8_t idx, uint8_t r, uint8_t g, uint8_t b);
+    void modeEmergencyShutdown(uint8_t idx, uint8_t r, uint8_t g, uint8_t b);
+    void modeAllOff(uint8_t idx);
 
 };
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////--CHECKS--DOWN--///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-
-#endif /* ADAFRUIT_NEOPIXEL_STM_LEDSTRIP_H_ */
