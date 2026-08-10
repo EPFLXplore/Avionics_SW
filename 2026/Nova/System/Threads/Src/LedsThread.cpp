@@ -22,9 +22,12 @@ LedsThread::~LedsThread(){
 
 
 void LedsThread::init(){
-	// Same lookup a servo on this slot would do: the strip and Pwm1 are the
-	// same physical output, so the timer and channel come from one table.
-	_strip.begin(pwmTimerOf(ConnType::Pwm1), pwmChannelOf(ConnType::Pwm1));
+	// Same lookup a servo on this slot would do: a strip and a servo on one slot
+	// are the same physical output, so the timer and channel come from one
+	// table. The slot itself is LED_STRIP_SLOT, never a literal - move the strip
+	// there and here follows, including the driver's DMA request.
+	_strip.begin(pwmTimerOf(LED_STRIP_SLOT), pwmChannelOf(LED_STRIP_SLOT),
+	             pwmMux(LED_STRIP_SLOT).complementary);
 
 	  _cmd.segment.r = 0;
 	  _cmd.segment.g = 255;

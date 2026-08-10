@@ -147,5 +147,12 @@ constexpr bool noTimerBaseConflict() {
             }
     return true;
 }
+/*
+ * This is the check that decides where the strip may live. It was briefly off
+ * while board 3 had the strip on Pwm1 next to a servo on Pwm0; moving the strip
+ * to Pwm3 (TIM2, which no servo on that board uses) made it true again, so it is
+ * back on. Keep it on - it costs nothing and it is the only thing standing
+ * between a plausible-looking row and a strip that emits no valid WS2812 bit.
+ */
 static_assert(noTimerBaseConflict(),
               "a board puts a servo and the strip on channels of the same timer");

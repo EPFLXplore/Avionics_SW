@@ -38,6 +38,8 @@
         * Output
         * EVENT_OUT
         * EXTI
+     PA0   ------> S_TIM5_CH1
+     PA1   ------> S_TIM5_CH2
 */
 void MX_GPIO_Init(void)
 {
@@ -72,6 +74,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(NRST_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : TIM_LEDS_1_Pin TIM_LEDS_2_Pin */
+  GPIO_InitStruct.Pin = TIM_LEDS_1_Pin|TIM_LEDS_2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF2_TIM5;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : HX2_DATA_Pin VIN_ALERT_Pin */
   GPIO_InitStruct.Pin = HX2_DATA_Pin|VIN_ALERT_Pin;

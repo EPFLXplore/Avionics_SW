@@ -5,10 +5,35 @@
 // hook below; one strip per board, so a single slot is enough.
 static WS2812Driver *s_activeDriver = nullptr;
 
-extern "C" void WS2812_FrameCompleteISR(void)
+// Returns 1 when this interrupt belonged to the strip, 0 otherwise. The filter
+// lives here rather than in main.c because only the driver knows which handle it
+// was given - and that follows LED_STRIP_SLOT, which main.c cannot see.
+extern "C" int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim)
 {
-	if (s_activeDriver)
-		s_activeDriver->frameCompleteFromISR();
+	if (!s_activeDriver || !s_activeDriver->ownsTimer(htim))
+		return 0;
+	s_activeDriver->frameCompleteFromISR();
+	return 1;
+}
+
+// TIM_CHANNEL_x -> the timer's DMA request enable bit, and its capture/compare
+// flag. The HAL constants are not an arithmetic sequence, so they get spelled
+// out; keeping the mapping here means the driver works on whichever channel
+// LED_STRIP_SLOT resolves to instead of assuming CC1.
+static uint32_t dmaRequestOf(uint32_t channel)
+{
+	return channel == TIM_CHANNEL_1 ? TIM_DMA_CC1
+	     : channel == TIM_CHANNEL_2 ? TIM_DMA_CC2
+	     : channel == TIM_CHANNEL_3 ? TIM_DMA_CC3
+	     :                            TIM_DMA_CC4;
+}
+
+static uint32_t ccFlagOf(uint32_t channel)
+{
+	return channel == TIM_CHANNEL_1 ? TIM_FLAG_CC1
+	     : channel == TIM_CHANNEL_2 ? TIM_FLAG_CC2
+	     : channel == TIM_CHANNEL_3 ? TIM_FLAG_CC3
+	     :                            TIM_FLAG_CC4;
 }
 
 uint32_t colorCode(const Color &c)
@@ -33,18 +58,30 @@ WS2812Driver::~WS2812Driver() {
 	}
 }
 
-void WS2812Driver::begin(TIM_HandleTypeDef *timer, uint32_t channel)
+void WS2812Driver::begin(TIM_HandleTypeDef *timer, uint32_t channel, bool complementary)
 {
 	if (!_begun)
 	{
 		_neoPixTim = timer;
 		_timCh = channel;
+		_complementary = complementary;
 
 		// Runtime check of assumption 1 (header): the timer kernel clock must
 		// be WS2812_TIM_CLK_HZ or every CCR/ARR constant is off. STM32 rule:
-		// timer clock = PCLK2 when the APB2 prescaler is /1, else PCLK2 x2.
-		const uint32_t pclk2 = HAL_RCC_GetPCLK2Freq();
-		const uint32_t timClk = (pclk2 == HAL_RCC_GetHCLKFreq()) ? pclk2 : pclk2 * 2u;
+		// timer clock = its APB clock when that prescaler is /1, else APB x2.
+		//
+		// WHICH APB depends on the timer, so it is read off the handle rather
+		// than assumed: this used to call HAL_RCC_GetPCLK2Freq() outright, which
+		// is right for TIM1/TIM15 and wrong for a strip on TIM2 or TIM5 - and
+		// wrong here means the check passes while the bit period is off.
+		const TIM_TypeDef* inst = _neoPixTim->Instance;
+		const bool apb2 = (inst == TIM1  || inst == TIM8
+#ifdef TIM20
+		                || inst == TIM20
+#endif
+		                || inst == TIM15 || inst == TIM16 || inst == TIM17);
+		const uint32_t pclk = apb2 ? HAL_RCC_GetPCLK2Freq() : HAL_RCC_GetPCLK1Freq();
+		const uint32_t timClk = (pclk == HAL_RCC_GetHCLKFreq()) ? pclk : pclk * 2u;
 		_clockValid = (timClk == WS2812_TIM_CLK_HZ);
 
 		// Given = idle; taken while a frame is streaming.
@@ -143,24 +180,38 @@ void WS2812Driver::show()
 		return;
 	}
 
-	// The timer free-runs between frames with the CC1 DMA request enabled, so
-	// a stale request is pending by the time the next frame starts. Left
-	// alone, it fires one transfer the instant the DMA channel is enabled -
+	// The timer free-runs between frames with this channel's DMA request
+	// enabled, so a stale request is pending by the time the next frame starts.
+	// Left alone, it fires one transfer the instant the DMA channel is enabled -
 	// at a random phase - shifting the whole frame by one slot (bit-shifted,
 	// chaotic colors). Drop the request and flag before re-arming.
-	__HAL_TIM_DISABLE_DMA(_neoPixTim, TIM_DMA_CC1);
-	__HAL_TIM_CLEAR_FLAG(_neoPixTim, TIM_FLAG_CC1);
+	//
+	// Derived from _timCh rather than fixed at CC1: which channel the strip runs
+	// on is a config choice (LED_STRIP_SLOT plus the .ioc DMA request), and this
+	// used to be the one place that silently assumed channel 1.
+	__HAL_TIM_DISABLE_DMA(_neoPixTim, dmaRequestOf(_timCh));
+	__HAL_TIM_CLEAR_FLAG(_neoPixTim, ccFlagOf(_timCh));
 
 	// Length includes the RESET_PULSE zero-duty tail: it holds the line low
 	// >50 us after the last bit so the strip latches, and leaves CCR at 0
 	// (line idle-low) once the DMA completes.
-	HAL_StatusTypeDef ret = HAL_TIM_PWM_Start_DMA(_neoPixTim, _timCh,
-			(uint32_t*) _pBuff, _bufferSize + RESET_PULSE);
+	//
+	// The N variant when the slot drives CHxN: HAL_TIM_PWM_Start_DMA enables
+	// CCxE, which puts the frame on the positive output and leaves the pad this
+	// board actually uses idle. Same split PWMDriver makes for a servo on a
+	// complementary channel; both are fed from PwmMux::complementary, so the
+	// mux stays the single statement of what a slot is.
+	HAL_StatusTypeDef ret = _complementary
+			? HAL_TIMEx_PWMN_Start_DMA(_neoPixTim, _timCh,
+					(uint32_t*) _pBuff, _bufferSize + RESET_PULSE)
+			: HAL_TIM_PWM_Start_DMA(_neoPixTim, _timCh,
+					(uint32_t*) _pBuff, _bufferSize + RESET_PULSE);
 	ws2812LastStatus = ret;
 	if (ret != HAL_OK) {
 		ws2812StartErrors++;
 		// Reset HAL TIM/DMA state and free the slot so the next tick retries.
-		HAL_TIM_PWM_Stop_DMA(_neoPixTim, _timCh);
+		if (_complementary) HAL_TIMEx_PWMN_Stop_DMA(_neoPixTim, _timCh);
+		else                HAL_TIM_PWM_Stop_DMA(_neoPixTim, _timCh);
 		xSemaphoreGive(_frameDone);
 	}
 }

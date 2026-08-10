@@ -61,18 +61,24 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* Counts completed WS2812 DMA transfers on TIM15_CH1 (watch in Live
- * Expressions alongside ws2812ShowCalls / ws2812StartErrors) and
- * releases the driver's frame semaphore so the next show() can start. */
+/* Counts completed WS2812 DMA transfers (watch in Live Expressions alongside
+ * ws2812ShowCalls / ws2812StartErrors). The hook releases the driver's frame
+ * semaphore so the next show() can start, and returns non-zero when the
+ * interrupt was the strip's.
+ *
+ * WHICH TIMER that is is deliberately not written here. This callback fires for
+ * every PWM channel that completes a DMA transfer, so it has to be filtered -
+ * but the strip's timer follows LED_STRIP_SLOT, which is C++ and unreachable
+ * from main.c. Asking the driver, which knows the handle it was given, keeps the
+ * one answer in one place; this file used to say TIM15 and would have gone
+ * quietly deaf the moment the strip moved. */
 volatile uint32_t ws2812DmaComplete = 0;
-extern void WS2812_FrameCompleteISR(void);
+extern int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim);
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
-	if (htim->Instance == TIM15) {
+	if (WS2812_FrameCompleteISR(htim))
 		ws2812DmaComplete++;
-		WS2812_FrameCompleteISR();
-	}
 }
 /* USER CODE END 0 */
 
@@ -109,7 +115,6 @@ int main(void)
   MX_ADC3_Init();
   MX_SPI3_Init();
   MX_TIM2_Init();
-  MX_TIM5_Init();
   MX_TIM1_Init();
   MX_TIM15_Init();
   MX_TIM7_Init();

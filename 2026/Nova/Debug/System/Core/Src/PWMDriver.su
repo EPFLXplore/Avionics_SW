@@ -4,7 +4,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:65:27:TIM_HandleTypeDef* timerOf(TimerId)	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:124:13:void deinitPin(PinId)	24	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:129:13:void configPin(PinId, uint32_t, uint32_t, uint32_t, uint8_t)	48	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:170:27:constexpr uint32_t halChannel(uint8_t)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:217:27:constexpr uint32_t halChannel(uint8_t)	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/PWMDriver.h:34:20:constexpr uint16_t angleToPulseUs(float)	16	static
 ../System/Core/Src/PWMDriver.cpp:4:1:PWMDriver::PWMDriver(const PwmMux&, uint16_t, bool)	40	static
 ../System/Core/Src/PWMDriver.cpp:25:1:PWMDriver::~PWMDriver()	24	static

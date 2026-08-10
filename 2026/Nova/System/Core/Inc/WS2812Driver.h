@@ -93,7 +93,11 @@ public:
 	WS2812Driver(const uint16_t ledsNum);
 	~WS2812Driver();
 
-	void begin(TIM_HandleTypeDef *timer, const uint32_t channel);
+	/** @param complementary true when the slot drives CHxN rather than CHx, so
+	 *  the frame is started with the TIMEx N variant. Comes straight from
+	 *  PwmMux::complementary - the driver never decides this itself. */
+	void begin(TIM_HandleTypeDef *timer, const uint32_t channel,
+	           bool complementary = false);
 	void setPixelColor(const uint32_t& ID, const Color& color, bool updateOG);
 	void presetColors(const Color colors[]);
 	void setBrightness(uint8_t br);
@@ -103,6 +107,12 @@ public:
 	// Called from the DMA transfer-complete ISR (via WS2812_FrameCompleteISR):
 	// releases the frame semaphore so the next show() may start a transfer.
 	void frameCompleteFromISR();
+
+	// Is this the timer the strip was given? HAL_TIM_PWM_PulseFinishedCallback
+	// is shared by every PWM channel that completes a DMA transfer, so the
+	// interrupt must be filtered - and this is the only place that knows which
+	// handle begin() received, so main.c need not name a timer.
+	bool ownsTimer(const TIM_HandleTypeDef *htim) const { return htim == _neoPixTim; }
 
 	// False if the runtime clock tree does not match WS2812_TIM_CLK_HZ (see
 	// the assumptions block above): the strip would get out-of-spec timing.
@@ -125,6 +135,7 @@ public:
 
 		TIM_HandleTypeDef *_neoPixTim = nullptr;
 		uint32_t _timCh = 0;
+		bool _complementary = false;   // slot drives CHxN, not CHx
 		uint16_t _numLeds;   // Number of LEDs in strip (<= WS2812_MAX_LEDS)
 		uint16_t _bufferSize;
 		uint8_t _brightness = 128; // Strip _brightness (0-255)
@@ -139,6 +150,8 @@ public:
 };
 
 // C hook for HAL_TIM_PWM_PulseFinishedCallback (main.c): forwards the DMA
-// transfer-complete event to the active driver instance.
-extern "C" void WS2812_FrameCompleteISR(void);
+// transfer-complete event to the active driver instance. Returns 1 when the
+// interrupt was the strip's, 0 when it belonged to some other PWM channel, so
+// the caller can filter without knowing which timer the strip runs on.
+extern "C" int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim);
 

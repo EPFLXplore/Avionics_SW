@@ -88,11 +88,34 @@ enum class ConnType : uint8_t {
     ConnI2C = 0,  ///< a bit-banged pad pair, or I2C3
     ConnUART,     ///< a bit-banged pad pair; no I2C peripheral reaches these pads
     Pwm0,
-    Pwm1,         ///< the one channel wired for the strip's DMA request
+    Pwm1,
     Pwm2,
     Pwm3,
 };
 constexpr uint8_t SLOT_COUNT = 6;
+
+/**
+ * The PWM slot the WS2812 strip is driven from. ONE constant, three consumers:
+ * deviceFitsSlot() (which slot a strip may occupy), LedsThread::init() (which
+ * timer and channel the driver is handed), and the reader of a board row.
+ *
+ * A CONFIGURATION fact, not a pad fact. Any PWM slot can drive the strip; what
+ * makes it this one is that CubeMX maps that channel's DMA request. Moving it is
+ * therefore TWO edits that must agree:
+ *
+ *   1. this line, and
+ *   2. the DMA request in Nova.ioc - today `Dma.Request1 = TIM2_CH4`, landing in
+ *      hdma[TIM_DMA_ID_CC4] of htim2 (see MX_TIM2_Init in Core/Src/tim.c).
+ *
+ * Nothing in C++ can see the .ioc, so the second half is on you; the driver
+ * itself no longer cares, since it derives its DMA request and CC flag from
+ * whatever channel it is handed.
+ *
+ * Choosing a slot is not free: it must be on a timer no servo shares, because a
+ * timer has one time base and the strip's is 800 kHz. See noTimerBaseConflict()
+ * in PWMDriver.h, which proves that for every board row.
+ */
+inline constexpr ConnType LED_STRIP_SLOT = ConnType::Pwm3;
 
 constexpr uint8_t CONNECTOR_FIRST = idOf(ConnType::ConnI2C);
 constexpr uint8_t CONNECTOR_COUNT = 2;
@@ -193,27 +216,40 @@ using Srv  = ServoIdType;
 
 inline constexpr BoardProfile PROFILES[4] = {
 
-    /* 0 - servo master: actuators + load cells */
+    /* 0 - drill master: the drill load cell and the drill servo, nothing else.
+     *     The sand/rocks load cell moved to board 3's ConnUART. */
     { .slots = {
-        { .device = Dev::LoadCell, .id = idOf(Mass::SandRocks)         },  // ConnI2C
-        { .device = Dev::LoadCell, .id = idOf(Mass::Drill)             },  // ConnUART
-        { .device = Dev::Servo,    .id = idOf(Srv::FrontCam)           },  // Pwm0
-        { .device = Dev::Servo,    .id = idOf(Srv::Drill)              },  // Pwm1
-        { .device = Dev::Servo,    .id = idOf(Srv::LeftServiceModule)  },  // Pwm2
-        { .device = Dev::Servo,    .id = idOf(Srv::RightServiceModule) },  // Pwm3
+        { .device = Dev::LoadCell, .id = idOf(Mass::Drill) },  // ConnI2C
+        FREE,                                                  // ConnUART
+        { .device = Dev::Servo,    .id = idOf(Srv::Drill)  },  // Pwm0
+        FREE,                                                  // Pwm1
+        FREE,                                                  // Pwm2
+        FREE,                                                  // Pwm3
     } },
 
     /* 1 */ EMPTY_BOARD,
     /* 2 */ EMPTY_BOARD,
 
-    /* 3 - LED master: the strip takes Pwm1, and a pH probe rides the I2C bus */
+    /* 3 - LED master, now carrying the servos as well. Every slot is occupied:
+     *     a pH probe on the I2C connector, the sand/rocks load cell on the UART
+     *     connector, three servos, and the strip.
+     *
+     *     THE STRIP TAKES Pwm3 (LED_STRIP_SLOT), and that placement is the whole
+     *     reason this row builds. Pwm3 is TIM2, which no servo here uses, so the
+     *     strip owns its time base outright. The two servos on Pwm0/Pwm1 share
+     *     TIM15 with each other, which is fine - they want the same 50 Hz frame
+     *     and differ only in CCR - and Pwm2 has TIM1 to itself.
+     *
+     *     Any other arrangement fails: with four slots occupied and Pwm0/Pwm1
+     *     both on TIM15, putting the strip on either of those forces a servo
+     *     onto TIM15 too, and one timer cannot be both 800 kHz and 50 Hz. */
     { .slots = {
-        { .device = Dev::PhMeter,  .id = NO_DEVICE },  // ConnI2C
-        FREE,                                          // ConnUART
-        FREE,                                          // Pwm0 - must stay free, see noTim15Conflict()
-        { .device = Dev::LedStrip, .id = NO_DEVICE },  // Pwm1
-        FREE,                                          // Pwm2 - free but unused today
-        FREE,                                          // Pwm3 - free but unused today
+        { .device = Dev::PhMeter,  .id = NO_DEVICE                     },  // ConnI2C
+        { .device = Dev::LoadCell, .id = idOf(Mass::SandRocks)         },  // ConnUART
+        { .device = Dev::Servo,    .id = idOf(Srv::RightServiceModule) },  // Pwm0 - TIM15
+        { .device = Dev::Servo,    .id = idOf(Srv::LeftServiceModule)  },  // Pwm1 - TIM15
+        { .device = Dev::Servo,    .id = idOf(Srv::FrontCam)           },  // Pwm2 - TIM1
+        { .device = Dev::LedStrip, .id = NO_DEVICE                     },  // Pwm3 - TIM2, strip alone
     } },
 };
 

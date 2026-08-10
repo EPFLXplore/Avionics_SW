@@ -98,11 +98,14 @@ static_assert(noPadUsedTwice(), "two slots are wired to the same pad");
 /**
  * May this kind sit in this slot? The single statement of driver placement.
  *
- * None of these are policy. An ADS1114 needs a real I2C peripheral, and only
- * ConnI2C's pads reach one. The WS2812 driver needs the timer channel wired to
- * its DMA request, which is Pwm1. HX711 bit-bangs, so a load cell is happy on
- * either connector. A row that breaks one of these describes hardware that
- * cannot exist.
+ * Mostly not policy. An ADS1114 needs a real I2C peripheral, and only ConnI2C's
+ * pads reach one; HX711 bit-bangs, so a load cell is happy on either connector.
+ * A row that breaks either describes hardware that cannot exist.
+ *
+ * The WS2812 line is the exception, and is a CONFIGURATION fact rather than a
+ * pad fact: the strip needs a channel whose DMA request the .ioc maps. That is
+ * why it reads LED_STRIP_SLOT rather than a literal - moving the strip is an
+ * edit to that one constant (plus CubeMX), not to this function.
  */
 constexpr bool deviceFitsSlot(DeviceType d, uint8_t s) {
     const bool isConnector = (s < CONNECTOR_FIRST + CONNECTOR_COUNT);
@@ -112,7 +115,7 @@ constexpr bool deviceFitsSlot(DeviceType d, uint8_t s) {
          : d == DeviceType::LoadCell ? isConnector
          : d == DeviceType::PhMeter  ? (s == idOf(ConnType::ConnI2C))
          : d == DeviceType::Servo    ? isPwm
-         : d == DeviceType::LedStrip ? (s == idOf(ConnType::Pwm1))
+         : d == DeviceType::LedStrip ? (s == idOf(LED_STRIP_SLOT))
          : false;
 }
 
@@ -171,57 +174,10 @@ constexpr bool noDuplicateIds(DeviceType kind) {
 static_assert(noDuplicateIds(DeviceType::LoadCell), "two boards claim the same load cell");
 static_assert(noDuplicateIds(DeviceType::Servo),    "two boards claim the same servo");
 
-/**
- * A servo's id is its board's block plus its PWM slot, fleet-wide:
- *
- *     id = board * PWM_COUNT + (slot - PWM_FIRST)
- *
- * board 0 -> ids 0..3, board 1 -> 4..7, board 2 -> 8..11, board 3 -> 12..15.
- *
- * A master has four PWM slots, so a block of four per board tiles the id space
- * with no gaps and no arithmetic to remember: an id read off a log tells you the
- * board and the connector, and a connector tells you the id. PWM_PADS fixes
- * Pwm0..Pwm3 to PB15/PB14/PB13/PB11 and the PCB silkscreens those
- * SERVO_1..SERVO_4, so on any board `id % 4` is the connector labelled
- * SERVO_((id % 4) + 1) and `id / 4` is the strap value.
- *
- * NOT structural, unlike every check above it. deviceFitsSlot() puts a servo on
- * any PWM slot and deviceFor() matches by id rather than by index, so the
- * firmware runs identically with any numbering at all; nothing on the wire
- * carries a board or a slot. This pins a naming CONVENTION so the numbering
- * cannot drift from the hardware silently.
- *
- * The cost, stated plainly because it is the thing device_ids.h was built to
- * avoid: an id is now derivable from where a device sits, so moving a servo to
- * another connector or another board means RENUMBERING it - here, in the profile
- * row, and in servo_cal.yaml on the RPi. The freedom to move a device without
- * touching its id is what buys the bench-predictable numbering.
- *
- * A slot holding anything else is skipped, so freeing a channel does not break
- * it - only a servo whose id disagrees with where it sits does. Delete this
- * assert if the fleet ever needs a servo numbered off-block, and expect ids to
- * stop implying connectors from then on.
- */
-constexpr uint8_t servoIdFor(uint8_t board, uint8_t pwmIndex) {
-    return static_cast<uint8_t>(board * PWM_COUNT + pwmIndex);
-}
-
-constexpr bool servoIdsFollowSlots() {
-    for (uint8_t b = 0; b < BOARD_STRAP_VALUES; ++b)
-        for (uint8_t i = 0; i < PWM_COUNT; ++i) {
-            const Slot& s = PROFILES[b].slots[PWM_FIRST + i];
-            if (s.device == DeviceType::Servo && s.id != servoIdFor(b, i)) return false;
-        }
-    return true;
-}
-static_assert(servoIdsFollowSlots(),
-              "a servo's id is not board * PWM_COUNT + slot: a servo on board B's PwmN "
-              "must be id B*4+N, or the ids stop implying boards and SERVO_n connectors");
-
-/* The scheme has to fit the id space it is allocating out of - otherwise the
- * last board's servos would collide with the group range, or with NO_DEVICE. */
-static_assert(servoIdFor(BOARD_STRAP_VALUES - 1, PWM_COUNT - 1) <= DEVICE_ID_MAX,
-              "the per-board servo blocks run past DEVICE_ID_MAX");
+/* An id says nothing about where a device sits, by design - see device_ids.h.
+ * Placement is checked here (deviceFitsSlot, the timer rule in PWMDriver.h) and
+ * identity is checked here (uniqueness, kind agreement); the two never have to
+ * agree with each other. */
 
 /* The one rule that spans slots - a strip and a servo cannot share a timer's
  * time base - needs to know which slots share a timer, which is a PWM wiring

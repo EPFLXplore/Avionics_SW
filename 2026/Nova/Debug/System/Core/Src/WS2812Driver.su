@@ -1,11 +1,14 @@
-../System/Core/Src/WS2812Driver.cpp:8:17:void WS2812_FrameCompleteISR()	8	static
-../System/Core/Src/WS2812Driver.cpp:14:10:uint32_t colorCode(const Color&)	16	static
-../System/Core/Src/WS2812Driver.cpp:19:1:WS2812Driver::WS2812Driver(uint16_t)	24	static
-../System/Core/Src/WS2812Driver.cpp:27:1:WS2812Driver::~WS2812Driver()	16	static
-../System/Core/Src/WS2812Driver.cpp:36:6:void WS2812Driver::begin(TIM_HandleTypeDef*, uint32_t)	48	static
-../System/Core/Src/WS2812Driver.cpp:81:6:void WS2812Driver::setPixelColor(const uint32_t&, const Color&, bool)	32	static
-../System/Core/Src/WS2812Driver.cpp:98:6:void WS2812Driver::presetColors(const Color*)	24	static
-../System/Core/Src/WS2812Driver.cpp:106:6:void WS2812Driver::setBrightness(uint8_t)	32	static
-../System/Core/Src/WS2812Driver.cpp:135:6:void WS2812Driver::show()	24	static
-../System/Core/Src/WS2812Driver.cpp:168:6:void WS2812Driver::frameCompleteFromISR()	24	static,ignoring_inline_asm
-../System/Core/Src/WS2812Driver.cpp:176:6:void WS2812Driver::clear()	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/WS2812Driver.h:115:7:bool WS2812Driver::ownsTimer(const TIM_HandleTypeDef*) const	16	static
+../System/Core/Src/WS2812Driver.cpp:11:16:int WS2812_FrameCompleteISR(TIM_HandleTypeDef*)	16	static
+../System/Core/Src/WS2812Driver.cpp:23:17:uint32_t dmaRequestOf(uint32_t)	16	static
+../System/Core/Src/WS2812Driver.cpp:31:17:uint32_t ccFlagOf(uint32_t)	16	static
+../System/Core/Src/WS2812Driver.cpp:39:10:uint32_t colorCode(const Color&)	16	static
+../System/Core/Src/WS2812Driver.cpp:44:1:WS2812Driver::WS2812Driver(uint16_t)	24	static
+../System/Core/Src/WS2812Driver.cpp:52:1:WS2812Driver::~WS2812Driver()	16	static
+../System/Core/Src/WS2812Driver.cpp:61:6:void WS2812Driver::begin(TIM_HandleTypeDef*, uint32_t, bool)	56	static
+../System/Core/Src/WS2812Driver.cpp:118:6:void WS2812Driver::setPixelColor(const uint32_t&, const Color&, bool)	32	static
+../System/Core/Src/WS2812Driver.cpp:135:6:void WS2812Driver::presetColors(const Color*)	24	static
+../System/Core/Src/WS2812Driver.cpp:143:6:void WS2812Driver::setBrightness(uint8_t)	32	static
+../System/Core/Src/WS2812Driver.cpp:172:6:void WS2812Driver::show()	24	static
+../System/Core/Src/WS2812Driver.cpp:219:6:void WS2812Driver::frameCompleteFromISR()	24	static,ignoring_inline_asm
+../System/Core/Src/WS2812Driver.cpp:227:6:void WS2812Driver::clear()	24	static

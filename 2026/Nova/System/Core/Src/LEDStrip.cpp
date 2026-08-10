@@ -13,10 +13,10 @@ static inline unsigned long nowMs() { return xTaskGetTickCount(); }
 LEDStrip::LEDStrip(uint8_t numLeds)
     : _numLeds(numLeds), _strip(numLeds) {}
 
-void LEDStrip::begin(TIM_HandleTypeDef *timer, uint32_t channel) {
+void LEDStrip::begin(TIM_HandleTypeDef *timer, uint32_t channel, bool complementary) {
     _stripTimer = timer;
     _stripChannel = channel;
-	_strip.begin(_stripTimer, _stripChannel);
+	_strip.begin(_stripTimer, _stripChannel, complementary);
     _strip.setBrightness(70);
     _strip.show();
 

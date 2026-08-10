@@ -45,7 +45,10 @@ inline constexpr uint8_t MAX_SYSTEMS = static_cast<uint8_t>(LedSystemType::Count
 class LEDStrip {
 public:
     LEDStrip(uint8_t numLeds);
-    void begin(TIM_HandleTypeDef *timer, const uint32_t channel);
+    /** `complementary` passes through to WS2812Driver: true when the slot drives
+     *  CHxN. Defaulted so callers on a normal channel need not mention it. */
+    void begin(TIM_HandleTypeDef *timer, const uint32_t channel,
+               bool complementary = false);
     void setBrightness(uint8_t b);
     void clear() { _strip.clear(); }
     void applyCommand(const Command& cmd);   // queue-safe "set and forget"

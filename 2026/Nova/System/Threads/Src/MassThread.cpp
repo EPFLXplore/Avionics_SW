@@ -31,15 +31,28 @@ void MassThread::init(){
 	// changes nothing beyond this one line.
 	bindSlots(_cell, DeviceType::LoadCell, ConnType::ConnI2C);
 
-	for (MassType& c : _cell) c.hx.begin();
+	// EVERY loop below skips unbound connectors, the same test loop() publishes
+	// under. A cell whose slot holds something else must touch nothing at all:
+	// HX711::begin() claims the pair as bit-banged GPIO, so running it on a
+	// connector carrying the pH probe would tear I2C3 out from under ADS1114 -
+	// silently, because nothing here would report an error. This is the same
+	// rule PWMDriver's `enabled` flag enforces for a servo channel; a load cell
+	// just expresses it through globalId, which bindSlots has already set.
+	//
+	// It went unnoticed while the only mass-carrying board had a cell on both
+	// connectors, where the guard was a no-op.
+	for (MassType& c : _cell)
+		if (c.globalId != NO_DEVICE) c.hx.begin();
 
 	// Wiring probe (debugger-visible verdict per connector, see HX711::lineTest).
-	for (MassType& c : _cell) c.lineTest = c.hx.lineTest();
+	for (MassType& c : _cell)
+		if (c.globalId != NO_DEVICE) c.lineTest = c.hx.lineTest();
 
 	// The probe power-cycles the chips: first conversion lands ~400 ms after
 	// wake (10 SPS settling), so give them time before taring.
 	osDelay(600);
-	for (MassType& c : _cell) this->tareScale(c);
+	for (MassType& c : _cell)
+		if (c.globalId != NO_DEVICE) this->tareScale(c);
 }
 
 void MassThread::loop(){
