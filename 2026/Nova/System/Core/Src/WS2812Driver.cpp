@@ -42,7 +42,7 @@ uint32_t colorCode(const Color &c)
 }
 
 WS2812Driver::WS2812Driver(const uint16_t ledsNum)
-    : _numLeds(ledsNum > WS2812_MAX_LEDS ? WS2812_MAX_LEDS : ledsNum), _brightness(0)
+    : _numLeds(ledsNum > WS2812_MAX_LEDS ? WS2812_MAX_LEDS : ledsNum)
 {
 	_bufferSize = BITS_PER_LED * _numLeds;       // <= WS2812_MAX_BUFFER, buffers are static
 	for (uint16_t i = 0; i < _bufferSize; ++i)
@@ -115,13 +115,12 @@ void WS2812Driver::begin(TIM_HandleTypeDef *timer, uint32_t channel, bool comple
 }
 
 // This function changes dmaBuffer. In order to see changes on the LEDS, use show() to activate the PWM timer.
-void WS2812Driver::setPixelColor(const uint32_t& ID, const Color& color, bool updateOG = false)
+void WS2812Driver::setPixelColor(const uint32_t& ID, const Color& color)
 {
 	if (ID >= _numLeds)
 		return;
 
 	_pixels[ID] = color;
-	if (updateOG) _pixelsFullB[ID] = color;
 
 	uint32_t code = colorCode(color);
 
@@ -129,30 +128,6 @@ void WS2812Driver::setPixelColor(const uint32_t& ID, const Color& color, bool up
 	{
 		// Setting duty cycle via a pointer in the dmaBuffer array.
 		_pBuff[24*ID + 23-i] = (code >> i) & 0x01 ? CCR_B1 : CCR_B0;
-	}
-}
-
-void WS2812Driver::presetColors(const Color colors[])
-{
-	for (int i(0); i < _numLeds; i++)
-		setPixelColor(i, colors[i], true);
-}
-
-// b is a percentage.
-// Transform it to an angle because why not.
-void WS2812Driver::setBrightness(uint8_t br)
-{
-	if (br > BRIGHTNESS_SAFETY_THRESH)
-		_brightness = BRIGHTNESS_SAFETY_THRESH;
-	else
-		_brightness = br;
-
-	for (int i(0); i < _numLeds; i++)
-	{
-		_pixels[i].r = _pixelsFullB[i].r * ((float) _brightness / 255.0f);
-		_pixels[i].g = _pixelsFullB[i].g * ((float) _brightness / 255.0f);
-		_pixels[i].b = _pixelsFullB[i].b * ((float) _brightness / 255.0f);
-		setPixelColor(i, _pixels[i], false);
 	}
 }
 
@@ -227,13 +202,7 @@ void WS2812Driver::frameCompleteFromISR()
 void WS2812Driver::clear()
 {
 	for (int i(0); i < _numLeds; i++)
-	{
-		_pixels[i].r = 0;
-		_pixels[i].g = 0;
-		_pixels[i].b = 0;
-
-		setPixelColor((uint8_t) i, _pixels[i], true);
-	}
+		setPixelColor(i, { 0, 0, 0 });
 
 	show();
 }

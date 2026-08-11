@@ -16,12 +16,13 @@ struct Segment {
     uint8_t r, g, b;
 };
 
+/* Firmware-local, NOT a wire struct: LEDRequest in packets.h is what crosses the
+ * link, and it carries only {system, mode}. The colours and the segment bounds
+ * are decided on this side, in LedsThread::loop(). */
 struct Command {
     Segment segment;
-    uint8_t emergency_global; // 0 or 1
-    uint8_t emergency_motors; // 0 or 1
-    uint8_t system;  // 0-2
-    uint8_t mode;    // 0-6
+    uint8_t system;  // LedSystemType, 0..MAX_SYSTEMS-1
+    uint8_t mode;    // LedModeType, Off..AllOff
 };
 
 struct ModeState {
@@ -49,20 +50,12 @@ public:
      *  CHxN. Defaulted so callers on a normal channel need not mention it. */
     void begin(TIM_HandleTypeDef *timer, const uint32_t channel,
                bool complementary = false);
-    void setBrightness(uint8_t b);
-    void clear() { _strip.clear(); }
     void applyCommand(const Command& cmd);   // queue-safe "set and forget"
     void tick();                             // call every loop: non-blocking
-    void tickOneSystem(uint8_t idx);
 
 private:
     uint8_t  _numLeds;
     WS2812Driver _strip;
-
-    TIM_HandleTypeDef *_stripTimer;
-    uint32_t _stripChannel;
-
-    bool _processCmd = false;  // true if command received
 
     Command   _cmds[MAX_SYSTEMS];
     ModeState _states[MAX_SYSTEMS];

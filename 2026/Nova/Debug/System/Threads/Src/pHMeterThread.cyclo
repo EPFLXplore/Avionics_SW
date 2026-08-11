@@ -1,7 +1,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:94:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:157:34:constexpr const ConnPads& pinOf(ConnType)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:162:34:constexpr const ConnPads& pinOf(ConnType)	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/pHMeterThread.h:75:14:PhType::PhType(const ADS1114&)	1
 ../System/Threads/Src/pHMeterThread.cpp:7:1:pHMeterThread::pHMeterThread(const char*, osPriority_t)	1
 ../System/Threads/Src/pHMeterThread.cpp:14:1:pHMeterThread::~pHMeterThread()	1

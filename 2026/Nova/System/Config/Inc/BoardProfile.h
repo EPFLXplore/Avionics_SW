@@ -104,8 +104,10 @@ constexpr uint8_t SLOT_COUNT = 6;
  * therefore TWO edits that must agree:
  *
  *   1. this line, and
- *   2. the DMA request in Nova.ioc - today `Dma.Request1 = TIM2_CH4`, landing in
- *      hdma[TIM_DMA_ID_CC4] of htim2 (see MX_TIM2_Init in Core/Src/tim.c).
+ *   2. the DMA request in Nova.ioc - today `Dma.Request0 = TIM2_CH4` (DMA1_Channel3,
+ *      hdma[TIM_DMA_ID_CC4] of htim2) and `Dma.Request1 = TIM1_CH1` (DMA1_Channel4,
+ *      hdma[TIM_DMA_ID_CC1] of htim1). Both are wired in Core/Src/tim.c, so Pwm2
+ *      and Pwm3 are the two slots that can actually stream a frame today.
  *
  * Nothing in C++ can see the .ioc, so the second half is on you; the driver
  * itself no longer cares, since it derives its DMA request and CC flag from
@@ -114,8 +116,11 @@ constexpr uint8_t SLOT_COUNT = 6;
  * Choosing a slot is not free: it must be on a timer no servo shares, because a
  * timer has one time base and the strip's is 800 kHz. See noTimerBaseConflict()
  * in PWMDriver.h, which proves that for every board row.
+ *
+ * Pinned to Pwm2 - see the LED_STRIP_SLOT static_assert in Pins.h for why this is
+ * a decision rather than something derived, and what has to change to move it.
  */
-inline constexpr ConnType LED_STRIP_SLOT = ConnType::Pwm3;
+inline constexpr ConnType LED_STRIP_SLOT = ConnType::Pwm2;
 
 constexpr uint8_t CONNECTOR_FIRST = idOf(ConnType::ConnI2C);
 constexpr uint8_t CONNECTOR_COUNT = 2;
@@ -171,7 +176,7 @@ inline constexpr PinId pwmPinOf(ConnType c) {
  * row: HX711 bit-bangs and goes on either connector; ADS1114 needs a real I2C
  * peripheral, so it only fits a connector whose `bus` is not None; a servo works
  * on any PWM output; the WS2812 strip needs the channel wired to its DMA
- * request, which is Pwm1 alone.
+ * request, which is LED_STRIP_SLOT alone.
  */
 enum class DeviceType : uint8_t {
     None = 0,   ///< nothing plugged in
@@ -234,22 +239,25 @@ inline constexpr BoardProfile PROFILES[4] = {
      *     a pH probe on the I2C connector, the sand/rocks load cell on the UART
      *     connector, three servos, and the strip.
      *
-     *     THE STRIP TAKES Pwm3 (LED_STRIP_SLOT), and that placement is the whole
-     *     reason this row builds. Pwm3 is TIM2, which no servo here uses, so the
+     *     THE STRIP TAKES Pwm2 (LED_STRIP_SLOT), and that placement is the whole
+     *     reason this row builds. Pwm2 is TIM1, which no servo here uses, so the
      *     strip owns its time base outright. The two servos on Pwm0/Pwm1 share
      *     TIM15 with each other, which is fine - they want the same 50 Hz frame
-     *     and differ only in CCR - and Pwm2 has TIM1 to itself.
+     *     and differ only in CCR - and FrontCam has TIM2 to itself on Pwm3.
      *
      *     Any other arrangement fails: with four slots occupied and Pwm0/Pwm1
      *     both on TIM15, putting the strip on either of those forces a servo
-     *     onto TIM15 too, and one timer cannot be both 800 kHz and 50 Hz. */
+     *     onto TIM15 too, and one timer cannot be both 800 kHz and 50 Hz.
+     *
+     *     Pwm2 drives CH1N (complementary) - PwmMux::complementary carries that
+     *     to the driver, which picks HAL_TIMEx_PWMN_Start_DMA accordingly. */
     { .slots = {
         { .device = Dev::PhMeter,  .id = NO_DEVICE                     },  // ConnI2C
         { .device = Dev::LoadCell, .id = idOf(Mass::SandRocks)         },  // ConnUART
         { .device = Dev::Servo,    .id = idOf(Srv::RightServiceModule) },  // Pwm0 - TIM15
         { .device = Dev::Servo,    .id = idOf(Srv::LeftServiceModule)  },  // Pwm1 - TIM15
-        { .device = Dev::Servo,    .id = idOf(Srv::FrontCam)           },  // Pwm2 - TIM1
-        { .device = Dev::LedStrip, .id = NO_DEVICE                     },  // Pwm3 - TIM2, strip alone
+        { .device = Dev::LedStrip, .id = NO_DEVICE                     },  // Pwm2 - TIM1 CH1N, strip alone
+        { .device = Dev::Servo,    .id = idOf(Srv::FrontCam)           },  // Pwm3 - TIM2
     } },
 };
 

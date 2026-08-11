@@ -25,9 +25,13 @@ public:
 	void loop();
 
 private:
-	bool _cleared = false;
+	/** Push _cmd to every segment. The whole-strip modes (4, 5, 6) are not tied to
+	 *  one subsystem, so they cannot go through the per-system path.
+	 *  Clobbers _cmd.system. */
+	void applyToEverySystem();
+
 	LEDRequest _req{};
 	LEDStrip _strip{WS2812_MAX_LEDS};          // the strip as a plain object (<= WS2812_MAX_LEDS)
-	Command _cmd;
+	Command _cmd{};
 };
 

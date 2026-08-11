@@ -1,7 +1,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:94:19:constexpr uint8_t idOf(E) [with E = ConnType]	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:261:28:const BoardProfile& profile()	8	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:269:28:const BoardProfile& profile()	8	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:179:32:constexpr const PwmMux& pwmMux(ConnType)	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/PWMDriver.h:34:20:constexpr uint16_t angleToPulseUs(float)	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/PWMDriver.h:88:10:void PWMDriver::setZeroPulseUs(uint16_t)	16	static
@@ -13,6 +13,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	40	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:288:13:void bindSlots(T (&)[N], DeviceType, ConnType) [with T = PWMDriver; unsigned int N = 4]	32	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:302:11:T* deviceFor(T (&)[N], uint8_t) [with T = PWMDriver; unsigned int N = 4]	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:296:13:void bindSlots(T (&)[N], DeviceType, ConnType) [with T = PWMDriver; unsigned int N = 4]	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:310:11:T* deviceFor(T (&)[N], uint8_t) [with T = PWMDriver; unsigned int N = 4]	32	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	40	static,ignoring_inline_asm

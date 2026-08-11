@@ -1,17 +1,15 @@
-../System/Core/Src/LEDStrip.cpp:13:1:LEDStrip::LEDStrip(uint8_t)	16	static
-../System/Core/Src/LEDStrip.cpp:16:6:void LEDStrip::begin(TIM_HandleTypeDef*, uint32_t, bool)	56	static
-../System/Core/Src/LEDStrip.cpp:35:6:void LEDStrip::setBrightness(uint8_t)	16	static
-../System/Core/Src/LEDStrip.cpp:38:5:int LEDStrip::pctToIdx(uint8_t) const	24	static
-../System/Core/Src/LEDStrip.cpp:45:6:void LEDStrip::applyCommand(const Command&)	32	static
-../System/Core/Src/LEDStrip.cpp:52:6:void LEDStrip::tick()	24	static
-../System/Core/Src/LEDStrip.cpp:58:6:void LEDStrip::tickOneSystem(uint8_t)	16	static
-../System/Core/Src/LEDStrip.cpp:64:6:void LEDStrip::setAll(int, int, uint8_t, uint8_t, uint8_t)	40	static
-../System/Core/Src/LEDStrip.cpp:70:6:void LEDStrip::handleMode(uint8_t)	64	static
-../System/Core/Src/LEDStrip.cpp:87:6:void LEDStrip::modeOff(uint8_t, int, int)	32	static
-../System/Core/Src/LEDStrip.cpp:94:6:void LEDStrip::modeOn(uint8_t, int, int, uint8_t, uint8_t, uint8_t)	32	static
-../System/Core/Src/LEDStrip.cpp:133:17:LEDStrip::modeBlink(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)::<lambda(int, uint8_t, uint8_t, uint8_t)>	32	static
-../System/Core/Src/LEDStrip.cpp:101:6:void LEDStrip::modeBlink(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)	64	static
-../System/Core/Src/LEDStrip.cpp:155:6:void LEDStrip::modeFault(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint16_t)	40	static
-../System/Core/Src/LEDStrip.cpp:200:6:void LEDStrip::modeEmergencyMotors(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
-../System/Core/Src/LEDStrip.cpp:207:6:void LEDStrip::modeEmergencyShutdown(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
-../System/Core/Src/LEDStrip.cpp:214:6:void LEDStrip::modeAllOff(uint8_t)	24	static
+../System/Core/Src/LEDStrip.cpp:10:1:LEDStrip::LEDStrip(uint8_t)	16	static
+../System/Core/Src/LEDStrip.cpp:13:6:void LEDStrip::begin(TIM_HandleTypeDef*, uint32_t, bool)	56	static
+../System/Core/Src/LEDStrip.cpp:31:5:int LEDStrip::pctToIdx(uint8_t) const	24	static
+../System/Core/Src/LEDStrip.cpp:38:6:void LEDStrip::applyCommand(const Command&)	32	static
+../System/Core/Src/LEDStrip.cpp:45:6:void LEDStrip::tick()	24	static
+../System/Core/Src/LEDStrip.cpp:51:6:void LEDStrip::setAll(int, int, uint8_t, uint8_t, uint8_t)	40	static
+../System/Core/Src/LEDStrip.cpp:57:6:void LEDStrip::handleMode(uint8_t)	64	static
+../System/Core/Src/LEDStrip.cpp:77:6:void LEDStrip::modeOff(uint8_t, int, int)	32	static
+../System/Core/Src/LEDStrip.cpp:84:6:void LEDStrip::modeOn(uint8_t, int, int, uint8_t, uint8_t, uint8_t)	32	static
+../System/Core/Src/LEDStrip.cpp:101:17:LEDStrip::modeBlink(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)::<lambda(int, uint8_t, uint8_t, uint8_t)>	32	static
+../System/Core/Src/LEDStrip.cpp:91:6:void LEDStrip::modeBlink(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t)	64	static
+../System/Core/Src/LEDStrip.cpp:123:6:void LEDStrip::modeFault(uint8_t, int, int, uint8_t, uint8_t, uint8_t, uint16_t)	40	static
+../System/Core/Src/LEDStrip.cpp:141:6:void LEDStrip::modeEmergencyMotors(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
+../System/Core/Src/LEDStrip.cpp:148:6:void LEDStrip::modeEmergencyShutdown(uint8_t, uint8_t, uint8_t, uint8_t)	24	static
+../System/Core/Src/LEDStrip.cpp:155:6:void LEDStrip::modeAllOff(uint8_t)	24	static

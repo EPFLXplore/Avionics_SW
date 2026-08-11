@@ -59,22 +59,31 @@ static_assert(CCR_B1 < ARR_PERIOD,
 	"1-bit high time must leave a low tail inside the bit period");
 static_assert(ARR_PERIOD <= 0xFFFFu, "TIM15 ARR is 16-bit");
 
-/** Hard ceiling on strip _brightness: the supply cannot carry a full-white
- *  strip above this. DO NOT EXCEED. */
-inline constexpr uint8_t BRIGHTNESS_SAFETY_THRESH = 200;
-
 inline constexpr uint16_t BITS_PER_LED = 24;
 inline constexpr uint16_t RESET_PULSE  = 50; // zero-duty tail slots appended to each frame
 
 static_assert((uint64_t)RESET_PULSE * 1000000000ULL / WS2812_BIT_HZ >= 50000u,
 	"reset tail shorter than the 50 us latch the strip needs");
 
-// Compile-time maximum strip length: sizes the static buffers (no heap).
-inline constexpr uint16_t WS2812_MAX_LEDS   = 75;
+// Strip length: sizes the static buffers (no heap) and is what the code drives.
+inline constexpr uint16_t WS2812_MAX_LEDS   = 72;
 inline constexpr uint16_t WS2812_MAX_BUFFER = WS2812_MAX_LEDS * BITS_PER_LED + RESET_PULSE;
 
 static_assert(WS2812_MAX_BUFFER <= 0xFFFFu,
 	"frame + reset tail must fit a 16-bit DMA transfer count (NDTR)");
+
+/**
+ * Supply ceiling, in the units a WS2812 channel is driven in.
+ *
+ * Was a cap on a global brightness scale, back when there was one: 255 meant a
+ * full-white strip, which the supply cannot carry, so the scale was clamped here.
+ * Colours are now written through unscaled, so the same limit is expressed where
+ * it actually bites - as a per-pixel budget, since what the supply sees is the
+ * sum of the three channels, not any one of them. A pixel may therefore be
+ * (0,255,0) at 255 units while full white at 200 each is 600. DO NOT EXCEED.
+ */
+inline constexpr uint16_t BRIGHTNESS_SAFETY_THRESH = 200;
+inline constexpr uint16_t PIXEL_BUDGET = 3 * BRIGHTNESS_SAFETY_THRESH;
 
 // Array containing RGB values. 0 = R | 1 = G | 2 = B.
 struct Color {
@@ -82,6 +91,9 @@ struct Color {
 	uint8_t g = 0;
 	uint8_t b = 0;
 };
+
+/** Current a pixel asks of the supply, as channel units summed. */
+inline constexpr uint16_t pixelLoad(const Color& c) { return c.r + c.g + c.b; }
 
 uint32_t colorCode(const Color &c);
 
@@ -98,9 +110,7 @@ public:
 	 *  PwmMux::complementary - the driver never decides this itself. */
 	void begin(TIM_HandleTypeDef *timer, const uint32_t channel,
 	           bool complementary = false);
-	void setPixelColor(const uint32_t& ID, const Color& color, bool updateOG);
-	void presetColors(const Color colors[]);
-	void setBrightness(uint8_t br);
+	void setPixelColor(const uint32_t& ID, const Color& color);
 	void show(void);
 	void clear();
 
@@ -120,7 +130,6 @@ public:
 
 	uint16_t* getBuffer() { return _pBuff; }
 
-	uint8_t getBrightness(void) const { return _brightness; }
 
 	uint16_t numPixels(void) const { return _numLeds; }
 	Color getPixelColor(const uint8_t ID) const { return _pixels[ID]; }
@@ -130,7 +139,6 @@ public:
 	private:
 		// Static storage: sized for WS2812_MAX_LEDS, no dynamic allocation.
 		Color    _pixels[WS2812_MAX_LEDS] = {};
-		Color    _pixelsFullB[WS2812_MAX_LEDS] = {};
 		uint16_t _pBuff[WS2812_MAX_BUFFER] = {};
 
 		TIM_HandleTypeDef *_neoPixTim = nullptr;
@@ -138,7 +146,6 @@ public:
 		bool _complementary = false;   // slot drives CHxN, not CHx
 		uint16_t _numLeds;   // Number of LEDs in strip (<= WS2812_MAX_LEDS)
 		uint16_t _bufferSize;
-		uint8_t _brightness = 128; // Strip _brightness (0-255)
 		bool _begun = false;
 		bool _clockValid = false;
 

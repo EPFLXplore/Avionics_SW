@@ -29,124 +29,78 @@ void LedsThread::init(){
 	_strip.begin(pwmTimerOf(LED_STRIP_SLOT), pwmChannelOf(LED_STRIP_SLOT),
 	             pwmMux(LED_STRIP_SLOT).complementary);
 
-	  _cmd.segment.r = 0;
-	  _cmd.segment.g = 255;
-	  _cmd.segment.b = 0;
-	  _cmd.segment.low = 0;
-	  _cmd.segment.high = 50;
-
-	  _strip.applyCommand(_cmd);
-	  osDelay(1);
-	  _strip.setBrightness(70);
-	  _strip.tick();
-
+	// LEDStrip::begin() has already zeroed every segment to Off and set the
+	// brightness, so there is nothing to paint here. What used to live in this
+	// spot was a green bring-up bar over the first half of the strip - useful
+	// once, misleading afterwards, because a boot pattern and a real NAV command
+	// looked identical.
+	_strip.tick();
 }
 
-void LedsThread::loop(){
-//	_cmd.system = 0;
-//	_cmd.mode = 0;
-//	_cmd.emergency_global = 1;
-//	_cmd.emergency_motors = 0;
-//
-//	switch (_cmd.system) {
-//	case 0:
-//		_cmd.segment.r = 147;
-//		_cmd.segment.g = 0;
-//		_cmd.segment.b = 211;
-//		_cmd.segment.low = 0, _cmd.segment.high = 50;
-//		break; // NAV: Pink
-//	case 1:
-//		_cmd.segment.r = 255;
-//		_cmd.segment.g = 1401000;
-//		_cmd.segment.b = 0;
-//		_cmd.segment.low = 51, _cmd.segment.high = 100;
-//		break; // HD: Yellow
-//	case 2:
-//		_cmd.segment.r = 0;
-//		_cmd.segment.g = 255;
-//		_cmd.segment.b = 0;
-//		_cmd.segment.low = 0, _cmd.segment.high = 50;
-//		break; // DRILL: Green
-//	case 3:
-//		_cmd.segment.r = 20;
-//		_cmd.segment.g = 56;
-//		_cmd.segment.b = 50;
-//		_cmd.segment.low = 51, _cmd.segment.high = 100;
-//		break; // Avionics: Turquoise
-//	}
-//
-//	if (_cmd.mode == 4) {
-//		_cmd.segment.r = 100;
-//		_cmd.segment.g = 81;
-//		_cmd.segment.b = 50;
-//		_cmd.segment.low = 0;
-//		_cmd.segment.high = 50; // AMBER
-//	}
-//
-//	//emergency shutdown
-//	if (_cmd.mode == 5) {
-//		_cmd.segment.r = 255;
-//		_cmd.segment.g = 0;
-//		_cmd.segment.b = 0;
-//		_cmd.segment.low = 0, _cmd.segment.high = 100;
-//	}
-//
-//	strip->applyCommand(_cmd);
-//	osDelay(1);
-//	strip->tickOneSystem(_cmd.system);
-//	osDelay(1);
+/* Every colour the strip can be told to show. Named only so the supply ceiling
+ * can be checked below - the switch still decides which system gets which. */
+static constexpr Color NAV_VIOLET      = { 147,   0, 211 };
+static constexpr Color HD_ORANGE       = { 255, 140,   0 };
+static constexpr Color DRILL_GREEN     = {   0, 255,   0 };
+static constexpr Color AVIONICS_TURQ   = {  64, 224, 208 };
+static constexpr Color EMERGENCY_AMBER = { 100,  81,  50 };
+static constexpr Color EMERGENCY_RED   = { 255,   0,   0 };
 
+/* No colour may ask more of the supply than a full-white pixel at the old
+ * brightness ceiling. Per-pixel and summed across the channels, because that is
+ * what the rail sees: a single channel at 255 is cheaper than three at 200. The
+ * whole-strip modes are the ones that matter - they paint every pixel at once. */
+static_assert(pixelLoad(NAV_VIOLET)      <= PIXEL_BUDGET, "NAV colour over the supply budget");
+static_assert(pixelLoad(HD_ORANGE)       <= PIXEL_BUDGET, "HD colour over the supply budget");
+static_assert(pixelLoad(DRILL_GREEN)     <= PIXEL_BUDGET, "DRILL colour over the supply budget");
+static_assert(pixelLoad(AVIONICS_TURQ)   <= PIXEL_BUDGET, "AVIONICS colour over the supply budget");
+static_assert(pixelLoad(EMERGENCY_AMBER) <= PIXEL_BUDGET, "emergency-motors colour over the supply budget");
+static_assert(pixelLoad(EMERGENCY_RED)   <= PIXEL_BUDGET, "emergency-shutdown colour over the supply budget");
+
+void LedsThread::loop(){
 
 	while (popCommand(_req)) {
 
-//		strip->clear();
-
 		_cmd.system = _req.system;
 		_cmd.mode = _req.mode;
-		_cmd.emergency_global = 1;
-		_cmd.emergency_motors = 0;
 
 		switch (_cmd.system) {
-			case 0: _cmd.segment.r = 147; _cmd.segment.g = 0;   _cmd.segment.b = 211; _cmd.segment.low = 0, _cmd.segment.high= 25; break; // NAV: Pink
-			case 1: _cmd.segment.r = 255; _cmd.segment.g = 140; _cmd.segment.b = 0;   _cmd.segment.low = 26, _cmd.segment.high=50; break; // HD: Yellow
-			case 2: _cmd.segment.r = 0;   _cmd.segment.g = 255; _cmd.segment.b = 0;   _cmd.segment.low = 51, _cmd.segment.high=75; break; // DRILL: Green
-			case 3: _cmd.segment.r = 20; _cmd.segment.g = 56; _cmd.segment.b = 50; _cmd.segment.low = 76, _cmd.segment.high=100; break; // Avionics: Turquoise
+			// Percentages, not pixel counts: pctToIdx floors pct*72/100, so these are
+			// the values that land on the intended LED boundaries. The split is
+			// 17 / 18 / 19 / 18 LEDs -> px 0-16, 17-34, 35-53, 54-71.
+			case 0: _cmd.segment.r = NAV_VIOLET.r;    _cmd.segment.g = NAV_VIOLET.g;    _cmd.segment.b = NAV_VIOLET.b;    _cmd.segment.low = 0, _cmd.segment.high= 23; break; // NAV: Violet
+			case 1: _cmd.segment.r = HD_ORANGE.r;     _cmd.segment.g = HD_ORANGE.g;     _cmd.segment.b = HD_ORANGE.b;     _cmd.segment.low = 24, _cmd.segment.high=48; break; // HD: Orange
+			case 2: _cmd.segment.r = DRILL_GREEN.r;   _cmd.segment.g = DRILL_GREEN.g;   _cmd.segment.b = DRILL_GREEN.b;   _cmd.segment.low = 49, _cmd.segment.high=74; break; // DRILL: Green
+			case 3: _cmd.segment.r = AVIONICS_TURQ.r; _cmd.segment.g = AVIONICS_TURQ.g; _cmd.segment.b = AVIONICS_TURQ.b; _cmd.segment.low = 75, _cmd.segment.high=99; break; // Avionics: Turquoise
 		}
 
 		if (_cmd.mode == 4) {
-			_cmd.segment.r = 100; _cmd.segment.g = 81; _cmd.segment.b = 50; _cmd.segment.low = 0; _cmd.segment.high = 100; // AMBER
-			for (int i = 0; i < MAX_SYSTEMS; i++)
-			{
-				_cmd.system = i;
-				_strip.applyCommand(_cmd);
-			}
+			_cmd.segment.r = EMERGENCY_AMBER.r; _cmd.segment.g = EMERGENCY_AMBER.g; _cmd.segment.b = EMERGENCY_AMBER.b; _cmd.segment.low = 0; _cmd.segment.high = 100; // AMBER
+			applyToEverySystem();
 		}	//emergency shutdown
 		else if (_cmd.mode == 5) {
-			_cmd.segment.r = 255; _cmd.segment.g = 0;   _cmd.segment.b = 0; _cmd.segment.low = 0, _cmd.segment.high= 100;
-			for (int i = 0; i < MAX_SYSTEMS; i++) {
-				_cmd.system = i;
-				_strip.applyCommand(_cmd);
-			}
+			_cmd.segment.r = EMERGENCY_RED.r; _cmd.segment.g = EMERGENCY_RED.g; _cmd.segment.b = EMERGENCY_RED.b; _cmd.segment.low = 0, _cmd.segment.high= 100;
+			applyToEverySystem();
 		}
 		else if (_cmd.mode == 6) {
-			for (int i = 0; i < MAX_SYSTEMS; i++) {
-				_cmd.system = i;
-				_strip.applyCommand(_cmd);
-			}
+			applyToEverySystem();
 		}
 		else
 		{
-//			_strip.clear();
 			_strip.applyCommand(_cmd);
 		}
 
 
 	}
 
-//	if (_cmd.mode == 4 || _cmd.mode == 5 || _cmd.mode == 6)
-//		_strip.tickOneSystem(_cmd.system);
-//	else
-		_strip.tick();
+	_strip.tick();
+}
+
+void LedsThread::applyToEverySystem() {
+	for (int i = 0; i < MAX_SYSTEMS; i++) {
+		_cmd.system = i;
+		_strip.applyCommand(_cmd);
+	}
 }
 
 

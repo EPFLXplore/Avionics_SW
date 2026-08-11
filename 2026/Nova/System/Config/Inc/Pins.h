@@ -213,6 +213,56 @@ static_assert(stripOwnsItsTimer(),
               "LED_STRIP_SLOT shares a timer with another PWM slot (Pwm0/Pwm1 are both "
               "TIM15) - that slot could never hold a servo; put the strip on Pwm2 or Pwm3");
 
+/**
+ * How many slots the derived rules above would accept.
+ *
+ * The two constraints that are real - a per-channel DMA request (ccDma) and sole
+ * ownership of a timer - do NOT single out one slot: with today's mux they admit
+ * Pwm2 (TIM1) and Pwm3 (TIM2) equally. Counting them is what makes the next
+ * assertion honest, and what makes it fail loudly if the mux ever changes: if a
+ * rewiring drops the count to 1, the pin below is redundant and should go; if it
+ * rises, the choice widened and someone should say which slot wins and why.
+ */
+constexpr uint8_t admissibleStripSlots() {
+    uint8_t n = 0;
+    for (uint8_t i = 0; i < PWM_COUNT; ++i) {
+        if (!PWM_MUX[i].ccDma) continue;
+        bool alone = true;
+        for (uint8_t j = 0; j < PWM_COUNT; ++j)
+            if (j != i && PWM_MUX[j].timer == PWM_MUX[i].timer) alone = false;
+        if (alone) ++n;
+    }
+    return n;
+}
+static_assert(admissibleStripSlots() == 2,
+              "the admissible strip slots are no longer {Pwm2, Pwm3} - revisit the pin below");
+
+/**
+ * The strip lives on Pwm2, and nowhere else.
+ *
+ * A DECISION, not a derivation. Pwm3 satisfies every structural rule just as
+ * well (TIM2, its own time base, a wired TIM2_CH4 request), so nothing in the
+ * hardware forces Pwm2 - which is exactly why it is written down here instead of
+ * being left implicit. Without this, the strip could drift back to Pwm3 in a
+ * refactor and every existing check would stay green while the board changed
+ * underneath.
+ *
+ * Moving it is not a one-line edit. All four must agree, and only the first two
+ * are visible to the compiler:
+ *
+ *   1. LED_STRIP_SLOT in BoardProfile.h,
+ *   2. the PROFILES row - the strip and the displaced servo swap slots,
+ *   3. the DMA request in Nova.ioc (TIM1_CH1 for Pwm2, TIM2_CH4 for Pwm3), and
+ *   4. this assertion.
+ *
+ * Steps 3 and 4 are the ones that bite: nothing in C++ can see the .ioc, so a
+ * strip pointed at a channel CubeMX never wired goes dark with no diagnostic.
+ */
+static_assert(LED_STRIP_SLOT == ConnType::Pwm2,
+              "the strip is pinned to Pwm2 (TIM1 CH1N, DMA1_Channel4 via DMA_REQUEST_TIM1_CH1). "
+              "Moving it needs the PROFILES row, the Nova.ioc DMA request and this line to change "
+              "together - see the comment above");
+
 /** The HAL's channel constant. */
 inline constexpr uint32_t halChannel(uint8_t ch) {
     return ch == 1 ? TIM_CHANNEL_1
