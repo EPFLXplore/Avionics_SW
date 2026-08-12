@@ -31,14 +31,31 @@
 
 /** Moving-average depth. A pH probe is a very high impedance source and the
  *  reading wanders; averaging ~10 samples at 2 Hz is 5 s of smoothing, which is
- *  fast next to how quickly the solution being measured actually changes. */
-constexpr uint8_t PH_AVG_SIZE = 10;
+ *  fast next to how quickly the solution being measured actually changes.
+ *
+ *  SET TO 1 TO DISABLE AVERAGING and publish every conversion raw - the whole
+ *  filter collapses to a copy: the shift loop's bound is PH_AVG_SIZE - 1, which
+ *  promotes to int 0 and never runs, `filled` saturates at 1, and the mean of one
+ *  sample is that sample. Useful for looking at the actual noise; 10 is what the
+ *  rover should fly with.
+ *
+ *  Currently 1 (raw) - see the static_assert below for why 0 is not the way to
+ *  ask for this. */
+constexpr uint8_t PH_AVG_SIZE = 1;
+
+/* 0 would be a zero-length array and a divide by zero on the first sample, and
+ * both would be silent: GCC accepts [0] as an extension, and 0.0f/0.0f is a
+ * quiet NaN that would just start appearing on the topic. 1 is "no averaging". */
+static_assert(PH_AVG_SIZE >= 1, "PH_AVG_SIZE must be >= 1; use 1 for no averaging");
 
 struct PhType {
     ADS1114 adc;                       // each _meter owns its front end (no pointers)
 
-    /* Two-point calibration: ph = slope * volts + offset, where `volts` is the
-     * DIFFERENTIAL reading AINP - AINN.
+    /* Two-PARAMETER calibration: ph = slope * volts + offset, where `volts` is
+     * the DIFFERENTIAL reading AINP - AINN. Two parameters, but fitted from
+     * three buffers: two points always fit a line perfectly, so the third
+     * point's residual is the only thing that can tell you the electrode has
+     * gone lazy. See scripts/calibrate_ph.sh in Avionics_ROS.
      *
      * On the pH hat that is the glass electrode's raw EMF. Both LTC2064 halves
      * are unity-gain followers (OUTA tied to -INA, OUTB to -INB), AINP follows
@@ -46,10 +63,17 @@ struct PhType {
      * VDD/2 bias on the shell (R1/R2) is pure common mode that the differential
      * measurement rejects. Nothing scales the electrode.
      *
-     * The fallbacks are therefore the ideal Nernst response at 25 C: 59.16 mV
-     * per pH with 0 V at pH 7, i.e. slope = -1/0.05916 = -16.904 pH/V and
-     * offset = 7. The sign is negative because electrode potential FALLS as pH
-     * rises.
+     * The ideal Nernst response at 25 C is 59.16 mV per pH with 0 V at pH 7,
+     * i.e. slope = -1/0.05916 = -16.904 pH/V and offset = 7. The sign is
+     * negative because electrode potential FALLS as pH rises. That is the SHAPE
+     * these numbers must keep; sanity-check any new pair against it.
+     *
+     * The values below are MEASURED rather than ideal - the installed electrode,
+     * calibrated 2026-08-12 against 4.01 / 6.86 / 9.18 buffers: 57.27 mV/pH
+     * (96.8% of theoretical) with a -6.2 mV asymmetry potential. A real
+     * calibration beats the ideal line for as long as THIS electrode is the one
+     * on the BNC. Swap the probe and they are wrong in a way nothing detects:
+     * put -16.904f / 7.0f back until the new one has been calibrated.
      *
      * FALLBACK ONLY. ph_cal.yaml on the RPi is the source of truth, replayed
      * over PhRequest on every link-up; these are what the board runs before the
@@ -61,8 +85,8 @@ struct PhType {
      * proportional to absolute temperature (0.1984 * T mV/pH) while this board
      * has no temperature sensor. Nexus replays a measured calibration over
      * PhRequest on every link-up, same path as the mass slopes. */
-    float slope  = -16.904f;           // pH per volt  (= -1 / 0.05916)
-    float offset = 7.0f;               // pH at 0 V differential
+    float slope  = -17.460922f;        // pH per volt  (ideal would be -16.904)
+    float offset = 6.891526f;          // pH at 0 V differential (ideal 7.0)
 
     float volts  = 0.0f;               // last raw differential reading [V]
     float ph     = 0.0f;               // last averaged, calibrated pH

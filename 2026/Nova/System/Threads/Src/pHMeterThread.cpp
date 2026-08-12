@@ -24,12 +24,19 @@ void pHMeterThread::init(){
 }
 
 void pHMeterThread::loop(){
-    // Always pop, so the queue drains even on a board with no probe fitted.
-    PhRequest cmd;
-    if (this->popCommand(cmd) && cmd.change_cal) {
-        // No id to match on: the command names the one probe this rover has.
-        _meter.slope  = cmd.slope;   // runtime calibration override
-        _meter.offset = cmd.offset;
+    // Always pop, so the queue drains even on a board with no probe fitted - but
+    // the pop's verdict GATES the read. xQueueReceive leaves `cmd` untouched when
+    // the queue is empty, which is almost every tick, so reading it unconditionally
+    // reads stale stack: a nonzero change_cal byte there overwrites slope/offset
+    // with whatever floats the previous iteration left behind, and those persist in
+    // _meter for the rest of the run. Same shape as MassThread::loop().
+    PhRequest cmd{};
+    if (this->popCommand(cmd)) {
+        if (cmd.change_cal) {
+            // No id to match on: the command names the one probe this rover has.
+            _meter.slope  = cmd.slope;   // runtime calibration override
+            _meter.offset = cmd.offset;
+        }
     }
 
     this->sample(_meter);
