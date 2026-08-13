@@ -13913,7 +13913,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_macro   0x000318ae       0x1c ./USB_Device/App/usbd_desc.o
  .debug_macro   0x000318ca      0x3c8 ./USB_Device/Target/usbd_conf.o
 
-.debug_line     0x00000000    0x3fa54
+.debug_line     0x00000000    0x3fa55
  .debug_line    0x00000000      0x827 ./Core/Src/adc.o
  .debug_line    0x00000827      0xb4e ./Core/Src/app_freertos.o
  .debug_line    0x00001375      0x762 ./Core/Src/dma.o
@@ -13962,19 +13962,19 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_line    0x0002e49f      0xea4 ./System/Core/Src/HX711.o
  .debug_line    0x0002f343     0x1709 ./System/Core/Src/LEDStrip.o
  .debug_line    0x00030a4c      0xec1 ./System/Core/Src/PWMDriver.o
- .debug_line    0x0003190d     0x1be2 ./System/Core/Src/System.o
- .debug_line    0x000334ef     0x161a ./System/Core/Src/WS2812Driver.o
- .debug_line    0x00034b09      0xa22 ./System/Threads/Src/HeartBeatThread.o
- .debug_line    0x0003552b     0x1821 ./System/Threads/Src/LedsThread.o
- .debug_line    0x00036d4c     0x16dc ./System/Threads/Src/MassThread.o
- .debug_line    0x00038428     0x1d96 ./System/Threads/Src/SerialThread.o
- .debug_line    0x0003a1be     0x1111 ./System/Threads/Src/ServoThread.o
- .debug_line    0x0003b2cf      0x837 ./System/Threads/Src/Thread.o
- .debug_line    0x0003bb06     0x10a6 ./System/Threads/Src/pHMeterThread.o
- .debug_line    0x0003cbac      0xa2d ./USB_Device/App/usb_device.o
- .debug_line    0x0003d5d9      0xad3 ./USB_Device/App/usbd_cdc_if.o
- .debug_line    0x0003e0ac      0xb27 ./USB_Device/App/usbd_desc.o
- .debug_line    0x0003ebd3      0xe81 ./USB_Device/Target/usbd_conf.o
+ .debug_line    0x0003190d     0x1be3 ./System/Core/Src/System.o
+ .debug_line    0x000334f0     0x161a ./System/Core/Src/WS2812Driver.o
+ .debug_line    0x00034b0a      0xa22 ./System/Threads/Src/HeartBeatThread.o
+ .debug_line    0x0003552c     0x1821 ./System/Threads/Src/LedsThread.o
+ .debug_line    0x00036d4d     0x16dc ./System/Threads/Src/MassThread.o
+ .debug_line    0x00038429     0x1d96 ./System/Threads/Src/SerialThread.o
+ .debug_line    0x0003a1bf     0x1111 ./System/Threads/Src/ServoThread.o
+ .debug_line    0x0003b2d0      0x837 ./System/Threads/Src/Thread.o
+ .debug_line    0x0003bb07     0x10a6 ./System/Threads/Src/pHMeterThread.o
+ .debug_line    0x0003cbad      0xa2d ./USB_Device/App/usb_device.o
+ .debug_line    0x0003d5da      0xad3 ./USB_Device/App/usbd_cdc_if.o
+ .debug_line    0x0003e0ad      0xb27 ./USB_Device/App/usbd_desc.o
+ .debug_line    0x0003ebd4      0xe81 ./USB_Device/Target/usbd_conf.o
 
 .debug_str      0x00000000   0x10c4dc
  .debug_str     0x00000000   0x10c4dc ./Core/Src/adc.o

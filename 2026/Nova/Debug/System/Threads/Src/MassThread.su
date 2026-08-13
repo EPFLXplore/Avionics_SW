@@ -3,7 +3,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:94:19:constexpr uint8_t idOf(E) [with E = ConnType]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:162:34:constexpr const ConnPads& pinOf(ConnType)	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:269:28:const BoardProfile& profile()	8	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:45:11:MassType::MassType(const HX711&)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:50:11:MassType::MassType(const HX711&)	16	static
 ../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(const char*, osPriority_t)	48	static
 ../System/Threads/Src/MassThread.cpp:17:1:MassThread::~MassThread()	16	static
 ../System/Threads/Src/MassThread.cpp:17:1:virtual MassThread::~MassThread()	16	static

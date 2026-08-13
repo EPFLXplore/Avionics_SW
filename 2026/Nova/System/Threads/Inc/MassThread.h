@@ -29,8 +29,13 @@ struct MassType {
 	uint8_t globalId = NO_DEVICE;
 	HX711 hx;                          // each _cell owns its sensor (no pointers)
 	float offset = 0.0f;
-	float slope = -0.0014164446f; // FALLBACK ONLY: mass_cal.yaml on the RPi is the
-                              // source of truth, replayed over MassRequest on every link-up
+	float slope = 0.000517406f;   // FALLBACK ONLY: mass_cal.yaml on the RPi is the
+                              // source of truth, replayed over MassRequest on every link-up.
+                              // Kept EQUAL to both slopes in that file: this value only ever
+                              // reaches a reading when the replay did not arrive, so a stale
+                              // one turns a comms failure into wrong numbers instead of the
+                              // same numbers. It was -0.0014164446f, which was both 2.7x off
+                              // and the opposite SIGN - a lost link inverted the load direction.
 	float weight = 0.0f;
 	float buffer[AVG_SIZE] = {};
 	// Live diagnostics. Members of the static MassThread (fixed addresses), so

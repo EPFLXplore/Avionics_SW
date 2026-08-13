@@ -87,19 +87,30 @@ struct PhType {
      * these numbers must keep; sanity-check any new pair against it.
      *
      * The values below are MEASURED rather than ideal - the installed electrode,
-     * fitted 2026-08-12 across 4.01 / 6.86 / 9.18: 57.92 mV/pH (97.9% of
-     * theoretical) with a +3.1 mV asymmetry potential, worst residual 0.015 pH.
-     * A real calibration beats the ideal line for as long as THIS electrode is
-     * the one on the BNC. Swap the probe and they are wrong in a way nothing
-     * detects: put -16.904f / 7.0f back until the new one has been calibrated.
+     * fitted 2026-08-13 across 4.01 / 6.86 / 9.18: 57.41 mV/pH (97.0% of
+     * theoretical) with a +7.4 mV asymmetry potential, worst residual 0.0056 pH,
+     * the tightest of the three fits so far. A real calibration beats the ideal
+     * line for as long as THIS electrode is the one on the BNC. Swap the probe
+     * and they are wrong in a way nothing detects: put -16.904f / 7.0f back
+     * until the new one has been calibrated.
      *
-     * These REPLACE an earlier fit from the same day (-17.460922f / 6.891526f,
-     * 57.27 mV/pH, -6.2 mV asymmetry). Nothing was wrong with that run: the
-     * probe had been in solution less than an hour and its gel layer was still
-     * forming, which suppresses the slope and shifts E0. Over the following
-     * hours the response climbed 96.8% -> 97.9% and the asymmetry crossed from
-     * -6.2 mV to +3.1 mV, both toward ideal - the signature of glass finishing
-     * its hydration, not of anything degrading.
+     * Third fit on this electrode, and the sequence is worth more than any one
+     * of them:
+     *
+     *   2026-08-12 early  -17.460922f / 6.891526f  57.27 mV/pH  96.8%  -6.2 mV
+     *   2026-08-12 late   -17.265400f / 7.053987f  57.92 mV/pH  97.9%  +3.1 mV
+     *   2026-08-13 below  -17.417130f / 7.128631f  57.41 mV/pH  97.0%  +7.4 mV
+     *
+     * Nothing was wrong with the early runs: the probe had been in solution less
+     * than an hour and its gel layer was still forming, which suppresses the
+     * slope and shifts E0. Read the last two columns separately though, because
+     * they no longer say the same thing. The RESPONSE has stopped moving -
+     * 97.9% then 97.0%, a step a three-point fit cannot resolve - so the gel
+     * layer is done. The ASYMMETRY has not: -6.2 -> +3.1 -> +7.4 mV, still
+     * walking one way. Slope agreeing while offset does not is the signature
+     * described below, and here it means E0 is settling NOW: expect the offset
+     * to keep moving and plan to refit, rather than treating this pair as final.
+     * It is not decay - a dying electrode loses slope, and this one has held it.
      *
      * The lesson is in the timing, not the numbers: a probe that has been stored
      * dry needs HOURS of soaking before it will hold an offset. Calibrating
@@ -118,8 +129,8 @@ struct PhType {
      * proportional to absolute temperature (0.1984 * T mV/pH) while this board
      * has no temperature sensor. Nexus replays a measured calibration over
      * PhRequest on every link-up, same path as the mass slopes. */
-    float slope  = -17.265400f;        // pH per volt  (ideal would be -16.904)
-    float offset =   7.053987f;        // pH at 0 V differential (ideal 7.0)
+    float slope  = -17.417130f;        // pH per volt  (ideal would be -16.904)
+    float offset =   7.128631f;        // pH at 0 V differential (ideal 7.0)
 
     float volts  = 0.0f;               // last raw differential reading [V]
     float ph     = 0.0f;               // last averaged, calibrated pH
