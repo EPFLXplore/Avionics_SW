@@ -5,7 +5,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/LedsThread.h:22:7:bool LedsThread::hasDevices() const	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/ServoThread.h:25:10:bool ServoThread::hasDevices() const	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:62:7:bool MassThread::hasDevices() const	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/pHMeterThread.h:100:10:bool pHMeterThread::hasDevices() const	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/pHMeterThread.h:143:10:bool pHMeterThread::hasDevices() const	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:SerialThread::~SerialThread()	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:virtual SerialThread::~SerialThread()	16	static
 ../System/Core/Src/System.cpp:25:98:void __tcf_0()	8	static

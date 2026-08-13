@@ -51,8 +51,6 @@ void System::init(){
 	// anywhere earlier - each hasDevices() is a live profile read taken at this
 	// point, exactly as HEAD's `switch (Board_MasterId())` was.
 	if (mass().hasDevices()) mass().setDelay(100); //ms
-	// pH: 500 ms. The probe is a slow chemical sensor and the ADS1114 runs at
-	// 8 SPS (125 ms/conversion), so anything faster just resamples noise.
 	if (ph().hasDevices())   ph().setDelay(500);   //ms
 	if (leds().hasDevices()) leds().setDelay(80);  //ms: matches CLEANED_LEDS (tick() rate = animation speed)
 

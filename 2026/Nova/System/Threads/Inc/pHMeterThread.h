@@ -30,18 +30,36 @@
 #include "cmsis_os2.h"
 
 /** Moving-average depth. A pH probe is a very high impedance source and the
- *  reading wanders; averaging ~10 samples at 2 Hz is 5 s of smoothing, which is
- *  fast next to how quickly the solution being measured actually changes.
+ *  reading wanders. The loop runs at 500 ms (System.cpp) plus a 125 ms conversion
+ *  at 8 SPS, so ~1.6 Hz: 10 samples is a 6.25 s window, fast next to how quickly
+ *  the solution being measured actually changes.
+ *
+ *  What it buys, measured on this probe: raw noise is ~0.0045 pH peak-to-peak, so
+ *  averaging 10 gives sqrt(10) ~ 3.2x, about 0.0015 pH. What it costs is group
+ *  delay of (N-1)/2 = 4.5 samples, ~2.8 s. It does NOT delay equilibrium - the
+ *  electrode settles when it settles - only your view of it.
  *
  *  SET TO 1 TO DISABLE AVERAGING and publish every conversion raw - the whole
  *  filter collapses to a copy: the shift loop's bound is PH_AVG_SIZE - 1, which
  *  promotes to int 0 and never runs, `filled` saturates at 1, and the mean of one
- *  sample is that sample. Useful for looking at the actual noise; 10 is what the
- *  rover should fly with.
+ *  sample is that sample.
  *
- *  Currently 1 (raw) - see the static_assert below for why 0 is not the way to
- *  ask for this. */
-constexpr uint8_t PH_AVG_SIZE = 1;
+ *  Currently 10 (flight setting) - see the static_assert below for why 0 is not
+ *  the way to ask for no averaging.
+ *
+ *  Use 1 when CHARACTERISING a probe rather than flying it. Unfiltered samples
+ *  are what let you watch a settling transient decay and extrapolate where it is
+ *  heading - on 2026-08-12 a 6.86 buffer stepped 7.44 -> 9.73 -> 10.30 mV, and
+ *  the ratio of those deltas said it had converged to ~10.5 without waiting
+ *  another hour. A 10-deep window smears exactly that structure into a smooth
+ *  curve with no usable deltas. Raw to characterise, averaged to fly.
+ *
+ *  Whichever it is, scripts/calibrate_ph.sh in Avionics_ROS assumes it: its
+ *  steadiness gate reads consecutive published samples, and averaged ones are
+ *  correlated (they share 9 of 10 window entries), so max-min understates real
+ *  movement. SETTLE_S=60 there covers both the 6.25 s window flush and the
+ *  electrode transient, so 10 is safe - but do not shorten it. */
+constexpr uint8_t PH_AVG_SIZE = 10;
 
 /* 0 would be a zero-length array and a divide by zero on the first sample, and
  * both would be silent: GCC accepts [0] as an extension, and 0.0f/0.0f is a
@@ -69,11 +87,26 @@ struct PhType {
      * these numbers must keep; sanity-check any new pair against it.
      *
      * The values below are MEASURED rather than ideal - the installed electrode,
-     * calibrated 2026-08-12 against 4.01 / 6.86 / 9.18 buffers: 57.27 mV/pH
-     * (96.8% of theoretical) with a -6.2 mV asymmetry potential. A real
-     * calibration beats the ideal line for as long as THIS electrode is the one
-     * on the BNC. Swap the probe and they are wrong in a way nothing detects:
-     * put -16.904f / 7.0f back until the new one has been calibrated.
+     * fitted 2026-08-12 across 4.01 / 6.86 / 9.18: 57.92 mV/pH (97.9% of
+     * theoretical) with a +3.1 mV asymmetry potential, worst residual 0.015 pH.
+     * A real calibration beats the ideal line for as long as THIS electrode is
+     * the one on the BNC. Swap the probe and they are wrong in a way nothing
+     * detects: put -16.904f / 7.0f back until the new one has been calibrated.
+     *
+     * These REPLACE an earlier fit from the same day (-17.460922f / 6.891526f,
+     * 57.27 mV/pH, -6.2 mV asymmetry). Nothing was wrong with that run: the
+     * probe had been in solution less than an hour and its gel layer was still
+     * forming, which suppresses the slope and shifts E0. Over the following
+     * hours the response climbed 96.8% -> 97.9% and the asymmetry crossed from
+     * -6.2 mV to +3.1 mV, both toward ideal - the signature of glass finishing
+     * its hydration, not of anything degrading.
+     *
+     * The lesson is in the timing, not the numbers: a probe that has been stored
+     * dry needs HOURS of soaking before it will hold an offset. Calibrating
+     * sooner produces a clean-looking fit with small residuals - the linearity
+     * is real, the electrode is simply on a different line than it will be on
+     * tonight - so no residual check can catch it. The tell is a later fit whose
+     * slope agrees while its offset does not. Soak first.
      *
      * FALLBACK ONLY. ph_cal.yaml on the RPi is the source of truth, replayed
      * over PhRequest on every link-up; these are what the board runs before the
@@ -85,8 +118,8 @@ struct PhType {
      * proportional to absolute temperature (0.1984 * T mV/pH) while this board
      * has no temperature sensor. Nexus replays a measured calibration over
      * PhRequest on every link-up, same path as the mass slopes. */
-    float slope  = -17.460922f;        // pH per volt  (ideal would be -16.904)
-    float offset = 6.891526f;          // pH at 0 V differential (ideal 7.0)
+    float slope  = -17.265400f;        // pH per volt  (ideal would be -16.904)
+    float offset =   7.053987f;        // pH at 0 V differential (ideal 7.0)
 
     float volts  = 0.0f;               // last raw differential reading [V]
     float ph     = 0.0f;               // last averaged, calibrated pH

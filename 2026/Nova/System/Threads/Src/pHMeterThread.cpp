@@ -4,6 +4,14 @@
 
 #include <pHMeterThread.h>
 
+namespace {
+/* How far short of the nominal conversion time the pre-sleep stops. The
+ * datasheet allows +-10% on the data rate, which is 12.5 ms at 8 SPS - so this
+ * is NOT a tolerance on the conversion finishing early, it is just the point
+ * where handing the rest to the poll loop is cheaper than sleeping again. */
+constexpr uint32_t PRE_SLEEP_MARGIN_MS = 5;
+} // namespace
+
 pHMeterThread::pHMeterThread(const char* name, osPriority priority)
 : MessageThread(name, priority)
 {
@@ -47,14 +55,21 @@ void pHMeterThread::loop(){
  * One polled, single-shot measurement.
  *
  * The ADS1114 sits powered down until we ask, so the sequence is: write the
- * config with OS = 1, then poll the same bit back until the conversion lands.
- * The wait is osDelay(1) per poll rather than a spin - a 125 ms conversion at
- * 8 SPS would otherwise burn a whole tick budget doing nothing, and this thread
- * runs at the same priority as the load cells.
+ * config with OS = 1, sleep through the bulk of the conversion, then poll the
+ * same bit back until it lands. Every wait is osDelay() rather than a spin, so
+ * this thread costs the CPU nothing while it runs - which matters because it
+ * shares a priority with the load cells.
+ *
+ * Sleeping first rather than polling the whole way is worth it because the
+ * duration is KNOWN from the data rate: waking 125 times at 8 SPS to ask "done
+ * yet?" is 125 context switches and 125 two-byte I2C register reads per sample,
+ * for no information - the answer is no until it is not. Two wakeups do the same
+ * job.
  *
  * The budget is 2x the nominal conversion time plus a few ms: the datasheet
  * allows +-10% on the data rate, and a chip that has stopped converting must
- * not wedge the loop forever.
+ * not wedge the loop forever. The pre-sleep counts against it, so a wedged chip
+ * still times out at the same wall-clock point it used to.
  */
 void pHMeterThread::sample(PhType& device){
     if (device.adc.startConversion() != ADS1114::ResultType::Ok) {
@@ -62,8 +77,20 @@ void pHMeterThread::sample(PhType& device){
         return;   // keep the last good reading rather than publishing a lie
     }
 
-    const uint32_t budget = device.adc.conversionMs() * 2 + 5;
+    const uint32_t conv   = device.adc.conversionMs();
+    const uint32_t budget = conv * 2 + 5;
     uint32_t waited = 0;
+
+    /* Guarded, and the guard is load-bearing: conversionMs() is 2-4 ms at the top
+     * data rates, where conv - PRE_SLEEP_MARGIN_MS would wrap unsigned into an
+     * osDelay of ~49 days and hang the thread forever. At those rates the whole
+     * conversion is shorter than the margin anyway, so polling immediately is
+     * both correct and already cheap. */
+    if (conv > PRE_SLEEP_MARGIN_MS) {
+        waited = conv - PRE_SLEEP_MARGIN_MS;
+        osDelay(waited);
+    }
+
     while (!device.adc.ready()) {
         if (waited >= budget) { ++device.errors; return; }
         osDelay(1);
