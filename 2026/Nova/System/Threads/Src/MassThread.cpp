@@ -44,13 +44,15 @@ void MassThread::init(){
 	for (MassType& c : _cell)
 		if (c.globalId != NO_DEVICE) c.hx.begin();
 
-	// Wiring probe (debugger-visible verdict per connector, see HX711::lineTest).
-	for (MassType& c : _cell)
-		if (c.globalId != NO_DEVICE) c.lineTest = c.hx.lineTest();
-
-	// The probe power-cycles the chips: first conversion lands ~400 ms after
-	// wake (10 SPS settling), so give them time before taring.
-	osDelay(600);
+	// Settling from power-up is 50 ms at RATE=1 / 80 SPS (Table 2, "output
+	// settling time"; it is 400 ms at RATE=0). Nothing power-cycles the chip here
+	// any more, and taskRun() already burned one thread period plus MCU boot
+	// before init() ran, so most of that window is gone - 100 ms is slack.
+	//
+	// It does NOT cover the strain gauges' thermal settling, which is seconds. A
+	// boot tare taken during that transient now fails tareValid instead of being
+	// adopted silently - see tareScale().
+	osDelay(100);
 	for (MassType& c : _cell)
 		if (c.globalId != NO_DEVICE) this->tareScale(c);
 }
@@ -76,6 +78,13 @@ void MassThread::loop(){
 
 void MassThread::updateMass(MassType& device){
 	this->update(device);
+
+	// Sample every loop (100 Hz, to keep up with the chip at 80 SPS), publish
+	// every PUBLISH_EVERY-th (~10 Hz, the rate the link and the calibration
+	// script were built around). See PUBLISH_EVERY in MassThread.h.
+	if (++device.pubTick < PUBLISH_EVERY) return;
+	device.pubTick = 0;
+
 	MassPacket st;
 	st.mass = device.weight;
 	st.id = device.globalId;
@@ -122,25 +131,69 @@ void MassThread::update(MassType& device)
 }
 
 void MassThread::tareScale(MassType& device) {
-	// Average 20 fresh samples. read() blocks (bounded) until each one is
-	// ready, so no available() pre-check: the old guard silently SKIPPED the
-	// tare whenever the chip wasn't ready yet (it rarely is 110 ms after
-	// power-up), leaving offset = 0.
-	int64_t sum = 0;
-	uint8_t good = 0;
-	for (uint8_t i = 0; i < 20; ++i) {
+	// Average up to TARE_SAMPLES fresh samples. read() blocks (bounded) until
+	// each one is ready, so no available() pre-check: the old guard silently
+	// SKIPPED the tare whenever the chip wasn't ready yet (it rarely is 110 ms
+	// after power-up), leaving offset = 0.
+	//
+	// The result is only adopted if it clears BOTH gates below. Refusing a tare
+	// keeps the previous offset, which at boot is 0.0f - tareValid is what tells
+	// you which of those you are looking at.
+	int64_t sum      = 0;
+	uint8_t good     = 0;
+	uint8_t timeouts = 0;
+	int32_t lo       = INT32_MAX;
+	int32_t hi       = INT32_MIN;
+	bool    abort    = false;
+
+	for (uint8_t i = 0; i < TARE_SAMPLES && !abort; ++i) {
 		int32_t raw = 0;
-		HX711::ReadResultType res = device.hx.read(raw);
-		if (res == HX711::ReadResultType::Ok)      { sum += raw; ++good; }
-		else if (res == HX711::ReadResultType::Timeout) break; // sensor absent: stop waiting
+		switch (device.hx.read(raw)) {
+		case HX711::ReadResultType::Ok:
+			sum += raw; ++good;
+			if (raw < lo) lo = raw;
+			if (raw > hi) hi = raw;
+			break;
+
+		case HX711::ReadResultType::ClockFault:
+			// Was silently skipped here: neither counted nor breaking, and the
+			// counters are only touched in update(). A tare taken over a
+			// marginal SCK line was indistinguishable from a clean one.
+			++device.nClockFault;
+			break;
+
+		case HX711::ReadResultType::Timeout:
+			// Was a first-strike break, so ONE late conversion ended the tare
+			// with however few samples it had already collected - the shortest
+			// path to a one-sample zero. A chip reset costs 400 ms of settling
+			// (Table 2) and surfaces exactly here, which is how a sagging rail
+			// reaches the offset. Spend a small budget before giving up.
+			++device.nTimeout;
+			if (++timeouts >= TARE_MAX_TIMEOUTS) abort = true;
+			break;
+		}
 	}
-	if (good == 0) return; // no data at all: keep the previous offset
 
-    device.offset = (float)(sum / good);
+	device.tareGood   = good;
+	device.tareSpread = (good > 0) ? (hi - lo) : 0;
 
-    for (uint8_t i = 0; i < AVG_SIZE; ++i) {
-    	device.buffer[i] = device.offset;
-    }
+	// Too few survivors: the sqrt(N) noise reduction the average is there to buy
+	// is largely gone, and at good == 1 the zero is a single sample - the 2025
+	// behaviour this routine was rewritten to leave behind. Keep the old offset.
+	if (good < TARE_MIN_GOOD) { device.tareValid = false; return; }
+
+	// Well-formed samples that disagree with each other: EMI corrupting a bit on
+	// DOUT, a chip still settling, or the cell genuinely moving. read() validates
+	// the clock train and never the data, so this is the only place any of that
+	// can be caught.
+	if ((hi - lo) > TARE_MAX_SPREAD) { device.tareValid = false; return; }
+
+	device.offset    = (float)(sum / good);
+	device.tareValid = true;
+
+	for (uint8_t i = 0; i < AVG_SIZE; ++i) {
+		device.buffer[i] = device.offset;
+	}
 }
 
 /*

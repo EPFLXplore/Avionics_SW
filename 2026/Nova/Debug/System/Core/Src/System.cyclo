@@ -4,7 +4,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:282:13:bool anySlot(DeviceType)	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/LedsThread.h:22:7:bool LedsThread::hasDevices() const	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/ServoThread.h:25:10:bool ServoThread::hasDevices() const	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:67:7:bool MassThread::hasDevices() const	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:119:7:bool MassThread::hasDevices() const	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/pHMeterThread.h:154:10:bool pHMeterThread::hasDevices() const	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:SerialThread::~SerialThread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/SerialThread.h:16:7:virtual SerialThread::~SerialThread()	1

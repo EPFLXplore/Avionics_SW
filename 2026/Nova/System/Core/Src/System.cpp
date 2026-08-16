@@ -50,7 +50,12 @@ void System::init(){
 	// tick rates first, then the link, then the workers. Nothing here is latched
 	// anywhere earlier - each hasDevices() is a live profile read taken at this
 	// point, exactly as HEAD's `switch (Board_MasterId())` was.
-	if (mass().hasDevices()) mass().setDelay(100); //ms
+	// 10 ms, NOT 100: the HX711 runs at 80 SPS (RATE=1), a sample every 12.5 ms,
+	// and it overwrites its output register whether or not we read it. Polling at
+	// 100 ms would take 1 sample in 8 and stretch MassThread's 160-deep buffer
+	// from a 2 s window to 16 s. The poll has to be faster than the conversion.
+	// Back to 10 SPS means 100 here AND AVG_SIZE 20 in MassThread.h.
+	if (mass().hasDevices()) mass().setDelay(10);  //ms
 	if (ph().hasDevices())   ph().setDelay(500);   //ms
 	if (leds().hasDevices()) leds().setDelay(80);  //ms: matches CLEANED_LEDS (tick() rate = animation speed)
 

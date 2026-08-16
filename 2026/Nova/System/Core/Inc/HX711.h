@@ -27,15 +27,6 @@ public:
     /// cannot leave this one bit-banging an alternate-function pad.
     void begin();
 
-    /// One-shot wiring probe (chip idle; resets it via a power-down cycle).
-    /// Bit set = check passed:
-    ///   bit0 (0x1) SCK pad reads back HIGH while driven HIGH (not shorted to GND)
-    ///   bit1 (0x2) DOUT went HIGH during forced power-down (chip actually sees SCK)
-    ///   bit2 (0x4) DOUT still HIGH right after wake (sane reset, no data yet)
-    /// 7 = wiring looks good. 1 = chip never reacts to SCK (open SCK line, swapped
-    /// SCK/DOUT, or DOUT stuck low). 0 = SCK net shorted / pin misconfigured.
-    uint8_t lineTest();
-
     /// true when data is ready (DOUT == LOW)
     bool available() const;
 

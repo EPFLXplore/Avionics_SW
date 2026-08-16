@@ -73,7 +73,7 @@ public:
     void begin();
 
     /** One-shot wiring probe: address ACK + config read-back + one conversion.
-     *  Returns the PROBE_* bits; debugger-visible, same idea as HX711::lineTest. */
+     *  Returns the PROBE_* bits; debugger-visible. */
     uint8_t probe();
 
     /** Kick a single conversion. The chip returns to power-down when it finishes. */
