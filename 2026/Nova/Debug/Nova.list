@@ -50463,7 +50463,7 @@ inline constexpr const ConnPads& pinOf(ConnType c) {
  8013896:	46bd      	mov	sp, r7
  8013898:	bd80      	pop	{r7, pc}
  801389a:	bf00      	nop
- 801389c:	3a07a287 	.word	0x3a07a287
+ 801389c:	3a05dfb3 	.word	0x3a05dfb3
 
 080138a0 <_ZN10MassThreadC1EPKc12osPriority_t>:
  *      Author: pedro
