@@ -8,8 +8,8 @@
 ../System/Threads/Src/pHMeterThread.cpp:22:1:virtual pHMeterThread::~pHMeterThread()	16	static
 ../System/Threads/Src/pHMeterThread.cpp:26:6:virtual void pHMeterThread::init()	16	static
 ../System/Threads/Src/pHMeterThread.cpp:34:6:virtual void pHMeterThread::loop()	32	static
-../System/Threads/Src/pHMeterThread.cpp:74:6:void pHMeterThread::sample(PhType&)	48	static
-../System/Threads/Src/pHMeterThread.cpp:139:6:void pHMeterThread::publish(PhType&)	24	static
+../System/Threads/Src/pHMeterThread.cpp:81:6:void pHMeterThread::sample(PhType&)	48	static
+../System/Threads/Src/pHMeterThread.cpp:146:6:void pHMeterThread::publish(PhType&)	24	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:116:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = PhRequest; StatusMsg = PhPacket]	40	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	16	static
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	16	static

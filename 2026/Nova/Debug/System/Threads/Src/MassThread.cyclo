@@ -3,17 +3,19 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:94:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:162:34:constexpr const ConnPads& pinOf(ConnType)	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:274:28:const BoardProfile& profile()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:112:11:MassType::MassType(const HX711&)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:128:11:MassType::MassType(const HX711&)	1
 ../System/Threads/Src/MassThread.cpp:10:1:MassThread::MassThread(const char*, osPriority_t)	1
 ../System/Threads/Src/MassThread.cpp:17:1:MassThread::~MassThread()	1
 ../System/Threads/Src/MassThread.cpp:17:1:virtual MassThread::~MassThread()	1
-../System/Threads/Src/MassThread.cpp:21:6:virtual void MassThread::init()	5
-../System/Threads/Src/MassThread.cpp:60:6:virtual void MassThread::loop()	8
-../System/Threads/Src/MassThread.cpp:79:6:void MassThread::updateMass(MassType&)	3
-../System/Threads/Src/MassThread.cpp:95:6:void MassThread::shift(float*, int, float)	2
-../System/Threads/Src/MassThread.cpp:102:7:float MassThread::movingAverage(const float*, uint8_t)	3
-../System/Threads/Src/MassThread.cpp:109:6:void MassThread::update(MassType&)	6
-../System/Threads/Src/MassThread.cpp:133:6:void MassThread::tareScale(MassType&)	14
+../System/Threads/Src/MassThread.cpp:21:6:virtual void MassThread::init()	6
+../System/Threads/Src/MassThread.cpp:68:6:virtual void MassThread::loop()	8
+../System/Threads/Src/MassThread.cpp:100:6:void MassThread::updateMass(MassType&)	4
+../System/Threads/Src/MassThread.cpp:126:6:void MassThread::shift(float*, int, float)	2
+../System/Threads/Src/MassThread.cpp:133:7:float MassThread::movingAverage(const float*, uint8_t)	3
+../System/Threads/Src/MassThread.cpp:140:6:void MassThread::update(MassType&)	6
+../System/Threads/Src/MassThread.cpp:164:6:void MassThread::beginTare(MassType&)	1
+../System/Threads/Src/MassThread.cpp:178:6:void MassThread::stepTare(MassType&)	9
+../System/Threads/Src/MassThread.cpp:216:6:void MassThread::commitTare(MassType&)	5
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:116:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1

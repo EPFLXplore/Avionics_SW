@@ -41,7 +41,7 @@ constexpr uint8_t AVG_SIZE = 160;
 constexpr uint8_t PUBLISH_EVERY = 10;   // loops per published packet
 
 // --- tare acceptance --------------------------------------------------------
-// tareScale() builds the zero every reading is measured against, and a wrong
+// The tare builds the zero every reading is measured against, and a wrong
 // zero is a CONSTANT error in grams at every load - at a single reference mass
 // that is indistinguishable from a wrong slope. These are the gates that stop a
 // bad zero from being adopted silently.
@@ -109,6 +109,22 @@ struct MassType {
 	int32_t  tareSpread  = 0;     // max-min across those samples, raw counts
 	bool     tareValid   = false; // false until a tare passes both gates
 	uint8_t  pubTick     = 0;     // loops since the last published packet
+
+	// --- tare in progress -------------------------------------------------
+	// The tare used to run to completion inside one loop() call: TARE_SAMPLES
+	// blocking reads back to back, ~1 s at 80 SPS, during which this thread
+	// serviced no commands and published no packets. A tare arriving mid-burst
+	// therefore froze the consumer for a second while its queue kept filling.
+	// It is now one sample per loop, accumulated here across ~80 loops, so the
+	// thread stays responsive throughout and only THIS cell pauses.
+	// `taring` is the whole state: false = idle, and every field below is
+	// scratch that beginTare() resets.
+	bool     taring       = false;
+	uint8_t  tareTries    = 0;    // samples attempted so far (good + faulted)
+	uint8_t  tareTimeouts = 0;    // timeouts so far, against TARE_MAX_TIMEOUTS
+	int64_t  tareSum      = 0;    // running sum of the good samples
+	int32_t  tareLo       = 0;    // running min / max, for the spread gate
+	int32_t  tareHi       = 0;
 	explicit MassType(const HX711& sensor) : hx(sensor) {}
 };
 
@@ -141,7 +157,18 @@ public:
 
 	void update(MassType& device);
 
-	void tareScale(MassType& device);
+	/** Arm a tare on this cell. Returns immediately: the sampling happens one
+	 *  reading per loop() in stepTare(). Arming a cell that is already taring
+	 *  restarts it from zero, which is what a second request means. */
+	void beginTare(MassType& device);
+
+	/** Take ONE sample into the running tare, and commit when the sample budget
+	 *  or the timeout budget runs out. Only call while device.taring. */
+	void stepTare(MassType& device);
+
+	/** Apply the two acceptance gates and adopt (or refuse) the new zero.
+	 *  Clears device.taring either way. */
+	void commitTare(MassType& device);
 
 	void loop();
 

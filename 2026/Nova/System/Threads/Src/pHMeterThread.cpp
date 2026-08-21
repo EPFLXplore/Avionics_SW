@@ -38,8 +38,15 @@ void pHMeterThread::loop(){
     // reads stale stack: a nonzero change_cal byte there overwrites slope/offset
     // with whatever floats the previous iteration left behind, and those persist in
     // _meter for the rest of the run. Same shape as MassThread::loop().
+    //
+    // Drained to EMPTY, not one per tick: this loop runs at 500 ms, so a
+    // one-per-tick drain gives a queued command up to half a second of
+    // head-of-line delay for every entry ahead of it. Same reasoning as
+    // MassThread::loop(), and it matters more here because the tick is 50x
+    // longer. A calibration is idempotent, so applying a whole backlog in one
+    // tick just lands on the newest one.
     PhRequest cmd{};
-    if (this->popCommand(cmd)) {
+    while (this->popCommand(cmd)) {
         if (cmd.change_cal) {
             // No id to match on: the command names the one probe this rover has.
             _meter.slope  = cmd.slope;   // runtime calibration override

@@ -28,5 +28,18 @@ class SerialThread : public Thread {
 
     CdcTransport _io;
     Proto _proto{_io};
+
+    /* Frames that reached the dispatcher intact and were still refused. Fixed
+     * addresses in the statically allocated thread object, so the debugger can
+     * watch them live - same rationale as the counters in MassType. Nothing
+     * puts them on the wire yet.
+     *   _badPayload: known id, wrong payload size -> wire contract drift.
+     *   _unknownId : id this firmware has no case for -> the far side is newer. */
+    uint16_t _badPayload = 0;
+    uint16_t _unknownId  = 0;
+
+  public:
+    uint16_t badPayload() const { return _badPayload; }
+    uint16_t unknownId()  const { return _unknownId; }
 };
 

@@ -12,12 +12,21 @@
 #include <cstring>
 
 namespace {
-/* size-checked reinterpret of a frame payload as a wire struct */
+/* Size-checked reinterpret of a frame payload as a wire struct.
+ *
+ * Returns false and leaves `out` untouched when the payload length does not
+ * match the struct. It used to return a ZERO-FILLED struct in that case and the
+ * caller dispatched it anyway, which is worse than dropping the frame: a
+ * ServoRequest of the wrong length became {id 0, angle 0, go_to_zero 0} - a
+ * valid command that MOVES servo 0 to 0 degrees. A length that does not match
+ * means the wire contract drifted or the frame is noise; neither is a reason to
+ * drive hardware. The RPi has always guarded this (Nexus::lengthOk); this is the
+ * missing half on the MCU. */
 template <class T>
-T _frameas(const SerialProtocol<128, CdcTransport>::Frame& f) {
-    T out{};
-    if (f.length == sizeof(T)) std::memcpy(&out, f.payload.data(), sizeof(T));
-    return out;
+bool _frameas(const SerialProtocol<128, CdcTransport>::Frame& f, T& out) {
+    if (f.length != sizeof(T)) return false;
+    std::memcpy(&out, f.payload.data(), sizeof(T));
+    return true;
 }
 } // namespace
 
@@ -39,6 +48,7 @@ void SerialThread::loop() {
     uint8_t chunk[64];
     uint16_t n = _io.read(chunk, sizeof chunk);
     if (n) _proto.parse(chunk, n, [this](const Frame& f) { dispatch(f); });
+    else   _proto.idle(); // quiet line: abandon any half-received frame (see idle())
 
     /* TX: worker status queues -> serial */
     MassPacket mp;
@@ -52,11 +62,30 @@ void SerialThread::loop() {
 }
 
 void SerialThread::dispatch(const Frame& f) {
+    /* A frame whose payload is the wrong size for its id is REFUSED, not
+     * dispatched zero-filled. Counted so a contract drift between the two sides
+     * shows up as a number instead of as hardware doing something odd. */
     switch (f.id) {
-        case ServoRequest_ID: System::servo().pushCommand(_frameas<ServoRequest>(f)); break;
-        case MassRequest_ID:  System::mass().pushCommand(_frameas<MassRequest>(f));   break;
-        case LEDRequest_ID:   System::leds().pushCommand(_frameas<LEDRequest>(f));    break;
-        case PhRequest_ID:    System::ph().pushCommand(_frameas<PhRequest>(f));       break;
-        default: break;
+        case ServoRequest_ID: {
+            ServoRequest r;
+            if (_frameas(f, r)) System::servo().pushCommand(r); else ++_badPayload;
+            break;
+        }
+        case MassRequest_ID: {
+            MassRequest r;
+            if (_frameas(f, r)) System::mass().pushCommand(r); else ++_badPayload;
+            break;
+        }
+        case LEDRequest_ID: {
+            LEDRequest r;
+            if (_frameas(f, r)) System::leds().pushCommand(r); else ++_badPayload;
+            break;
+        }
+        case PhRequest_ID: {
+            PhRequest r;
+            if (_frameas(f, r)) System::ph().pushCommand(r); else ++_badPayload;
+            break;
+        }
+        default: ++_unknownId; break;
     }
 }
