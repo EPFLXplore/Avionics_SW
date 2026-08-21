@@ -13,7 +13,7 @@
 ../System/Threads/Src/LedsThread.cpp:24:6:virtual void LedsThread::init()	1
 ../System/Threads/Src/LedsThread.cpp:60:6:virtual void LedsThread::loop()	10
 ../System/Threads/Src/LedsThread.cpp:99:6:void LedsThread::applyToEverySystem()	2
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:112:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:147:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:116:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:71:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3

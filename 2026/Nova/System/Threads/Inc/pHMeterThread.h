@@ -129,12 +129,27 @@ struct PhType {
      * proportional to absolute temperature (0.1984 * T mV/pH) while this board
      * has no temperature sensor. Nexus replays a measured calibration over
      * PhRequest on every link-up, same path as the mass slopes. */
-    float slope  = -17.417130f;        // pH per volt  (ideal would be -16.904)
-    float offset =   7.128631f;        // pH at 0 V differential (ideal 7.0)
+    /* DFRobot probe, fitted 2026-08-20. A different electrode from the three
+     * fits tabulated above - those belong to the previous probe and are kept
+     * only as a record of how a calibration series reads. Do not compare across
+     * the swap; asymmetry potential and slope are per-electrode.
+     *
+     *   53.37 mV/pH = 90.2% of theoretical, -82.6 mV asymmetry at pH 7
+     *
+     * Both numbers are marginal and flagged for re-check: 90.2% clears the
+     * script's "good" band by 0.2%, and -82.6 mV is ~2.8x outside the +-30 mV
+     * a healthy glass electrode holds. A resistive leak on the input measured
+     * the same day (14.7 GOhm open-circuit, falling to 2-4 GOhm) attenuates the
+     * slope and drags the offset negative together - exactly this shape. Refit
+     * with a dry BNC before trusting these. */
+    float slope  = -18.736416f;        // pH per volt  (ideal would be -16.904)
+    float offset =   5.452840f;        // pH at 0 V differential (ideal 7.0)
 
     float volts  = 0.0f;               // last raw differential reading [V]
     float ph     = 0.0f;               // last averaged, calibrated pH
-    float window[PH_AVG_SIZE] = {};    // moving-average ring
+    float window[PH_AVG_SIZE] = {};    // moving-average ring, in VOLTS (see .cpp:
+                                       // averaging the raw quantity keeps the
+                                       // window valid across a calibration change)
     uint8_t filled = 0;                // samples in `window` so far (< PH_AVG_SIZE while warming up)
 
     uint8_t probe = 0;                 // ADS1114::probe() verdict, debugger-visible

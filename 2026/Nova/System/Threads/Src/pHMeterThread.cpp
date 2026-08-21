@@ -104,19 +104,36 @@ void pHMeterThread::sample(PhType& device){
     }
     device.volts = volts;
 
-    // Moving average over the calibrated value. Averaging pH rather than volts
-    // is equivalent here (the map is affine) and keeps the window meaningful if
-    // a calibration arrives mid-run.
-    const float ph = device.slope * volts + device.offset;
-
+    /* Moving average over VOLTS, with the calibration applied after the mean.
+     *
+     * This used to average the calibrated pH, on the reasoning that the map is
+     * affine so the two are equivalent. They are - but only while the
+     * calibration is CONSTANT across the window, which is exactly when it is
+     * not. The window is never cleared, so a calibration arriving mid-run left
+     * the ring holding values computed under the OLD slope/offset while new ones
+     * came in under the new pair, and the mean of those is not a pH under either
+     * calibration. For PH_AVG_SIZE samples (6.25 s at ~1.6 Hz) the topic then
+     * published a blend of two coordinate systems.
+     *
+     * That is not academic: calibrate_ph.sh switches to the identity (slope 1,
+     * offset 0) to read raw volts, and the blend made the topic report ~0.89 -
+     * neither a voltage nor a pH - long enough for the script's own range check
+     * to declare the calibration had not been applied when it had.
+     *
+     * Averaging the raw quantity fixes it at the root: the window holds volts,
+     * which mean nothing calibration-dependent, so a new slope/offset applies to
+     * the whole history at once and the very next published value is correct.
+     * No flush, no blend, no transient. Same arithmetic otherwise - for a fixed
+     * calibration this is bit-for-bit the old behaviour, since
+     * mean(m*v + b) == m*mean(v) + b. */
     for (uint8_t i = PH_AVG_SIZE - 1; i > 0; --i)
         device.window[i] = device.window[i - 1];
-    device.window[0] = ph;
+    device.window[0] = volts;
     if (device.filled < PH_AVG_SIZE) ++device.filled;
 
     float sum = 0.0f;
     for (uint8_t i = 0; i < device.filled; ++i) sum += device.window[i];
-    device.ph = sum / static_cast<float>(device.filled);
+    device.ph = device.slope * (sum / static_cast<float>(device.filled)) + device.offset;
 }
 
 void pHMeterThread::publish(PhType& device){

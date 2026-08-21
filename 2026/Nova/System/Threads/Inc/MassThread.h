@@ -74,13 +74,23 @@ struct MassType {
 	uint8_t globalId = NO_DEVICE;
 	HX711 hx;                          // each _cell owns its sensor (no pointers)
 	float offset = 0.0f;
-	float slope = 0.0005106881f;  // FALLBACK ONLY: mass_cal.yaml on the RPi is the
+	float slope = 0.0005157476f;  // FALLBACK ONLY: mass_cal.yaml on the RPi is the
                               // source of truth, replayed over MassRequest on every link-up.
-                              // Kept EQUAL to both slopes in that file: this value only ever
-                              // reaches a reading when the replay did not arrive, so a stale
-                              // one turns a comms failure into wrong numbers instead of the
-                              // same numbers. It was -0.0014164446f, which was both 2.7x off
-                              // and the opposite SIGN - a lost link inverted the load direction.
+                              // One fallback for every cell, and this one holds the sand_rocks
+                              // slope from that file (id 0). drill is now
+                              // separately calibrated at ~2.8x LARGER, so a lost link leaves
+                              // the drill cell reading ~2.8x LIGHT until the replay lands. One
+                              // fallback cannot serve both cells: pointing it at drill would
+                              // only move that error onto sand_rocks.
+                              // This value only ever reaches a reading when the replay did not
+                              // arrive, so a stale one turns a comms failure into wrong numbers
+                              // instead of the same numbers. Two earlier fallbacks lived here:
+                              // 0.0014233825f (a superseded sand_rocks calibration, ~2.8x
+                              // HEAVY against this one) and -0.0014164446f (that same gain with
+                              // the load direction inverted). Neither is a second opinion on
+                              // this cell - do not "restore" either one. Note the trap: both
+                              // land within ~0.3% of drill's CURRENT slope, so a number that
+                              // "looks familiar" here is not evidence it belongs to this cell.
 	float weight = 0.0f;
 	float buffer[AVG_SIZE] = {};
 	// Live diagnostics. Members of the static MassThread (fixed addresses), so

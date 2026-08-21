@@ -33,6 +33,8 @@ namespace ThreadCfg {
     constexpr uint32_t    STACK_SIZE    = 2048;  // match DEFAULT_STACK_SIZE idea
 }
 
+
+
 /**
  * @brief Placeholder struct for MessageThread parameters that are not used.
  * For example, a thread that only publishes status can use MessageThread<EmptyMessage, MyStatus>.
@@ -107,6 +109,8 @@ public:
               ThreadCfg::QUEUE_DEPTH,            // default command depth
               ThreadCfg::QUEUE_DEPTH)            // default status depth
     {}
+
+
 
     /// Thread(const char* name, osPriority priority)
     MessageThread(const char* name, osPriority priority)

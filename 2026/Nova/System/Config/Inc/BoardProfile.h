@@ -186,6 +186,11 @@ enum class DeviceType : uint8_t {
     LedStrip,   ///< WS2812 over PWM+DMA -> LedsThread     | no id (one in the rover)
 };
 
+
+
+
+
+
 /** One slot's occupancy: what is in it, and which device that is where the kind
  *  is addressable. Indexed by ConnType, stored as slots[] on the profile. */
 struct Slot {
