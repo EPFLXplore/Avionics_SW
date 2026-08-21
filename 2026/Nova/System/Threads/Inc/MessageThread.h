@@ -29,7 +29,7 @@
 // ----------------------------------------------------------------------------
 namespace ThreadCfg {
     constexpr uint32_t    TICK_DELAY_MS = 10;
-    constexpr std::size_t QUEUE_DEPTH   = 5;
+    constexpr std::size_t QUEUE_DEPTH   = 50;
     constexpr uint32_t    STACK_SIZE    = 2048;  // match DEFAULT_STACK_SIZE idea
 }
 
