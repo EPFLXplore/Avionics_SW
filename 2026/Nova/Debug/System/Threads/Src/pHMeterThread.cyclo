@@ -10,7 +10,7 @@
 ../System/Threads/Src/pHMeterThread.cpp:26:6:virtual void pHMeterThread::loop()	4
 ../System/Threads/Src/pHMeterThread.cpp:61:6:void pHMeterThread::sample(PhType&)	9
 ../System/Threads/Src/pHMeterThread.cpp:117:6:void pHMeterThread::publish(PhType&)	2
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = PhRequest; StatusMsg = PhPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = PhRequest; StatusMsg = PhPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:99:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = PhRequest; StatusMsg = PhPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = PhRequest; StatusMsg = PhPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:72:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = PhRequest; StatusMsg = PhPacket]	3

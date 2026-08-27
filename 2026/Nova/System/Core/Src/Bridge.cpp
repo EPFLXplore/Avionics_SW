@@ -42,9 +42,22 @@ void BridgeSystemInit(void) {
 
 /* Called from usbd_cdc_if.c  (CDC_Receive_FS, USB IRQ) when a CDC OUT packet
  * arrives. Copies the bytes into the transport, then re-arms reception. */
+/* The buffer the CDC stack hands us each time. Remembered so Cdc_ArmRx() can
+ * re-arm later, from thread context, with the same one. */
+static uint8_t* s_rxBuf = nullptr;
+
 void Cdc_onRxISR(uint8_t* buf, uint32_t len) {
-	CdcTransport::dispatchRxISR(buf, static_cast<uint16_t>(len));
+	s_rxBuf = buf;
+	if (!CdcTransport::dispatchRxISR(buf, static_cast<uint16_t>(len)))
+		return;   // refused: leave the endpoint un-armed, the host NAKs and retries
+
 	USBD_CDC_SetRxBuffer(&hUsbDeviceFS, buf);
+	USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+}
+
+void Cdc_ArmRx(void) {
+	if (!s_rxBuf) return;   // nothing ever arrived, so nothing to re-arm
+	USBD_CDC_SetRxBuffer(&hUsbDeviceFS, s_rxBuf);
 	USBD_CDC_ReceivePacket(&hUsbDeviceFS);
 }
 

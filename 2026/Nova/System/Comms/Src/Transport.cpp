@@ -10,6 +10,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "usbd_cdc_if.h" // CDC_Transmit_FS, USBD_OK
+#include "Bridge.h"       // Cdc_ArmRx()
 
 /* The single transport the CDC ISR forwards to (set in begin()). */
 static CdcTransport* gCdc = nullptr;
@@ -20,20 +21,50 @@ void CdcTransport::begin() {
 
 /* ---- RX: ISR producer, thread consumer (SPSC byte ring) ---------------- */
 
-void CdcTransport::onRxISR(const uint8_t* data, uint16_t len) {
-    for (uint16_t i = 0; i < len; ++i) {
-        uint16_t next = static_cast<uint16_t>((_rxHead + 1) % RX_BUF_SIZE);
-        if (next == _rxTail) break; // ring full -> drop (the framing FSM resyncs)
-        _rxBuf[_rxHead] = data[i];
-        _rxHead = next;
+bool CdcTransport::onRxISR(const uint8_t* data, uint16_t len) {
+    /* Free space, computed once. One slot is always left empty so head==tail
+     * means empty rather than full. */
+    const uint16_t head = _rxHead, tail = _rxTail;
+    const uint16_t used = static_cast<uint16_t>((head - tail) % RX_BUF_SIZE);
+    const uint16_t room = static_cast<uint16_t>(RX_BUF_SIZE - 1 - used);
+
+    /* ALL OR NOTHING. Copying a prefix is what used to destroy frames: the tail
+     * of the packet vanished, the parser sat in Payload waiting for bytes that
+     * no longer existed, and it then ate the next frame's header. Refusing the
+     * whole packet leaves it on the wire for the host to retry. */
+    if (len > room) {
+        ++_rxDeferred;
+        _rxArmPending = true;
+        return false;
     }
+
+    uint16_t next = head;
+    for (uint16_t i = 0; i < len; ++i) {
+        _rxBuf[next] = data[i];
+        next = static_cast<uint16_t>((next + 1) % RX_BUF_SIZE);
+    }
+    _rxHead = next;
+    return true;
 }
 
 uint16_t CdcTransport::read(uint8_t* destination, uint16_t maxLen) {
+    /* Thread context, so this is where the ISR's flush request is honoured. */
+    if (_rxFlush) {
+        _rxFlush = false;
+        _rxTail  = _rxHead;   // discard the previous link's bytes
+    }
+
     uint16_t count = 0;
     while (count < maxLen && _rxTail != _rxHead) {
     	destination[count++] = _rxBuf[_rxTail];
         _rxTail = static_cast<uint16_t>((_rxTail + 1) % RX_BUF_SIZE);
+    }
+
+    /* Room again: take the endpoint off NAK. Deliberately after the drain, so
+     * the host only resumes once there is somewhere to put the retry. */
+    if (_rxArmPending && count) {
+        _rxArmPending = false;
+        Cdc_ArmRx();
     }
     return count;
 }
@@ -71,18 +102,28 @@ void CdcTransport::reset() {
      * and this function can never interleave. */
     _head = _tail = 0;   // discard anything queued for the link that just died
     _off = 0;
+
+    /* RX is stale too: bytes from the previous link cannot be part of any frame
+     * the new one will send. Flagged rather than done here - _rxTail belongs to
+     * the thread, and an ISR writing it would race the drain. read() honours it.
+     *
+     * _linkReset rides along so the protocol can resync its parser: a frame left
+     * half-built when the cable went away must not be spliced onto the first
+     * frame of the new link. */
+    _rxFlush   = true;
+    _linkReset = true;
     _zeroLengthPacket = false;
     _busy = false;       // the missing half of USBD_CDC_Init's TxState = 0
     _busySince = 0;
 }
 
-void CdcTransport::serviceTx(uint32_t nowTicks) {
+void CdcTransport::serviceLink(uint32_t nowMs) {
     taskENTER_CRITICAL();
     if (!_busy) {
         _busySince = 0;                  // idle, or a transfer completed normally
     } else if (_busySince == 0) {
-        _busySince = nowTicks ? nowTicks : 1; // first tick we saw it busy (0 = sentinel)
-    } else if ((nowTicks - _busySince) >= TX_TIMEOUT_TICKS) {
+        _busySince = nowMs ? nowMs : 1; // first tick we saw it busy (0 = sentinel)
+    } else if ((nowMs - _busySince) >= TX_TIMEOUT_TICKS) {
         // The completion is never coming. Releasing the flag is safe even if the
         // transfer is somehow still live: CDC_Transmit_FS re-checks TxState and
         // returns USBD_BUSY, which pump() handles by leaving the frame queued.
@@ -132,8 +173,14 @@ void CdcTransport::pump() {
 
 /* ---- static forwarders to the singleton (called by the C bridge) -------- */
 
-void CdcTransport::dispatchRxISR(const uint8_t* data, uint16_t len) {
-    if (gCdc) gCdc->onRxISR(data, len);
+bool CdcTransport::linkReset() {
+    const bool was = _linkReset;
+    _linkReset = false;
+    return was;
+}
+
+bool CdcTransport::dispatchRxISR(const uint8_t* data, uint16_t len) {
+    return gCdc ? gCdc->onRxISR(data, len) : false;
 }
 
 void CdcTransport::dispatchTxCpltISR() {

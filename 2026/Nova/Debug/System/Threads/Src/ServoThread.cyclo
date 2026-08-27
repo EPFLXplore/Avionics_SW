@@ -20,9 +20,9 @@
 ../System/Threads/Src/ServoThread.cpp:14:6:virtual void ServoThread::init()	3
 ../System/Threads/Src/ServoThread.cpp:54:6:virtual void ServoThread::loop()	9
 ../System/Threads/Src/ServoThread.cpp:77:6:void ServoThread::apply(const ServoRequest&, uint8_t, bool)	11
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:99:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:149:13:void bindSlots(T (&)[N], DeviceType) [with SlotGroup G = SlotGroup::Pwm; T = PWMDriver; unsigned int N = 4]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:165:11:T* deviceFor(T (&)[N], uint8_t) [with T = PWMDriver; unsigned int N = 4]	4
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:72:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = ServoRequest; StatusMsg = EmptyMessage]	3

@@ -20,14 +20,17 @@ class SerialThread : public Thread {
     void init() override;
     void loop() override;
 
-  private:
-    /* The largest payload this link carries. The only place the number is
+  public:
+    /* Public so SerialThread.cpp's frame-size asserts can name FRAME_OVERHEAD.
+     * The largest payload this link carries. The only place the number is
      * written: Proto derives MAX_FRAME from it, and the static_assert below
      * makes the transport's TX slots agree rather than hoping they do. */
     static constexpr std::size_t SERIAL_MAX_PAYLOAD = 128;
 
     using Proto = SerialProtocol<SERIAL_MAX_PAYLOAD, CdcTransport>;
     using Frame = Proto::Frame;
+
+  private:
 
     /* CdcTransport sizes its TX ring slots itself, so nothing in the type system
      * forces them to fit a full protocol frame - a payload cap raised here would
@@ -37,6 +40,10 @@ class SerialThread : public Thread {
                   "CdcTransport::MAX_FRAME to match SERIAL_MAX_PAYLOAD + overhead");
 
     void dispatch(const Frame& f);
+
+    /** Link re-establishments seen. Diagnostic only - the MCU has nothing to
+     *  redo on link-up, since every worker's state is its own. */
+    uint32_t _linkResets = 0;
 
     CdcTransport _io;
     Proto _proto{_io};

@@ -1,9 +1,10 @@
 ../System/Core/Src/Bridge.cpp:34:5:int WS2812_FrameCompleteISR(TIM_HandleTypeDef*)	2
 ../System/Core/Src/Bridge.cpp:39:6:void BridgeSystemInit()	1
-../System/Core/Src/Bridge.cpp:45:6:void Cdc_onRxISR(uint8_t*, uint32_t)	1
-../System/Core/Src/Bridge.cpp:53:6:void Cdc_onTxCpltISR()	1
-../System/Core/Src/Bridge.cpp:62:6:void Cdc_onCdcInit()	1
-../System/Core/Src/Bridge.cpp:68:6:void Bridge_UsbSerial(uint8_t*, uint16_t*)	1
-../System/Core/Src/Bridge.cpp:82:16:uint8_t Board_ReadStraps()	4
-../System/Core/Src/Bridge.cpp:100:6:void Board_LatchMasterId()	2
-../System/Core/Src/Bridge.cpp:107:9:uint8_t Board_MasterId()	2
+../System/Core/Src/Bridge.cpp:49:6:void Cdc_onRxISR(uint8_t*, uint32_t)	2
+../System/Core/Src/Bridge.cpp:58:6:void Cdc_ArmRx()	2
+../System/Core/Src/Bridge.cpp:66:6:void Cdc_onTxCpltISR()	1
+../System/Core/Src/Bridge.cpp:75:6:void Cdc_onCdcInit()	1
+../System/Core/Src/Bridge.cpp:81:6:void Bridge_UsbSerial(uint8_t*, uint16_t*)	1
+../System/Core/Src/Bridge.cpp:95:16:uint8_t Board_ReadStraps()	4
+../System/Core/Src/Bridge.cpp:113:6:void Board_LatchMasterId()	2
+../System/Core/Src/Bridge.cpp:120:9:uint8_t Board_MasterId()	2

@@ -17,9 +17,9 @@
 ../System/Threads/Src/MassThread.cpp:164:6:void MassThread::beginTare(MassType&)	1
 ../System/Threads/Src/MassThread.cpp:178:6:void MassThread::stepTare(MassType&)	9
 ../System/Threads/Src/MassThread.cpp:216:6:void MassThread::commitTare(MassType&)	5
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:99:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:149:13:void bindSlots(T (&)[N], DeviceType) [with SlotGroup G = SlotGroup::Connectors; T = MassType; unsigned int N = 2]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:165:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:72:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3

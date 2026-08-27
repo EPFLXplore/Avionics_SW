@@ -28,7 +28,10 @@
 namespace ThreadCfg {
     constexpr uint32_t    TICK_DELAY_MS = 10;
     constexpr std::size_t QUEUE_DEPTH   = 5;
-    constexpr uint32_t    STACK_SIZE    = 2048;  // match DEFAULT_STACK_SIZE idea
+    /* 4096, matching Thread::STACK_BYTES. Asking for less does NOT save memory:
+     * _stackBuffer is statically sized at 4 KB per thread whatever we request,
+     * so 2048 left half of every thread's stack allocated and unreachable. */
+    constexpr uint32_t    STACK_SIZE    = 4096;
 }
 
 

@@ -13,7 +13,7 @@
 ../System/Threads/Src/LedsThread.cpp:20:6:virtual void LedsThread::init()	32	static
 ../System/Threads/Src/LedsThread.cpp:40:6:virtual void LedsThread::loop()	24	static
 ../System/Threads/Src/LedsThread.cpp:79:6:void LedsThread::applyToEverySystem()	24	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	32	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	40	static,ignoring_inline_asm
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:99:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	32	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:72:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	40	static,ignoring_inline_asm
