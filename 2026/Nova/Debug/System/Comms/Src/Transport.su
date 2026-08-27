@@ -4,9 +4,9 @@
 ../System/Comms/Src/Transport.cpp:74:6:bool CdcTransport::write(const uint8_t*, uint16_t)	32	static
 ../System/Comms/Src/Transport.cpp:92:6:void CdcTransport::reset()	16	static
 ../System/Comms/Src/Transport.cpp:120:6:void CdcTransport::serviceLink(uint32_t)	16	static
-../System/Comms/Src/Transport.cpp:138:6:void CdcTransport::onTxCpltISR()	24	static
-../System/Comms/Src/Transport.cpp:156:6:void CdcTransport::pump()	24	static
-../System/Comms/Src/Transport.cpp:176:6:bool CdcTransport::linkReset()	24	static
-../System/Comms/Src/Transport.cpp:182:6:static bool CdcTransport::dispatchRxISR(const uint8_t*, uint16_t)	16	static
-../System/Comms/Src/Transport.cpp:186:6:static void CdcTransport::dispatchTxCpltISR()	8	static
-../System/Comms/Src/Transport.cpp:190:6:static void CdcTransport::dispatchReset()	8	static
+../System/Comms/Src/Transport.cpp:147:6:void CdcTransport::onTxCpltISR()	24	static
+../System/Comms/Src/Transport.cpp:165:6:void CdcTransport::pump()	24	static
+../System/Comms/Src/Transport.cpp:185:6:bool CdcTransport::linkReset()	24	static
+../System/Comms/Src/Transport.cpp:191:6:static bool CdcTransport::dispatchRxISR(const uint8_t*, uint16_t)	16	static
+../System/Comms/Src/Transport.cpp:208:6:static void CdcTransport::dispatchTxCpltISR()	8	static
+../System/Comms/Src/Transport.cpp:212:6:static void CdcTransport::dispatchReset()	8	static

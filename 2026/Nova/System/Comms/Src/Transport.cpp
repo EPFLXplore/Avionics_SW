@@ -118,6 +118,15 @@ void CdcTransport::reset() {
 }
 
 void CdcTransport::serviceLink(uint32_t nowMs) {
+    /* A re-arm that never happened is a dead link, so do not rely on read()
+     * alone to clear it: read() only re-arms when it actually moved bytes, and a
+     * refusal that lands when the consumer has already drained would otherwise
+     * sit here forever. Cheap, and it makes the failure self-healing. */
+    if (_rxArmPending && _rxTail == _rxHead) {
+        _rxArmPending = false;
+        Cdc_ArmRx();
+    }
+
     taskENTER_CRITICAL();
     if (!_busy) {
         _busySince = 0;                  // idle, or a transfer completed normally
@@ -180,7 +189,20 @@ bool CdcTransport::linkReset() {
 }
 
 bool CdcTransport::dispatchRxISR(const uint8_t* data, uint16_t len) {
-    return gCdc ? gCdc->onRxISR(data, len) : false;
+    /* No transport registered yet. begin() runs in TASK context, and the host
+     * can write long before that - Nexus sends its flush preamble the instant it
+     * opens the port, and it is already running and retrying when a board
+     * enumerates. There is nothing to hold these bytes, so they are dropped.
+     *
+     * But TRUE, not false. False here means "refused, leave the endpoint
+     * un-armed and let the host retry" - and nothing would ever re-arm it,
+     * because read() only does so when a refusal is outstanding and there is a
+     * transport to have recorded one. The endpoint would stay dark for the life
+     * of the boot: TX keeps heartbeating, RX never receives another byte, and
+     * every command of every id is silently lost. */
+    if (!gCdc) return true;
+
+    return gCdc->onRxISR(data, len);
 }
 
 void CdcTransport::dispatchTxCpltISR() {

@@ -12,7 +12,15 @@
 
 /** Danger zone: changing the stack size might create very nasty bugs. Capped by
  *  Thread::start() to the per-thread static buffer (STACK_BYTES). */
-inline constexpr uint32_t DEFAULT_STACK_SIZE = 2048;
+/* 4096, matching Thread::STACK_BYTES - the per-task buffer is statically sized
+ * at 4 KB whatever we ask for, so anything less just leaves part of it
+ * unreachable. It is NOT free to get this wrong: SerialThread derives from
+ * Thread directly (not MessageThread), so it takes THIS default, and its
+ * SerialProtocol::poll() frame is 1240 bytes once RX_CHUNK is a full USB-FS
+ * frame. At 2048 that plus the TX path and the interrupt frame ran the task
+ * stack out, and a static FreeRTOS task with no overflow checking simply
+ * corrupts whatever sits next to it. */
+inline constexpr uint32_t DEFAULT_STACK_SIZE = 4096;
 
 
 void taskRun(void* arg) {
