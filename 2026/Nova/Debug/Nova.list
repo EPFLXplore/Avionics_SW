@@ -27,9 +27,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000191ec  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0005286d  00000000  00000000  0001921c  2**0
+ 12 .debug_info   0005286c  00000000  00000000  0001921c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000bd97  00000000  00000000  0006ba89  2**0
+ 13 .debug_abbrev 0000bd97  00000000  00000000  0006ba88  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 00002f98  00000000  00000000  00077820  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -52353,7 +52353,7 @@ void SerialThread::loop() {
  80146c6:	f107 0210 	add.w	r2, r7, #16
  80146ca:	2305      	movs	r3, #5
  80146cc:	2101      	movs	r1, #1
- 80146ce:	f000 fa17 	bl	8014b00 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
+ 80146ce:	f000 fa16 	bl	8014afe <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
  80146d2:	f7fe f861 	bl	8012798 <_ZN6System4massEv>
  80146d6:	4603      	mov	r3, r0
  80146d8:	627b      	str	r3, [r7, #36]	@ 0x24
@@ -52392,7 +52392,7 @@ void SerialThread::loop() {
  801471c:	f107 020c 	add.w	r2, r7, #12
  8014720:	2304      	movs	r3, #4
  8014722:	2103      	movs	r1, #3
- 8014724:	f000 f9ec 	bl	8014b00 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
+ 8014724:	f000 f9eb 	bl	8014afe <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
  8014728:	f7fe f86e 	bl	8012808 <_ZN6System2phEv>
  801472c:	4603      	mov	r3, r0
  801472e:	623b      	str	r3, [r7, #32]
@@ -52431,7 +52431,7 @@ void SerialThread::loop() {
  8014772:	f107 0208 	add.w	r2, r7, #8
  8014776:	2301      	movs	r3, #1
  8014778:	2102      	movs	r1, #2
- 801477a:	f000 f9c1 	bl	8014b00 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
+ 801477a:	f000 f9c0 	bl	8014afe <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>
  801477e:	f7fe f8d7 	bl	8012930 <_ZN6System9heartbeatEv>
  8014782:	4603      	mov	r3, r0
  8014784:	61fb      	str	r3, [r7, #28]
@@ -52496,7 +52496,7 @@ void SerialThread::dispatch(const Frame& f) {
  80147f4:	f107 0324 	add.w	r3, r7, #36	@ 0x24
  80147f8:	4619      	mov	r1, r3
  80147fa:	6838      	ldr	r0, [r7, #0]
- 80147fc:	f000 fa18 	bl	8014c30 <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
+ 80147fc:	f000 fa17 	bl	8014c2e <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
  8014800:	4603      	mov	r3, r0
  8014802:	2b00      	cmp	r3, #0
  8014804:	d018      	beq.n	8014838 <_ZN12SerialThread8dispatchERKN14SerialProtocolILj128E12CdcTransportE5FrameE+0x70>
@@ -52540,7 +52540,7 @@ void SerialThread::dispatch(const Frame& f) {
  8014856:	f107 031c 	add.w	r3, r7, #28
  801485a:	4619      	mov	r1, r3
  801485c:	6838      	ldr	r0, [r7, #0]
- 801485e:	f000 fa02 	bl	8014c66 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
+ 801485e:	f000 fa01 	bl	8014c64 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
  8014862:	4603      	mov	r3, r0
  8014864:	2b00      	cmp	r3, #0
  8014866:	d018      	beq.n	801489a <_ZN12SerialThread8dispatchERKN14SerialProtocolILj128E12CdcTransportE5FrameE+0xd2>
@@ -52584,7 +52584,7 @@ void SerialThread::dispatch(const Frame& f) {
  80148b8:	f107 0318 	add.w	r3, r7, #24
  80148bc:	4619      	mov	r1, r3
  80148be:	6838      	ldr	r0, [r7, #0]
- 80148c0:	f000 f9ec 	bl	8014c9c <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
+ 80148c0:	f000 f9eb 	bl	8014c9a <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
  80148c4:	4603      	mov	r3, r0
  80148c6:	2b00      	cmp	r3, #0
  80148c8:	d018      	beq.n	80148fc <_ZN12SerialThread8dispatchERKN14SerialProtocolILj128E12CdcTransportE5FrameE+0x134>
@@ -52628,7 +52628,7 @@ void SerialThread::dispatch(const Frame& f) {
  801491a:	f107 030c 	add.w	r3, r7, #12
  801491e:	4619      	mov	r1, r3
  8014920:	6838      	ldr	r0, [r7, #0]
- 8014922:	f000 f9d5 	bl	8014cd0 <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
+ 8014922:	f000 f9d4 	bl	8014cce <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>
  8014926:	4603      	mov	r3, r0
  8014928:	2b00      	cmp	r3, #0
  801492a:	d018      	beq.n	801495e <_ZN12SerialThread8dispatchERKN14SerialProtocolILj128E12CdcTransportE5FrameE+0x196>
@@ -52773,7 +52773,7 @@ void SerialThread::dispatch(const Frame& f) {
  8014a44:	d006      	beq.n	8014a54 <_ZN14SerialProtocolILj128E12CdcTransportE4tickEm+0x3c>
             reset();              // drop any half-built frame from the old link
  8014a46:	6878      	ldr	r0, [r7, #4]
- 8014a48:	f000 f95d 	bl	8014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
+ 8014a48:	f000 f95c 	bl	8014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
             _linkChanged = true;  // hand it on; the app consumes via linkReset()
  8014a4c:	687b      	ldr	r3, [r7, #4]
  8014a4e:	2201      	movs	r2, #1
@@ -52819,504 +52819,505 @@ void SerialThread::dispatch(const Frame& f) {
     template <class OnFrame>
     void poll(OnFrame&& onFrame) {
  8014a82:	b580      	push	{r7, lr}
- 8014a84:	f5ad 6d9a 	sub.w	sp, sp, #1232	@ 0x4d0
- 8014a88:	af00      	add	r7, sp, #0
- 8014a8a:	f507 639a 	add.w	r3, r7, #1232	@ 0x4d0
- 8014a8e:	f2a3 43cc 	subw	r3, r3, #1228	@ 0x4cc
- 8014a92:	6018      	str	r0, [r3, #0]
- 8014a94:	f507 639a 	add.w	r3, r7, #1232	@ 0x4d0
- 8014a98:	f5a3 639a 	sub.w	r3, r3, #1232	@ 0x4d0
- 8014a9c:	6019      	str	r1, [r3, #0]
+ 8014a84:	b0c4      	sub	sp, #272	@ 0x110
+ 8014a86:	af00      	add	r7, sp, #0
+ 8014a88:	f507 7388 	add.w	r3, r7, #272	@ 0x110
+ 8014a8c:	f5a3 7386 	sub.w	r3, r3, #268	@ 0x10c
+ 8014a90:	6018      	str	r0, [r3, #0]
+ 8014a92:	f507 7388 	add.w	r3, r7, #272	@ 0x110
+ 8014a96:	f5a3 7388 	sub.w	r3, r3, #272	@ 0x110
+ 8014a9a:	6019      	str	r1, [r3, #0]
         uint8_t chunk[RX_CHUNK];
         const uint16_t got = _io.read(chunk, sizeof chunk);
- 8014a9e:	f507 639a 	add.w	r3, r7, #1232	@ 0x4d0
- 8014aa2:	f2a3 43cc 	subw	r3, r3, #1228	@ 0x4cc
+ 8014a9c:	f507 7388 	add.w	r3, r7, #272	@ 0x110
+ 8014aa0:	f5a3 7386 	sub.w	r3, r3, #268	@ 0x10c
+ 8014aa4:	681b      	ldr	r3, [r3, #0]
  8014aa6:	681b      	ldr	r3, [r3, #0]
- 8014aa8:	681b      	ldr	r3, [r3, #0]
- 8014aaa:	f107 010c 	add.w	r1, r7, #12
- 8014aae:	f44f 6298 	mov.w	r2, #1216	@ 0x4c0
- 8014ab2:	4618      	mov	r0, r3
- 8014ab4:	f7fb fe07 	bl	80106c6 <_ZN12CdcTransport4readEPht>
- 8014ab8:	4603      	mov	r3, r0
- 8014aba:	f8a7 34ce 	strh.w	r3, [r7, #1230]	@ 0x4ce
+ 8014aa8:	f107 010c 	add.w	r1, r7, #12
+ 8014aac:	f44f 7280 	mov.w	r2, #256	@ 0x100
+ 8014ab0:	4618      	mov	r0, r3
+ 8014ab2:	f7fb fe08 	bl	80106c6 <_ZN12CdcTransport4readEPht>
+ 8014ab6:	4603      	mov	r3, r0
+ 8014ab8:	f8a7 310e 	strh.w	r3, [r7, #270]	@ 0x10e
         if (got) parse(chunk, got, onFrame);
- 8014abe:	f8b7 34ce 	ldrh.w	r3, [r7, #1230]	@ 0x4ce
- 8014ac2:	2b00      	cmp	r3, #0
- 8014ac4:	d010      	beq.n	8014ae8 <_ZN14SerialProtocolILj128E12CdcTransportE4pollIZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvOT_+0x66>
- 8014ac6:	f507 639a 	add.w	r3, r7, #1232	@ 0x4d0
- 8014aca:	f5a3 639a 	sub.w	r3, r3, #1232	@ 0x4d0
- 8014ace:	f8b7 24ce 	ldrh.w	r2, [r7, #1230]	@ 0x4ce
- 8014ad2:	f107 010c 	add.w	r1, r7, #12
- 8014ad6:	f507 609a 	add.w	r0, r7, #1232	@ 0x4d0
- 8014ada:	f2a0 40cc 	subw	r0, r0, #1228	@ 0x4cc
- 8014ade:	681b      	ldr	r3, [r3, #0]
- 8014ae0:	6800      	ldr	r0, [r0, #0]
- 8014ae2:	f000 f92e 	bl	8014d42 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_>
+ 8014abc:	f8b7 310e 	ldrh.w	r3, [r7, #270]	@ 0x10e
+ 8014ac0:	2b00      	cmp	r3, #0
+ 8014ac2:	d010      	beq.n	8014ae6 <_ZN14SerialProtocolILj128E12CdcTransportE4pollIZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvOT_+0x64>
+ 8014ac4:	f507 7388 	add.w	r3, r7, #272	@ 0x110
+ 8014ac8:	f5a3 7388 	sub.w	r3, r3, #272	@ 0x110
+ 8014acc:	f8b7 210e 	ldrh.w	r2, [r7, #270]	@ 0x10e
+ 8014ad0:	f107 010c 	add.w	r1, r7, #12
+ 8014ad4:	f507 7088 	add.w	r0, r7, #272	@ 0x110
+ 8014ad8:	f5a0 7086 	sub.w	r0, r0, #268	@ 0x10c
+ 8014adc:	681b      	ldr	r3, [r3, #0]
+ 8014ade:	6800      	ldr	r0, [r0, #0]
+ 8014ae0:	f000 f92e 	bl	8014d40 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_>
         else     staleFrame();   // quiet line: abandon a frame that stopped arriving
     }
- 8014ae6:	e006      	b.n	8014af6 <_ZN14SerialProtocolILj128E12CdcTransportE4pollIZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvOT_+0x74>
+ 8014ae4:	e006      	b.n	8014af4 <_ZN14SerialProtocolILj128E12CdcTransportE4pollIZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvOT_+0x72>
         else     staleFrame();   // quiet line: abandon a frame that stopped arriving
- 8014ae8:	f507 639a 	add.w	r3, r7, #1232	@ 0x4d0
- 8014aec:	f2a3 43cc 	subw	r3, r3, #1228	@ 0x4cc
- 8014af0:	6818      	ldr	r0, [r3, #0]
- 8014af2:	f000 f94e 	bl	8014d92 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv>
+ 8014ae6:	f507 7388 	add.w	r3, r7, #272	@ 0x110
+ 8014aea:	f5a3 7386 	sub.w	r3, r3, #268	@ 0x10c
+ 8014aee:	6818      	ldr	r0, [r3, #0]
+ 8014af0:	f000 f94e 	bl	8014d90 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv>
     }
- 8014af6:	bf00      	nop
- 8014af8:	f507 679a 	add.w	r7, r7, #1232	@ 0x4d0
- 8014afc:	46bd      	mov	sp, r7
- 8014afe:	bd80      	pop	{r7, pc}
+ 8014af4:	bf00      	nop
+ 8014af6:	f507 7788 	add.w	r7, r7, #272	@ 0x110
+ 8014afa:	46bd      	mov	sp, r7
+ 8014afc:	bd80      	pop	{r7, pc}
 
-08014b00 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>:
+08014afe <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt>:
     bool send(uint8_t id, const void* payload, uint16_t len) {
- 8014b00:	b580      	push	{r7, lr}
- 8014b02:	b0aa      	sub	sp, #168	@ 0xa8
- 8014b04:	af00      	add	r7, sp, #0
- 8014b06:	60f8      	str	r0, [r7, #12]
- 8014b08:	607a      	str	r2, [r7, #4]
- 8014b0a:	461a      	mov	r2, r3
- 8014b0c:	460b      	mov	r3, r1
- 8014b0e:	72fb      	strb	r3, [r7, #11]
- 8014b10:	4613      	mov	r3, r2
- 8014b12:	813b      	strh	r3, [r7, #8]
+ 8014afe:	b580      	push	{r7, lr}
+ 8014b00:	b0aa      	sub	sp, #168	@ 0xa8
+ 8014b02:	af00      	add	r7, sp, #0
+ 8014b04:	60f8      	str	r0, [r7, #12]
+ 8014b06:	607a      	str	r2, [r7, #4]
+ 8014b08:	461a      	mov	r2, r3
+ 8014b0a:	460b      	mov	r3, r1
+ 8014b0c:	72fb      	strb	r3, [r7, #11]
+ 8014b0e:	4613      	mov	r3, r2
+ 8014b10:	813b      	strh	r3, [r7, #8]
         if (len == 0 || len > MaxPayload) return false; // drop oversized/empty packets
- 8014b14:	893b      	ldrh	r3, [r7, #8]
- 8014b16:	2b00      	cmp	r3, #0
- 8014b18:	d002      	beq.n	8014b20 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x20>
- 8014b1a:	893b      	ldrh	r3, [r7, #8]
- 8014b1c:	2b80      	cmp	r3, #128	@ 0x80
- 8014b1e:	d901      	bls.n	8014b24 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x24>
- 8014b20:	2300      	movs	r3, #0
- 8014b22:	e081      	b.n	8014c28 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x128>
+ 8014b12:	893b      	ldrh	r3, [r7, #8]
+ 8014b14:	2b00      	cmp	r3, #0
+ 8014b16:	d002      	beq.n	8014b1e <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x20>
+ 8014b18:	893b      	ldrh	r3, [r7, #8]
+ 8014b1a:	2b80      	cmp	r3, #128	@ 0x80
+ 8014b1c:	d901      	bls.n	8014b22 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x24>
+ 8014b1e:	2300      	movs	r3, #0
+ 8014b20:	e081      	b.n	8014c26 <_ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt+0x128>
         uint16_t n = 0;
- 8014b24:	2300      	movs	r3, #0
- 8014b26:	f8a7 30a6 	strh.w	r3, [r7, #166]	@ 0xa6
+ 8014b22:	2300      	movs	r3, #0
+ 8014b24:	f8a7 30a6 	strh.w	r3, [r7, #166]	@ 0xa6
         buf[n++] = STX1;
- 8014b2a:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014b2e:	1c5a      	adds	r2, r3, #1
- 8014b30:	f8a7 20a6 	strh.w	r2, [r7, #166]	@ 0xa6
- 8014b34:	33a8      	adds	r3, #168	@ 0xa8
- 8014b36:	443b      	add	r3, r7
- 8014b38:	22a5      	movs	r2, #165	@ 0xa5
- 8014b3a:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014b28:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014b2c:	1c5a      	adds	r2, r3, #1
+ 8014b2e:	f8a7 20a6 	strh.w	r2, [r7, #166]	@ 0xa6
+ 8014b32:	33a8      	adds	r3, #168	@ 0xa8
+ 8014b34:	443b      	add	r3, r7
+ 8014b36:	22a5      	movs	r2, #165	@ 0xa5
+ 8014b38:	f803 2c94 	strb.w	r2, [r3, #-148]
         buf[n++] = STX2;
- 8014b3e:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014b42:	1c5a      	adds	r2, r3, #1
- 8014b44:	f8a7 20a6 	strh.w	r2, [r7, #166]	@ 0xa6
- 8014b48:	33a8      	adds	r3, #168	@ 0xa8
- 8014b4a:	443b      	add	r3, r7
- 8014b4c:	225a      	movs	r2, #90	@ 0x5a
- 8014b4e:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014b3c:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014b40:	1c5a      	adds	r2, r3, #1
+ 8014b42:	f8a7 20a6 	strh.w	r2, [r7, #166]	@ 0xa6
+ 8014b46:	33a8      	adds	r3, #168	@ 0xa8
+ 8014b48:	443b      	add	r3, r7
+ 8014b4a:	225a      	movs	r2, #90	@ 0x5a
+ 8014b4c:	f803 2c94 	strb.w	r2, [r3, #-148]
         const uint16_t L = static_cast<uint16_t>(len + 1);
- 8014b52:	893b      	ldrh	r3, [r7, #8]
- 8014b54:	3301      	adds	r3, #1
- 8014b56:	f8a7 30a4 	strh.w	r3, [r7, #164]	@ 0xa4
+ 8014b50:	893b      	ldrh	r3, [r7, #8]
+ 8014b52:	3301      	adds	r3, #1
+ 8014b54:	f8a7 30a4 	strh.w	r3, [r7, #164]	@ 0xa4
         buf[n++] = static_cast<uint8_t>(L & 0xFF);
- 8014b5a:	f8b7 30a4 	ldrh.w	r3, [r7, #164]	@ 0xa4
- 8014b5e:	b2da      	uxtb	r2, r3
- 8014b60:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014b64:	1c59      	adds	r1, r3, #1
- 8014b66:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
- 8014b6a:	33a8      	adds	r3, #168	@ 0xa8
- 8014b6c:	443b      	add	r3, r7
- 8014b6e:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014b58:	f8b7 30a4 	ldrh.w	r3, [r7, #164]	@ 0xa4
+ 8014b5c:	b2da      	uxtb	r2, r3
+ 8014b5e:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014b62:	1c59      	adds	r1, r3, #1
+ 8014b64:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
+ 8014b68:	33a8      	adds	r3, #168	@ 0xa8
+ 8014b6a:	443b      	add	r3, r7
+ 8014b6c:	f803 2c94 	strb.w	r2, [r3, #-148]
         buf[n++] = static_cast<uint8_t>((L >> 8) & 0xFF);
- 8014b72:	f8b7 30a4 	ldrh.w	r3, [r7, #164]	@ 0xa4
- 8014b76:	0a1b      	lsrs	r3, r3, #8
- 8014b78:	b29b      	uxth	r3, r3
- 8014b7a:	b2da      	uxtb	r2, r3
- 8014b7c:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014b80:	1c59      	adds	r1, r3, #1
- 8014b82:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
- 8014b86:	33a8      	adds	r3, #168	@ 0xa8
- 8014b88:	443b      	add	r3, r7
- 8014b8a:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014b70:	f8b7 30a4 	ldrh.w	r3, [r7, #164]	@ 0xa4
+ 8014b74:	0a1b      	lsrs	r3, r3, #8
+ 8014b76:	b29b      	uxth	r3, r3
+ 8014b78:	b2da      	uxtb	r2, r3
+ 8014b7a:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014b7e:	1c59      	adds	r1, r3, #1
+ 8014b80:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
+ 8014b84:	33a8      	adds	r3, #168	@ 0xa8
+ 8014b86:	443b      	add	r3, r7
+ 8014b88:	f803 2c94 	strb.w	r2, [r3, #-148]
         buf[n++] = id;
- 8014b8e:	7afa      	ldrb	r2, [r7, #11]
- 8014b90:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014b94:	1c59      	adds	r1, r3, #1
- 8014b96:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
- 8014b9a:	33a8      	adds	r3, #168	@ 0xa8
- 8014b9c:	443b      	add	r3, r7
- 8014b9e:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014b8c:	7afa      	ldrb	r2, [r7, #11]
+ 8014b8e:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014b92:	1c59      	adds	r1, r3, #1
+ 8014b94:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
+ 8014b98:	33a8      	adds	r3, #168	@ 0xa8
+ 8014b9a:	443b      	add	r3, r7
+ 8014b9c:	f803 2c94 	strb.w	r2, [r3, #-148]
         const uint8_t* p = static_cast<const uint8_t*>(payload);
- 8014ba2:	687b      	ldr	r3, [r7, #4]
- 8014ba4:	f8c7 30a0 	str.w	r3, [r7, #160]	@ 0xa0
+ 8014ba0:	687b      	ldr	r3, [r7, #4]
+ 8014ba2:	f8c7 30a0 	str.w	r3, [r7, #160]	@ 0xa0
         std::memcpy(buf + n, p, len);
- 8014ba8:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014bac:	f107 0214 	add.w	r2, r7, #20
- 8014bb0:	4413      	add	r3, r2
- 8014bb2:	893a      	ldrh	r2, [r7, #8]
- 8014bb4:	f8d7 10a0 	ldr.w	r1, [r7, #160]	@ 0xa0
- 8014bb8:	4618      	mov	r0, r3
- 8014bba:	f002 f861 	bl	8016c80 <memcpy>
+ 8014ba6:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014baa:	f107 0214 	add.w	r2, r7, #20
+ 8014bae:	4413      	add	r3, r2
+ 8014bb0:	893a      	ldrh	r2, [r7, #8]
+ 8014bb2:	f8d7 10a0 	ldr.w	r1, [r7, #160]	@ 0xa0
+ 8014bb6:	4618      	mov	r0, r3
+ 8014bb8:	f002 f862 	bl	8016c80 <memcpy>
         n += len;
- 8014bbe:	f8b7 20a6 	ldrh.w	r2, [r7, #166]	@ 0xa6
- 8014bc2:	893b      	ldrh	r3, [r7, #8]
- 8014bc4:	4413      	add	r3, r2
- 8014bc6:	f8a7 30a6 	strh.w	r3, [r7, #166]	@ 0xa6
+ 8014bbc:	f8b7 20a6 	ldrh.w	r2, [r7, #166]	@ 0xa6
+ 8014bc0:	893b      	ldrh	r3, [r7, #8]
+ 8014bc2:	4413      	add	r3, r2
+ 8014bc4:	f8a7 30a6 	strh.w	r3, [r7, #166]	@ 0xa6
         const uint16_t crc = crc16(id, p, len);
- 8014bca:	893a      	ldrh	r2, [r7, #8]
- 8014bcc:	7afb      	ldrb	r3, [r7, #11]
- 8014bce:	f8d7 10a0 	ldr.w	r1, [r7, #160]	@ 0xa0
- 8014bd2:	4618      	mov	r0, r3
- 8014bd4:	f000 f902 	bl	8014ddc <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>
- 8014bd8:	4603      	mov	r3, r0
- 8014bda:	f8a7 309e 	strh.w	r3, [r7, #158]	@ 0x9e
+ 8014bc8:	893a      	ldrh	r2, [r7, #8]
+ 8014bca:	7afb      	ldrb	r3, [r7, #11]
+ 8014bcc:	f8d7 10a0 	ldr.w	r1, [r7, #160]	@ 0xa0
+ 8014bd0:	4618      	mov	r0, r3
+ 8014bd2:	f000 f902 	bl	8014dda <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>
+ 8014bd6:	4603      	mov	r3, r0
+ 8014bd8:	f8a7 309e 	strh.w	r3, [r7, #158]	@ 0x9e
         buf[n++] = static_cast<uint8_t>(crc & 0xFF);
- 8014bde:	f8b7 309e 	ldrh.w	r3, [r7, #158]	@ 0x9e
- 8014be2:	b2da      	uxtb	r2, r3
- 8014be4:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014be8:	1c59      	adds	r1, r3, #1
- 8014bea:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
- 8014bee:	33a8      	adds	r3, #168	@ 0xa8
- 8014bf0:	443b      	add	r3, r7
- 8014bf2:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014bdc:	f8b7 309e 	ldrh.w	r3, [r7, #158]	@ 0x9e
+ 8014be0:	b2da      	uxtb	r2, r3
+ 8014be2:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014be6:	1c59      	adds	r1, r3, #1
+ 8014be8:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
+ 8014bec:	33a8      	adds	r3, #168	@ 0xa8
+ 8014bee:	443b      	add	r3, r7
+ 8014bf0:	f803 2c94 	strb.w	r2, [r3, #-148]
         buf[n++] = static_cast<uint8_t>((crc >> 8) & 0xFF);
- 8014bf6:	f8b7 309e 	ldrh.w	r3, [r7, #158]	@ 0x9e
- 8014bfa:	0a1b      	lsrs	r3, r3, #8
- 8014bfc:	b29b      	uxth	r3, r3
- 8014bfe:	b2da      	uxtb	r2, r3
- 8014c00:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
- 8014c04:	1c59      	adds	r1, r3, #1
- 8014c06:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
- 8014c0a:	33a8      	adds	r3, #168	@ 0xa8
- 8014c0c:	443b      	add	r3, r7
- 8014c0e:	f803 2c94 	strb.w	r2, [r3, #-148]
+ 8014bf4:	f8b7 309e 	ldrh.w	r3, [r7, #158]	@ 0x9e
+ 8014bf8:	0a1b      	lsrs	r3, r3, #8
+ 8014bfa:	b29b      	uxth	r3, r3
+ 8014bfc:	b2da      	uxtb	r2, r3
+ 8014bfe:	f8b7 30a6 	ldrh.w	r3, [r7, #166]	@ 0xa6
+ 8014c02:	1c59      	adds	r1, r3, #1
+ 8014c04:	f8a7 10a6 	strh.w	r1, [r7, #166]	@ 0xa6
+ 8014c08:	33a8      	adds	r3, #168	@ 0xa8
+ 8014c0a:	443b      	add	r3, r7
+ 8014c0c:	f803 2c94 	strb.w	r2, [r3, #-148]
         return _io.write(buf, n);
- 8014c12:	68fb      	ldr	r3, [r7, #12]
- 8014c14:	681b      	ldr	r3, [r3, #0]
- 8014c16:	f8b7 20a6 	ldrh.w	r2, [r7, #166]	@ 0xa6
- 8014c1a:	f107 0114 	add.w	r1, r7, #20
- 8014c1e:	4618      	mov	r0, r3
- 8014c20:	f7fb fdc2 	bl	80107a8 <_ZN12CdcTransport5writeEPKht>
- 8014c24:	4603      	mov	r3, r0
- 8014c26:	bf00      	nop
+ 8014c10:	68fb      	ldr	r3, [r7, #12]
+ 8014c12:	681b      	ldr	r3, [r3, #0]
+ 8014c14:	f8b7 20a6 	ldrh.w	r2, [r7, #166]	@ 0xa6
+ 8014c18:	f107 0114 	add.w	r1, r7, #20
+ 8014c1c:	4618      	mov	r0, r3
+ 8014c1e:	f7fb fdc3 	bl	80107a8 <_ZN12CdcTransport5writeEPKht>
+ 8014c22:	4603      	mov	r3, r0
+ 8014c24:	bf00      	nop
     }
- 8014c28:	4618      	mov	r0, r3
- 8014c2a:	37a8      	adds	r7, #168	@ 0xa8
- 8014c2c:	46bd      	mov	sp, r7
- 8014c2e:	bd80      	pop	{r7, pc}
+ 8014c26:	4618      	mov	r0, r3
+ 8014c28:	37a8      	adds	r7, #168	@ 0xa8
+ 8014c2a:	46bd      	mov	sp, r7
+ 8014c2c:	bd80      	pop	{r7, pc}
 
-08014c30 <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
+08014c2e <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
 bool _frameas(const Frame& f, T& out) {
- 8014c30:	b580      	push	{r7, lr}
- 8014c32:	b082      	sub	sp, #8
- 8014c34:	af00      	add	r7, sp, #0
- 8014c36:	6078      	str	r0, [r7, #4]
- 8014c38:	6039      	str	r1, [r7, #0]
+ 8014c2e:	b580      	push	{r7, lr}
+ 8014c30:	b082      	sub	sp, #8
+ 8014c32:	af00      	add	r7, sp, #0
+ 8014c34:	6078      	str	r0, [r7, #4]
+ 8014c36:	6039      	str	r1, [r7, #0]
     if (f.length != sizeof(T)) return false;
- 8014c3a:	687b      	ldr	r3, [r7, #4]
- 8014c3c:	885b      	ldrh	r3, [r3, #2]
- 8014c3e:	2b0b      	cmp	r3, #11
- 8014c40:	d001      	beq.n	8014c46 <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
- 8014c42:	2300      	movs	r3, #0
- 8014c44:	e00b      	b.n	8014c5e <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
+ 8014c38:	687b      	ldr	r3, [r7, #4]
+ 8014c3a:	885b      	ldrh	r3, [r3, #2]
+ 8014c3c:	2b0b      	cmp	r3, #11
+ 8014c3e:	d001      	beq.n	8014c44 <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
+ 8014c40:	2300      	movs	r3, #0
+ 8014c42:	e00b      	b.n	8014c5c <_ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
     std::memcpy(&out, f.payload.data(), sizeof(T));
- 8014c46:	687b      	ldr	r3, [r7, #4]
- 8014c48:	3304      	adds	r3, #4
- 8014c4a:	4618      	mov	r0, r3
- 8014c4c:	f000 f8f3 	bl	8014e36 <_ZNKSt5arrayIhLj128EE4dataEv>
- 8014c50:	4603      	mov	r3, r0
- 8014c52:	220b      	movs	r2, #11
- 8014c54:	4619      	mov	r1, r3
- 8014c56:	6838      	ldr	r0, [r7, #0]
- 8014c58:	f002 f812 	bl	8016c80 <memcpy>
+ 8014c44:	687b      	ldr	r3, [r7, #4]
+ 8014c46:	3304      	adds	r3, #4
+ 8014c48:	4618      	mov	r0, r3
+ 8014c4a:	f000 f8f3 	bl	8014e34 <_ZNKSt5arrayIhLj128EE4dataEv>
+ 8014c4e:	4603      	mov	r3, r0
+ 8014c50:	220b      	movs	r2, #11
+ 8014c52:	4619      	mov	r1, r3
+ 8014c54:	6838      	ldr	r0, [r7, #0]
+ 8014c56:	f002 f813 	bl	8016c80 <memcpy>
     return true;
- 8014c5c:	2301      	movs	r3, #1
+ 8014c5a:	2301      	movs	r3, #1
 }
- 8014c5e:	4618      	mov	r0, r3
- 8014c60:	3708      	adds	r7, #8
- 8014c62:	46bd      	mov	sp, r7
- 8014c64:	bd80      	pop	{r7, pc}
+ 8014c5c:	4618      	mov	r0, r3
+ 8014c5e:	3708      	adds	r7, #8
+ 8014c60:	46bd      	mov	sp, r7
+ 8014c62:	bd80      	pop	{r7, pc}
 
-08014c66 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
+08014c64 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
 bool _frameas(const Frame& f, T& out) {
- 8014c66:	b580      	push	{r7, lr}
- 8014c68:	b082      	sub	sp, #8
- 8014c6a:	af00      	add	r7, sp, #0
- 8014c6c:	6078      	str	r0, [r7, #4]
- 8014c6e:	6039      	str	r1, [r7, #0]
+ 8014c64:	b580      	push	{r7, lr}
+ 8014c66:	b082      	sub	sp, #8
+ 8014c68:	af00      	add	r7, sp, #0
+ 8014c6a:	6078      	str	r0, [r7, #4]
+ 8014c6c:	6039      	str	r1, [r7, #0]
     if (f.length != sizeof(T)) return false;
- 8014c70:	687b      	ldr	r3, [r7, #4]
- 8014c72:	885b      	ldrh	r3, [r3, #2]
- 8014c74:	2b07      	cmp	r3, #7
- 8014c76:	d001      	beq.n	8014c7c <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
- 8014c78:	2300      	movs	r3, #0
- 8014c7a:	e00b      	b.n	8014c94 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
+ 8014c6e:	687b      	ldr	r3, [r7, #4]
+ 8014c70:	885b      	ldrh	r3, [r3, #2]
+ 8014c72:	2b07      	cmp	r3, #7
+ 8014c74:	d001      	beq.n	8014c7a <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
+ 8014c76:	2300      	movs	r3, #0
+ 8014c78:	e00b      	b.n	8014c92 <_ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
     std::memcpy(&out, f.payload.data(), sizeof(T));
- 8014c7c:	687b      	ldr	r3, [r7, #4]
- 8014c7e:	3304      	adds	r3, #4
- 8014c80:	4618      	mov	r0, r3
- 8014c82:	f000 f8d8 	bl	8014e36 <_ZNKSt5arrayIhLj128EE4dataEv>
- 8014c86:	4603      	mov	r3, r0
- 8014c88:	2207      	movs	r2, #7
- 8014c8a:	4619      	mov	r1, r3
- 8014c8c:	6838      	ldr	r0, [r7, #0]
- 8014c8e:	f001 fff7 	bl	8016c80 <memcpy>
+ 8014c7a:	687b      	ldr	r3, [r7, #4]
+ 8014c7c:	3304      	adds	r3, #4
+ 8014c7e:	4618      	mov	r0, r3
+ 8014c80:	f000 f8d8 	bl	8014e34 <_ZNKSt5arrayIhLj128EE4dataEv>
+ 8014c84:	4603      	mov	r3, r0
+ 8014c86:	2207      	movs	r2, #7
+ 8014c88:	4619      	mov	r1, r3
+ 8014c8a:	6838      	ldr	r0, [r7, #0]
+ 8014c8c:	f001 fff8 	bl	8016c80 <memcpy>
     return true;
- 8014c92:	2301      	movs	r3, #1
+ 8014c90:	2301      	movs	r3, #1
 }
- 8014c94:	4618      	mov	r0, r3
- 8014c96:	3708      	adds	r7, #8
- 8014c98:	46bd      	mov	sp, r7
- 8014c9a:	bd80      	pop	{r7, pc}
+ 8014c92:	4618      	mov	r0, r3
+ 8014c94:	3708      	adds	r7, #8
+ 8014c96:	46bd      	mov	sp, r7
+ 8014c98:	bd80      	pop	{r7, pc}
 
-08014c9c <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
+08014c9a <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
 bool _frameas(const Frame& f, T& out) {
- 8014c9c:	b580      	push	{r7, lr}
- 8014c9e:	b082      	sub	sp, #8
- 8014ca0:	af00      	add	r7, sp, #0
- 8014ca2:	6078      	str	r0, [r7, #4]
- 8014ca4:	6039      	str	r1, [r7, #0]
+ 8014c9a:	b580      	push	{r7, lr}
+ 8014c9c:	b082      	sub	sp, #8
+ 8014c9e:	af00      	add	r7, sp, #0
+ 8014ca0:	6078      	str	r0, [r7, #4]
+ 8014ca2:	6039      	str	r1, [r7, #0]
     if (f.length != sizeof(T)) return false;
- 8014ca6:	687b      	ldr	r3, [r7, #4]
- 8014ca8:	885b      	ldrh	r3, [r3, #2]
- 8014caa:	2b02      	cmp	r3, #2
- 8014cac:	d001      	beq.n	8014cb2 <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
- 8014cae:	2300      	movs	r3, #0
- 8014cb0:	e00a      	b.n	8014cc8 <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2c>
+ 8014ca4:	687b      	ldr	r3, [r7, #4]
+ 8014ca6:	885b      	ldrh	r3, [r3, #2]
+ 8014ca8:	2b02      	cmp	r3, #2
+ 8014caa:	d001      	beq.n	8014cb0 <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
+ 8014cac:	2300      	movs	r3, #0
+ 8014cae:	e00a      	b.n	8014cc6 <_ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2c>
     std::memcpy(&out, f.payload.data(), sizeof(T));
- 8014cb2:	687b      	ldr	r3, [r7, #4]
- 8014cb4:	3304      	adds	r3, #4
- 8014cb6:	4618      	mov	r0, r3
- 8014cb8:	f000 f8bd 	bl	8014e36 <_ZNKSt5arrayIhLj128EE4dataEv>
- 8014cbc:	4603      	mov	r3, r0
- 8014cbe:	881b      	ldrh	r3, [r3, #0]
- 8014cc0:	b29a      	uxth	r2, r3
- 8014cc2:	683b      	ldr	r3, [r7, #0]
- 8014cc4:	801a      	strh	r2, [r3, #0]
+ 8014cb0:	687b      	ldr	r3, [r7, #4]
+ 8014cb2:	3304      	adds	r3, #4
+ 8014cb4:	4618      	mov	r0, r3
+ 8014cb6:	f000 f8bd 	bl	8014e34 <_ZNKSt5arrayIhLj128EE4dataEv>
+ 8014cba:	4603      	mov	r3, r0
+ 8014cbc:	881b      	ldrh	r3, [r3, #0]
+ 8014cbe:	b29a      	uxth	r2, r3
+ 8014cc0:	683b      	ldr	r3, [r7, #0]
+ 8014cc2:	801a      	strh	r2, [r3, #0]
     return true;
- 8014cc6:	2301      	movs	r3, #1
+ 8014cc4:	2301      	movs	r3, #1
 }
- 8014cc8:	4618      	mov	r0, r3
- 8014cca:	3708      	adds	r7, #8
- 8014ccc:	46bd      	mov	sp, r7
- 8014cce:	bd80      	pop	{r7, pc}
+ 8014cc6:	4618      	mov	r0, r3
+ 8014cc8:	3708      	adds	r7, #8
+ 8014cca:	46bd      	mov	sp, r7
+ 8014ccc:	bd80      	pop	{r7, pc}
 
-08014cd0 <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
+08014cce <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_>:
 bool _frameas(const Frame& f, T& out) {
- 8014cd0:	b580      	push	{r7, lr}
- 8014cd2:	b082      	sub	sp, #8
- 8014cd4:	af00      	add	r7, sp, #0
- 8014cd6:	6078      	str	r0, [r7, #4]
- 8014cd8:	6039      	str	r1, [r7, #0]
+ 8014cce:	b580      	push	{r7, lr}
+ 8014cd0:	b082      	sub	sp, #8
+ 8014cd2:	af00      	add	r7, sp, #0
+ 8014cd4:	6078      	str	r0, [r7, #4]
+ 8014cd6:	6039      	str	r1, [r7, #0]
     if (f.length != sizeof(T)) return false;
- 8014cda:	687b      	ldr	r3, [r7, #4]
- 8014cdc:	885b      	ldrh	r3, [r3, #2]
- 8014cde:	2b09      	cmp	r3, #9
- 8014ce0:	d001      	beq.n	8014ce6 <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
- 8014ce2:	2300      	movs	r3, #0
- 8014ce4:	e00b      	b.n	8014cfe <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
+ 8014cd8:	687b      	ldr	r3, [r7, #4]
+ 8014cda:	885b      	ldrh	r3, [r3, #2]
+ 8014cdc:	2b09      	cmp	r3, #9
+ 8014cde:	d001      	beq.n	8014ce4 <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x16>
+ 8014ce0:	2300      	movs	r3, #0
+ 8014ce2:	e00b      	b.n	8014cfc <_ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_+0x2e>
     std::memcpy(&out, f.payload.data(), sizeof(T));
- 8014ce6:	687b      	ldr	r3, [r7, #4]
- 8014ce8:	3304      	adds	r3, #4
- 8014cea:	4618      	mov	r0, r3
- 8014cec:	f000 f8a3 	bl	8014e36 <_ZNKSt5arrayIhLj128EE4dataEv>
- 8014cf0:	4603      	mov	r3, r0
- 8014cf2:	2209      	movs	r2, #9
- 8014cf4:	4619      	mov	r1, r3
- 8014cf6:	6838      	ldr	r0, [r7, #0]
- 8014cf8:	f001 ffc2 	bl	8016c80 <memcpy>
+ 8014ce4:	687b      	ldr	r3, [r7, #4]
+ 8014ce6:	3304      	adds	r3, #4
+ 8014ce8:	4618      	mov	r0, r3
+ 8014cea:	f000 f8a3 	bl	8014e34 <_ZNKSt5arrayIhLj128EE4dataEv>
+ 8014cee:	4603      	mov	r3, r0
+ 8014cf0:	2209      	movs	r2, #9
+ 8014cf2:	4619      	mov	r1, r3
+ 8014cf4:	6838      	ldr	r0, [r7, #0]
+ 8014cf6:	f001 ffc3 	bl	8016c80 <memcpy>
     return true;
- 8014cfc:	2301      	movs	r3, #1
+ 8014cfa:	2301      	movs	r3, #1
 }
- 8014cfe:	4618      	mov	r0, r3
- 8014d00:	3708      	adds	r7, #8
- 8014d02:	46bd      	mov	sp, r7
- 8014d04:	bd80      	pop	{r7, pc}
+ 8014cfc:	4618      	mov	r0, r3
+ 8014cfe:	3708      	adds	r7, #8
+ 8014d00:	46bd      	mov	sp, r7
+ 8014d02:	bd80      	pop	{r7, pc}
 
-08014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>:
+08014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>:
     uint32_t _nowMs = 0;           // last clock handed in by tick()
     uint32_t _frameStartedMs = 0;  // when the current frame's first byte arrived
     bool     _linkChanged = false; // link came back; consumed by linkReset()
 
     /* Reset parser to STX hunt */
     void reset() {
- 8014d06:	b480      	push	{r7}
- 8014d08:	b083      	sub	sp, #12
- 8014d0a:	af00      	add	r7, sp, #0
- 8014d0c:	6078      	str	r0, [r7, #4]
+ 8014d04:	b480      	push	{r7}
+ 8014d06:	b083      	sub	sp, #12
+ 8014d08:	af00      	add	r7, sp, #0
+ 8014d0a:	6078      	str	r0, [r7, #4]
         _state = StateType::Stx1;
- 8014d0e:	687b      	ldr	r3, [r7, #4]
- 8014d10:	2200      	movs	r2, #0
- 8014d12:	f883 2088 	strb.w	r2, [r3, #136]	@ 0x88
+ 8014d0c:	687b      	ldr	r3, [r7, #4]
+ 8014d0e:	2200      	movs	r2, #0
+ 8014d10:	f883 2088 	strb.w	r2, [r3, #136]	@ 0x88
         _len = _bytes = _crcRead = 0;
- 8014d16:	687b      	ldr	r3, [r7, #4]
- 8014d18:	2200      	movs	r2, #0
- 8014d1a:	f8a3 208e 	strh.w	r2, [r3, #142]	@ 0x8e
- 8014d1e:	687b      	ldr	r3, [r7, #4]
- 8014d20:	f8b3 208e 	ldrh.w	r2, [r3, #142]	@ 0x8e
- 8014d24:	687b      	ldr	r3, [r7, #4]
- 8014d26:	f8a3 208c 	strh.w	r2, [r3, #140]	@ 0x8c
- 8014d2a:	687b      	ldr	r3, [r7, #4]
- 8014d2c:	f8b3 208c 	ldrh.w	r2, [r3, #140]	@ 0x8c
- 8014d30:	687b      	ldr	r3, [r7, #4]
- 8014d32:	f8a3 208a 	strh.w	r2, [r3, #138]	@ 0x8a
+ 8014d14:	687b      	ldr	r3, [r7, #4]
+ 8014d16:	2200      	movs	r2, #0
+ 8014d18:	f8a3 208e 	strh.w	r2, [r3, #142]	@ 0x8e
+ 8014d1c:	687b      	ldr	r3, [r7, #4]
+ 8014d1e:	f8b3 208e 	ldrh.w	r2, [r3, #142]	@ 0x8e
+ 8014d22:	687b      	ldr	r3, [r7, #4]
+ 8014d24:	f8a3 208c 	strh.w	r2, [r3, #140]	@ 0x8c
+ 8014d28:	687b      	ldr	r3, [r7, #4]
+ 8014d2a:	f8b3 208c 	ldrh.w	r2, [r3, #140]	@ 0x8c
+ 8014d2e:	687b      	ldr	r3, [r7, #4]
+ 8014d30:	f8a3 208a 	strh.w	r2, [r3, #138]	@ 0x8a
     }
- 8014d36:	bf00      	nop
- 8014d38:	370c      	adds	r7, #12
- 8014d3a:	46bd      	mov	sp, r7
- 8014d3c:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8014d40:	4770      	bx	lr
+ 8014d34:	bf00      	nop
+ 8014d36:	370c      	adds	r7, #12
+ 8014d38:	46bd      	mov	sp, r7
+ 8014d3a:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8014d3e:	4770      	bx	lr
 
-08014d42 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_>:
+08014d40 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_>:
     void parse(const uint8_t* data, uint16_t len, OnFrame&& onFrame) {
- 8014d42:	b580      	push	{r7, lr}
- 8014d44:	b086      	sub	sp, #24
- 8014d46:	af00      	add	r7, sp, #0
- 8014d48:	60f8      	str	r0, [r7, #12]
- 8014d4a:	60b9      	str	r1, [r7, #8]
- 8014d4c:	603b      	str	r3, [r7, #0]
- 8014d4e:	4613      	mov	r3, r2
- 8014d50:	80fb      	strh	r3, [r7, #6]
+ 8014d40:	b580      	push	{r7, lr}
+ 8014d42:	b086      	sub	sp, #24
+ 8014d44:	af00      	add	r7, sp, #0
+ 8014d46:	60f8      	str	r0, [r7, #12]
+ 8014d48:	60b9      	str	r1, [r7, #8]
+ 8014d4a:	603b      	str	r3, [r7, #0]
+ 8014d4c:	4613      	mov	r3, r2
+ 8014d4e:	80fb      	strh	r3, [r7, #6]
         for (uint16_t i = 0; i < len; ++i) {
- 8014d52:	2300      	movs	r3, #0
- 8014d54:	82fb      	strh	r3, [r7, #22]
- 8014d56:	e013      	b.n	8014d80 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x3e>
+ 8014d50:	2300      	movs	r3, #0
+ 8014d52:	82fb      	strh	r3, [r7, #22]
+ 8014d54:	e013      	b.n	8014d7e <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x3e>
             if (processByte(data[i])) onFrame(_frame); // emit each complete frame
- 8014d58:	8afb      	ldrh	r3, [r7, #22]
- 8014d5a:	68ba      	ldr	r2, [r7, #8]
- 8014d5c:	4413      	add	r3, r2
- 8014d5e:	781b      	ldrb	r3, [r3, #0]
- 8014d60:	4619      	mov	r1, r3
- 8014d62:	68f8      	ldr	r0, [r7, #12]
- 8014d64:	f000 f872 	bl	8014e4c <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh>
- 8014d68:	4603      	mov	r3, r0
- 8014d6a:	2b00      	cmp	r3, #0
- 8014d6c:	d005      	beq.n	8014d7a <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x38>
- 8014d6e:	68fb      	ldr	r3, [r7, #12]
- 8014d70:	3304      	adds	r3, #4
- 8014d72:	4619      	mov	r1, r3
- 8014d74:	6838      	ldr	r0, [r7, #0]
- 8014d76:	f7ff fc62 	bl	801463e <_ZZN12SerialThread4loopEvENKUlRKN14SerialProtocolILj128E12CdcTransportE5FrameEE_clES5_>
+ 8014d56:	8afb      	ldrh	r3, [r7, #22]
+ 8014d58:	68ba      	ldr	r2, [r7, #8]
+ 8014d5a:	4413      	add	r3, r2
+ 8014d5c:	781b      	ldrb	r3, [r3, #0]
+ 8014d5e:	4619      	mov	r1, r3
+ 8014d60:	68f8      	ldr	r0, [r7, #12]
+ 8014d62:	f000 f873 	bl	8014e4c <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh>
+ 8014d66:	4603      	mov	r3, r0
+ 8014d68:	2b00      	cmp	r3, #0
+ 8014d6a:	d005      	beq.n	8014d78 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x38>
+ 8014d6c:	68fb      	ldr	r3, [r7, #12]
+ 8014d6e:	3304      	adds	r3, #4
+ 8014d70:	4619      	mov	r1, r3
+ 8014d72:	6838      	ldr	r0, [r7, #0]
+ 8014d74:	f7ff fc63 	bl	801463e <_ZZN12SerialThread4loopEvENKUlRKN14SerialProtocolILj128E12CdcTransportE5FrameEE_clES5_>
         for (uint16_t i = 0; i < len; ++i) {
- 8014d7a:	8afb      	ldrh	r3, [r7, #22]
- 8014d7c:	3301      	adds	r3, #1
- 8014d7e:	82fb      	strh	r3, [r7, #22]
- 8014d80:	8afa      	ldrh	r2, [r7, #22]
- 8014d82:	88fb      	ldrh	r3, [r7, #6]
- 8014d84:	429a      	cmp	r2, r3
- 8014d86:	d3e7      	bcc.n	8014d58 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x16>
+ 8014d78:	8afb      	ldrh	r3, [r7, #22]
+ 8014d7a:	3301      	adds	r3, #1
+ 8014d7c:	82fb      	strh	r3, [r7, #22]
+ 8014d7e:	8afa      	ldrh	r2, [r7, #22]
+ 8014d80:	88fb      	ldrh	r3, [r7, #6]
+ 8014d82:	429a      	cmp	r2, r3
+ 8014d84:	d3e7      	bcc.n	8014d56 <_ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_+0x16>
     }
+ 8014d86:	bf00      	nop
  8014d88:	bf00      	nop
- 8014d8a:	bf00      	nop
- 8014d8c:	3718      	adds	r7, #24
- 8014d8e:	46bd      	mov	sp, r7
- 8014d90:	bd80      	pop	{r7, pc}
+ 8014d8a:	3718      	adds	r7, #24
+ 8014d8c:	46bd      	mov	sp, r7
+ 8014d8e:	bd80      	pop	{r7, pc}
 
-08014d92 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv>:
+08014d90 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv>:
     void staleFrame() {
- 8014d92:	b580      	push	{r7, lr}
- 8014d94:	b082      	sub	sp, #8
- 8014d96:	af00      	add	r7, sp, #0
- 8014d98:	6078      	str	r0, [r7, #4]
+ 8014d90:	b580      	push	{r7, lr}
+ 8014d92:	b082      	sub	sp, #8
+ 8014d94:	af00      	add	r7, sp, #0
+ 8014d96:	6078      	str	r0, [r7, #4]
         if (_state == StateType::Stx1) return;                 // not mid-frame
- 8014d9a:	687b      	ldr	r3, [r7, #4]
- 8014d9c:	f893 3088 	ldrb.w	r3, [r3, #136]	@ 0x88
- 8014da0:	2b00      	cmp	r3, #0
- 8014da2:	d015      	beq.n	8014dd0 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x3e>
+ 8014d98:	687b      	ldr	r3, [r7, #4]
+ 8014d9a:	f893 3088 	ldrb.w	r3, [r3, #136]	@ 0x88
+ 8014d9e:	2b00      	cmp	r3, #0
+ 8014da0:	d015      	beq.n	8014dce <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x3e>
         if (_nowMs - _frameStartedMs < IDLE_ABORT_MS) return;  // still within budget
- 8014da4:	687b      	ldr	r3, [r7, #4]
- 8014da6:	f8d3 209c 	ldr.w	r2, [r3, #156]	@ 0x9c
- 8014daa:	687b      	ldr	r3, [r7, #4]
- 8014dac:	f8d3 30a0 	ldr.w	r3, [r3, #160]	@ 0xa0
- 8014db0:	1ad3      	subs	r3, r2, r3
- 8014db2:	f640 32b7 	movw	r2, #2999	@ 0xbb7
- 8014db6:	4293      	cmp	r3, r2
- 8014db8:	d90c      	bls.n	8014dd4 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x42>
+ 8014da2:	687b      	ldr	r3, [r7, #4]
+ 8014da4:	f8d3 209c 	ldr.w	r2, [r3, #156]	@ 0x9c
+ 8014da8:	687b      	ldr	r3, [r7, #4]
+ 8014daa:	f8d3 30a0 	ldr.w	r3, [r3, #160]	@ 0xa0
+ 8014dae:	1ad3      	subs	r3, r2, r3
+ 8014db0:	f640 32b7 	movw	r2, #2999	@ 0xbb7
+ 8014db4:	4293      	cmp	r3, r2
+ 8014db6:	d90c      	bls.n	8014dd2 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x42>
         ++_truncated;
- 8014dba:	687b      	ldr	r3, [r7, #4]
- 8014dbc:	f8d3 3098 	ldr.w	r3, [r3, #152]	@ 0x98
- 8014dc0:	1c5a      	adds	r2, r3, #1
- 8014dc2:	687b      	ldr	r3, [r7, #4]
- 8014dc4:	f8c3 2098 	str.w	r2, [r3, #152]	@ 0x98
+ 8014db8:	687b      	ldr	r3, [r7, #4]
+ 8014dba:	f8d3 3098 	ldr.w	r3, [r3, #152]	@ 0x98
+ 8014dbe:	1c5a      	adds	r2, r3, #1
+ 8014dc0:	687b      	ldr	r3, [r7, #4]
+ 8014dc2:	f8c3 2098 	str.w	r2, [r3, #152]	@ 0x98
         reset();
- 8014dc8:	6878      	ldr	r0, [r7, #4]
- 8014dca:	f7ff ff9c 	bl	8014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
- 8014dce:	e002      	b.n	8014dd6 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x44>
+ 8014dc6:	6878      	ldr	r0, [r7, #4]
+ 8014dc8:	f7ff ff9c 	bl	8014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
+ 8014dcc:	e002      	b.n	8014dd4 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x44>
         if (_state == StateType::Stx1) return;                 // not mid-frame
- 8014dd0:	bf00      	nop
- 8014dd2:	e000      	b.n	8014dd6 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x44>
+ 8014dce:	bf00      	nop
+ 8014dd0:	e000      	b.n	8014dd4 <_ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv+0x44>
         if (_nowMs - _frameStartedMs < IDLE_ABORT_MS) return;  // still within budget
- 8014dd4:	bf00      	nop
+ 8014dd2:	bf00      	nop
     }
- 8014dd6:	3708      	adds	r7, #8
- 8014dd8:	46bd      	mov	sp, r7
- 8014dda:	bd80      	pop	{r7, pc}
+ 8014dd4:	3708      	adds	r7, #8
+ 8014dd6:	46bd      	mov	sp, r7
+ 8014dd8:	bd80      	pop	{r7, pc}
 
-08014ddc <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>:
+08014dda <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>:
         crc ^= b;
         for (uint8_t i = 0; i < 8; ++i) crc = (crc & 1) ? (crc >> 1) ^ 0xA001 : crc >> 1;
         return crc;
     }
 
     static uint16_t crc16(uint8_t id, const uint8_t* data, uint16_t len) {
- 8014ddc:	b580      	push	{r7, lr}
- 8014dde:	b084      	sub	sp, #16
- 8014de0:	af00      	add	r7, sp, #0
- 8014de2:	4603      	mov	r3, r0
- 8014de4:	6039      	str	r1, [r7, #0]
- 8014de6:	71fb      	strb	r3, [r7, #7]
- 8014de8:	4613      	mov	r3, r2
- 8014dea:	80bb      	strh	r3, [r7, #4]
+ 8014dda:	b580      	push	{r7, lr}
+ 8014ddc:	b084      	sub	sp, #16
+ 8014dde:	af00      	add	r7, sp, #0
+ 8014de0:	4603      	mov	r3, r0
+ 8014de2:	6039      	str	r1, [r7, #0]
+ 8014de4:	71fb      	strb	r3, [r7, #7]
+ 8014de6:	4613      	mov	r3, r2
+ 8014de8:	80bb      	strh	r3, [r7, #4]
         uint16_t crc = 0xFFFF;
- 8014dec:	f64f 73ff 	movw	r3, #65535	@ 0xffff
- 8014df0:	81fb      	strh	r3, [r7, #14]
+ 8014dea:	f64f 73ff 	movw	r3, #65535	@ 0xffff
+ 8014dee:	81fb      	strh	r3, [r7, #14]
         crc = updateCrc(crc, id);
- 8014df2:	79fa      	ldrb	r2, [r7, #7]
- 8014df4:	89fb      	ldrh	r3, [r7, #14]
- 8014df6:	4611      	mov	r1, r2
- 8014df8:	4618      	mov	r0, r3
- 8014dfa:	f000 f925 	bl	8015048 <_ZN14SerialProtocolILj128E12CdcTransportE9updateCrcEth>
- 8014dfe:	4603      	mov	r3, r0
- 8014e00:	81fb      	strh	r3, [r7, #14]
+ 8014df0:	79fa      	ldrb	r2, [r7, #7]
+ 8014df2:	89fb      	ldrh	r3, [r7, #14]
+ 8014df4:	4611      	mov	r1, r2
+ 8014df6:	4618      	mov	r0, r3
+ 8014df8:	f000 f926 	bl	8015048 <_ZN14SerialProtocolILj128E12CdcTransportE9updateCrcEth>
+ 8014dfc:	4603      	mov	r3, r0
+ 8014dfe:	81fb      	strh	r3, [r7, #14]
         for (uint16_t i = 0; i < len; ++i) crc = updateCrc(crc, data[i]);
- 8014e02:	2300      	movs	r3, #0
- 8014e04:	81bb      	strh	r3, [r7, #12]
- 8014e06:	e00d      	b.n	8014e24 <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht+0x48>
- 8014e08:	89bb      	ldrh	r3, [r7, #12]
- 8014e0a:	683a      	ldr	r2, [r7, #0]
- 8014e0c:	4413      	add	r3, r2
- 8014e0e:	781a      	ldrb	r2, [r3, #0]
- 8014e10:	89fb      	ldrh	r3, [r7, #14]
- 8014e12:	4611      	mov	r1, r2
- 8014e14:	4618      	mov	r0, r3
- 8014e16:	f000 f917 	bl	8015048 <_ZN14SerialProtocolILj128E12CdcTransportE9updateCrcEth>
- 8014e1a:	4603      	mov	r3, r0
- 8014e1c:	81fb      	strh	r3, [r7, #14]
- 8014e1e:	89bb      	ldrh	r3, [r7, #12]
- 8014e20:	3301      	adds	r3, #1
- 8014e22:	81bb      	strh	r3, [r7, #12]
- 8014e24:	89ba      	ldrh	r2, [r7, #12]
- 8014e26:	88bb      	ldrh	r3, [r7, #4]
- 8014e28:	429a      	cmp	r2, r3
- 8014e2a:	d3ed      	bcc.n	8014e08 <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht+0x2c>
+ 8014e00:	2300      	movs	r3, #0
+ 8014e02:	81bb      	strh	r3, [r7, #12]
+ 8014e04:	e00d      	b.n	8014e22 <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht+0x48>
+ 8014e06:	89bb      	ldrh	r3, [r7, #12]
+ 8014e08:	683a      	ldr	r2, [r7, #0]
+ 8014e0a:	4413      	add	r3, r2
+ 8014e0c:	781a      	ldrb	r2, [r3, #0]
+ 8014e0e:	89fb      	ldrh	r3, [r7, #14]
+ 8014e10:	4611      	mov	r1, r2
+ 8014e12:	4618      	mov	r0, r3
+ 8014e14:	f000 f918 	bl	8015048 <_ZN14SerialProtocolILj128E12CdcTransportE9updateCrcEth>
+ 8014e18:	4603      	mov	r3, r0
+ 8014e1a:	81fb      	strh	r3, [r7, #14]
+ 8014e1c:	89bb      	ldrh	r3, [r7, #12]
+ 8014e1e:	3301      	adds	r3, #1
+ 8014e20:	81bb      	strh	r3, [r7, #12]
+ 8014e22:	89ba      	ldrh	r2, [r7, #12]
+ 8014e24:	88bb      	ldrh	r3, [r7, #4]
+ 8014e26:	429a      	cmp	r2, r3
+ 8014e28:	d3ed      	bcc.n	8014e06 <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht+0x2c>
         return crc;
- 8014e2c:	89fb      	ldrh	r3, [r7, #14]
+ 8014e2a:	89fb      	ldrh	r3, [r7, #14]
     }
- 8014e2e:	4618      	mov	r0, r3
- 8014e30:	3710      	adds	r7, #16
- 8014e32:	46bd      	mov	sp, r7
- 8014e34:	bd80      	pop	{r7, pc}
+ 8014e2c:	4618      	mov	r0, r3
+ 8014e2e:	3710      	adds	r7, #16
+ 8014e30:	46bd      	mov	sp, r7
+ 8014e32:	bd80      	pop	{r7, pc}
 
-08014e36 <_ZNKSt5arrayIhLj128EE4dataEv>:
+08014e34 <_ZNKSt5arrayIhLj128EE4dataEv>:
       data() noexcept
       { return static_cast<pointer>(_M_elems); }
 
       [[__nodiscard__]]
       _GLIBCXX17_CONSTEXPR const_pointer
       data() const noexcept
- 8014e36:	b480      	push	{r7}
- 8014e38:	b083      	sub	sp, #12
- 8014e3a:	af00      	add	r7, sp, #0
- 8014e3c:	6078      	str	r0, [r7, #4]
+ 8014e34:	b480      	push	{r7}
+ 8014e36:	b083      	sub	sp, #12
+ 8014e38:	af00      	add	r7, sp, #0
+ 8014e3a:	6078      	str	r0, [r7, #4]
       { return static_cast<const_pointer>(_M_elems); }
- 8014e3e:	687b      	ldr	r3, [r7, #4]
- 8014e40:	4618      	mov	r0, r3
- 8014e42:	370c      	adds	r7, #12
- 8014e44:	46bd      	mov	sp, r7
- 8014e46:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8014e4a:	4770      	bx	lr
+ 8014e3c:	687b      	ldr	r3, [r7, #4]
+ 8014e3e:	4618      	mov	r0, r3
+ 8014e40:	370c      	adds	r7, #12
+ 8014e42:	46bd      	mov	sp, r7
+ 8014e44:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8014e48:	4770      	bx	lr
+	...
 
 08014e4c <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh>:
     bool processByte(uint8_t b) {
@@ -53418,7 +53419,7 @@ bool _frameas(const Frame& f, T& out) {
  8014f20:	687b      	ldr	r3, [r7, #4]
  8014f22:	f8c3 2094 	str.w	r2, [r3, #148]	@ 0x94
  8014f26:	6878      	ldr	r0, [r7, #4]
- 8014f28:	f7ff feed 	bl	8014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
+ 8014f28:	f7ff feec 	bl	8014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
  8014f2c:	e087      	b.n	801503e <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh+0x1f2>
                 _bytes = 0; // new payload counter
  8014f2e:	687b      	ldr	r3, [r7, #4]
@@ -53518,7 +53519,7 @@ bool _frameas(const Frame& f, T& out) {
  8014ff0:	3b01      	subs	r3, #1
  8014ff2:	b29b      	uxth	r3, r3
  8014ff4:	461a      	mov	r2, r3
- 8014ff6:	f7ff fef1 	bl	8014ddc <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>
+ 8014ff6:	f7ff fef0 	bl	8014dda <_ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht>
  8014ffa:	4603      	mov	r3, r0
  8014ffc:	429c      	cmp	r4, r3
  8014ffe:	bf0c      	ite	eq
@@ -53536,7 +53537,7 @@ bool _frameas(const Frame& f, T& out) {
  8015016:	80da      	strh	r2, [r3, #6]
                     reset();                  // ready for next frame
  8015018:	6878      	ldr	r0, [r7, #4]
- 801501a:	f7ff fe74 	bl	8014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
+ 801501a:	f7ff fe73 	bl	8014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
                     return true;              // success!
  801501e:	2301      	movs	r3, #1
  8015020:	e00e      	b.n	8015040 <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh+0x1f4>
@@ -53548,7 +53549,7 @@ bool _frameas(const Frame& f, T& out) {
  801502c:	f8c3 2090 	str.w	r2, [r3, #144]	@ 0x90
                 reset();
  8015030:	6878      	ldr	r0, [r7, #4]
- 8015032:	f7ff fe68 	bl	8014d06 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
+ 8015032:	f7ff fe67 	bl	8014d04 <_ZN14SerialProtocolILj128E12CdcTransportE5resetEv>
                 break;
  8015036:	e002      	b.n	801503e <_ZN14SerialProtocolILj128E12CdcTransportE11processByteEh+0x1f2>
                 break;

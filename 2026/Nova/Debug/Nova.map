@@ -12515,32 +12515,33 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
                 0x08014a5c       0x26 ./System/Threads/Src/SerialThread.o
                 0x08014a5c                SerialProtocol<128u, CdcTransport>::linkReset()
  .text._ZN14SerialProtocolILj128E12CdcTransportE4pollIZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvOT_
-                0x08014a82       0x7e ./System/Threads/Src/SerialThread.o
+                0x08014a82       0x7c ./System/Threads/Src/SerialThread.o
  .text._ZN14SerialProtocolILj128E12CdcTransportE4sendEhPKvt
-                0x08014b00      0x130 ./System/Threads/Src/SerialThread.o
-                0x08014b00                SerialProtocol<128u, CdcTransport>::send(unsigned char, void const*, unsigned short)
+                0x08014afe      0x130 ./System/Threads/Src/SerialThread.o
+                0x08014afe                SerialProtocol<128u, CdcTransport>::send(unsigned char, void const*, unsigned short)
  .text._ZN12_GLOBAL__N_18_frameasI12ServoRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_
-                0x08014c30       0x36 ./System/Threads/Src/SerialThread.o
+                0x08014c2e       0x36 ./System/Threads/Src/SerialThread.o
  .text._ZN12_GLOBAL__N_18_frameasI11MassRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_
-                0x08014c66       0x36 ./System/Threads/Src/SerialThread.o
+                0x08014c64       0x36 ./System/Threads/Src/SerialThread.o
  .text._ZN12_GLOBAL__N_18_frameasI10LEDRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_
-                0x08014c9c       0x34 ./System/Threads/Src/SerialThread.o
+                0x08014c9a       0x34 ./System/Threads/Src/SerialThread.o
  .text._ZN12_GLOBAL__N_18_frameasI9PhRequestN14SerialProtocolILj128E12CdcTransportE5FrameEEEbRKT0_RT_
-                0x08014cd0       0x36 ./System/Threads/Src/SerialThread.o
+                0x08014cce       0x36 ./System/Threads/Src/SerialThread.o
  .text._ZN14SerialProtocolILj128E12CdcTransportE5resetEv
-                0x08014d06       0x3c ./System/Threads/Src/SerialThread.o
-                0x08014d06                SerialProtocol<128u, CdcTransport>::reset()
+                0x08014d04       0x3c ./System/Threads/Src/SerialThread.o
+                0x08014d04                SerialProtocol<128u, CdcTransport>::reset()
  .text._ZN14SerialProtocolILj128E12CdcTransportE5parseIRZN12SerialThread4loopEvEUlRKNS1_5FrameEE_EEvPKhtOT_
-                0x08014d42       0x50 ./System/Threads/Src/SerialThread.o
+                0x08014d40       0x50 ./System/Threads/Src/SerialThread.o
  .text._ZN14SerialProtocolILj128E12CdcTransportE10staleFrameEv
-                0x08014d92       0x4a ./System/Threads/Src/SerialThread.o
-                0x08014d92                SerialProtocol<128u, CdcTransport>::staleFrame()
+                0x08014d90       0x4a ./System/Threads/Src/SerialThread.o
+                0x08014d90                SerialProtocol<128u, CdcTransport>::staleFrame()
  .text._ZN14SerialProtocolILj128E12CdcTransportE5crc16EhPKht
-                0x08014ddc       0x5a ./System/Threads/Src/SerialThread.o
-                0x08014ddc                SerialProtocol<128u, CdcTransport>::crc16(unsigned char, unsigned char const*, unsigned short)
+                0x08014dda       0x5a ./System/Threads/Src/SerialThread.o
+                0x08014dda                SerialProtocol<128u, CdcTransport>::crc16(unsigned char, unsigned char const*, unsigned short)
  .text._ZNKSt5arrayIhLj128EE4dataEv
-                0x08014e36       0x16 ./System/Threads/Src/SerialThread.o
-                0x08014e36                std::array<unsigned char, 128u>::data() const
+                0x08014e34       0x16 ./System/Threads/Src/SerialThread.o
+                0x08014e34                std::array<unsigned char, 128u>::data() const
+ *fill*         0x08014e4a        0x2 
  .text._ZN14SerialProtocolILj128E12CdcTransportE11processByteEh
                 0x08014e4c      0x1fc ./System/Threads/Src/SerialThread.o
                 0x08014e4c                SerialProtocol<128u, CdcTransport>::processByte(unsigned char)
@@ -13483,7 +13484,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/libgcc.a
 
-.debug_info     0x00000000    0x5286d
+.debug_info     0x00000000    0x5286c
  .debug_info    0x00000000      0xf4a ./Core/Src/adc.o
  .debug_info    0x00000f4a      0x519 ./Core/Src/app_freertos.o
  .debug_info    0x00001463      0x582 ./Core/Src/dma.o
@@ -13537,14 +13538,14 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_info    0x0003c90a     0x158f ./System/Threads/Src/HeartBeatThread.o
  .debug_info    0x0003de99     0x408a ./System/Threads/Src/LedsThread.o
  .debug_info    0x00041f23     0x2b08 ./System/Threads/Src/MassThread.o
- .debug_info    0x00044a2b     0x5342 ./System/Threads/Src/SerialThread.o
- .debug_info    0x00049d6d     0x26c8 ./System/Threads/Src/ServoThread.o
- .debug_info    0x0004c435      0xb04 ./System/Threads/Src/Thread.o
- .debug_info    0x0004cf39     0x27a0 ./System/Threads/Src/pHMeterThread.o
- .debug_info    0x0004f6d9      0x6d7 ./USB_Device/App/usb_device.o
- .debug_info    0x0004fdb0      0x8c9 ./USB_Device/App/usbd_cdc_if.o
- .debug_info    0x00050679      0x474 ./USB_Device/App/usbd_desc.o
- .debug_info    0x00050aed     0x1d80 ./USB_Device/Target/usbd_conf.o
+ .debug_info    0x00044a2b     0x5341 ./System/Threads/Src/SerialThread.o
+ .debug_info    0x00049d6c     0x26c8 ./System/Threads/Src/ServoThread.o
+ .debug_info    0x0004c434      0xb04 ./System/Threads/Src/Thread.o
+ .debug_info    0x0004cf38     0x27a0 ./System/Threads/Src/pHMeterThread.o
+ .debug_info    0x0004f6d8      0x6d7 ./USB_Device/App/usb_device.o
+ .debug_info    0x0004fdaf      0x8c9 ./USB_Device/App/usbd_cdc_if.o
+ .debug_info    0x00050678      0x474 ./USB_Device/App/usbd_desc.o
+ .debug_info    0x00050aec     0x1d80 ./USB_Device/Target/usbd_conf.o
 
 .debug_abbrev   0x00000000     0xbd97
  .debug_abbrev  0x00000000      0x1f1 ./Core/Src/adc.o
