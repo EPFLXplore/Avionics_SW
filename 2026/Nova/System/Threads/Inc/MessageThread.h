@@ -169,13 +169,11 @@ private:
         return false;
     }
 
-    /// Wire side. Blocking wait for status (SerialThread only, timeout in ticks).
-    ALWAYS_INLINE bool waitStatus(StatusMsg& status, TickType_t timeout) {
-        if (_statusQueue) {
-            return (xQueueReceive(_statusQueue, &status, timeout) == pdTRUE);
-        }
-        return false;
-    }
+    /* There is no waitStatus(). The symmetric twin of waitCommand() looks like it
+     * belongs here, but the only class that could call it - SerialThread -
+     * services three status queues plus RX plus TX in one pass, so blocking on
+     * any one of them would stall the other four. popStatus() in a while-drain
+     * is the correct shape, and it is what SerialThread uses. */
 
 protected:
     /// Worker side. Non-blocking pop from this thread's command inbox.

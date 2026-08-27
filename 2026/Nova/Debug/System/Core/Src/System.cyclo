@@ -1,6 +1,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardProfile.h:191:28:const BoardProfile& profile()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardProfile.h:197:28:const BoardProfile& profile()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:98:13:bool anySlot(DeviceType)	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/LedsThread.h:22:7:bool LedsThread::hasDevices() const	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/ServoThread.h:66:10:bool ServoThread::hasDevices() const	1

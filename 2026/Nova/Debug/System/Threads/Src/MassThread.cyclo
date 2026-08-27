@@ -1,7 +1,7 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/device_ids.h:109:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardProfile.h:191:28:const BoardProfile& profile()	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardProfile.h:197:28:const BoardProfile& profile()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:122:21:constexpr SlotRange rangeOf(SlotGroup)	2
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:105:34:constexpr const ConnPads& pinOf(ConnType)	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MassThread.h:123:11:MassType::MassType(const HX711&)	1
@@ -20,6 +20,6 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:99:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:113:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = MassRequest; StatusMsg = MassPacket]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:149:13:void bindSlots(T (&)[N], DeviceType) [with SlotGroup G = SlotGroup::Connectors; T = MassType; unsigned int N = 2]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:165:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:157:13:void bindSlots(T (&)[N], DeviceType) [with SlotGroup G = SlotGroup::Connectors; T = MassType; unsigned int N = 2]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/BoardUtils.h:173:11:T* deviceFor(T (&)[N], uint8_t) [with T = MassType; unsigned int N = 2]	4
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:72:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = MassRequest; StatusMsg = MassPacket]	3
