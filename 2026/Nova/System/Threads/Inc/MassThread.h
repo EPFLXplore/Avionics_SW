@@ -13,6 +13,7 @@
 #include "packets.h"
 #include "device_ids.h"    // MassId: the shared, fleet-wide device ids
 #include "BoardProfile.h"  // which connector carries which load _cell, per board
+#include "Pins.h"          // pinOf(): that connector's pads
 
 #include <sys/time.h>
 #include "cmsis_os2.h"
@@ -29,7 +30,7 @@
 // Going back to 10 SPS means AVG_SIZE 20 AND mass().setDelay(100) in System.cpp.
 // Both, or the buffer spans the wrong amount of time.
 //
-// Ceiling: this is uint8_t and movingAverage() takes uint8_t n - 255 is the max.
+// Ceiling: this is uint8_t and movingAverage() takes a uint8_t count - 255 is the max.
 constexpr uint8_t AVG_SIZE = 160;
 
 // The thread now polls at 100 Hz to keep up with the chip, but the wire does not
@@ -54,7 +55,7 @@ constexpr uint8_t TARE_MIN_GOOD     = 48;  // 60% floor, as before: below this t
                                            // sqrt(N) the average promises is
                                            // largely gone, and at 1 the zero is
                                            // ONE sample
-constexpr uint8_t TARE_MAX_TIMEOUTS = 3;   // budget before abandoning the tare
+constexpr uint8_t TARE_MAX_TIMEOUTS = 10;   // budget before abandoning the tare
 
 // Rejection threshold for the spread (max-min) of the tare samples, in raw
 // counts. MEASURE THIS: watch lastRaw with the pan empty and the robot in its
@@ -73,24 +74,20 @@ struct MassType {
 	// the wire carries: a _cell publishes under it and answers commands for it.
 	uint8_t globalId = NO_DEVICE;
 	HX711 hx;                          // each _cell owns its sensor (no pointers)
+
+	/* FALLBACK ONLY: mass_cal.yaml on the RPi is the
+	    * source of truth, replayed over MassRequest on every link-up.
+	    * WHY? because its more practical for last minute calibrations
+	    *
+	    * RECOMENDATION: move from yaml to a plain old .h on the new submodule so to synch up both
+	    * you only need to rebuild and reflash but you still get the practicality of changing calibration from the RP side.
+	    *
+	    * */
 	float offset = 0.0f;
-	float slope = 0.0005157476f;  // FALLBACK ONLY: mass_cal.yaml on the RPi is the
-                              // source of truth, replayed over MassRequest on every link-up.
-                              // One fallback for every cell, and this one holds the sand_rocks
-                              // slope from that file (id 0). drill is now
-                              // separately calibrated at ~2.8x LARGER, so a lost link leaves
-                              // the drill cell reading ~2.8x LIGHT until the replay lands. One
-                              // fallback cannot serve both cells: pointing it at drill would
-                              // only move that error onto sand_rocks.
-                              // This value only ever reaches a reading when the replay did not
-                              // arrive, so a stale one turns a comms failure into wrong numbers
-                              // instead of the same numbers. Two earlier fallbacks lived here:
-                              // 0.0014233825f (a superseded sand_rocks calibration, ~2.8x
-                              // HEAVY against this one) and -0.0014164446f (that same gain with
-                              // the load direction inverted). Neither is a second opinion on
-                              // this cell - do not "restore" either one. Note the trap: both
-                              // land within ~0.3% of drill's CURRENT slope, so a number that
-                              // "looks familiar" here is not evidence it belongs to this cell.
+	float slope = 0.0005157476f;
+
+
+	/* why having here an offset and a slope apaprt from the driver one? Because this makes the driver portable to other systems that dont have RTOS */
 	float weight = 0.0f;
 	float buffer[AVG_SIZE] = {};
 	// Live diagnostics. Members of the static MassThread (fixed addresses), so
@@ -101,14 +98,12 @@ struct MassType {
 	uint32_t nNotReady   = 0;   // DOUT high at poll: no conversion (power / DOUT line)
 	uint32_t nClockFault = 0;   // chip ignored our clocks (SCK line open)
 	uint32_t nTimeout    = 0;   // ready flag lost while waiting
-	// Outcome of the LAST tare, same rationale as the counters above: fixed
-	// address, debugger-visible, nothing added to MassPacket. tareValid == false
-	// means the tare was attempted and REFUSED, so `offset` is the older zero and
-	// the weight being published is measured against it.
 	uint8_t  tareGood    = 0;     // samples that survived the last tare
 	int32_t  tareSpread  = 0;     // max-min across those samples, raw counts
 	bool     tareValid   = false; // false until a tare passes both gates
 	uint8_t  pubTick     = 0;     // loops since the last published packet
+
+
 
 	// --- tare in progress -------------------------------------------------
 	// The tare used to run to completion inside one loop() call: TARE_SAMPLES
@@ -128,10 +123,8 @@ struct MassType {
 	explicit MassType(const HX711& sensor) : hx(sensor) {}
 };
 
-// ConnType / CONNECTOR_COUNT live in BoardProfile.h, beside the table they index.
-// Only the wire speaks MassId; everything here speaks slots.
 
-class MassThread : public MessageThread<MassRequest, MassPacket>{ //TODO reput the tare
+class MassThread : public MessageThread<MassRequest, MassPacket>{
 public:
 	MassThread(const char* name, osPriority priority);
 	~MassThread();
@@ -153,7 +146,7 @@ public:
 
 	void shift(float *array , int N, float valueIn);
 
-	float movingAverage(const float *arr, uint8_t n);
+	float movingAverage(const float *samples, uint8_t count);
 
 	void update(MassType& device);
 

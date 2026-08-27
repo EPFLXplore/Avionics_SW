@@ -8,9 +8,9 @@
 #include "cmsis_os2.h"   // osDelay in the bounded ready-wait
 
 // ---- Constructor -----------------------------------------------------------
-HX711::HX711(const ConnPads& hw)
-    : _dout(hw.data),
-      _sck(hw.clk)
+HX711::HX711(const ConnPads& pads)
+    : _dout(pads.data),
+      _sck(pads.clk)
 {
 
 }

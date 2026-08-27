@@ -22,8 +22,8 @@ namespace {
  * means the wire contract drifted or the frame is noise; neither is a reason to
  * drive hardware. The RPi has always guarded this (Nexus::lengthOk); this is the
  * missing half on the MCU. */
-template <class T>
-bool _frameas(const SerialProtocol<128, CdcTransport>::Frame& f, T& out) {
+template <class T, class Frame>
+bool _frameas(const Frame& f, T& out) {
     if (f.length != sizeof(T)) return false;
     std::memcpy(&out, f.payload.data(), sizeof(T));
     return true;
@@ -31,11 +31,12 @@ bool _frameas(const SerialProtocol<128, CdcTransport>::Frame& f, T& out) {
 } // namespace
 
 SerialThread::SerialThread(const char* name, osPriority priority) : Thread(name, priority) {
-    setDelay(1); // poll the RX ring + drain status queues every 1 ms
+    // Tick rate is NOT set here: every thread's is in System::init(), so the
+    // whole schedule reads in one place.
 }
 
 void SerialThread::init() {
-    _io.begin(); // register as the CDC singleton
+    _io.begin(); //init transport
 }
 
 void SerialThread::loop() {
@@ -45,9 +46,9 @@ void SerialThread::loop() {
     _io.serviceTx(xTaskGetTickCount());
 
     /* RX: serial -> worker command queues */
-    uint8_t chunk[64];
-    uint16_t n = _io.read(chunk, sizeof chunk);
-    if (n) _proto.parse(chunk, n, [this](const Frame& f) { dispatch(f); });
+    uint8_t chunk[CdcTransport::USB_PACKET];
+    uint16_t count = _io.read(chunk, sizeof chunk);
+    if (count) _proto.parse(chunk, count, [this](const Frame& frame) { dispatch(frame); });
     else   _proto.idle(); // quiet line: abandon any half-received frame (see idle())
 
     /* TX: worker status queues -> serial */

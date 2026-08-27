@@ -4,14 +4,14 @@
  */
 
 #pragma once
-#include "BoardProfile.h"   // ConnPads, PinId
+#include "Pins.h"           // ConnPads, PinId - the pads live with the HAL binding
 #include <cstdint>
 
 class HX711 {
 public:
     /** @param hw  the connector this cell is plugged into; the driver takes its
      *             clock and data pads from there and nothing else. */
-    explicit HX711(const ConnPads& hw);
+    explicit HX711(const ConnPads& pads);
 
     /// Outcome of one 24-bit read attempt. Each failure points at a different wire:
     enum class ReadResultType : uint8_t {
@@ -39,7 +39,7 @@ public:
 
     /// Get / set offset used in read()
     int32_t getOffset() const { return _offset; }
-    void setOffset(int32_t o) { _offset = o; }
+    void setOffset(int32_t offset) { _offset = offset; }
 
 
 private:

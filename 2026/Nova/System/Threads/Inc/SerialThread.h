@@ -21,8 +21,20 @@ class SerialThread : public Thread {
     void loop() override;
 
   private:
-    using Proto = SerialProtocol<128, CdcTransport>;
+    /* The largest payload this link carries. The only place the number is
+     * written: Proto derives MAX_FRAME from it, and the static_assert below
+     * makes the transport's TX slots agree rather than hoping they do. */
+    static constexpr std::size_t SERIAL_MAX_PAYLOAD = 128;
+
+    using Proto = SerialProtocol<SERIAL_MAX_PAYLOAD, CdcTransport>;
     using Frame = Proto::Frame;
+
+    /* CdcTransport sizes its TX ring slots itself, so nothing in the type system
+     * forces them to fit a full protocol frame - a payload cap raised here would
+     * otherwise truncate silently, one layer down, on the wire. */
+    static_assert(Proto::MAX_FRAME <= CdcTransport::MAX_FRAME,
+                  "the TX ring slot cannot hold a full protocol frame: raise "
+                  "CdcTransport::MAX_FRAME to match SERIAL_MAX_PAYLOAD + overhead");
 
     void dispatch(const Frame& f);
 

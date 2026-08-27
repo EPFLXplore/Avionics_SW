@@ -14,37 +14,17 @@ constexpr uint32_t PRE_SLEEP_MARGIN_MS = 5;
 
 pHMeterThread::pHMeterThread(const char* name, osPriority priority)
 : MessageThread(name, priority)
-{
-    // _meter owns its ADS1114 (constructed in the header) - nothing to wire.
-    // The board profile is NOT read here: see init().
-}
+{}
 
-pHMeterThread::~pHMeterThread(){
-    // _meter is a statically allocated member: nothing to free.
-}
+pHMeterThread::~pHMeterThread(){}
 
 void pHMeterThread::init(){
-    // Only reached because System asked hasDevices() and got true, so a probe is
-    // fitted. Bringing the bus up on a board without one would claim PC8/PC9 as
-    // I2C3 AF and take the pins out from under a bit-banged HX711.
     _meter.adc.begin();
     _meter.probe = _meter.adc.probe();   // debugger-visible wiring verdict
 }
 
 void pHMeterThread::loop(){
-    // Always pop, so the queue drains even on a board with no probe fitted - but
-    // the pop's verdict GATES the read. xQueueReceive leaves `cmd` untouched when
-    // the queue is empty, which is almost every tick, so reading it unconditionally
-    // reads stale stack: a nonzero change_cal byte there overwrites slope/offset
-    // with whatever floats the previous iteration left behind, and those persist in
-    // _meter for the rest of the run. Same shape as MassThread::loop().
-    //
-    // Drained to EMPTY, not one per tick: this loop runs at 500 ms, so a
-    // one-per-tick drain gives a queued command up to half a second of
-    // head-of-line delay for every entry ahead of it. Same reasoning as
-    // MassThread::loop(), and it matters more here because the tick is 50x
-    // longer. A calibration is idempotent, so applying a whole backlog in one
-    // tick just lands on the newest one.
+
     PhRequest cmd{};
     while (this->popCommand(cmd)) {
         if (cmd.change_cal) {
@@ -111,27 +91,18 @@ void pHMeterThread::sample(PhType& device){
     }
     device.volts = volts;
 
-    /* Moving average over VOLTS, with the calibration applied after the mean.
+    /* Moving average over VOLTS, calibration applied after the mean.
      *
-     * This used to average the calibrated pH, on the reasoning that the map is
-     * affine so the two are equivalent. They are - but only while the
-     * calibration is CONSTANT across the window, which is exactly when it is
-     * not. The window is never cleared, so a calibration arriving mid-run left
-     * the ring holding values computed under the OLD slope/offset while new ones
-     * came in under the new pair, and the mean of those is not a pH under either
-     * calibration. For PH_AVG_SIZE samples (6.25 s at ~1.6 Hz) the topic then
-     * published a blend of two coordinate systems.
+     * Averaging calibrated pH instead is equivalent only while the calibration
+     * holds still across the window - and the window is never cleared, so a new
+     * slope/offset mid-run blends two coordinate systems for PH_AVG_SIZE samples
+     * (6.25 s at ~1.6 Hz). calibrate_ph.sh hits this every run: it switches to
+     * the identity to read raw volts, and the blend published ~0.89 - neither a
+     * voltage nor a pH - long enough for the script's own range check to call
+     * the calibration unapplied when it had been applied.
      *
-     * That is not academic: calibrate_ph.sh switches to the identity (slope 1,
-     * offset 0) to read raw volts, and the blend made the topic report ~0.89 -
-     * neither a voltage nor a pH - long enough for the script's own range check
-     * to declare the calibration had not been applied when it had.
-     *
-     * Averaging the raw quantity fixes it at the root: the window holds volts,
-     * which mean nothing calibration-dependent, so a new slope/offset applies to
-     * the whole history at once and the very next published value is correct.
-     * No flush, no blend, no transient. Same arithmetic otherwise - for a fixed
-     * calibration this is bit-for-bit the old behaviour, since
+     * Volts carry no calibration, so a new pair applies to the whole history at
+     * once and the next published value is already right. Otherwise identical:
      * mean(m*v + b) == m*mean(v) + b. */
     for (uint8_t i = PH_AVG_SIZE - 1; i > 0; --i)
         device.window[i] = device.window[i - 1];

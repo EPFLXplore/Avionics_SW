@@ -1,10 +1,10 @@
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/BoardProfile.h:51:20:constexpr uint16_t maskOf(PinId)	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:26:22:GPIO_TypeDef* portOf(PortId)	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:40:13:void enableGpioClock(PortId)	48	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:55:21:I2C_TypeDef* busOf(BusId)	16	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:59:13:void enableBusClock(BusId)	24	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:109:13:void initI2c(I2C_HandleTypeDef&, BusId, uint32_t)	24	static
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:129:13:void configPin(PinId, uint32_t, uint32_t, uint32_t, uint8_t)	48	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:36:20:constexpr uint16_t maskOf(PinId)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:116:22:GPIO_TypeDef* portOf(PortId)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:130:13:void enableGpioClock(PortId)	48	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:145:21:I2C_TypeDef* busOf(BusId)	16	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:149:13:void enableBusClock(BusId)	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:199:13:void initI2c(I2C_HandleTypeDef&, BusId, uint32_t)	24	static
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:219:13:void configPin(PinId, uint32_t, uint32_t, uint32_t, uint8_t)	48	static
 ../System/Core/Src/ADS1114.cpp:15:1:ADS1114::ADS1114(const ConnPads&, BusId, uint8_t, uint8_t, FsrType, RateType)	24	static
 ../System/Core/Src/ADS1114.cpp:28:6:void ADS1114::begin()	24	static
 ../System/Core/Src/ADS1114.cpp:53:21:ADS1114::ResultType ADS1114::writeReg(uint8_t, uint16_t)	32	static

@@ -31,8 +31,27 @@ HeartBeatThread&    System::heartbeat() { static HeartBeatThread    beatThread {
 
 void System::init(){
 
+	/* EVERY thread's tick rate, and the only place any of them is set - a rate
+	 * hidden in a constructor is a rate nobody finds when the schedule needs
+	 * reading. Thread's default is 100 ms, so a thread missing from this block
+	 * gets that silently; keep the list complete.
+	 *
+	 * The rates below are unconditional. The profile-dependent ones are further
+	 * down, guarded by hasDevices().
+	 *
+	 * ServoThread does not tick on this delay: loop() blocks in waitCommand()
+	 * for up to 10 ms, so the queue drives it and a command is acted on the
+	 * moment it arrives. The 1 ms is a BACKSTOP. It used to be 0, which
+	 * CMSIS-RTOS2 turns into a no-op - not even a yield - so the only thing
+	 * keeping the task off the CPU was the queue receive blocking. If that
+	 * queue ever failed to be created, waitCommand() would return false
+	 * immediately and this thread would spin flat out at osPriorityAboveNormal,
+	 * starving every osPriorityNormal worker. One millisecond buys a guaranteed
+	 * block on a path that otherwise has none, and costs nothing measurable: the
+	 * PWM frame is 20 ms, so a command delayed 1 ms lands in the same frame. */
 	comms().setDelay(1);       //ms: poll USB RX ring + drain status queues
 	heartbeat().setDelay(100); //ms: ~2 Hz liveness beat (runs on every board)
+	servo().setDelay(1);       //ms: a floor, not the tick - see below
 
 	// Construct every thread now (single-threaded, post-HAL) so later access from
 	// the wire-owner never triggers lazy construction on another task.
@@ -66,7 +85,7 @@ void System::init(){
 	// Which threads run follows from what the board actually carries. We ask
 	// each thread, never the board profile: System deals in threads, threads
 	// deal in devices. A thread with nothing bound is simply never started.
-	if (servo().hasDevices()) servo().start(); // servo: 0 (set in ctor) - blocks in waitCommand()
+	if (servo().hasDevices()) servo().start();
 	if (mass().hasDevices())  mass().start();
 	if (ph().hasDevices())    ph().start();
 

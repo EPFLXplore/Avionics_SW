@@ -19,7 +19,7 @@
 
 #pragma once
 #include "main.h"              // I2C_HandleTypeDef
-#include "BoardProfile.h"     // ConnPads, BusId
+#include "Pins.h"             // ConnPads, BusId, pinOf
 
 #include <cstdint>
 
@@ -104,7 +104,7 @@ private:
     ResultType writeReg(uint8_t reg, uint16_t value);
     ResultType readReg(uint8_t reg, uint16_t& value);
 
-    I2C_HandleTypeDef _h{};
+    I2C_HandleTypeDef _i2c{};
     ConnPads          _pads;
     BusId             _bus;
     uint8_t           _af;

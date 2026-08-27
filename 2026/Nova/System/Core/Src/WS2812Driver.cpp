@@ -5,15 +5,26 @@
 // hook below; one strip per board, so a single slot is enough.
 static WS2812Driver *s_activeDriver = nullptr;
 
-// Returns 1 when this interrupt belonged to the strip, 0 otherwise. The filter
-// lives here rather than in main.c because only the driver knows which handle it
-// was given - and that follows LED_STRIP_SLOT, which main.c cannot see.
-extern "C" int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim)
+
+// Debug counters (watch in Live Expressions): show() calls, frames skipped
+// because the previous one was still streaming, failed DMA starts, last HAL
+// status, clock-tree mismatch. ws2812DmaComplete (main.c) counts finished
+// transfers.
+volatile uint32_t ws2812ShowCalls     = 0;
+volatile uint32_t ws2812FramesSkipped = 0;
+volatile uint32_t ws2812StartErrors   = 0;
+volatile uint32_t ws2812LastStatus    = 0;
+volatile uint32_t ws2812ClockBad      = 0;
+
+// The filter lives here rather than in main.c or Bridge.cpp because only the
+// driver knows which handle it was given - that follows LED_STRIP_SLOT, which C
+// cannot see - and because s_activeDriver stays private to this file.
+bool WS2812Driver::onFrameCompleteISR(TIM_HandleTypeDef *htim)
 {
 	if (!s_activeDriver || !s_activeDriver->ownsTimer(htim))
-		return 0;
+		return false;
 	s_activeDriver->frameCompleteFromISR();
-	return 1;
+	return true;
 }
 
 // TIM_CHANNEL_x -> the timer's DMA request enable bit, and its capture/compare
@@ -36,9 +47,9 @@ static uint32_t ccFlagOf(uint32_t channel)
 	     :                            TIM_FLAG_CC4;
 }
 
-uint32_t colorCode(const Color &c)
+uint32_t colorCode(const Color &color)
 {
-	return ((uint32_t) c.g << 16) | ((uint32_t) c.r << 8) | (uint32_t) c.b;
+	return ((uint32_t) color.g << 16) | ((uint32_t) color.r << 8) | (uint32_t) color.b;
 }
 
 WS2812Driver::WS2812Driver(const uint16_t ledsNum)
@@ -131,15 +142,6 @@ void WS2812Driver::setPixelColor(const uint32_t& ID, const Color& color)
 	}
 }
 
-// Debug counters (watch in Live Expressions): show() calls, frames skipped
-// because the previous one was still streaming, failed DMA starts, last HAL
-// status, clock-tree mismatch. ws2812DmaComplete (main.c) counts finished
-// transfers.
-volatile uint32_t ws2812ShowCalls     = 0;
-volatile uint32_t ws2812FramesSkipped = 0;
-volatile uint32_t ws2812StartErrors   = 0;
-volatile uint32_t ws2812LastStatus    = 0;
-volatile uint32_t ws2812ClockBad      = 0;
 
 // Non-blocking: starts the DMA transfer and returns immediately (~us of CPU);
 // the hardware streams the frame while every thread keeps running. If the
@@ -174,8 +176,8 @@ void WS2812Driver::show()
 	// The N variant when the slot drives CHxN: HAL_TIM_PWM_Start_DMA enables
 	// CCxE, which puts the frame on the positive output and leaves the pad this
 	// board actually uses idle. Same split PWMDriver makes for a servo on a
-	// complementary channel; both are fed from PwmMux::complementary, so the
-	// mux stays the single statement of what a slot is.
+	// complementary channel; both are fed from PwmPinConfig::complementary, so the
+	// pin config stays the single statement of what a slot is.
 	HAL_StatusTypeDef ret = _complementary
 			? HAL_TIMEx_PWMN_Start_DMA(_neoPixTim, _timCh,
 					(uint32_t*) _pBuff, _bufferSize + RESET_PULSE)

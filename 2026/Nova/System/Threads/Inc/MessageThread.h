@@ -15,9 +15,7 @@
 #include <cstddef>      // std::size_t
 #include <type_traits>  // std::is_trivially_copyable
 
-// ----------------------------------------------------------------------------
-// Compiler-agnostic forced inline macro
-// ----------------------------------------------------------------------------
+/* Compiler-agnostic forced inline macro because without it inline is more a recommendation to the compiler than an obligation*/
 #if defined(__GNUC__)
   #define ALWAYS_INLINE __attribute__((always_inline)) inline
 #else
@@ -68,30 +66,18 @@ public:
     // ------------------------------------------------------------------------
     // "Full" constructor (internal workhorse)
     // ------------------------------------------------------------------------
-    MessageThread(const char*   name,
-                  osPriority    priority,
-                  uint32_t      stackSize,
-                  uint32_t      tickDelayMs,
-                  std::size_t   commandDepth,
-                  std::size_t   statusDepth)
+    MessageThread(const char* name, osPriority priority, uint32_t stackSize, uint32_t tickDelayMs)
         : Thread(name, priority, stackSize)
     {
         // Set loop delay in base Thread
         setDelay(tickDelayMs);
 
-        // Depths are fixed at DEPTH so the storage can be static; the runtime
-        // depth params are kept for API compatibility but clamped to DEPTH.
-        (void)commandDepth;
-        (void)statusDepth;
-
         // Create inbox (command) queue: statically allocated
-        _commandQueue = xQueueCreateStatic(DEPTH, sizeof(CommandMsg),
-                                           _commandQueueStorage, &_commandQueueCb);
+        _commandQueue = xQueueCreateStatic(DEPTH, sizeof(CommandMsg), _commandQueueStorage, &_commandQueueCb);
         configASSERT(_commandQueue);
 
         // Create outbox (status) queue: statically allocated
-        _statusQueue = xQueueCreateStatic(DEPTH, sizeof(StatusMsg),
-                                          _statusQueueStorage, &_statusQueueCb);
+        _statusQueue = xQueueCreateStatic(DEPTH, sizeof(StatusMsg), _statusQueueStorage, &_statusQueueCb);
         configASSERT(_statusQueue);
     }
 
@@ -99,51 +85,24 @@ public:
     // Constructors mirroring Thread base class
     // ------------------------------------------------------------------------
 
+    /* Each fills in what the caller left out and forwards to the workhorse
+     * above; the defaults are ThreadCfg's, never spelled out twice. */
+
     /// Thread(const char* name)
     MessageThread(const char* name)
-        : MessageThread(
-              name,
-              (osPriority)osPriorityNormal,      // default priority
-              ThreadCfg::STACK_SIZE,             // default stack size
-              ThreadCfg::TICK_DELAY_MS,          // default loop period
-              ThreadCfg::QUEUE_DEPTH,            // default command depth
-              ThreadCfg::QUEUE_DEPTH)            // default status depth
-    {}
-
-
+        : MessageThread(name, (osPriority)osPriorityNormal, ThreadCfg::STACK_SIZE, ThreadCfg::TICK_DELAY_MS) {}
 
     /// Thread(const char* name, osPriority priority)
     MessageThread(const char* name, osPriority priority)
-        : MessageThread(
-              name,
-              priority,
-              ThreadCfg::STACK_SIZE,
-              ThreadCfg::TICK_DELAY_MS,
-              ThreadCfg::QUEUE_DEPTH,
-              ThreadCfg::QUEUE_DEPTH)
-    {}
+        : MessageThread(name, priority, ThreadCfg::STACK_SIZE, ThreadCfg::TICK_DELAY_MS) {}
 
     /// Thread(const char* name, uint32_t stackSize)
     MessageThread(const char* name, uint32_t stackSize)
-        : MessageThread(
-              name,
-              (osPriority)osPriorityNormal,
-              stackSize,
-              ThreadCfg::TICK_DELAY_MS,
-              ThreadCfg::QUEUE_DEPTH,
-              ThreadCfg::QUEUE_DEPTH)
-    {}
+        : MessageThread(name, (osPriority)osPriorityNormal, stackSize, ThreadCfg::TICK_DELAY_MS) {}
 
     /// Thread(const char* name, osPriority priority, uint32_t stackSize)
     MessageThread(const char* name, osPriority priority, uint32_t stackSize)
-        : MessageThread(
-              name,
-              priority,
-              stackSize,
-              ThreadCfg::TICK_DELAY_MS,
-              ThreadCfg::QUEUE_DEPTH,
-              ThreadCfg::QUEUE_DEPTH)
-    {}
+        : MessageThread(name, priority, stackSize, ThreadCfg::TICK_DELAY_MS) {}
 
     // ------------------------------------------------------------------------
     // Destructor

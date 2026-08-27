@@ -73,7 +73,6 @@ void MX_FREERTOS_Init(void);
  * one answer in one place; this file used to say TIM15 and would have gone
  * quietly deaf the moment the strip moved. */
 volatile uint32_t ws2812DmaComplete = 0;
-extern int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim);
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {

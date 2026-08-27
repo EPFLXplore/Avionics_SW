@@ -61,21 +61,22 @@ private:
     ModeState _states[MAX_SYSTEMS];
 
     // helpers
-    int pctToIdx(uint8_t pct) const;
+    int pctToIdx(uint8_t percent) const;
     void setAll(int start, int end, uint8_t r, uint8_t g, uint8_t b);
-    void handleMode(uint8_t idx);
+    void setBounded(int px, int start, int end, const Color& color);
+    void handleMode(uint8_t system);
 
     /* Pattern engines, one per LedModeType. All non-blocking: each is called
      * once per tick() and advances its own ModeState. */
-    void modeOff(uint8_t idx, int s, int e);
-    void modeOn(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b);
-    void modeBlink(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
+    void modeOff(uint8_t system, int start, int end);
+    void modeOn(uint8_t system, int start, int end, uint8_t r, uint8_t g, uint8_t b);
+    void modeBlink(uint8_t system, int start, int end, uint8_t r, uint8_t g, uint8_t b,
                    uint8_t eye = 4, uint16_t speed = 50, uint16_t pause = 100);
-    void modeFault(uint8_t idx, int s, int e, uint8_t r, uint8_t g, uint8_t b,
+    void modeFault(uint8_t system, int start, int end, uint8_t r, uint8_t g, uint8_t b,
                    uint16_t speed = 250);
-    void modeEmergencyMotors(uint8_t idx, uint8_t r, uint8_t g, uint8_t b);
-    void modeEmergencyShutdown(uint8_t idx, uint8_t r, uint8_t g, uint8_t b);
-    void modeAllOff(uint8_t idx);
+    void modeEmergencyMotors(uint8_t system, uint8_t r, uint8_t g, uint8_t b);
+    void modeEmergencyShutdown(uint8_t system, uint8_t r, uint8_t g, uint8_t b);
+    void modeAllOff(uint8_t system);
 
 };
 

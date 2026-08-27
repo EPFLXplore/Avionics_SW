@@ -89,7 +89,8 @@ Nova.list \
 
 
 # All Target
-all: main-build
+all:
+	+@$(MAKE) --no-print-directory pre-build && $(MAKE) --no-print-directory main-build
 
 # Main-build Target
 main-build: Nova.elf secondary-outputs
@@ -115,6 +116,10 @@ clean:
 	-$(RM) Nova.elf Nova.list Nova.map default.size.stdout
 	-@echo ' '
 
+pre-build:
+	bash "/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/gen_av_packets.sh"
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
@@ -124,6 +129,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified pre-build
 
 -include ../makefile.targets

@@ -1,19 +1,19 @@
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:Thread::~Thread()	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/Thread.h:20:10:virtual Thread::~Thread()	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/ERC_SE_CustomMessages/include/device_ids.h:94:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:65:27:TIM_HandleTypeDef* timerOf(TimerId)	5
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:179:32:constexpr const PwmMux& pwmMux(ConnType)	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:267:27:constexpr uint32_t halChannel(uint8_t)	4
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:275:27:TIM_HandleTypeDef* pwmTimerOf(ConnType)	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:276:27:uint32_t pwmChannelOf(ConnType)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/Avionics_Common/include/device_ids.h:109:19:constexpr uint8_t idOf(E) [with E = ConnType]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:155:27:TIM_HandleTypeDef* timerOf(TimerId)	5
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:285:38:constexpr const PwmPinConfig& pwmConfigOf(ConnType)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:289:27:constexpr uint32_t halChannel(TimCh)	4
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:297:27:TIM_HandleTypeDef* pwmTimerOf(ConnType)	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Config/Inc/Pins.h:298:27:uint32_t pwmChannelOf(ConnType)	1
 /home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Core/Inc/LEDStrip.h:46:7:LEDStrip::~LEDStrip()	1
 ../System/Threads/Src/LedsThread.cpp:15:1:LedsThread::LedsThread(const char*, osPriority_t)	1
-../System/Threads/Src/LedsThread.cpp:19:1:LedsThread::~LedsThread()	1
-../System/Threads/Src/LedsThread.cpp:19:1:virtual LedsThread::~LedsThread()	1
-../System/Threads/Src/LedsThread.cpp:24:6:virtual void LedsThread::init()	1
-../System/Threads/Src/LedsThread.cpp:60:6:virtual void LedsThread::loop()	10
-../System/Threads/Src/LedsThread.cpp:99:6:void LedsThread::applyToEverySystem()	2
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:116:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:151:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
-/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:71:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t, std::size_t, std::size_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
+../System/Threads/Src/LedsThread.cpp:17:1:LedsThread::~LedsThread()	1
+../System/Threads/Src/LedsThread.cpp:17:1:virtual LedsThread::~LedsThread()	1
+../System/Threads/Src/LedsThread.cpp:20:6:virtual void LedsThread::init()	1
+../System/Threads/Src/LedsThread.cpp:40:6:virtual void LedsThread::loop()	10
+../System/Threads/Src/LedsThread.cpp:79:6:void LedsThread::applyToEverySystem()	2
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:96:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:110:13:MessageThread<CommandMsg, StatusMsg>::~MessageThread() [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	1
+/home/pedro/Pedro/Xplore/Gits/Avionics_SW/2026/Nova/System/Threads/Inc/MessageThread.h:69:5:MessageThread<CommandMsg, StatusMsg>::MessageThread(const char*, osPriority_t, uint32_t, uint32_t) [with CommandMsg = LEDRequest; StatusMsg = EmptyMessage]	3

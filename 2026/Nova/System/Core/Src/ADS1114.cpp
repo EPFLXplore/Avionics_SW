@@ -36,7 +36,7 @@ void ADS1114::begin()
     configPin(_pads.clk,  GPIO_MODE_AF_OD, GPIO_PULLUP, GPIO_SPEED_FREQ_HIGH, _af);
     configPin(_pads.data, GPIO_MODE_AF_OD, GPIO_PULLUP, GPIO_SPEED_FREQ_HIGH, _af);
 
-    initI2c(_h, _bus, I2C_TIMING_STD_144MHZ);
+    initI2c(_i2c, _bus, I2C_TIMING_STD_144MHZ);
 
     _begun = true;
 
@@ -56,7 +56,7 @@ ADS1114::ResultType ADS1114::writeReg(uint8_t reg, uint16_t value)
                        static_cast<uint8_t>(value >> 8),
                        static_cast<uint8_t>(value & 0xFF) };
     const HAL_StatusTypeDef st = HAL_I2C_Master_Transmit(
-        &_h, static_cast<uint16_t>(_addr7 << 1), buf, sizeof buf, I2C_TIMEOUT_MS);
+        &_i2c, static_cast<uint16_t>(_addr7 << 1), buf, sizeof buf, I2C_TIMEOUT_MS);
     return (st == HAL_OK) ? ResultType::Ok : ResultType::BusError;
 }
 
@@ -66,7 +66,7 @@ ADS1114::ResultType ADS1114::readReg(uint8_t reg, uint16_t& value)
 {
     uint8_t buf[2] = { 0, 0 };
     const HAL_StatusTypeDef st = HAL_I2C_Mem_Read(
-        &_h, static_cast<uint16_t>(_addr7 << 1), reg, I2C_MEMADD_SIZE_8BIT,
+        &_i2c, static_cast<uint16_t>(_addr7 << 1), reg, I2C_MEMADD_SIZE_8BIT,
         buf, sizeof buf, I2C_TIMEOUT_MS);
     if (st != HAL_OK) return ResultType::BusError;
     value = static_cast<uint16_t>((static_cast<uint16_t>(buf[0]) << 8) | buf[1]);
@@ -167,7 +167,7 @@ uint8_t ADS1114::probe()
 
     // 1. Does anything ACK this address at all? Separates "no chip / no power /
     //    open SDA" from "chip there but misconfigured".
-    if (HAL_I2C_IsDeviceReady(&_h, static_cast<uint16_t>(_addr7 << 1), 2,
+    if (HAL_I2C_IsDeviceReady(&_i2c, static_cast<uint16_t>(_addr7 << 1), 2,
                               I2C_TIMEOUT_MS) == HAL_OK)
         ok |= PROBE_ACK;
 

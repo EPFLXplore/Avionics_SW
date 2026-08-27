@@ -20,34 +20,34 @@ void CdcTransport::begin() {
 
 /* ---- RX: ISR producer, thread consumer (SPSC byte ring) ---------------- */
 
-void CdcTransport::onRxISR(const uint8_t* d, uint16_t n) {
-    for (uint16_t i = 0; i < n; ++i) {
+void CdcTransport::onRxISR(const uint8_t* data, uint16_t len) {
+    for (uint16_t i = 0; i < len; ++i) {
         uint16_t next = static_cast<uint16_t>((_rxHead + 1) % RX_BUF_SIZE);
         if (next == _rxTail) break; // ring full -> drop (the framing FSM resyncs)
-        _rxBuf[_rxHead] = d[i];
+        _rxBuf[_rxHead] = data[i];
         _rxHead = next;
     }
 }
 
-uint16_t CdcTransport::read(uint8_t* dst, uint16_t max) {
-    uint16_t cnt = 0;
-    while (cnt < max && _rxTail != _rxHead) {
-        dst[cnt++] = _rxBuf[_rxTail];
+uint16_t CdcTransport::read(uint8_t* destination, uint16_t maxLen) {
+    uint16_t count = 0;
+    while (count < maxLen && _rxTail != _rxHead) {
+    	destination[count++] = _rxBuf[_rxTail];
         _rxTail = static_cast<uint16_t>((_rxTail + 1) % RX_BUF_SIZE);
     }
-    return cnt;
+    return count;
 }
 
 /* ---- TX: completion-driven frame ring ---------------------------------- */
 
-bool CdcTransport::write(const uint8_t* d, uint16_t n) {
-    if (n > MAX_FRAME) return false;
+bool CdcTransport::write(const uint8_t* data, uint16_t len) {
+    if (len > MAX_FRAME) return false;
     bool ok = false;
     taskENTER_CRITICAL(); // masks the USB IRQ: ring update + kick are atomic vs onTxCpltISR
     uint16_t next = static_cast<uint16_t>((_tail + 1) % RING_N);
     if (next != _head) {  // not full
-        std::memcpy(_ring[_tail].buf, d, n);
-        _ring[_tail].len = n;
+        std::memcpy(_ring[_tail].buf, data, len);
+        _ring[_tail].len = len;
         _tail = next;
         pump();
         ok = true;
@@ -71,7 +71,7 @@ void CdcTransport::reset() {
      * and this function can never interleave. */
     _head = _tail = 0;   // discard anything queued for the link that just died
     _off = 0;
-    _zlp = false;
+    _zeroLengthPacket = false;
     _busy = false;       // the missing half of USBD_CDC_Init's TxState = 0
     _busySince = 0;
 }
@@ -96,14 +96,14 @@ void CdcTransport::serviceTx(uint32_t nowTicks) {
 
 void CdcTransport::onTxCpltISR() {
     _busy = false;
-    OutFrame& f = _ring[_head];
-    if (_zlp) {
-        _zlp = false; // the ZLP finished the frame
+    OutFrame& frame = _ring[_head];
+    if (_zeroLengthPacket) {
+        _zeroLengthPacket = false; // the ZLP finished the frame
         _head = static_cast<uint16_t>((_head + 1) % RING_N);
         _off = 0;
-    } else if (_off == f.len) {
-        if (f.len % USB_PACKET == 0) {
-            _zlp = true; // ended on a 64-B boundary -> owe a ZLP
+    } else if (_off == frame.len) {
+        if (frame.len % USB_PACKET == 0) {
+            _zeroLengthPacket = true; // ended on a 64-B boundary -> owe a ZLP
         } else {
             _head = static_cast<uint16_t>((_head + 1) % RING_N);
             _off = 0;
@@ -115,25 +115,25 @@ void CdcTransport::onTxCpltISR() {
 void CdcTransport::pump() {
     if (_busy) return;
     if (_head == _tail) return; // nothing queued
-    OutFrame& f = _ring[_head];
+    OutFrame& frame = _ring[_head];
     _busy = true;
-    if (_zlp) {
-        if (CDC_Transmit_FS(f.buf, 0) != USBD_OK) _busy = false; // retry on next kick
+    if (_zeroLengthPacket) {
+        if (CDC_Transmit_FS(frame.buf, 0) != USBD_OK) _busy = false; // retry on next kick
         return;
     }
-    uint16_t rem = static_cast<uint16_t>(f.len - _off);
-    uint16_t n = rem < USB_PACKET ? rem : USB_PACKET;
-    if (CDC_Transmit_FS(f.buf + _off, n) != USBD_OK) {
+    uint16_t remaining = static_cast<uint16_t>(frame.len - _off);
+    uint16_t chunkLen = remaining < USB_PACKET ? remaining : USB_PACKET;
+    if (CDC_Transmit_FS(frame.buf + _off, chunkLen) != USBD_OK) {
         _busy = false; // endpoint busy -> leave queued; next write()/TxCplt re-pumps
         return;
     }
-    _off = static_cast<uint16_t>(_off + n);
+    _off = static_cast<uint16_t>(_off + chunkLen);
 }
 
 /* ---- static forwarders to the singleton (called by the C bridge) -------- */
 
-void CdcTransport::dispatchRxISR(const uint8_t* d, uint16_t n) {
-    if (gCdc) gCdc->onRxISR(d, n);
+void CdcTransport::dispatchRxISR(const uint8_t* data, uint16_t len) {
+    if (gCdc) gCdc->onRxISR(data, len);
 }
 
 void CdcTransport::dispatchTxCpltISR() {

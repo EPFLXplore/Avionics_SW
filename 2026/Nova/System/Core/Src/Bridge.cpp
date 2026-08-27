@@ -9,14 +9,31 @@
 
 #include "System.h"
 #include "Transport.h"
+#include "WS2812Driver.h"
 
 #include "main.h"        // HAL, GPIOB, GPIO_PIN_4/5
 #include "usb_device.h"  // MX_USB_Device_Init, USBD_HandleTypeDef
 #include "usbd_cdc.h"    // USBD_CDC_SetRxBuffer / USBD_CDC_ReceivePacket
 #include "usbd_core.h"   // USBD_GetString
 
+
+/* BRIDGE: self explanatory name: bridges C code generated from STM Cube IDE and C++ application code
+ * Simple idea: need to call your code from main or any of the C code? Put it here and put the function
+ * on the USER_CODE command blocks so it lives between ioc generations
+ * */
+
+
+
 /* Defined in usb_device.c (no header declares it). */
 extern USBD_HandleTypeDef hUsbDeviceFS;
+
+/* Called from main.c  (HAL_TIM_PWM_PulseFinishedCallback, DMA IRQ). That
+ * callback fires for EVERY PWM channel that finishes a transfer, so the driver
+ * filters it; this is only the C linkage. Returns 1 when the frame was the
+ * strip's. */
+int WS2812_FrameCompleteISR(TIM_HandleTypeDef* htim) {
+	return WS2812Driver::onFrameCompleteISR(htim) ? 1 : 0;
+}
 
 /* Called from main.c  (StartDefaultTask, right after MX_USB_Device_Init). */
 void BridgeSystemInit(void) {
@@ -54,15 +71,7 @@ void Bridge_UsbSerial(uint8_t* buf, uint16_t* length) {
 	USBD_GetString((uint8_t*)novaSerial, buf, length);
 }
 
-/* 2-bit board id strapped on PB4 (bit0) / PB5 (bit1). PB4 is NJTRST -> the debug
- * interface must be SWD for it to be a free GPIO. PB4/PB5 are also SPI3
- * MISO/MOSI, so MX_SPI3_Init() hands them to AF6; claiming them back as GPIO has
- * to happen after that, which is why the latch lives in main()'s USER CODE 2.
- *
- * PB4's NJTRST pull-up is active from reset until the pin is reconfigured, so a
- * "low" strap starts charged HIGH. Internal pull-down + a settle make the read
- * deterministic: a high strap overrides the ~40k pull-down, an absent or weak
- * low strap no longer floats at whatever charge the pull-up left. */
+// 2-bit board id coming from the switch. Used also for the Nova<id> names of /dev/tty*
 static int boardMasterId = -1;   // -1 = not yet latched
 
 /* Debugger handles: watch these in Live Expressions to see what the pins
@@ -71,11 +80,11 @@ static int boardMasterId = -1;   // -1 = not yet latched
 volatile uint8_t boardStrapRaw = 0xFF;
 
 static uint8_t Board_ReadStraps(void) {
-	GPIO_InitTypeDef g = {};
-	g.Pin  = GPIO_PIN_4 | GPIO_PIN_5;
-	g.Mode = GPIO_MODE_INPUT;
-	g.Pull = GPIO_PULLDOWN;          // the board straps each line high or low
-	HAL_GPIO_Init(GPIOB, &g);
+	GPIO_InitTypeDef gpio = {};
+	gpio.Pin  = GPIO_PIN_4 | GPIO_PIN_5;
+	gpio.Mode = GPIO_MODE_INPUT;
+	gpio.Pull = GPIO_PULLDOWN;          // the board straps each line high or low
+	HAL_GPIO_Init(GPIOB, &gpio);
 	for (volatile uint32_t i = 0; i < 3000; ++i) { __NOP(); } // ~20-60 us settle
 	const uint8_t b0 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_SET) ? 1 : 0;
 	const uint8_t b1 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == GPIO_PIN_SET) ? 1 : 0;
@@ -87,8 +96,7 @@ static uint8_t Board_ReadStraps(void) {
  * takes the pins off SPI3's alternate function and turns the pull-down on, the
  * second reads them once the NJTRST pull-up's charge has actually decayed.
  * HAL_Delay is legal here - this runs in main(), before the kernel, and never
- * from the USB IRQ. That is the whole point of latching here: the ISR path
- * below can then only ever hit the cache. */
+ * from the USB IRQ. */
 void Board_LatchMasterId(void) {
 	if (boardMasterId >= 0) return;
 	(void)Board_ReadStraps();   // claim the pins from AF6, enable the pull-down

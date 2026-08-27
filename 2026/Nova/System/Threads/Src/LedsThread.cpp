@@ -12,13 +12,9 @@
 
 
 
-LedsThread::LedsThread(const char* name, osPriority priority) : MessageThread(name, priority) {
-	// strip points at the static LEDStrip member (no heap).
-}
+LedsThread::LedsThread(const char* name, osPriority priority) : MessageThread(name, priority) {}
 
-LedsThread::~LedsThread(){
-	// LEDStrip is a static member: nothing to free.
-}
+LedsThread::~LedsThread(){}
 
 
 void LedsThread::init(){
@@ -27,18 +23,12 @@ void LedsThread::init(){
 	// table. The slot itself is LED_STRIP_SLOT, never a literal - move the strip
 	// there and here follows, including the driver's DMA request.
 	_strip.begin(pwmTimerOf(LED_STRIP_SLOT), pwmChannelOf(LED_STRIP_SLOT),
-	             pwmMux(LED_STRIP_SLOT).complementary);
+	             pwmConfigOf(LED_STRIP_SLOT).complementary);
 
-	// LEDStrip::begin() has already zeroed every segment to Off and set the
-	// brightness, so there is nothing to paint here. What used to live in this
-	// spot was a green bring-up bar over the first half of the strip - useful
-	// once, misleading afterwards, because a boot pattern and a real NAV command
-	// looked identical.
-	_strip.tick();
+	_strip.tick(); //tick whats set at begin.
 }
 
-/* Every colour the strip can be told to show. Named only so the supply ceiling
- * can be checked below - the switch still decides which system gets which. */
+/* Color definitions */
 static constexpr Color NAV_VIOLET      = { 147,   0, 211 };
 static constexpr Color HD_ORANGE       = { 255, 140,   0 };
 static constexpr Color DRILL_GREEN     = {   0, 255,   0 };
@@ -46,16 +36,6 @@ static constexpr Color AVIONICS_TURQ   = {  64, 224, 208 };
 static constexpr Color EMERGENCY_AMBER = { 100,  81,  50 };
 static constexpr Color EMERGENCY_RED   = { 255,   0,   0 };
 
-/* No colour may ask more of the supply than a full-white pixel at the old
- * brightness ceiling. Per-pixel and summed across the channels, because that is
- * what the rail sees: a single channel at 255 is cheaper than three at 200. The
- * whole-strip modes are the ones that matter - they paint every pixel at once. */
-static_assert(pixelLoad(NAV_VIOLET)      <= PIXEL_BUDGET, "NAV colour over the supply budget");
-static_assert(pixelLoad(HD_ORANGE)       <= PIXEL_BUDGET, "HD colour over the supply budget");
-static_assert(pixelLoad(DRILL_GREEN)     <= PIXEL_BUDGET, "DRILL colour over the supply budget");
-static_assert(pixelLoad(AVIONICS_TURQ)   <= PIXEL_BUDGET, "AVIONICS colour over the supply budget");
-static_assert(pixelLoad(EMERGENCY_AMBER) <= PIXEL_BUDGET, "emergency-motors colour over the supply budget");
-static_assert(pixelLoad(EMERGENCY_RED)   <= PIXEL_BUDGET, "emergency-shutdown colour over the supply budget");
 
 void LedsThread::loop(){
 
@@ -103,8 +83,16 @@ void LedsThread::applyToEverySystem() {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////--CHECKS--DOWN--///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
+/* Checks for current: max brightness on the whole strip for the whole length may bee too much, test before raising safety threshold */
+static_assert(pixelLoad(NAV_VIOLET)      <= PIXEL_BUDGET, "NAV colour over the supply budget");
+static_assert(pixelLoad(HD_ORANGE)       <= PIXEL_BUDGET, "HD colour over the supply budget");
+static_assert(pixelLoad(DRILL_GREEN)     <= PIXEL_BUDGET, "DRILL colour over the supply budget");
+static_assert(pixelLoad(AVIONICS_TURQ)   <= PIXEL_BUDGET, "AVIONICS colour over the supply budget");
+static_assert(pixelLoad(EMERGENCY_AMBER) <= PIXEL_BUDGET, "emergency-motors colour over the supply budget");
+static_assert(pixelLoad(EMERGENCY_RED)   <= PIXEL_BUDGET, "emergency-shutdown colour over the supply budget");

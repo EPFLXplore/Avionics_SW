@@ -24,10 +24,22 @@ class CdcTransport {
     void begin();
 
     /** Queue a whole frame for transmission; false if the TX ring is full. */
-    bool write(const uint8_t* d, uint16_t n);
+    bool write(const uint8_t* data, uint16_t len);
+
+    /** Largest frame a TX ring slot can hold. Public so the protocol layer can
+     *  assert it is big enough - see the static_assert in SerialThread.h. It is
+     *  stated here rather than derived because a transport must not depend on
+     *  the protocol riding on it; the assert is what keeps the two honest. */
+    static constexpr uint16_t MAX_FRAME = 135;   // SerialProtocol<128>: 128 + 7
+
+    /** USB FS bulk max packet. Public because it is the natural size for a
+     *  caller's read() buffer: the host can never hand the device more than one
+     *  packet at a time, so a buffer this big drains everything a single ISR
+     *  delivered, and a bigger one only ever comes back part full. */
+    static constexpr uint16_t USB_PACKET = 64;
 
     /** Copy up to max bytes currently available from the RX ring (non-blocking). */
-    uint16_t read(uint8_t* dst, uint16_t max);
+    uint16_t read(uint8_t* dest, uint16_t maxLen);
 
     /**
      * @brief Drop every in-flight TX transfer and re-arm the ring.
@@ -57,11 +69,11 @@ class CdcTransport {
     uint16_t txTimeouts() const { return _txTimeouts; }
 
     /* ---- called from the CDC ISR (via the C bridge in Bridge.cpp) -------- */
-    void onRxISR(const uint8_t* d, uint16_t n);
+    void onRxISR(const uint8_t* data, uint16_t len);
     void onTxCpltISR();
 
     /* Static forwarders to the singleton transport: the C bridge calls these. */
-    static void dispatchRxISR(const uint8_t* d, uint16_t n);
+    static void dispatchRxISR(const uint8_t* data, uint16_t len);
     static void dispatchTxCpltISR();
     static void dispatchReset();
 
@@ -69,9 +81,7 @@ class CdcTransport {
     void pump(); // start at most one IN packet; runs in thread (IRQ-masked) or ISR
 
     static constexpr uint16_t RX_BUF_SIZE = 2048; // RX byte ring
-    static constexpr uint16_t MAX_FRAME = 135;   // SerialProtocol<128>: 128 + 7
     static constexpr uint8_t RING_N = 8;         // frames in flight
-    static constexpr uint16_t USB_PACKET = 64;   // USB FS bulk max packet
 
     /* A 64-byte FS bulk IN completes in well under a millisecond when the host
      * is polling. 100 ms of "busy" therefore means the transfer is never coming
@@ -93,7 +103,7 @@ class CdcTransport {
     volatile uint16_t _tail = 0; // producer (write)
     uint16_t _off = 0;           // bytes of the head frame already sent
     volatile bool _busy = false; // an IN packet is outstanding
-    volatile bool _zlp = false;  // a terminating zero-length packet is owed
+    volatile bool _zeroLengthPacket = false;  // a terminating zero-length packet is owed
 
     /* Stall recovery + diagnostics */
     volatile uint32_t _busySince = 0; // tick _busy was first observed set (0 = idle)

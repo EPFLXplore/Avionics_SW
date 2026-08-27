@@ -6,6 +6,52 @@
  *
  *  Bit-banged-over-PWM/DMA driver for WS2812B addressable LEDs.
  *  (Renamed from Adafruit_NeoPixel_STM; statically allocated: no heap.)
+ *
+ * ===========================================================================
+ * HOW IT WORKS, and why it costs the CPU nothing
+ * ===========================================================================
+ *
+ * A WS2812B has no clock line. Every bit is one fixed 1.25 us slot, and what
+ * says 0 from 1 is HOW LONG THE LINE STAYS HIGH inside that slot:
+ *
+ *     '0'  high ~350 ns, then low     -> CCR_B0
+ *     '1'  high ~700 ns, then low     -> CCR_B1
+ *
+ * 24 bits per LED (GRB), sent back to back. A gap longer than ~50 us anywhere
+ * in the frame and the strip latches early, so the whole thing is one
+ * uninterruptible burst: 72 LEDs = 1728 bits = 2.16 ms of hard real time.
+ *
+ * Doing that in software means hitting a deadline every 1.25 us for two
+ * milliseconds - impossible under FreeRTOS, and the reason naive drivers
+ * disable interrupts for the whole frame and wreck everything else's timing.
+ *
+ * So the hardware does it instead:
+ *
+ *   1. The timer runs at exactly 800 kHz (ARR_PERIOD), PWM mode. Its CCR sets
+ *      the high time of the current slot - which IS the bit being sent.
+ *   2. _pBuff[] holds one CCR value per bit: CCR_B0 or CCR_B1, filled in by
+ *      setPixelColor().
+ *   3. A DMA channel is tied to this channel's capture/compare request. Every
+ *      slot the counter wraps, DMA copies the next _pBuff entry into CCR. No
+ *      CPU, no interrupt, no jitter - the transfer is memory-to-peripheral.
+ *
+ * show() therefore starts the transfer and RETURNS - a few microseconds of
+ * CPU. The 2.2 ms of streaming happens in hardware while every thread keeps
+ * running. When the DMA count reaches zero the transfer-complete interrupt
+ * fires, reaches onFrameCompleteISR() through Bridge, and gives _frameDone.
+ *
+ * _frameDone is what makes that safe: binary, given = idle. show() takes it
+ * without blocking, so a call landing mid-frame SKIPS rather than waiting or
+ * corrupting the buffer being streamed.
+ *
+ *     show()      [take sem] -> [start DMA] -> return          (~us of CPU)
+ *                                   |
+ *          hardware streams 1778 slots, 2.2 ms, CPU free
+ *                                   |
+ *     DMA TC IRQ -> Bridge -> onFrameCompleteISR -> [give sem]
+ *
+ * The last RESET_PULSE slots carry CCR = 0, holding the line low past the
+ * 50 us latch window - and leaving CCR at 0, so the pad idles low afterwards.
  */
 
 #pragma once
@@ -37,40 +83,29 @@
 inline constexpr uint32_t WS2812_TIM_CLK_HZ = 144000000u;
 inline constexpr uint32_t WS2812_BIT_HZ     = 800000u;    // 1.25 us bit period
 
+/** Nanoseconds -> timer ticks at WS2812_TIM_CLK_HZ, rounded to nearest. */
 inline constexpr uint32_t ws2812NsToTicks(uint32_t ns) {
 	return (uint32_t)(((uint64_t)WS2812_TIM_CLK_HZ * ns + 500000000ULL) / 1000000000ULL);
 }
+/** Timer ticks -> nanoseconds; how the spec-window asserts below read a CCR. */
 inline constexpr uint32_t ws2812TicksToNs(uint32_t ticks) {
 	return (uint32_t)(((uint64_t)ticks * 1000000000ULL) / WS2812_TIM_CLK_HZ);
 }
 
-static_assert(WS2812_TIM_CLK_HZ % WS2812_BIT_HZ == 0,
-	"timer clock must be an integer multiple of 800 kHz or the bit period drifts");
 
 inline constexpr uint32_t ARR_PERIOD = WS2812_TIM_CLK_HZ / WS2812_BIT_HZ - 1; // 179 @ 144 MHz
 inline constexpr uint32_t CCR_B0 = ws2812NsToTicks(350); // 0-bit high time (50 @ 144 MHz)
 inline constexpr uint32_t CCR_B1 = ws2812NsToTicks(700); // 1-bit high time (101 @ 144 MHz)
 
-static_assert(ws2812TicksToNs(CCR_B0) >= 220 && ws2812TicksToNs(CCR_B0) <= 380,
-	"T0H outside WS2812B spec window");
-static_assert(ws2812TicksToNs(CCR_B1) >= 580 && ws2812TicksToNs(CCR_B1) <= 1000,
-	"T1H outside WS2812B spec window");
-static_assert(CCR_B1 < ARR_PERIOD,
-	"1-bit high time must leave a low tail inside the bit period");
-static_assert(ARR_PERIOD <= 0xFFFFu, "TIM15 ARR is 16-bit");
 
 inline constexpr uint16_t BITS_PER_LED = 24;
 inline constexpr uint16_t RESET_PULSE  = 50; // zero-duty tail slots appended to each frame
 
-static_assert((uint64_t)RESET_PULSE * 1000000000ULL / WS2812_BIT_HZ >= 50000u,
-	"reset tail shorter than the 50 us latch the strip needs");
 
 // Strip length: sizes the static buffers (no heap) and is what the code drives.
 inline constexpr uint16_t WS2812_MAX_LEDS   = 72;
 inline constexpr uint16_t WS2812_MAX_BUFFER = WS2812_MAX_LEDS * BITS_PER_LED + RESET_PULSE;
 
-static_assert(WS2812_MAX_BUFFER <= 0xFFFFu,
-	"frame + reset tail must fit a 16-bit DMA transfer count (NDTR)");
 
 /**
  * Supply ceiling, in the units a WS2812 channel is driven in.
@@ -93,11 +128,15 @@ struct Color {
 };
 
 /** Current a pixel asks of the supply, as channel units summed. */
-inline constexpr uint16_t pixelLoad(const Color& c) { return c.r + c.g + c.b; }
+/** Current a pixel asks of the supply: the three channels summed, since that is
+ *  what the rail sees. Compare against PIXEL_BUDGET. */
+inline constexpr uint16_t pixelLoad(const Color& color) { return color.r + color.g + color.b; }
 
-uint32_t colorCode(const Color &c);
+/** Pack a Color into the 24 bits the strip expects, GRB order, G first. */
+uint32_t colorCode(const Color &color);
 
-Color operator*(const Color& c, const double alpha);
+/** Scale a colour by alpha, for dimming a defined colour without redefining it. */
+Color operator*(const Color& color, const double alpha);
 
 class WS2812Driver {
 // Made for WS2812B.
@@ -107,7 +146,7 @@ public:
 
 	/** @param complementary true when the slot drives CHxN rather than CHx, so
 	 *  the frame is started with the TIMEx N variant. Comes straight from
-	 *  PwmMux::complementary - the driver never decides this itself. */
+	 *  PwmPinConfig::complementary - the driver never decides this itself. */
 	void begin(TIM_HandleTypeDef *timer, const uint32_t channel,
 	           bool complementary = false);
 	void setPixelColor(const uint32_t& ID, const Color& color);
@@ -123,6 +162,16 @@ public:
 	// interrupt must be filtered - and this is the only place that knows which
 	// handle begin() received, so main.c need not name a timer.
 	bool ownsTimer(const TIM_HandleTypeDef *htim) const { return htim == _neoPixTim; }
+
+	// The whole ISR side in one call, instance lookup included: true when `htim`
+	// is the strip's timer and the frame was consumed, false when the interrupt
+	// belonged to some other PWM channel.
+	//
+	// STATIC because an ISR has no object. The active instance is registered by
+	// begin() into a file-local in WS2812Driver.cpp, and this is what lets that
+	// stay file-local: Bridge.cpp's C hook is a one-line forward to here rather
+	// than something that needs to see the pointer.
+	static bool onFrameCompleteISR(TIM_HandleTypeDef *htim);
 
 	// False if the runtime clock tree does not match WS2812_TIM_CLK_HZ (see
 	// the assumptions block above): the strip would get out-of-spec timing.
@@ -156,9 +205,29 @@ public:
 
 };
 
-// C hook for HAL_TIM_PWM_PulseFinishedCallback (main.c): forwards the DMA
-// transfer-complete event to the active driver instance. Returns 1 when the
-// interrupt was the strip's, 0 when it belonged to some other PWM channel, so
-// the caller can filter without knowing which timer the strip runs on.
-extern "C" int WS2812_FrameCompleteISR(TIM_HandleTypeDef *htim);
+// A 0-bit the strip would read as a 1 (or as noise) if the rounding lands wrong.
+static_assert(ws2812TicksToNs(CCR_B0) >= 220 && ws2812TicksToNs(CCR_B0) <= 380,
+	"T0H outside WS2812B spec window");
+// Same for a 1-bit: too short reads as 0, too long eats the slot's low tail.
+static_assert(ws2812TicksToNs(CCR_B1) >= 580 && ws2812TicksToNs(CCR_B1) <= 1000,
+	"T1H outside WS2812B spec window");
+// CCR >= ARR is 100% duty: the line never returns low and the bit never ends.
+static_assert(CCR_B1 < ARR_PERIOD,
+	"1-bit high time must leave a low tail inside the bit period");
+// The auto-reload register truncates silently above 16 bits, halving the period.
+static_assert(ARR_PERIOD <= 0xFFFFu, "TIM15 ARR is 16-bit");
+
+// A non-integer divider means ARR cannot express 800 kHz and every bit drifts.
+static_assert(WS2812_TIM_CLK_HZ % WS2812_BIT_HZ == 0,
+	"timer clock must be an integer multiple of 800 kHz or the bit period drifts");
+
+// Too short a tail and the strip never latches, so the frame is simply not shown.
+static_assert((uint64_t)RESET_PULSE * 1000000000ULL / WS2812_BIT_HZ >= 50000u,
+	"reset tail shorter than the 50 us latch the strip needs");
+
+// NDTR counts the DMA slots in 16 bits; overflow would truncate the frame.
+static_assert(WS2812_MAX_BUFFER <= 0xFFFFu,
+	"frame + reset tail must fit a 16-bit DMA transfer count (NDTR)");
+
+
 

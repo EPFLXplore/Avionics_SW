@@ -7,6 +7,7 @@
 
 #pragma once
 #include <stdint.h>
+#include "stm32g4xx_hal.h"   // TIM_HandleTypeDef, for the timer ISR hook below
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,6 +39,16 @@ void Cdc_onCdcInit(void);
 /** Build the USB serial string "NOVA<board-id>" into buf (called from
  *  USBD_CDC_SerialStrDescriptor in usbd_desc.c). */
 void Bridge_UsbSerial(uint8_t* buf, uint16_t* length);
+
+/** WS2812 frame finished (called from HAL_TIM_PWM_PulseFinishedCallback in
+ *  main.c, DMA IRQ). That callback fires for EVERY PWM channel that completes a
+ *  transfer, so it has to be filtered - and only the driver knows which handle
+ *  it was given, since that follows LED_STRIP_SLOT and main.c cannot see C++.
+ *  Returns 1 when the interrupt belonged to the strip, 0 otherwise.
+ *  Bridge.cpp holds only the C linkage; the filter itself is
+ *  WS2812Driver::onFrameCompleteISR(), which is where the active instance
+ *  lives. */
+int WS2812_FrameCompleteISR(TIM_HandleTypeDef* htim);
 
 #ifdef __cplusplus
 }

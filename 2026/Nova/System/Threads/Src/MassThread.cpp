@@ -29,7 +29,7 @@ void MassThread::init(){
 	// This is the ONLY place the board profile is bound; everything else works
 	// off _cell[i].globalId, so swapping this for hardware detection later
 	// changes nothing beyond this one line.
-	bindSlots(_cell, DeviceType::LoadCell, ConnType::ConnI2C);
+	bindSlots<SlotGroup::Connectors>(_cell, DeviceType::LoadCell);
 
 	// EVERY loop below skips unbound connectors, the same test loop() publishes
 	// under. A cell whose slot holds something else must touch nothing at all:
@@ -130,11 +130,11 @@ void MassThread::shift(float *array , int N, float valueIn){  //shifts all array
   array[N-1] = valueIn;
 }
 
-float MassThread::movingAverage(const float *arr, uint8_t n) {
-  if(n<=0){return 0;}
+float MassThread::movingAverage(const float *samples, uint8_t count) {
+  if(count<=0){return 0;}
   float sum = 0.0f;
-  for (uint8_t i = 0; i < n; i++) sum += arr[i];
-  return sum / n;
+  for (uint8_t i = 0; i < count; i++) sum += samples[i];
+  return sum / count;
 }
 
 void MassThread::update(MassType& device)
@@ -239,16 +239,5 @@ void MassThread::commitTare(MassType& device) {
 	}
 }
 
-/*
-void MassThread::sendfloat(float value) {
-	snprintf(this->_buffer, sizeof(buffer), "Mass value = %.3f\r\n", value);
-	CDC_Transmit_FS((uint8_t*)buffer, sizeof(buffer));
-}
-
-void MassThread::sendint(int32_t value) {
-	snprintf(this->_buffer, sizeof(buffer), "Mass value = %d\r\n", value);
-	CDC_Transmit_FS((uint8_t*)buffer, sizeof(buffer));
-}
-*/
 
 

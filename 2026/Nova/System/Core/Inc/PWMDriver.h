@@ -1,7 +1,7 @@
 /*
  * PWMDriver.h  --  one 50 Hz PWM output, plus the angle map a servo needs.
  *
- * The channel's wiring is NOT here: it is PwmMux in Pins.h, because Pwm1 is a
+ * The channel's wiring is NOT here: it is PwmPinConfig in Pins.h, because Pwm1 is a
  * servo output on one board and the WS2812 strip's DMA channel on another, and
  * both drivers need the same timer and channel. What is here is the part that is
  * about driving a servo - the time base, the angle map, the home position.
@@ -11,7 +11,7 @@
 
 #include <cstdint>
 
-#include "Pins.h"   // PwmMux, pwmMux(), portOf/configPin, PROFILES
+#include "Pins.h"   // PwmPinConfig, pwmConfigOf(), portOf/configPin, PROFILES
 
 /* ---- the angle map -------------------------------------------------------- */
 
@@ -23,6 +23,23 @@
 inline constexpr uint16_t PULSE_MIN_US  = 500;
 inline constexpr uint16_t PULSE_MAX_US  = 2500;
 inline constexpr float    ANGLE_MAX_DEG = 180.0f;
+
+/**
+ * The 50 Hz frame, as the timer counts it.
+ *
+ * set50Hz() prescales to TIMER_TICK_HZ so ONE COUNT IS ONE MICROSECOND - that is
+ * what lets setPulseUs() write a microsecond straight into CCR with no
+ * conversion, and what makes the pulse constants above directly comparable to
+ * these. ARR counts from zero, hence the -1.
+ *
+ * PWM_ARR is also the clamp in setPulseUs(): a pulse longer than the period is
+ * not a wider pulse, it is a duty cycle the counter can never reach. It was
+ * written as a bare 19999 in two places that had to agree - the period and the
+ * clamp - which is exactly the pair that silently stops agreeing.
+ */
+inline constexpr uint32_t TIMER_TICK_HZ   = 1000000;               // 1 count = 1 us
+inline constexpr uint16_t SERVO_PERIOD_US = 20000;                 // 50 Hz
+inline constexpr uint16_t PWM_ARR         = SERVO_PERIOD_US - 1;
 
 /**
  * @brief Angle in degrees -> pulse width in us, clamped to 0..ANGLE_MAX_DEG.
@@ -60,14 +77,14 @@ inline constexpr uint16_t SERVO_ZERO_PULSE_US = angleToPulseUs(SERVO_ZERO_DEG);
 class PWMDriver {
 public:
     /**
-     * @param mux            the slot's wiring, from pwmMux(ConnType::PwmN).
+     * @param config       the slot's wiring, from pwmConfigOf(ConnType::PwmN).
      * @param zeroPulseUs  home position this channel drives on zero().
      * @param enabled        false constructs the channel inert: it touches
      *                       neither pad nor timer, and every setter no-ops. That
      *                       is what keeps a timer clear for another subsystem on
      *                       a board whose profile declares no servo on this slot.
      */
-    PWMDriver(const PwmMux& mux, uint16_t zeroPulseUs, bool enabled);
+    PWMDriver(const PwmPinConfig& config, uint16_t zeroPulseUs, bool enabled);
     ~PWMDriver();
 
     /** Pulse width in microseconds, clamped to the timer period. */
@@ -100,7 +117,7 @@ private:
     void disableCcrPreload();
     uint32_t timerClock() const;
 
-    PwmMux   _mux;
+    PwmPinConfig   _config;
     uint16_t _zeroPulseUs;
     uint32_t _channelHal;
     bool     _enabled;
@@ -118,14 +135,22 @@ static_assert(SERVO_ZERO_PULSE_US      == PULSE_MIN_US, "servo zero drifted from
 static_assert(angleToPulseUs(0.0f)  == PULSE_MIN_US, "0 deg must map to PULSE_MIN_US");
 static_assert(angleToPulseUs(180.0f)== PULSE_MAX_US, "180 deg must map to PULSE_MAX_US");
 
+/* A pulse the frame cannot contain is not a signal, it is a stuck-high output.
+ * Both ends of the travel have to fit inside one period. */
+static_assert(PULSE_MAX_US <= PWM_ARR,
+              "PULSE_MAX_US does not fit in the 50 Hz frame - setPulseUs() would clamp the "
+              "top of the servo's travel");
+static_assert(PULSE_MIN_US < PULSE_MAX_US, "the pulse range is empty or inverted");
+
 
 /** Every channel drives a real timer channel. */
 constexpr bool pwmChannelsValid() {
-    for (const PwmMux& m : PWM_MUX)
-        if (m.timer == TimerId::None || m.channel < 1 || m.channel > 4) return false;
+    for (const PwmPinConfig& config : PWM_PIN_CONFIG)
+        if (config.timer == TimerId::None) return false;
     return true;
 }
-static_assert(pwmChannelsValid(), "a PWM channel has no timer, or is outside 1..4");
+static_assert(pwmChannelsValid(), "a PWM slot names no timer");
+/* The 1..4 half of this check is gone: TimCh cannot hold anything else. */
 
 /**
  * A strip and a servo cannot share a timer's time base.
@@ -133,13 +158,13 @@ static_assert(pwmChannelsValid(), "a PWM channel has no timer, or is outside 1..
  * PSC and ARR are per timer, so the strip's 800 kHz bit period and a servo's
  * 50 Hz base cannot both be programmed into one, whichever channels they use.
  * The only rule that spans slots, and it lives here because it needs both the
- * mux (which slots share a timer) and the profile (what is on them).
+ * pin config (which slots share a timer) and the profile (what is on them).
  */
 constexpr bool noTimerBaseConflict() {
     for (const BoardProfile& p : PROFILES)
         for (uint8_t a = 0; a < PWM_COUNT; ++a)
             for (uint8_t b = a + 1; b < PWM_COUNT; ++b) {
-                if (PWM_MUX[a].timer != PWM_MUX[b].timer) continue;
+                if (PWM_PIN_CONFIG[a].timer != PWM_PIN_CONFIG[b].timer) continue;
                 const DeviceType da = p.slots[PWM_FIRST + a].device;
                 const DeviceType db = p.slots[PWM_FIRST + b].device;
                 if ((da == DeviceType::LedStrip && db == DeviceType::Servo) ||
