@@ -103,7 +103,7 @@ inline constexpr uint16_t RESET_PULSE  = 50; // zero-duty tail slots appended to
 
 
 // Strip length: sizes the static buffers (no heap) and is what the code drives.
-inline constexpr uint16_t WS2812_MAX_LEDS   = 72;
+inline constexpr uint16_t WS2812_MAX_LEDS   = 69;
 inline constexpr uint16_t WS2812_MAX_BUFFER = WS2812_MAX_LEDS * BITS_PER_LED + RESET_PULSE;
 
 
